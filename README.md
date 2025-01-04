@@ -31,9 +31,9 @@ Bu adımları takip ederek VoteBot'u bilgisayarınıza kurabilirsiniz:
 
 VoteBot, kullanıcı dostu bir arayüze sahip olup, gerekli bilgileri girerek hızlıca kullanmaya başlayabilirsiniz.
 
-- **Adım 1:** [Gerekli platforma dair bilgi]
-- **Adım 2:** [Platforma göre botu yapılandırma ve talimatlar]
-- **Adım 3:** [Botun nasıl çalıştığını ve sonuçları nasıl kontrol edebileceğinizi açıklayın]
+- **Adım 1:** []
+- **Adım 2:** []
+- **Adım 3:** []
 
 ## Katkı Sağlama
 
