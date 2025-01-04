@@ -25,10 +25,7 @@ Bu adımları takip ederek VoteBot'u bilgisayarınıza kurabilirsiniz:
    ```
 
 3. **Botu Çalıştırın:**
-   Botu çalıştırmak için şu komutu kullanın:
-   ```bash
-   python vote_bot.py
-   ```
+   Botu çalıştırmak için VoteBot(1,2,3) olarak görünen dosyalardaki .exe uzantılı dosyaları çalıştırmanız yeterlidir
 
 ## Kullanım
 
