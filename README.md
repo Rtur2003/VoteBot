@@ -3,7 +3,7 @@
 
 VoteBot, kullanıcıların oy verme süreçlerini otomatikleştiren bir bot uygulamasıdır. Bu bot, kullanıcıların belirli platformlarda oy kullanmalarını kolaylaştırır ve oy verme işlemini hızlı bir şekilde yönetir.
 
-## Özellikler
+## Özellikler 
 
 - **Otomatik Oy Verme**: Bot, belirlediğiniz oylama platformlarında otomatik olarak oy kullanma işlemini gerçekleştirir.
 - **Desteklenen Platformlar**: [DistroKid].
