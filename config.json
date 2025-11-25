@@ -1,13 +1,11 @@
-﻿{
+{
     "paths": {
-        "chrome": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
-        "driver": "chromedriver.exe",
-        "logs": "logs",
-        "config": "config.json"
+        "driver": "",
+        "chrome": ""
     },
     "target_url": "https://distrokid.com/spotlight/hasanarthuraltunta/vote/",
-    "pause_between_votes": 3,
-    "batch_size": 1,
+    "pause_between_votes": 3.0,
+    "batch_size": 5,
     "max_errors": 3,
     "headless": true,
     "timeout_seconds": 15
