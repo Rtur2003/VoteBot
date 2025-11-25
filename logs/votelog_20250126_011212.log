@@ -1,0 +1,19 @@
+2025-01-26 01:12:14,740 - INFO - Status: Çalýþýyor
+2025-01-26 01:13:39,023 - INFO - Oy baþarýyla gönderildi.
+2025-01-26 01:13:41,185 - INFO - Tarayýcý kapatýldý.
+2025-01-26 01:13:47,289 - INFO - Oy baþarýyla gönderildi.
+2025-01-26 01:13:49,374 - INFO - Tarayýcý kapatýldý.
+2025-01-26 01:13:59,765 - INFO - Oy baþarýyla gönderildi.
+2025-01-26 01:14:01,846 - INFO - Tarayýcý kapatýldý.
+2025-01-26 01:14:09,560 - INFO - Oy baþarýyla gönderildi.
+2025-01-26 01:14:11,647 - INFO - Tarayýcý kapatýldý.
+2025-01-26 01:14:15,100 - INFO - Oy baþarýyla gönderildi.
+2025-01-26 01:14:17,189 - INFO - Tarayýcý kapatýldý.
+2025-01-26 01:14:41,720 - INFO - Oy baþarýyla gönderildi.
+2025-01-26 01:14:43,822 - INFO - Tarayýcý kapatýldý.
+2025-01-26 01:14:48,662 - INFO - Oy baþarýyla gönderildi.
+2025-01-26 01:14:50,750 - INFO - Tarayýcý kapatýldý.
+2025-01-26 01:15:01,287 - INFO - Hata: ('Connection aborted.', ConnectionResetError(10054, 'Varolan bir baðlantý uzaktaki bir ana bilgisayar tarafýndan zorla kapatýldý', None, 10054, None))
+2025-01-26 01:15:01,297 - INFO - Hata: ('Connection aborted.', ConnectionResetError(10054, 'Varolan bir baðlantý uzaktaki bir ana bilgisayar tarafýndan zorla kapatýldý', None, 10054, None))
+2025-01-26 01:15:01,298 - INFO - Hata: ('Connection aborted.', ConnectionResetError(10054, 'Varolan bir baðlantý uzaktaki bir ana bilgisayar tarafýndan zorla kapatýldý', None, 10054, None))
+2025-01-26 01:15:01,299 - INFO - Hata: ('Connection aborted.', ConnectionResetError(10054, 'Varolan bir baðlantý uzaktaki bir ana bilgisayar tarafýndan zorla kapatýldý', None, 10054, None))

@@ -1,0 +1,290 @@
+2025-01-12 13:02:23,111 - INFO - Status: Çalýþýyor
+2025-01-12 13:03:45,950 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:03:48,050 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:03:50,941 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:03:52,186 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:03:53,001 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:03:53,029 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:03:54,274 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:03:54,949 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:03:55,079 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:03:57,037 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:04:01,433 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:04:03,543 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:04:19,960 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:04:22,060 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:04:24,158 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:04:24,857 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:04:26,251 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:04:26,735 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:04:26,930 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:04:27,173 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:04:28,794 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:04:29,242 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:04:40,073 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:04:42,177 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:04:55,217 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:04:55,228 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:04:57,310 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:04:57,326 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:04:57,880 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:04:58,936 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:04:59,951 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:05:01,001 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:05:21,245 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:05:22,298 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:05:22,364 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:05:23,328 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:05:24,400 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:05:24,446 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:05:24,866 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:05:26,928 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:05:39,625 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:05:41,705 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:05:48,094 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:05:48,488 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:05:50,081 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:05:50,167 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:05:50,573 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:05:52,155 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:05:56,994 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:05:59,082 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:06:15,698 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:06:17,776 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:06:18,032 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:06:19,201 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:06:19,583 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:06:20,108 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:06:21,292 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:06:21,650 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:06:30,262 - INFO - Hata: HTTPConnectionPool(host='localhost', port=58754): Read timed out. (read timeout=120)
+2025-01-12 13:06:39,050 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:06:41,128 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:06:45,479 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:06:45,763 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:06:47,565 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:06:47,622 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:06:47,843 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:06:49,694 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:06:59,388 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:07:01,462 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:07:07,354 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:07:12,564 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:07:12,574 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:07:13,195 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:07:15,029 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:07:15,261 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:07:21,779 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:07:24,868 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:07:38,074 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:07:40,341 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:07:45,385 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:07:48,236 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:07:49,115 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:07:50,365 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:07:50,942 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:07:53,038 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:07:54,765 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:08:07,075 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:08:09,183 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:08:13,570 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:08:14,612 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:08:15,651 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:08:16,695 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:08:21,314 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:08:23,391 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:08:23,464 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:08:25,541 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:08:30,444 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:08:32,519 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:08:44,241 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:08:44,407 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:08:46,334 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:08:46,507 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:08:51,827 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:08:52,813 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:08:53,901 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:08:54,891 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:09:00,722 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:09:02,807 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:09:03,586 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:09:05,670 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:09:20,059 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:09:21,639 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:09:22,150 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:09:23,715 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:09:24,019 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:09:24,739 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:09:26,086 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:09:26,816 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:09:34,828 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:09:36,905 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:09:53,382 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:09:53,972 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:09:55,014 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:09:55,458 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:09:55,748 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:09:56,049 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:09:57,089 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:09:57,827 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:10:23,335 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:10:24,338 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:10:25,028 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:10:25,184 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:10:25,427 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:10:26,069 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:10:26,420 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:10:27,125 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:10:27,295 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:10:28,154 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:10:49,877 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:10:51,305 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:10:51,962 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:10:53,382 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:10:54,234 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:10:54,622 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:10:56,307 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:10:56,696 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:10:56,826 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:10:58,911 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:11:25,234 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:11:25,306 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:11:25,952 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:11:26,026 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:11:27,323 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:11:27,344 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:11:27,422 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:11:28,041 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:11:28,120 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:11:29,418 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:11:51,971 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:11:54,082 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:11:55,627 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:11:56,296 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:11:56,352 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:11:57,010 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:11:57,710 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:11:58,380 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:11:58,427 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:11:59,072 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:12:08,394 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:12:10,475 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:12:24,266 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:12:25,354 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:12:26,338 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:12:26,506 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:12:27,067 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:12:27,442 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:12:28,592 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:12:28,857 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:12:29,152 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:12:30,932 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:12:44,838 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:12:46,931 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:12:54,208 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:12:55,543 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:12:56,098 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:12:56,294 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:12:57,613 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:12:58,191 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:12:59,086 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:13:01,167 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:13:01,371 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:13:03,535 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:13:14,047 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:13:16,141 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:13:22,314 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:13:24,440 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:13:24,916 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:13:27,002 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:13:29,372 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:13:30,142 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:13:31,472 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:13:32,222 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:13:41,559 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:13:43,691 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:13:44,558 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:13:46,654 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:13:52,902 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:13:54,992 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:13:57,668 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:13:59,771 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:14:01,645 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:14:03,724 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:14:03,724 - INFO - Hata: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00007FF75A7FFB05+28789]
+	(No symbol) [0x00007FF75A7686E0]
+	(No symbol) [0x00007FF75A60592A]
+	(No symbol) [0x00007FF75A65930E]
+	(No symbol) [0x00007FF75A6595FC]
+	(No symbol) [0x00007FF75A6A28A7]
+	(No symbol) [0x00007FF75A67F47F]
+	(No symbol) [0x00007FF75A69F654]
+	(No symbol) [0x00007FF75A67F1E3]
+	(No symbol) [0x00007FF75A64A938]
+	(No symbol) [0x00007FF75A64BAA1]
+	GetHandleVerifier [0x00007FF75AB3933D+3410093]
+	GetHandleVerifier [0x00007FF75AB4E7DD+3497293]
+	GetHandleVerifier [0x00007FF75AB42A73+3448803]
+	GetHandleVerifier [0x00007FF75A8C7BBB+848171]
+	(No symbol) [0x00007FF75A773C3F]
+	(No symbol) [0x00007FF75A76F6E4]
+	(No symbol) [0x00007FF75A76F87D]
+	(No symbol) [0x00007FF75A75ED49]
+	BaseThreadInitThunk [0x00007FFE78CB259D+29]
+	RtlUserThreadStart [0x00007FFE7958AF38+40]
+
+2025-01-12 13:14:05,852 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:14:07,682 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:14:09,773 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:14:13,518 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:14:15,720 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:14:27,815 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:14:29,736 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:14:29,898 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:14:31,453 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:14:31,821 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:14:31,838 - INFO - Status: Stopping...
+2025-01-12 13:14:32,701 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:14:32,920 - INFO - Settings saved successfully
+2025-01-12 13:14:33,530 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:14:33,801 - INFO - Status: Çalýþýyor
+2025-01-12 13:14:34,764 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:14:42,696 - INFO - Log cleared
+2025-01-12 13:15:09,836 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:15:11,509 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:15:11,965 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:15:13,690 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:15:15,891 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:15:15,892 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:15:16,910 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:15:17,154 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:15:18,035 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:15:18,051 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:15:19,054 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:15:19,242 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:15:19,290 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:15:19,339 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:15:21,411 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:15:21,442 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:15:27,633 - INFO - Status: Stopping...
+2025-01-12 13:15:52,792 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:15:54,878 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:15:54,882 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:15:55,310 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:15:55,955 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:15:56,998 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:15:57,400 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:15:58,036 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:15:59,660 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:16:01,336 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:16:01,742 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:16:03,421 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:16:05,012 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:16:07,092 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:16:08,335 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:16:10,400 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:17:21,483 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 13:17:23,559 - INFO - Tarayýcý kapatýldý.
+2025-01-12 13:22:53,831 - INFO - Log cleared

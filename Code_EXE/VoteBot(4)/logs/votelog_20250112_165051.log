@@ -1,0 +1,813 @@
+2025-01-12 16:50:57,614 - INFO - Status: Çalýþýyor
+2025-01-12 16:52:10,655 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 16:52:11,171 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 16:52:13,606 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 16:52:31,653 - INFO - Tarayýcý kapatýldý.
+2025-01-12 16:52:31,654 - INFO - Tarayýcý kapatýldý.
+2025-01-12 16:52:31,658 - INFO - Tarayýcý kapatýldý.
+2025-01-12 16:52:31,869 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 16:52:36,992 - INFO - Tarayýcý kapatýldý.
+2025-01-12 16:53:02,903 - INFO - Hata: HTTPConnectionPool(host='localhost', port=64759): Read timed out. (read timeout=120)
+2025-01-12 16:53:55,000 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 16:53:57,864 - INFO - Tarayýcý kapatýldý.
+2025-01-12 16:54:17,997 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 16:54:20,200 - INFO - Tarayýcý kapatýldý.
+2025-01-12 16:54:40,315 - INFO - Hata: HTTPConnectionPool(host='localhost', port=49413): Read timed out. (read timeout=120)
+2025-01-12 16:54:42,683 - INFO - Hata: HTTPConnectionPool(host='localhost', port=49464): Read timed out. (read timeout=120)
+2025-01-12 16:54:54,317 - INFO - Tarayýcý kapatýldý.
+2025-01-12 16:55:02,917 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=64759): Read timed out. (read timeout=120)")': /session/218443d144ee6f96f09bb4e54257e503
+2025-01-12 16:55:03,620 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 16:55:06,395 - INFO - Tarayýcý kapatýldý.
+2025-01-12 16:55:26,715 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 16:55:29,782 - INFO - Tarayýcý kapatýldý.
+2025-01-12 16:55:45,499 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 16:55:49,430 - INFO - Tarayýcý kapatýldý.
+2025-01-12 16:56:07,679 - INFO - Tarayýcý kapatýldý.
+2025-01-12 16:56:23,277 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 16:56:25,509 - INFO - Tarayýcý kapatýldý.
+2025-01-12 16:56:25,627 - INFO - Tarayýcý kapatýldý.
+2025-01-12 16:56:35,350 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 16:56:37,761 - INFO - Tarayýcý kapatýldý.
+2025-01-12 16:56:39,343 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 16:56:41,609 - INFO - Tarayýcý kapatýldý.
+2025-01-12 16:56:42,681 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 16:56:44,861 - INFO - Tarayýcý kapatýldý.
+2025-01-12 16:57:20,726 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 16:57:28,192 - INFO - Tarayýcý kapatýldý.
+2025-01-12 16:57:28,863 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 16:57:31,060 - INFO - Tarayýcý kapatýldý.
+2025-01-12 16:58:05,791 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 16:58:09,492 - INFO - Tarayýcý kapatýldý.
+2025-01-12 16:58:47,568 - INFO - Hata: HTTPConnectionPool(host='localhost', port=52473): Read timed out. (read timeout=120)
+2025-01-12 16:58:48,492 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 16:58:52,059 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 16:58:54,737 - INFO - Tarayýcý kapatýldý.
+2025-01-12 16:58:54,754 - INFO - Tarayýcý kapatýldý.
+2025-01-12 16:59:06,220 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 16:59:08,356 - INFO - Tarayýcý kapatýldý.
+2025-01-12 16:59:16,388 - INFO - Tarayýcý kapatýldý.
+2025-01-12 16:59:31,542 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:00:27,500 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:00:30,535 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:00:33,468 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:00:42,352 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:00:44,904 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:00:59,036 - INFO - Hata: HTTPConnectionPool(host='localhost', port=54285): Read timed out. (read timeout=120)
+2025-01-12 17:00:59,037 - INFO - Hata: HTTPConnectionPool(host='localhost', port=54284): Read timed out. (read timeout=120)
+2025-01-12 17:01:13,769 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:01:17,962 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:01:18,364 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:01:20,528 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:01:32,228 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:01:33,869 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:01:35,987 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:02:12,758 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:02:51,412 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:02:53,782 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:03:11,841 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:03:12,490 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:03:13,982 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:03:14,640 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:03:22,277 - INFO - Hata: HTTPConnectionPool(host='localhost', port=55751): Read timed out. (read timeout=120)
+2025-01-12 17:03:24,797 - INFO - Hata: HTTPConnectionPool(host='localhost', port=55770): Read timed out. (read timeout=120)
+2025-01-12 17:04:28,145 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:04:30,339 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:05:18,142 - INFO - Hata: HTTPConnectionPool(host='localhost', port=57195): Read timed out. (read timeout=120)
+2025-01-12 17:05:18,991 - INFO - Hata: HTTPConnectionPool(host='localhost', port=57207): Read timed out. (read timeout=120)
+2025-01-12 17:05:22,293 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=55751): Read timed out. (read timeout=120)")': /session/13a2323a31ea5d775a76813e855fbc38
+2025-01-12 17:05:24,806 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=55770): Read timed out. (read timeout=120)")': /session/2912c909484f4a616f449f2a055de8a1
+2025-01-12 17:05:32,942 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:05:34,257 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:05:39,876 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:05:40,032 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:05:41,923 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:06:59,986 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:07:03,238 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:07:06,105 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:07:15,756 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:07:17,997 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:07:39,968 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:07:42,664 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:07:47,120 - INFO - Hata: HTTPConnectionPool(host='localhost', port=59017): Read timed out. (read timeout=120)
+2025-01-12 17:08:18,650 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:08:21,595 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:08:21,854 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:08:44,985 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:08:47,299 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:08:53,118 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:08:55,900 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:09:46,165 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:09:50,099 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:09:51,982 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:09:56,997 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:10:03,100 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:10:05,365 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:10:13,031 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:10:15,277 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:10:30,348 - INFO - Hata: HTTPConnectionPool(host='localhost', port=61042): Read timed out. (read timeout=120)
+2025-01-12 17:10:49,163 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:10:53,928 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:11:02,039 - INFO - Hata: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00007FF75A7FFB05+28789]
+	(No symbol) [0x00007FF75A7686E0]
+	(No symbol) [0x00007FF75A60592A]
+	(No symbol) [0x00007FF75A65930E]
+	(No symbol) [0x00007FF75A6595FC]
+	(No symbol) [0x00007FF75A6A28A7]
+	(No symbol) [0x00007FF75A67F47F]
+	(No symbol) [0x00007FF75A69F654]
+	(No symbol) [0x00007FF75A67F1E3]
+	(No symbol) [0x00007FF75A64A938]
+	(No symbol) [0x00007FF75A64BAA1]
+	GetHandleVerifier [0x00007FF75AB3933D+3410093]
+	GetHandleVerifier [0x00007FF75AB4E7DD+3497293]
+	GetHandleVerifier [0x00007FF75AB42A73+3448803]
+	GetHandleVerifier [0x00007FF75A8C7BBB+848171]
+	(No symbol) [0x00007FF75A773C3F]
+	(No symbol) [0x00007FF75A76F6E4]
+	(No symbol) [0x00007FF75A76F87D]
+	(No symbol) [0x00007FF75A75ED49]
+	BaseThreadInitThunk [0x00007FFE78CB259D+29]
+	RtlUserThreadStart [0x00007FFE7958AF38+40]
+
+2025-01-12 17:11:02,943 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:11:02,991 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:11:04,207 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:11:04,912 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:11:07,060 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:12:02,990 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:12:04,378 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:12:07,089 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:12:07,657 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:12:10,104 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:13:08,424 - INFO - Hata: HTTPConnectionPool(host='localhost', port=62870): Read timed out. (read timeout=120)
+2025-01-12 17:13:13,739 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:13:15,239 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:13:16,838 - INFO - Hata: HTTPConnectionPool(host='localhost', port=62933): Read timed out. (read timeout=120)
+2025-01-12 17:13:18,842 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:13:18,888 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:13:23,287 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:13:41,056 - INFO - Hata: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00007FF75A7FFB05+28789]
+	(No symbol) [0x00007FF75A7686E0]
+	(No symbol) [0x00007FF75A60592A]
+	(No symbol) [0x00007FF75A65930E]
+	(No symbol) [0x00007FF75A6595FC]
+	(No symbol) [0x00007FF75A6A28A7]
+	(No symbol) [0x00007FF75A67F47F]
+	(No symbol) [0x00007FF75A69F654]
+	(No symbol) [0x00007FF75A67F1E3]
+	(No symbol) [0x00007FF75A64A938]
+	(No symbol) [0x00007FF75A64BAA1]
+	GetHandleVerifier [0x00007FF75AB3933D+3410093]
+	GetHandleVerifier [0x00007FF75AB4E7DD+3497293]
+	GetHandleVerifier [0x00007FF75AB42A73+3448803]
+	GetHandleVerifier [0x00007FF75A8C7BBB+848171]
+	(No symbol) [0x00007FF75A773C3F]
+	(No symbol) [0x00007FF75A76F6E4]
+	(No symbol) [0x00007FF75A76F87D]
+	(No symbol) [0x00007FF75A75ED49]
+	BaseThreadInitThunk [0x00007FFE78CB259D+29]
+	RtlUserThreadStart [0x00007FFE7958AF38+40]
+
+2025-01-12 17:13:43,285 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:14:36,855 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:14:39,100 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:14:42,186 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:14:44,472 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:14:54,119 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:14:57,698 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:15:00,116 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:15:07,384 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:15:09,849 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:16:07,479 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:16:09,625 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:16:10,414 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:16:12,551 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:16:14,881 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:16:16,715 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:16:17,002 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:16:18,842 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:17:56,106 - INFO - Hata: HTTPConnectionPool(host='localhost', port=49652): Read timed out. (read timeout=120)
+2025-01-12 17:17:56,130 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:17:56,146 - INFO - Hata: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00007FF75A7FFB05+28789]
+	(No symbol) [0x00007FF75A7686E0]
+	(No symbol) [0x00007FF75A60592A]
+	(No symbol) [0x00007FF75A65930E]
+	(No symbol) [0x00007FF75A6595FC]
+	(No symbol) [0x00007FF75A6A28A7]
+	(No symbol) [0x00007FF75A67F47F]
+	(No symbol) [0x00007FF75A69F654]
+	(No symbol) [0x00007FF75A67F1E3]
+	(No symbol) [0x00007FF75A64A938]
+	(No symbol) [0x00007FF75A64BAA1]
+	GetHandleVerifier [0x00007FF75AB3933D+3410093]
+	GetHandleVerifier [0x00007FF75AB4E7DD+3497293]
+	GetHandleVerifier [0x00007FF75AB42A73+3448803]
+	GetHandleVerifier [0x00007FF75A8C7BBB+848171]
+	(No symbol) [0x00007FF75A773C3F]
+	(No symbol) [0x00007FF75A76F6E4]
+	(No symbol) [0x00007FF75A76F87D]
+	(No symbol) [0x00007FF75A75ED49]
+	BaseThreadInitThunk [0x00007FFE78CB259D+29]
+	RtlUserThreadStart [0x00007FFE7958AF38+40]
+
+2025-01-12 17:17:59,861 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:18:00,226 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:18:02,047 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:18:21,173 - INFO - Hata: HTTPConnectionPool(host='localhost', port=50533): Read timed out. (read timeout=120)
+2025-01-12 17:18:23,008 - INFO - Hata: HTTPConnectionPool(host='localhost', port=50571): Read timed out. (read timeout=120)
+2025-01-12 17:18:30,484 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:18:30,558 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:18:50,044 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:18:58,220 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:19:23,619 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:19:26,774 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:19:27,009 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:19:27,009 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:19:27,169 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:19:29,175 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:19:33,271 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:19:35,812 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:20:25,985 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:20:26,372 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:20:28,204 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:20:29,573 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:20:31,137 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:20:32,136 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:20:33,315 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:20:34,297 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:21:09,606 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:21:20,487 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:21:57,254 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:21:59,501 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:22:28,749 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:22:32,402 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:22:33,766 - INFO - Hata: HTTPConnectionPool(host='localhost', port=53395): Read timed out. (read timeout=120)
+2025-01-12 17:22:37,534 - INFO - Hata: HTTPConnectionPool(host='localhost', port=53483): Read timed out. (read timeout=120)
+2025-01-12 17:23:07,283 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:23:10,164 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:23:10,645 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:23:13,310 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:23:27,199 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:24:00,976 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:24:07,227 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:24:12,581 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:24:12,582 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:24:15,863 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:24:16,424 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:24:17,082 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:24:18,003 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:24:20,788 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:26:01,123 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:26:05,596 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:26:12,276 - INFO - Hata: HTTPConnectionPool(host='localhost', port=55814): Read timed out. (read timeout=120)
+2025-01-12 17:26:32,273 - INFO - Hata: HTTPConnectionPool(host='localhost', port=55935): Read timed out. (read timeout=120)
+2025-01-12 17:26:37,186 - INFO - Hata: HTTPConnectionPool(host='localhost', port=55969): Read timed out. (read timeout=120)
+2025-01-12 17:26:37,554 - INFO - Hata: HTTPConnectionPool(host='localhost', port=55942): Read timed out. (read timeout=120)
+2025-01-12 17:26:42,659 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:27:58,003 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:28:02,904 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:28:32,285 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=55935): Read timed out. (read timeout=120)")': /session/6085925cdb5d59d5f77e2ff997b71a79
+2025-01-12 17:28:37,192 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=55969): Read timed out. (read timeout=120)")': /session/7c4adce1321e94233d304e77162e1bcc
+2025-01-12 17:28:37,568 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=55942): Read timed out. (read timeout=120)")': /session/5ad96eafd5dd47b21d6c8e1bb6e37e15
+2025-01-12 17:29:24,861 - INFO - Hata: HTTPConnectionPool(host='localhost', port=57175): Read timed out. (read timeout=120)
+2025-01-12 17:29:24,864 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:29:36,929 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:29:36,929 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:29:39,444 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:29:39,886 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:31:09,179 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:31:10,766 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:31:11,493 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:31:13,030 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:31:18,950 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:31:43,607 - INFO - Hata: HTTPConnectionPool(host='localhost', port=59304): Read timed out. (read timeout=120)
+2025-01-12 17:31:44,362 - INFO - Hata: HTTPConnectionPool(host='localhost', port=59316): Read timed out. (read timeout=120)
+2025-01-12 17:32:25,697 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:32:29,845 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:32:46,541 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:32:49,024 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:33:43,618 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=59304): Read timed out. (read timeout=120)")': /session/df0f52ebd8a1ec581346f8c87d27f6a4
+2025-01-12 17:33:44,371 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=59316): Read timed out. (read timeout=120)")': /session/822d71c34bb0af3101cbeeea131722f4
+2025-01-12 17:33:48,625 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:33:52,322 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:33:52,369 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:33:59,785 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:34:02,036 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:34:03,705 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:34:06,772 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:34:08,975 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:34:56,985 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:34:59,148 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:35:00,904 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:35:01,087 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:35:02,586 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:35:03,054 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:35:03,238 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:35:04,797 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:35:08,223 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:35:12,784 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:36:08,784 - INFO - Hata: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00007FF75A7FFB05+28789]
+	(No symbol) [0x00007FF75A7686E0]
+	(No symbol) [0x00007FF75A60592A]
+	(No symbol) [0x00007FF75A65930E]
+	(No symbol) [0x00007FF75A6595FC]
+	(No symbol) [0x00007FF75A6A28A7]
+	(No symbol) [0x00007FF75A67F47F]
+	(No symbol) [0x00007FF75A69F654]
+	(No symbol) [0x00007FF75A67F1E3]
+	(No symbol) [0x00007FF75A64A938]
+	(No symbol) [0x00007FF75A64BAA1]
+	GetHandleVerifier [0x00007FF75AB3933D+3410093]
+	GetHandleVerifier [0x00007FF75AB4E7DD+3497293]
+	GetHandleVerifier [0x00007FF75AB42A73+3448803]
+	GetHandleVerifier [0x00007FF75A8C7BBB+848171]
+	(No symbol) [0x00007FF75A773C3F]
+	(No symbol) [0x00007FF75A76F6E4]
+	(No symbol) [0x00007FF75A76F87D]
+	(No symbol) [0x00007FF75A75ED49]
+	BaseThreadInitThunk [0x00007FFE78CB259D+29]
+	RtlUserThreadStart [0x00007FFE7958AF38+40]
+
+2025-01-12 17:36:16,385 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:37:03,401 - INFO - Hata: HTTPConnectionPool(host='localhost', port=62153): Read timed out. (read timeout=120)
+2025-01-12 17:37:14,734 - INFO - Hata: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00007FF75A7FFB05+28789]
+	(No symbol) [0x00007FF75A7686E0]
+	(No symbol) [0x00007FF75A60592A]
+	(No symbol) [0x00007FF75A65930E]
+	(No symbol) [0x00007FF75A6595FC]
+	(No symbol) [0x00007FF75A6A28A7]
+	(No symbol) [0x00007FF75A67F47F]
+	(No symbol) [0x00007FF75A69F654]
+	(No symbol) [0x00007FF75A67F1E3]
+	(No symbol) [0x00007FF75A64A938]
+	(No symbol) [0x00007FF75A64BAA1]
+	GetHandleVerifier [0x00007FF75AB3933D+3410093]
+	GetHandleVerifier [0x00007FF75AB4E7DD+3497293]
+	GetHandleVerifier [0x00007FF75AB42A73+3448803]
+	GetHandleVerifier [0x00007FF75A8C7BBB+848171]
+	(No symbol) [0x00007FF75A773C3F]
+	(No symbol) [0x00007FF75A76F6E4]
+	(No symbol) [0x00007FF75A76F87D]
+	(No symbol) [0x00007FF75A75ED49]
+	BaseThreadInitThunk [0x00007FFE78CB259D+29]
+	RtlUserThreadStart [0x00007FFE7958AF38+40]
+
+2025-01-12 17:37:16,367 - INFO - Hata: HTTPConnectionPool(host='localhost', port=62249): Read timed out. (read timeout=120)
+2025-01-12 17:37:20,785 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:37:24,410 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:37:24,576 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:37:24,636 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:37:25,259 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:37:29,731 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:37:31,908 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:38:32,946 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:38:35,190 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:38:43,646 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:38:45,842 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:38:50,879 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:38:53,109 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:38:53,711 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:38:55,994 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:38:56,762 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:38:58,973 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:39:57,491 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:39:59,477 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:40:00,371 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:40:01,718 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:40:05,192 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:40:06,870 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:40:07,344 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:40:09,027 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:40:24,492 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:40:34,689 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:41:34,140 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:41:36,257 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:41:36,472 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:41:38,675 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:42:04,572 - INFO - Hata: HTTPConnectionPool(host='localhost', port=49225): Read timed out. (read timeout=120)
+2025-01-12 17:42:05,868 - INFO - Hata: HTTPConnectionPool(host='localhost', port=49267): Read timed out. (read timeout=120)
+2025-01-12 17:42:13,287 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:42:32,949 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:42:33,072 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:42:43,839 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:43:15,618 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:43:39,648 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:43:44,536 - INFO - Hata: HTTPConnectionPool(host='localhost', port=50399): Read timed out. (read timeout=120)
+2025-01-12 17:44:09,315 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:44:11,864 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:44:14,049 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:44:16,348 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:44:18,785 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:44:22,443 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:45:34,082 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:45:36,321 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:45:39,012 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:45:41,205 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:45:44,553 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=50399): Read timed out. (read timeout=120)")': /session/8d9dd2d91ebedd5a67ee0f34bd960612
+2025-01-12 17:46:17,091 - INFO - Hata: HTTPConnectionPool(host='localhost', port=52142): Read timed out. (read timeout=120)
+2025-01-12 17:46:24,944 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:46:35,036 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:46:48,252 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:46:50,250 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:46:51,955 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:46:54,028 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:46:56,349 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:48:17,104 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=52142): Read timed out. (read timeout=120)")': /session/8f73f761cc861ca32e07d1095e610d55
+2025-01-12 17:48:23,855 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:48:53,602 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:48:54,471 - INFO - Hata: HTTPConnectionPool(host='localhost', port=53926): Read timed out. (read timeout=120)
+2025-01-12 17:48:56,036 - INFO - Hata: HTTPConnectionPool(host='localhost', port=53998): Read timed out. (read timeout=120)
+2025-01-12 17:49:00,570 - INFO - Hata: HTTPConnectionPool(host='localhost', port=54083): Read timed out. (read timeout=120)
+2025-01-12 17:49:00,850 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:49:19,434 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:50:50,334 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:50:55,812 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:50:56,044 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=53998): Read timed out. (read timeout=120)")': /session/cb92222518c5d7407f56c4a28e6acc35
+2025-01-12 17:51:00,584 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=54083): Read timed out. (read timeout=120)")': /session/48e3b3e55d63e6dfb9c47d786391d85c
+2025-01-12 17:51:05,352 - INFO - Hata: HTTPConnectionPool(host='localhost', port=55262): Read timed out. (read timeout=120)
+2025-01-12 17:51:26,015 - INFO - Hata: HTTPConnectionPool(host='localhost', port=55458): Read timed out. (read timeout=120)
+2025-01-12 17:51:39,832 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:51:42,009 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:52:00,742 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:52:02,843 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:53:05,367 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=55262): Read timed out. (read timeout=120)")': /session/7a7e75c8a6db120485d6569ed13d6084
+2025-01-12 17:53:21,230 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:53:23,577 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:53:26,030 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=55458): Read timed out. (read timeout=120)")': /session/1b65d8e91045e75af9062276db37646c
+2025-01-12 17:53:36,295 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:53:38,557 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:53:46,261 - INFO - Hata: HTTPConnectionPool(host='localhost', port=56811): Read timed out. (read timeout=120)
+2025-01-12 17:54:16,694 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:54:16,835 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:54:28,220 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:54:42,799 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:54:45,234 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:56:04,506 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:56:06,871 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:56:16,554 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:56:18,850 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:56:21,068 - INFO - Hata: HTTPConnectionPool(host='localhost', port=58645): Read timed out. (read timeout=120)
+2025-01-12 17:56:25,968 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:56:32,834 - INFO - Hata: HTTPConnectionPool(host='localhost', port=58792): Read timed out. (read timeout=120)
+2025-01-12 17:56:49,984 - INFO - Hata: HTTPConnectionPool(host='localhost', port=59002): Read timed out. (read timeout=120)
+2025-01-12 17:57:06,887 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:57:40,817 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:57:52,567 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:57:54,334 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:57:55,300 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:57:55,433 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:57:57,513 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:57:58,614 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:58:23,300 - INFO - Hata: HTTPConnectionPool(host='localhost', port=59716): Read timed out. (read timeout=120)
+2025-01-12 17:59:10,498 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:59:10,563 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:59:17,165 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:59:18,888 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:59:20,597 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:59:33,017 - INFO - Tarayýcý kapatýldý.
+2025-01-12 17:59:38,682 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 17:59:40,803 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:00:23,329 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=59716): Read timed out. (read timeout=120)")': /session/7f316be796b027c65b44d15839e9749e
+2025-01-12 18:01:09,974 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:01:12,206 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:01:25,642 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:01:28,892 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:01:31,240 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:01:37,158 - INFO - Hata: HTTPConnectionPool(host='localhost', port=61869): Read timed out. (read timeout=120)
+2025-01-12 18:01:44,956 - INFO - Hata: HTTPConnectionPool(host='localhost', port=62021): Read timed out. (read timeout=120)
+2025-01-12 18:02:06,119 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:02:10,004 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:02:10,203 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:02:12,855 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:02:12,933 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:02:13,419 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:02:15,690 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:02:17,970 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:03:02,853 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:03:05,787 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:03:14,372 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:03:16,531 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:03:20,150 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:03:21,886 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:03:22,319 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:03:24,013 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:03:55,468 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:03:59,104 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:04:22,985 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:04:48,801 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:04:49,930 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:04:51,195 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:04:52,761 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:04:56,495 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:05:00,235 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:05:02,810 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:05:10,618 - INFO - Hata: HTTPConnectionPool(host='localhost', port=64246): Read timed out. (read timeout=120)
+2025-01-12 18:06:18,896 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:06:22,862 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:06:23,445 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:06:26,088 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:06:26,363 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:06:26,442 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:07:00,777 - INFO - Hata: HTTPConnectionPool(host='localhost', port=65529): Read timed out. (read timeout=120)
+2025-01-12 18:07:10,649 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=64246): Read timed out. (read timeout=120)")': /session/4dd5a17acb7b0776271997f81650f1d4
+2025-01-12 18:07:41,025 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:07:43,290 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:08:13,307 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:08:21,389 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:08:25,926 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:08:32,409 - INFO - Hata: HTTPConnectionPool(host='localhost', port=49975): Read timed out. (read timeout=120)
+2025-01-12 18:09:27,804 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:09:29,291 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:09:29,670 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:09:32,154 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:09:32,301 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:09:32,321 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:10:07,003 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:10:32,431 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=49975): Read timed out. (read timeout=120)")': /session/c6ab18c4eb7e148c723dcc69b2f897e3
+2025-01-12 18:10:37,236 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:10:37,539 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:10:38,820 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:10:45,363 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:10:45,430 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:10:46,315 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:12:08,930 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:12:18,134 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:12:20,384 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:12:23,513 - INFO - Hata: HTTPConnectionPool(host='localhost', port=52239): Read timed out. (read timeout=120)
+2025-01-12 18:12:49,948 - INFO - Hata: HTTPConnectionPool(host='localhost', port=52654): Read timed out. (read timeout=120)
+2025-01-12 18:12:50,713 - INFO - Hata: HTTPConnectionPool(host='localhost', port=52682): Read timed out. (read timeout=120)
+2025-01-12 18:13:04,794 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:13:07,662 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:13:10,009 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:13:36,045 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:14:00,393 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:14:25,643 - INFO - Hata: HTTPConnectionPool(host='localhost', port=53553): Read timed out. (read timeout=120)
+2025-01-12 18:15:01,907 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:15:04,841 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:15:14,325 - INFO - Hata: HTTPConnectionPool(host='localhost', port=54070): Read timed out. (read timeout=120)
+2025-01-12 18:15:27,219 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:15:45,190 - INFO - Hata: HTTPConnectionPool(host='localhost', port=54423): Read timed out. (read timeout=120)
+2025-01-12 18:16:05,369 - INFO - Hata: HTTPConnectionPool(host='localhost', port=54697): Read timed out. (read timeout=120)
+2025-01-12 18:16:25,664 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=53553): Read timed out. (read timeout=120)")': /session/d7e631884e0e549a254dec8779479edc
+2025-01-12 18:16:42,469 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:17:05,419 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:17:15,354 - INFO - Hata: HTTPConnectionPool(host='localhost', port=55240): Read timed out. (read timeout=120)
+2025-01-12 18:17:31,737 - INFO - Hata: HTTPConnectionPool(host='localhost', port=55455): Read timed out. (read timeout=120)
+2025-01-12 18:17:45,204 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=54423): Read timed out. (read timeout=120)")': /session/9d2a68f7e2db894fcba9fd21a231f0a5
+2025-01-12 18:17:47,630 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:18:09,949 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:18:14,048 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:18:14,717 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:19:15,368 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=55240): Read timed out. (read timeout=120)")': /session/5d33c17222651e017ee2ac17acd47a97
+2025-01-12 18:19:17,199 - INFO - Hata: HTTPConnectionPool(host='localhost', port=56103): Read timed out. (read timeout=120)
+2025-01-12 18:19:17,202 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:19:21,179 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:19:25,828 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:19:30,411 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:19:41,128 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:19:44,298 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:20:11,729 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:20:14,127 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:20:16,844 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:20:17,677 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:20:19,044 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:20:27,227 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:20:29,415 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:21:17,211 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=56103): Read timed out. (read timeout=120)")': /session/c963d76d8012f1d56604cb49e52ac67c
+2025-01-12 18:21:20,124 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:21:26,806 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:22:21,956 - INFO - Hata: HTTPConnectionPool(host='localhost', port=58012): Read timed out. (read timeout=120)
+2025-01-12 18:22:23,409 - INFO - Hata: HTTPConnectionPool(host='localhost', port=58028): Read timed out. (read timeout=120)
+2025-01-12 18:22:28,777 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:22:33,700 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:22:33,868 - INFO - Hata: HTTPConnectionPool(host='localhost', port=58221): Read timed out. (read timeout=120)
+2025-01-12 18:23:00,323 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:23:08,874 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:24:21,968 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=58012): Read timed out. (read timeout=120)")': /session/06ef7e6497f596eaa02b9d25e9057434
+2025-01-12 18:24:33,671 - INFO - Hata: HTTPConnectionPool(host='localhost', port=59214): Read timed out. (read timeout=120)
+2025-01-12 18:24:33,892 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=58221): Read timed out. (read timeout=120)")': /session/ea4dd47ef57b28f2872886ca61604909
+2025-01-12 18:24:38,469 - INFO - Hata: HTTPConnectionPool(host='localhost', port=59308): Read timed out. (read timeout=120)
+2025-01-12 18:24:46,313 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:25:06,052 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:25:08,366 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:25:48,934 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:26:33,686 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=59214): Read timed out. (read timeout=120)")': /session/221c9dccc4db8a08fb21d1ccf0d0d53c
+2025-01-12 18:26:38,481 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=59308): Read timed out. (read timeout=120)")': /session/6000742ce33bddb90974cc5bdd88bec2
+2025-01-12 18:26:50,564 - INFO - Hata: HTTPConnectionPool(host='localhost', port=60674): Read timed out. (read timeout=120)
+2025-01-12 18:27:01,143 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:27:08,796 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:27:11,411 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:27:13,308 - INFO - Hata: HTTPConnectionPool(host='localhost', port=60881): Read timed out. (read timeout=120)
+2025-01-12 18:28:08,574 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:28:10,227 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:28:14,122 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:28:16,110 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:28:17,223 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:28:18,285 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:28:50,575 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=60674): Read timed out. (read timeout=120)")': /session/3c8dfa6bbee2f3afd5565fb7cf0fe528
+2025-01-12 18:29:17,691 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:29:21,458 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:29:52,636 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:29:52,959 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:29:54,926 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:30:14,869 - INFO - Hata: HTTPConnectionPool(host='localhost', port=62299): Read timed out. (read timeout=120)
+2025-01-12 18:30:25,603 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:30:28,734 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:31:26,698 - INFO - Hata: HTTPConnectionPool(host='localhost', port=63267): Read timed out. (read timeout=120)
+2025-01-12 18:31:33,771 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:31:36,405 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:31:55,834 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:31:57,283 - INFO - Hata: HTTPConnectionPool(host='localhost', port=63622): Read timed out. (read timeout=120)
+2025-01-12 18:32:14,877 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=62299): Read timed out. (read timeout=120)")': /session/b480c7ac3850f058f522a0ea8f9c874c
+2025-01-12 18:32:28,070 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:32:34,611 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:32:36,311 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:32:36,778 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:33:18,795 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:33:24,601 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:33:26,711 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=63267): Read timed out. (read timeout=120)")': /session/5643488dcaa99a0c4754439a9501a95c
+2025-01-12 18:33:27,074 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:34:18,060 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:34:20,194 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:34:21,456 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:34:23,592 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:34:28,879 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:34:33,547 - INFO - Hata: HTTPConnectionPool(host='localhost', port=64965): Read timed out. (read timeout=120)
+2025-01-12 18:34:54,856 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:35:02,107 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:36:24,407 - INFO - Hata: HTTPConnectionPool(host='localhost', port=50019): Read timed out. (read timeout=120)
+2025-01-12 18:36:27,725 - INFO - Hata: HTTPConnectionPool(host='localhost', port=50086): Read timed out. (read timeout=120)
+2025-01-12 18:36:33,558 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=64965): Read timed out. (read timeout=120)")': /session/561ae10ad799f33ed3de8c2ede3c6747
+2025-01-12 18:36:43,442 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:36:48,172 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:36:49,787 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:37:02,625 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:37:04,968 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:37:45,737 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:38:27,734 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=50086): Read timed out. (read timeout=120)")': /session/8801db2457dc9d3de651736a469e2405
+2025-01-12 18:38:35,199 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:38:38,350 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:38:43,999 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:38:47,198 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:38:47,352 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:38:47,385 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:38:48,591 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:38:50,877 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:38:56,593 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:40:37,399 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:40:39,644 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:40:41,529 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:40:44,328 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:40:54,332 - INFO - Hata: HTTPConnectionPool(host='localhost', port=52307): Read timed out. (read timeout=120)
+2025-01-12 18:40:55,030 - INFO - Hata: HTTPConnectionPool(host='localhost', port=52400): Read timed out. (read timeout=120)
+2025-01-12 18:41:01,631 - INFO - Hata: HTTPConnectionPool(host='localhost', port=52568): Read timed out. (read timeout=120)
+2025-01-12 18:41:27,077 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:41:27,232 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:41:55,045 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:41:58,180 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:42:01,175 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:42:01,427 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:42:54,339 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=52307): Read timed out. (read timeout=120)")': /session/b9f3fe426fdc6c6dbd1f0561a6416f11
+2025-01-12 18:43:03,558 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:43:12,191 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:43:12,318 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:43:14,380 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:43:15,941 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:43:18,240 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:43:26,458 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:44:29,337 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:44:30,274 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:44:30,971 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:44:31,498 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:44:32,504 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:44:33,115 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:45:18,521 - INFO - Hata: HTTPConnectionPool(host='localhost', port=54945): Read timed out. (read timeout=120)
+2025-01-12 18:45:48,032 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:46:03,645 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:46:09,226 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:46:10,561 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:46:12,710 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:46:36,865 - INFO - Hata: HTTPConnectionPool(host='localhost', port=55994): Read timed out. (read timeout=120)
+2025-01-12 18:47:28,747 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:47:31,109 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:47:42,331 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:47:44,681 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:47:52,295 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:48:16,879 - INFO - Hata: HTTPConnectionPool(host='localhost', port=57028): Read timed out. (read timeout=120)
+2025-01-12 18:48:37,146 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:48:40,223 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:49:18,910 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:49:26,111 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:49:49,544 - INFO - Hata: HTTPConnectionPool(host='localhost', port=57971): Read timed out. (read timeout=120)
+2025-01-12 18:50:16,885 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=57028): Read timed out. (read timeout=120)")': /session/7cb54578d25bdc5fd731ee27fafbcc0c
+2025-01-12 18:50:22,560 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:50:24,592 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:50:28,307 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:50:30,624 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:50:32,504 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:50:33,957 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:51:49,552 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=57971): Read timed out. (read timeout=120)")': /session/609dd19e24ee8a562fd8faa129b3b269
+2025-01-12 18:51:56,353 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:52:02,483 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:52:03,021 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:52:03,687 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:52:05,817 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:52:10,332 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:52:11,110 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:52:12,462 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:53:19,636 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:53:22,296 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:53:24,495 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:53:26,699 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:53:30,881 - INFO - Hata: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00007FF75A7FFB05+28789]
+	(No symbol) [0x00007FF75A7686E0]
+	(No symbol) [0x00007FF75A60592A]
+	(No symbol) [0x00007FF75A65930E]
+	(No symbol) [0x00007FF75A6595FC]
+	(No symbol) [0x00007FF75A6A28A7]
+	(No symbol) [0x00007FF75A67F47F]
+	(No symbol) [0x00007FF75A69F654]
+	(No symbol) [0x00007FF75A67F1E3]
+	(No symbol) [0x00007FF75A64A938]
+	(No symbol) [0x00007FF75A64BAA1]
+	GetHandleVerifier [0x00007FF75AB3933D+3410093]
+	GetHandleVerifier [0x00007FF75AB4E7DD+3497293]
+	GetHandleVerifier [0x00007FF75AB42A73+3448803]
+	GetHandleVerifier [0x00007FF75A8C7BBB+848171]
+	(No symbol) [0x00007FF75A773C3F]
+	(No symbol) [0x00007FF75A76F6E4]
+	(No symbol) [0x00007FF75A76F87D]
+	(No symbol) [0x00007FF75A75ED49]
+	BaseThreadInitThunk [0x00007FFE78CB259D+29]
+	RtlUserThreadStart [0x00007FFE7958AF38+40]
+
+2025-01-12 18:53:33,097 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:53:33,565 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:53:35,744 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:53:38,214 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:53:40,396 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:55:09,963 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:55:11,964 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:55:16,509 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:55:16,663 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:55:26,859 - INFO - Hata: HTTPConnectionPool(host='localhost', port=61658): Read timed out. (read timeout=120)
+2025-01-12 18:55:37,263 - INFO - Hata: HTTPConnectionPool(host='localhost', port=61802): Read timed out. (read timeout=120)
+2025-01-12 18:55:45,426 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:55:53,046 - INFO - Hata: HTTPConnectionPool(host='localhost', port=61917): Read timed out. (read timeout=120)
+2025-01-12 18:56:26,409 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:56:32,803 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:56:55,272 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:56:58,357 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:57:17,893 - INFO - Hata: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00007FF75A7FFB05+28789]
+	(No symbol) [0x00007FF75A7686E0]
+	(No symbol) [0x00007FF75A60592A]
+	(No symbol) [0x00007FF75A65930E]
+	(No symbol) [0x00007FF75A6595FC]
+	(No symbol) [0x00007FF75A6A28A7]
+	(No symbol) [0x00007FF75A67F47F]
+	(No symbol) [0x00007FF75A69F654]
+	(No symbol) [0x00007FF75A67F1E3]
+	(No symbol) [0x00007FF75A64A938]
+	(No symbol) [0x00007FF75A64BAA1]
+	GetHandleVerifier [0x00007FF75AB3933D+3410093]
+	GetHandleVerifier [0x00007FF75AB4E7DD+3497293]
+	GetHandleVerifier [0x00007FF75AB42A73+3448803]
+	GetHandleVerifier [0x00007FF75A8C7BBB+848171]
+	(No symbol) [0x00007FF75A773C3F]
+	(No symbol) [0x00007FF75A76F6E4]
+	(No symbol) [0x00007FF75A76F87D]
+	(No symbol) [0x00007FF75A75ED49]
+	BaseThreadInitThunk [0x00007FFE78CB259D+29]
+	RtlUserThreadStart [0x00007FFE7958AF38+40]
+
+2025-01-12 18:57:20,337 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:57:29,987 - INFO - Hata: HTTPConnectionPool(host='localhost', port=62731): Read timed out. (read timeout=120)
+2025-01-12 18:58:30,656 - INFO - Hata: HTTPConnectionPool(host='localhost', port=63445): Read timed out. (read timeout=120)
+2025-01-12 18:58:40,238 - INFO - Hata: HTTPConnectionPool(host='localhost', port=63529): Read timed out. (read timeout=120)
+2025-01-12 18:58:43,588 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 18:58:45,816 - INFO - Tarayýcý kapatýldý.
+2025-01-12 18:59:12,020 - INFO - Hata: HTTPConnectionPool(host='localhost', port=63749): Read timed out. (read timeout=120)
+2025-01-12 18:59:29,990 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=62731): Read timed out. (read timeout=120)")': /session/5d55be75be4d060f79fd4e5d56cd21a8
+2025-01-12 18:59:52,285 - INFO - Tarayýcý kapatýldý.
+2025-01-12 19:00:30,661 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=63445): Read timed out. (read timeout=120)")': /session/3bbd6ebc6f7e6a5963a983a08d4e95d1
+2025-01-12 19:00:40,029 - INFO - Tarayýcý kapatýldý.
+2025-01-12 19:00:43,958 - INFO - Oy baþarýyla gönderildi.
+2025-01-12 19:00:47,980 - INFO - Tarayýcý kapatýldý.
+2025-01-12 19:00:50,246 - INFO - Hata: HTTPConnectionPool(host='localhost', port=64684): Read timed out. (read timeout=120)
+2025-01-12 19:01:12,047 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPConnectionPool(host='localhost', port=63749): Read timed out. (read timeout=120)")': /session/7647e2469d7a2c27c12ecbc95a8b5fbf
+2025-01-12 19:01:33,165 - INFO - Tarayýcý kapatýldý.
+2025-01-12 19:01:59,561 - INFO - Status: Stopping...
