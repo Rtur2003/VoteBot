@@ -1,49 +1,73 @@
+# VoteBot 5
 
-# VoteBot
-
-VoteBot, kullanıcıların oy verme süreçlerini otomatikleştiren bir bot uygulamasıdır. Bu bot, kullanıcıların belirli platformlarda oy kullanmalarını kolaylaştırır ve oy verme işlemini hızlı bir şekilde yönetir.
+Profesyonel, GUI tabanlı DistroKid oy botu. Sürüm 5, yol/doğrulama kontrolleri, daha stabil Selenium akışı, modern arayüz ve ayrıntılı loglama ile yeniden yazıldı.
 
 ## Özellikler
+- **Ön kontrol**: Chrome/ChromeDriver yolları ve sürüm uyumluluğu otomatik denetlenir.
+- **Başlat/Durdur güvenliği**: İş parçacığı güvenli UI, temiz durdurma, durum göstergeleri.
+- **Batch oy**: Ayarlanabilir batch sayısı ve oy aralığı; her oyda sürücü aç/kapat.
+- **Kapsamlı log**: UI log + `logs/votebot5.log` dosyası.
+- **Temiz tema**: Koyu lacivert arka plan, amber/azure aksanlı kartlar.
 
-- **Otomatik Oy Verme**: Bot, belirlediğiniz oylama platformlarında otomatik olarak oy kullanma işlemini gerçekleştirir.
-- **Desteklenen Platformlar**: [Platformların adı ve açıklamaları burada yer alacak].
-- **Yapılandırılabilirlik**: Farklı platformlar ve oylama seçeneklerine göre botu özelleştirebilirsiniz.
+## Gereksinimler
+- Python 3.9+
+- Google Chrome (kurulu)
+- Chrome sürümünüzle uyumlu `chromedriver.exe`
+- `pip install -r requirements.txt` (selenium, requests, discord.py)
 
 ## Kurulum
+```bash
+cd "C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot"
+pip install -r requirements.txt
+```
 
-Bu adımları takip ederek VoteBot'u bilgisayarınıza kurabilirsiniz:
+### ChromeDriver
+- Chrome sürümünüzü öğrenin: `chrome --version`
+- Aynı major sürüme sahip ChromeDriver indirin (örn. Chrome 142 için `142.x` driver):  
+  https://googlechromelabs.github.io/chrome-for-testing/
+- İnen `chromedriver.exe`yi proje köküne koyun: `C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\chromedriver.exe`
 
-1. **Repository'yi Klonlayın:**
-   ```bash
-   git clone https://github.com/Rtur2003/VoteBot.git
-   ```
+## Yapılandırma
+`config.json` (kök) veya `Code_EXE/VoteBot(5)/config.json`:
+```json
+{
+  "paths": {
+    "chrome": "C:\\\\Program Files\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe",
+    "driver": "chromedriver.exe",
+    "logs": "logs",
+    "config": "config.json"
+  },
+  "target_url": "https://distrokid.com/spotlight/hasanarthuraltunta/vote/",
+  "pause_between_votes": 3,
+  "batch_size": 1,
+  "max_errors": 3,
+  "headless": true,
+  "timeout_seconds": 15
+}
+```
+- `driver` ve `logs` göreli bırakılırsa kök klasöre göre çözümlenir.
+- `headless` kapatırsanız tarayıcıyı görerek izleyebilirsiniz.
 
-2. **Gerekli Bağımlılıkları Yükleyin:**
-   Proje, belirli Python kütüphanelerini kullanıyor. Bunları yüklemek için:
-   ```bash
-   pip install -r requirements.txt
-   ```
+## Çalıştırma
+```bash
+python Code_EXE/VoteBot(5)/VoteBot5.py
+```
+1) **Ön kontrol**: Yollar ve sürümler uygunsa mesaj verir. Değilse sürümü/konumu düzeltin.  
+2) **Başlat**: Bot çalışır, sayaçlar/log akar.  
+3) **Durdur**: Temiz kapatma.  
+4) Log klasörünü aç butonuyla `logs/votebot5.log`a hızlı erişim.
 
-3. **Botu Çalıştırın:**
-   Botu çalıştırmak için VoteBot(1,2,3) olarak görünen dosyalardaki .exe uzantılı dosyaları çalıştırmanız yeterlidir
+## Git
+```bash
+git remote add origin https://github.com/Rtur2003/VoteBot.git
+git branch -M main
+git pull --rebase origin main   # uzak geçmişi içe al
+git push -u origin main
+```
 
-## Kullanım
+## Ekran Görüntüleri
+`docs/screenshots/votebot5-ui.png` – ana arayüz (mevcut)
 
-VoteBot, kullanıcı dostu bir arayüze sahip olup, gerekli bilgileri girerek hızlıca kullanmaya başlayabilirsiniz.
+![VoteBot 5 UI](docs/screenshots/votebot5-ui.png)
 
-- **Adım 1:** []
-- **Adım 2:** []
-- **Adım 3:** []
-
-## Katkı Sağlama
-
-Bu projeye katkıda bulunmak isterseniz, lütfen aşağıdaki adımları izleyin:
-
-1. Bu repository'yi fork'layın.
-2. Yeni bir dal oluşturun (`git checkout -b feature-branch`).
-3. Değişikliklerinizi yapın ve commit edin.
-4. Değişikliklerinizi Github üzerinden bir Pull Request ile gönderin.
-
-## Lisans
-
-Bu proje MIT Lisansı ile lisanslanmıştır - daha fazla bilgi için [LICENSE](LICENSE) dosyasına bakabilirsiniz.
+Ek görseller için aynı klasöre dosya bırakabilirsiniz (ör. `votebot5-preflight.png`).
