@@ -31,3 +31,42 @@ Stacktrace:
 	RtlUserThreadStart [0x00007FF98B80C53C+44]
 
 2025-11-26 01:42:36,874 [INFO] Bot durduruluyor...
+2025-11-26 01:52:10,720 [ERROR] Chrome versiyon okunamadı: Command '['C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', '--version']' timed out after 5 seconds
+2025-11-26 01:52:10,720 [INFO] Sürücü: C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\chromedriver.exe
+2025-11-26 01:52:10,720 [INFO] Chrome: C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-11-26 01:52:12,219 [INFO] Ön kontrol başarılı
+2025-11-26 01:52:19,990 [ERROR] Chrome versiyon okunamadı: Command '['C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', '--version']' timed out after 5 seconds
+2025-11-26 01:52:19,990 [INFO] Sürücü: C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\chromedriver.exe
+2025-11-26 01:52:19,990 [INFO] Chrome: C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-11-26 01:52:19,990 [INFO] Bot başlatıldı
+2025-11-26 01:52:25,529 [INFO] Oy verildi (batch 1/1)
+2025-11-26 01:52:36,545 [INFO] Oy verildi (batch 1/1)
+2025-11-26 01:52:47,766 [INFO] Oy verildi (batch 1/1)
+2025-11-26 01:52:47,821 [INFO] Bot durduruluyor...
+2025-11-26 01:52:58,801 [INFO] Ayarlar kaydedildi.
+2025-11-26 01:53:05,947 [ERROR] Chrome versiyon okunamadı: Command '['C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', '--version']' timed out after 5 seconds
+2025-11-26 01:53:05,947 [INFO] Sürücü: C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\chromedriver.exe
+2025-11-26 01:53:05,947 [INFO] Chrome: C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-11-26 01:53:05,947 [INFO] Bot başlatıldı
+2025-11-26 01:53:11,575 [INFO] Oy verildi (batch 1/5)
+2025-11-26 01:53:19,277 [INFO] Oy verildi (batch 2/5)
+2025-11-26 01:53:27,151 [INFO] Oy verildi (batch 3/5)
+2025-11-26 01:53:38,096 [INFO] Oy verildi (batch 4/5)
+2025-11-26 01:53:56,254 [INFO] Oy verildi (batch 5/5)
+2025-11-26 01:54:13,955 [INFO] Oy verildi (batch 1/5)
+2025-11-26 01:54:25,095 [INFO] Oy verildi (batch 2/5)
+2025-11-26 01:54:34,944 [INFO] Oy verildi (batch 3/5)
+2025-11-26 01:54:44,439 [INFO] Oy verildi (batch 4/5)
+2025-11-26 01:54:51,900 [INFO] Oy verildi (batch 5/5)
+2025-11-26 01:55:03,054 [INFO] Oy verildi (batch 1/5)
+2025-11-26 01:55:11,285 [INFO] Oy verildi (batch 2/5)
+2025-11-26 01:55:18,867 [INFO] Oy verildi (batch 3/5)
+2025-11-26 01:55:26,744 [INFO] Oy verildi (batch 4/5)
+2025-11-26 01:55:34,264 [INFO] Oy verildi (batch 5/5)
+2025-11-26 01:55:45,253 [INFO] Oy verildi (batch 1/5)
+2025-11-26 01:55:52,866 [INFO] Oy verildi (batch 2/5)
+2025-11-26 01:56:01,022 [INFO] Oy verildi (batch 3/5)
+2025-11-26 01:56:08,780 [INFO] Oy verildi (batch 4/5)
+2025-11-26 01:56:16,695 [INFO] Oy verildi (batch 5/5)
+2025-11-26 01:56:27,232 [INFO] Oy verildi (batch 1/5)
+2025-11-26 01:56:35,022 [INFO] Oy verildi (batch 2/5)
