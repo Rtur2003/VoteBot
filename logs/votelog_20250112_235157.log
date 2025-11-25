@@ -1,7 +1,0 @@
-2025-01-12 23:52:13,797 - INFO - Settings saved successfully
-2025-01-12 23:52:18,372 - INFO - Status: Çalýþýyor
-2025-01-12 23:53:00,449 - INFO - Hata: ('Connection aborted.', ConnectionResetError(10054, 'Varolan bir baðlantý uzaktaki bir ana bilgisayar tarafýndan zorla kapatýldý', None, 10054, None))
-2025-01-12 23:53:00,450 - INFO - Hata: ('Connection aborted.', ConnectionResetError(10054, 'Varolan bir baðlantý uzaktaki bir ana bilgisayar tarafýndan zorla kapatýldý', None, 10054, None))
-2025-01-12 23:53:00,459 - INFO - Hata: ('Connection aborted.', ConnectionResetError(10054, 'Varolan bir baðlantý uzaktaki bir ana bilgisayar tarafýndan zorla kapatýldý', None, 10054, None))
-2025-01-12 23:53:00,460 - INFO - Hata: ('Connection aborted.', ConnectionResetError(10054, 'Varolan bir baðlantý uzaktaki bir ana bilgisayar tarafýndan zorla kapatýldý', None, 10054, None))
-2025-01-12 23:53:00,573 - INFO - Hata: ('Connection aborted.', ConnectionResetError(10054, 'Varolan bir baðlantý uzaktaki bir ana bilgisayar tarafýndan zorla kapatýldý', None, 10054, None))

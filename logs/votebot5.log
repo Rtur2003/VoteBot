@@ -1,0 +1,33 @@
+2025-11-26 01:42:23,708 [INFO] Sürücü: C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\chromedriver.exe
+2025-11-26 01:42:23,709 [INFO] Chrome: C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-11-26 01:42:25,994 [INFO] Ön kontrol başarılı
+2025-11-26 01:42:30,930 [INFO] Sürücü: C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\chromedriver.exe
+2025-11-26 01:42:30,930 [INFO] Chrome: C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-11-26 01:42:30,931 [INFO] Bot başlatıldı
+2025-11-26 01:42:34,766 [ERROR] ChromeDriver başlatılamadı: Message: session not created: This version of ChromeDriver only supports Chrome version 135
+Current browser version is 142.0.7444.176 with binary path C:\Program Files\Google\Chrome\Application\chrome.exe; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+	GetHandleVerifier [0x00007FF610D05355+78597]
+	GetHandleVerifier [0x00007FF610D053B0+78688]
+	(No symbol) [0x00007FF610AB91AA]
+	(No symbol) [0x00007FF610AFD1CF]
+	(No symbol) [0x00007FF610AFC21B]
+	(No symbol) [0x00007FF610AF65A8]
+	(No symbol) [0x00007FF610AF1A5D]
+	(No symbol) [0x00007FF610B451E5]
+	(No symbol) [0x00007FF610B447A0]
+	(No symbol) [0x00007FF610B36EC3]
+	(No symbol) [0x00007FF610B003F8]
+	(No symbol) [0x00007FF610B01163]
+	GetHandleVerifier [0x00007FF610FAEF0D+2870973]
+	GetHandleVerifier [0x00007FF610FA96B8+2848360]
+	GetHandleVerifier [0x00007FF610FC6993+2967875]
+	GetHandleVerifier [0x00007FF610D2019A+188746]
+	GetHandleVerifier [0x00007FF610D2847F+222255]
+	GetHandleVerifier [0x00007FF610D0D2D4+111236]
+	GetHandleVerifier [0x00007FF610D0D482+111666]
+	GetHandleVerifier [0x00007FF610CF35A9+5465]
+	BaseThreadInitThunk [0x00007FF989EAE8D7+23]
+	RtlUserThreadStart [0x00007FF98B80C53C+44]
+
+2025-11-26 01:42:36,874 [INFO] Bot durduruluyor...
