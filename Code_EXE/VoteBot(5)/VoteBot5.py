@@ -894,7 +894,9 @@ class VoteBot5:
                 consecutive_errors = 0
                 if not self._sleep_with_checks(5):
                     break
-            if not self._sleep_with_checks(self.pause_between_votes):
+            jitter = random.uniform(-0.3, 0.3)
+            pause = max(0.5, self.pause_between_votes + jitter)
+            if not self._sleep_with_checks(pause):
                 break
         self.is_running = False
         self._schedule(lambda: self.update_status("Durduruldu", tone="stopped"))
