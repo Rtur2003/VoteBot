@@ -906,36 +906,68 @@ class VoteBot5:
 
     def run_batch(self):
         self.update_status("Oy veriliyor", tone="running")
-        for i in range(self.batch_size):
-            if self._stop_event.is_set():
-                break
-            driver = self.create_driver()
-            if not driver:
-                return False
+        driver = self.create_driver()
+        if not driver:
+            return False
+        driver.set_page_load_timeout(self.timeout_seconds)
+        wait = WebDriverWait(driver, self.timeout_seconds)
+        try:
+            for i in range(self.batch_size):
+                if self._stop_event.is_set():
+                    break
+                try:
+                    self._perform_vote(driver, wait, i)
+                except TimeoutException:
+                    self.log_message("Oy butonu zaman aşımına uğradı.", level="error")
+                    return False
+                except Exception as exc:
+                    self.logger.exception("Oy verme hatası", exc_info=exc)
+                    self.log_message(f"Beklenmeyen hata: {exc}", level="error")
+                    return False
+            self.update_status("Bekliyor", tone="idle")
+            return True
+        finally:
             try:
-                driver.get(self.target_url)
-                wait = WebDriverWait(driver, self.timeout_seconds)
-                vote_button = wait.until(
-                    EC.element_to_be_clickable(
-                        (
-                            By.XPATH,
-                            '//*[@id="distroListContainer"]/div[3]/div[3]/div[1]/div[1]/div[2]/div[2]/a[1]'
-                        )
-                    )
-                )
-                vote_button.click()
-                self.log_message(f"Oy verildi (batch {i + 1}/{self.batch_size})", level="success")
-                self.increment_count()
-            except TimeoutException:
-                self.log_message("Oy butonu zaman aşımına uğradı.", level="error")
-                return False
-            except Exception as exc:
-                self.log_message(f"Beklenmeyen hata: {exc}", level="error")
-                return False
-            finally:
                 driver.quit()
-        self.update_status("Bekliyor", tone="idle")
-        return True
+            except Exception:
+                pass
+
+    def _perform_vote(self, driver, wait, batch_index):
+        driver.get(self.target_url)
+        vote_button = self._locate_vote_button(driver, wait)
+        try:
+            vote_button.click()
+        except Exception:
+            driver.refresh()
+            vote_button = self._locate_vote_button(driver, wait)
+            vote_button.click()
+        self.log_message(f"Oy verildi (batch {batch_index + 1}/{self.batch_size})", level="success")
+        self.increment_count()
+
+    def _locate_vote_button(self, driver, wait):
+        selectors = [
+            (By.CSS_SELECTOR, "a[data-action='vote']"),
+            (
+                By.XPATH,
+                '//*[@id="distroListContainer"]/div[3]/div[3]/div[1]/div[1]/div[2]/div[2]/a[1]',
+            ),
+        ]
+        last_exc = None
+        for by, value in selectors:
+            try:
+                return wait.until(EC.element_to_be_clickable((by, value)))
+            except Exception as exc:
+                last_exc = exc
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        screenshot = self.log_dir / f"vote_fail_{timestamp}.png"
+        try:
+            driver.save_screenshot(screenshot)
+            self.log_message(f"Oy butonu bulunamadı, ekran görüntüsü: {screenshot}", level="error")
+        except Exception:
+            self.log_message("Oy butonu bulunamadı, ekran görüntüsü alınamadı.", level="error")
+        if last_exc:
+            raise last_exc
+        return None
 
     def _sleep_with_checks(self, seconds):
         steps = max(1, int(seconds * 10))
@@ -961,6 +993,8 @@ class VoteBot5:
         self.timeout_entry.delete(0, tk.END)
         self.timeout_entry.insert(0, str(defaults["timeout_seconds"]))
         self.max_errors = defaults["max_errors"]
+        self.max_errors_entry.delete(0, tk.END)
+        self.max_errors_entry.insert(0, str(defaults["max_errors"]))
         self.headless_var.set(defaults["headless"])
         self.log_message("Varsayılan ayarlar yüklendi.")
         self.apply_settings()
@@ -970,6 +1004,7 @@ class VoteBot5:
             pause = float(self.pause_entry.get())
             batch = max(1, int(self.batch_entry.get()))
             timeout_val = max(5, int(self.timeout_entry.get()))
+            max_err = max(1, int(self.max_errors_entry.get()))
         except ValueError:
             messagebox.showerror("Hata", "Sayısal alanlar geçerli bir sayı olmalı.")
             return
@@ -977,6 +1012,7 @@ class VoteBot5:
         self.pause_between_votes = pause
         self.batch_size = batch
         self.timeout_seconds = timeout_val
+        self.max_errors = max_err
         self.headless = bool(self.headless_var.get())
         self.config["target_url"] = self.target_url
         self.config["pause_between_votes"] = self.pause_between_votes
