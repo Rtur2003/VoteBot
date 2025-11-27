@@ -7,6 +7,7 @@ import threading
 import time
 from datetime import datetime
 from logging.handlers import RotatingFileHandler
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 import tkinter as tk
 from tkinter import ttk, scrolledtext, messagebox
@@ -35,6 +36,7 @@ class VoteBot5:
             "pause_between_votes": 3,
             "batch_size": 1,
             "max_errors": 3,
+            "parallel_workers": 2,
             "headless": True,
             "timeout_seconds": 15,
         }
@@ -50,6 +52,7 @@ class VoteBot5:
         self.headless = bool(self.config.get("headless", True))
         self.timeout_seconds = int(self.config.get("timeout_seconds", 15))
         self.max_errors = max(1, int(self.config.get("max_errors", 3)))
+        self.parallel_workers = max(1, min(10, int(self.config.get("parallel_workers", 2))))
 
         self.driver_path = None
         self.chrome_path = None
@@ -465,6 +468,21 @@ class VoteBot5:
             style="Helper.TLabel",
         ).grid(row=9, column=1, sticky="w", pady=(0, 8))
 
+        ttk.Label(
+            settings,
+            text="Paralel pencere",
+            background=self.colors["panel"],
+            foreground=self.colors["text"],
+        ).grid(row=10, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
+        self.parallel_entry = ttk.Entry(settings, width=10)
+        self.parallel_entry.insert(0, str(self.parallel_workers))
+        self.parallel_entry.grid(row=10, column=1, sticky="w", pady=(4, 0))
+        ttk.Label(
+            settings,
+            text="Aynı anda açılacak tarayıcı sayısı (her biri tek oy).",
+            style="Helper.TLabel",
+        ).grid(row=11, column=1, sticky="w", pady=(0, 8))
+
         self.headless_var = tk.BooleanVar(value=self.headless)
         self.headless_check = ttk.Checkbutton(
             settings,
@@ -472,15 +490,15 @@ class VoteBot5:
             variable=self.headless_var,
             style="Switch.TCheckbutton",
         )
-        self.headless_check.grid(row=10, column=0, columnspan=2, sticky="w", pady=(4, 0))
+        self.headless_check.grid(row=12, column=0, columnspan=2, sticky="w", pady=(4, 0))
         ttk.Label(
             settings,
             text="Kapalıysa tarayıcıyı görerek izleyebilirsiniz.",
             style="Helper.TLabel",
-        ).grid(row=11, column=0, columnspan=2, sticky="w", pady=(0, 8))
+        ).grid(row=13, column=0, columnspan=2, sticky="w", pady=(0, 8))
 
         actions = ttk.Frame(settings, style="Panel.TFrame")
-        actions.grid(row=12, column=0, columnspan=2, sticky="ew", pady=(6, 0))
+        actions.grid(row=14, column=0, columnspan=2, sticky="ew", pady=(6, 0))
         actions.columnconfigure((0, 1), weight=1)
         self.apply_btn = ttk.Button(
             actions,
@@ -702,6 +720,7 @@ class VoteBot5:
             self.batch_entry,
             self.timeout_entry,
             self.max_errors_entry,
+            self.parallel_entry,
         ]:
             entry.state(state_flag)
         for btn in [self.apply_btn, self.defaults_btn, self.preflight_btn]:
@@ -906,43 +925,63 @@ class VoteBot5:
 
     def run_batch(self):
         self.update_status("Oy veriliyor", tone="running")
+        tasks = []
+        successes = 0
+        failures = 0
+        with ThreadPoolExecutor(max_workers=self.parallel_workers) as executor:
+            for i in range(self.batch_size):
+                if self._stop_event.is_set():
+                    break
+                tasks.append(executor.submit(self._vote_once, i))
+            for future in as_completed(tasks):
+                if self._stop_event.is_set():
+                    break
+                try:
+                    ok = future.result()
+                except Exception as exc:
+                    self.logger.exception("Oy verme hatası", exc_info=exc)
+                    ok = False
+                if ok:
+                    successes += 1
+                else:
+                    failures += 1
+        if failures:
+            return False
+        self.update_status("Bekliyor", tone="idle")
+        return True
+
+    def _vote_once(self, batch_index):
         driver = self.create_driver()
         if not driver:
             return False
         driver.set_page_load_timeout(self.timeout_seconds)
         wait = WebDriverWait(driver, self.timeout_seconds)
         try:
-            for i in range(self.batch_size):
-                if self._stop_event.is_set():
-                    break
-                try:
-                    self._perform_vote(driver, wait, i)
-                except TimeoutException:
-                    self.log_message("Oy butonu zaman aşımına uğradı.", level="error")
-                    return False
-                except Exception as exc:
-                    self.logger.exception("Oy verme hatası", exc_info=exc)
-                    self.log_message(f"Beklenmeyen hata: {exc}", level="error")
-                    return False
-            self.update_status("Bekliyor", tone="idle")
+            driver.get(self.target_url)
+            vote_button = self._locate_vote_button(driver, wait)
+            try:
+                vote_button.click()
+            except Exception:
+                driver.refresh()
+                vote_button = self._locate_vote_button(driver, wait)
+                vote_button.click()
+            self.log_message(
+                f"Oy verildi (pencere {batch_index + 1}/{self.batch_size})", level="success"
+            )
+            self.increment_count()
             return True
+        except TimeoutException:
+            self.log_message("Oy butonu zaman aşımına uğradı.", level="error")
+            return False
+        except Exception as exc:
+            self.logger.exception("Oy verme hatası", exc_info=exc)
+            self.log_message(f"Beklenmeyen hata: {exc}", level="error")
+            return False
         finally:
             try:
                 driver.quit()
             except Exception:
                 pass
-
-    def _perform_vote(self, driver, wait, batch_index):
-        driver.get(self.target_url)
-        vote_button = self._locate_vote_button(driver, wait)
-        try:
-            vote_button.click()
-        except Exception:
-            driver.refresh()
-            vote_button = self._locate_vote_button(driver, wait)
-            vote_button.click()
-        self.log_message(f"Oy verildi (batch {batch_index + 1}/{self.batch_size})", level="success")
-        self.increment_count()
 
     def _locate_vote_button(self, driver, wait):
         selectors = [
@@ -995,6 +1034,9 @@ class VoteBot5:
         self.max_errors = defaults["max_errors"]
         self.max_errors_entry.delete(0, tk.END)
         self.max_errors_entry.insert(0, str(defaults["max_errors"]))
+        self.parallel_workers = defaults["parallel_workers"]
+        self.parallel_entry.delete(0, tk.END)
+        self.parallel_entry.insert(0, str(defaults["parallel_workers"]))
         self.headless_var.set(defaults["headless"])
         self.log_message("Varsayılan ayarlar yüklendi.")
         self.apply_settings()
@@ -1005,6 +1047,7 @@ class VoteBot5:
             batch = max(1, int(self.batch_entry.get()))
             timeout_val = max(5, int(self.timeout_entry.get()))
             max_err = max(1, int(self.max_errors_entry.get()))
+            parallel = max(1, min(10, int(self.parallel_entry.get())))
         except ValueError:
             messagebox.showerror("Hata", "Sayısal alanlar geçerli bir sayı olmalı.")
             return
@@ -1013,11 +1056,13 @@ class VoteBot5:
         self.batch_size = batch
         self.timeout_seconds = timeout_val
         self.max_errors = max_err
+        self.parallel_workers = parallel
         self.headless = bool(self.headless_var.get())
         self.config["target_url"] = self.target_url
         self.config["pause_between_votes"] = self.pause_between_votes
         self.config["batch_size"] = self.batch_size
         self.config["max_errors"] = self.max_errors
+        self.config["parallel_workers"] = self.parallel_workers
         self.config["headless"] = self.headless
         self.config["timeout_seconds"] = self.timeout_seconds
         self.config.setdefault("paths", self.paths)
