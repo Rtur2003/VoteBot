@@ -128,3 +128,1554 @@ Stacktrace:
 2025-11-26 02:04:50,594 [INFO] Oy verildi (batch 3/5)
 2025-11-26 02:04:58,001 [INFO] Oy verildi (batch 4/5)
 2025-11-26 02:05:05,655 [INFO] Oy verildi (batch 5/5)
+2025-11-26 02:05:16,574 [INFO] Oy verildi (batch 1/5)
+2025-11-26 02:05:24,055 [INFO] Oy verildi (batch 2/5)
+2025-11-26 02:05:31,777 [INFO] Oy verildi (batch 3/5)
+2025-11-26 02:05:39,468 [INFO] Oy verildi (batch 4/5)
+2025-11-26 02:05:47,467 [INFO] Oy verildi (batch 5/5)
+2025-11-26 02:05:58,443 [INFO] Oy verildi (batch 1/5)
+2025-11-26 02:06:06,177 [INFO] Oy verildi (batch 2/5)
+2025-11-26 02:06:13,988 [INFO] Oy verildi (batch 3/5)
+2025-11-26 02:06:21,990 [INFO] Oy verildi (batch 4/5)
+2025-11-26 02:06:30,057 [INFO] Oy verildi (batch 5/5)
+2025-11-26 02:06:41,671 [INFO] Oy verildi (batch 1/5)
+2025-11-26 02:06:49,497 [INFO] Oy verildi (batch 2/5)
+2025-11-26 02:06:57,274 [INFO] Oy verildi (batch 3/5)
+2025-11-26 02:07:05,374 [INFO] Oy verildi (batch 4/5)
+2025-11-26 02:07:13,311 [INFO] Oy verildi (batch 5/5)
+2025-11-26 02:07:24,631 [INFO] Oy verildi (batch 1/5)
+2025-11-26 02:07:33,095 [INFO] Oy verildi (batch 2/5)
+2025-11-26 09:43:08,440 [ERROR] Chrome versiyon okunamadı: Command '['C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', '--version']' timed out after 5 seconds
+2025-11-26 09:43:08,441 [INFO] Sürücü: C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\chromedriver.exe
+2025-11-26 09:43:08,441 [INFO] Chrome: C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-11-26 09:43:08,441 [INFO] Bot başlatıldı
+2025-11-26 09:44:01,110 [ERROR] Beklenmeyen hata: Message: unknown error: net::ERR_CONNECTION_RESET
+  (Session info: chrome=142.0.7444.176)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x7ff65162a235
+	0x7ff651382650
+	0x7ff6511116dd
+	0x7ff65110e228
+	0x7ff6510feba9
+	0x7ff6511009d7
+	0x7ff6510ff160
+	0x7ff6510fe917
+	0x7ff6510fe5db
+	0x7ff6510fc145
+	0x7ff6510fc9dc
+	0x7ff6511159ea
+	0x7ff6511bc8be
+	0x7ff651192b0a
+	0x7ff6511bbaba
+	0x7ff65115b0ed
+	0x7ff65115bf63
+	0x7ff651655d60
+	0x7ff65164fe8a
+	0x7ff651671005
+	0x7ff65139d73e
+	0x7ff6513a4e3f
+	0x7ff65138b7e4
+	0x7ff65138b99f
+	0x7ff651371908
+	0x7ffbab91e8d7
+	0x7ffbac5ac53c
+
+2025-11-26 09:45:12,780 [ERROR] Beklenmeyen hata: Message: unknown error: net::ERR_CONNECTION_TIMED_OUT
+  (Session info: chrome=142.0.7444.176)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x7ff65162a235
+	0x7ff651382650
+	0x7ff6511116dd
+	0x7ff65110e228
+	0x7ff6510feba9
+	0x7ff6511009d7
+	0x7ff6510ff160
+	0x7ff6510fe917
+	0x7ff6510fe5db
+	0x7ff6510fc145
+	0x7ff6510fc9dc
+	0x7ff6511159ea
+	0x7ff6511bc8be
+	0x7ff651192b0a
+	0x7ff6511bbaba
+	0x7ff65115b0ed
+	0x7ff65115bf63
+	0x7ff651655d60
+	0x7ff65164fe8a
+	0x7ff651671005
+	0x7ff65139d73e
+	0x7ff6513a4e3f
+	0x7ff65138b7e4
+	0x7ff65138b99f
+	0x7ff651371908
+	0x7ffbab91e8d7
+	0x7ffbac5ac53c
+
+2025-11-26 09:46:37,550 [ERROR] Beklenmeyen hata: Message: unknown error: net::ERR_SSL_PROTOCOL_ERROR
+  (Session info: chrome=142.0.7444.176)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x7ff65162a235
+	0x7ff651382650
+	0x7ff6511116dd
+	0x7ff65110e228
+	0x7ff6510feba9
+	0x7ff6511009d7
+	0x7ff6510ff160
+	0x7ff6510fe917
+	0x7ff6510fe5db
+	0x7ff6510fc145
+	0x7ff6510fc9dc
+	0x7ff6511159ea
+	0x7ff6511bc8be
+	0x7ff651192b0a
+	0x7ff6511bbaba
+	0x7ff65115b0ed
+	0x7ff65115bf63
+	0x7ff651655d60
+	0x7ff65164fe8a
+	0x7ff651671005
+	0x7ff65139d73e
+	0x7ff6513a4e3f
+	0x7ff65138b7e4
+	0x7ff65138b99f
+	0x7ff651371908
+	0x7ffbab91e8d7
+	0x7ffbac5ac53c
+
+2025-11-26 09:46:39,647 [ERROR] Çok hata alındı, 5 saniye bekleniyor ve yeniden denenecek.
+2025-11-26 09:46:53,741 [ERROR] Beklenmeyen hata: Message: unknown error: net::ERR_CONNECTION_RESET
+  (Session info: chrome=142.0.7444.176)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x7ff65162a235
+	0x7ff651382650
+	0x7ff6511116dd
+	0x7ff65110e228
+	0x7ff6510feba9
+	0x7ff6511009d7
+	0x7ff6510ff160
+	0x7ff6510fe917
+	0x7ff6510fe5db
+	0x7ff6510fc145
+	0x7ff6510fc9dc
+	0x7ff6511159ea
+	0x7ff6511bc8be
+	0x7ff651192b0a
+	0x7ff6511bbaba
+	0x7ff65115b0ed
+	0x7ff65115bf63
+	0x7ff651655d60
+	0x7ff65164fe8a
+	0x7ff651671005
+	0x7ff65139d73e
+	0x7ff6513a4e3f
+	0x7ff65138b7e4
+	0x7ff65138b99f
+	0x7ff651371908
+	0x7ffbab91e8d7
+	0x7ffbac5ac53c
+
+2025-11-26 09:47:04,451 [ERROR] Beklenmeyen hata: Message: unknown error: net::ERR_CONNECTION_RESET
+  (Session info: chrome=142.0.7444.176)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x7ff65162a235
+	0x7ff651382650
+	0x7ff6511116dd
+	0x7ff65110e228
+	0x7ff6510feba9
+	0x7ff6511009d7
+	0x7ff6510ff160
+	0x7ff6510fe917
+	0x7ff6510fe5db
+	0x7ff6510fc145
+	0x7ff6510fc9dc
+	0x7ff6511159ea
+	0x7ff6511bc8be
+	0x7ff651192b0a
+	0x7ff6511bbaba
+	0x7ff65115b0ed
+	0x7ff65115bf63
+	0x7ff651655d60
+	0x7ff65164fe8a
+	0x7ff651671005
+	0x7ff65139d73e
+	0x7ff6513a4e3f
+	0x7ff65138b7e4
+	0x7ff65138b99f
+	0x7ff651371908
+	0x7ffbab91e8d7
+	0x7ffbac5ac53c
+
+2025-11-26 09:47:57,206 [ERROR] Oy butonu zaman aşımına uğradı.
+2025-11-26 09:47:59,320 [ERROR] Çok hata alındı, 5 saniye bekleniyor ve yeniden denenecek.
+2025-11-26 09:48:45,021 [ERROR] Beklenmeyen hata: Message: unknown error: net::ERR_CONNECTION_RESET
+  (Session info: chrome=142.0.7444.176)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x7ff65162a235
+	0x7ff651382650
+	0x7ff6511116dd
+	0x7ff65110e228
+	0x7ff6510feba9
+	0x7ff6511009d7
+	0x7ff6510ff160
+	0x7ff6510fe917
+	0x7ff6510fe5db
+	0x7ff6510fc145
+	0x7ff6510fc9dc
+	0x7ff6511159ea
+	0x7ff6511bc8be
+	0x7ff651192b0a
+	0x7ff6511bbaba
+	0x7ff65115b0ed
+	0x7ff65115bf63
+	0x7ff651655d60
+	0x7ff65164fe8a
+	0x7ff651671005
+	0x7ff65139d73e
+	0x7ff6513a4e3f
+	0x7ff65138b7e4
+	0x7ff65138b99f
+	0x7ff651371908
+	0x7ffbab91e8d7
+	0x7ffbac5ac53c
+
+2025-11-26 09:49:35,715 [ERROR] Beklenmeyen hata: Message: unknown error: net::ERR_CONNECTION_TIMED_OUT
+  (Session info: chrome=142.0.7444.176)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x7ff65162a235
+	0x7ff651382650
+	0x7ff6511116dd
+	0x7ff65110e228
+	0x7ff6510feba9
+	0x7ff6511009d7
+	0x7ff6510ff160
+	0x7ff6510fe917
+	0x7ff6510fe5db
+	0x7ff6510fc145
+	0x7ff6510fc9dc
+	0x7ff6511159ea
+	0x7ff6511bc8be
+	0x7ff651192b0a
+	0x7ff6511bbaba
+	0x7ff65115b0ed
+	0x7ff65115bf63
+	0x7ff651655d60
+	0x7ff65164fe8a
+	0x7ff651671005
+	0x7ff65139d73e
+	0x7ff6513a4e3f
+	0x7ff65138b7e4
+	0x7ff65138b99f
+	0x7ff651371908
+	0x7ffbab91e8d7
+	0x7ffbac5ac53c
+
+2025-11-26 09:49:50,249 [ERROR] Beklenmeyen hata: Message: unknown error: net::ERR_CONNECTION_RESET
+  (Session info: chrome=142.0.7444.176)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x7ff65162a235
+	0x7ff651382650
+	0x7ff6511116dd
+	0x7ff65110e228
+	0x7ff6510feba9
+	0x7ff6511009d7
+	0x7ff6510ff160
+	0x7ff6510fe917
+	0x7ff6510fe5db
+	0x7ff6510fc145
+	0x7ff6510fc9dc
+	0x7ff6511159ea
+	0x7ff6511bc8be
+	0x7ff651192b0a
+	0x7ff6511bbaba
+	0x7ff65115b0ed
+	0x7ff65115bf63
+	0x7ff651655d60
+	0x7ff65164fe8a
+	0x7ff651671005
+	0x7ff65139d73e
+	0x7ff6513a4e3f
+	0x7ff65138b7e4
+	0x7ff65138b99f
+	0x7ff651371908
+	0x7ffbab91e8d7
+	0x7ffbac5ac53c
+
+2025-11-26 09:49:52,352 [ERROR] Çok hata alındı, 5 saniye bekleniyor ve yeniden denenecek.
+2025-11-26 09:50:10,291 [ERROR] Beklenmeyen hata: Message: unknown error: net::ERR_CONNECTION_RESET
+  (Session info: chrome=142.0.7444.176)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x7ff65162a235
+	0x7ff651382650
+	0x7ff6511116dd
+	0x7ff65110e228
+	0x7ff6510feba9
+	0x7ff6511009d7
+	0x7ff6510ff160
+	0x7ff6510fe917
+	0x7ff6510fe5db
+	0x7ff6510fc145
+	0x7ff6510fc9dc
+	0x7ff6511159ea
+	0x7ff6511bc8be
+	0x7ff651192b0a
+	0x7ff6511bbaba
+	0x7ff65115b0ed
+	0x7ff65115bf63
+	0x7ff651655d60
+	0x7ff65164fe8a
+	0x7ff651671005
+	0x7ff65139d73e
+	0x7ff6513a4e3f
+	0x7ff65138b7e4
+	0x7ff65138b99f
+	0x7ff651371908
+	0x7ffbab91e8d7
+	0x7ffbac5ac53c
+
+2025-11-26 09:50:42,907 [ERROR] Beklenmeyen hata: Message: unknown error: net::ERR_CONNECTION_RESET
+  (Session info: chrome=142.0.7444.176)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x7ff65162a235
+	0x7ff651382650
+	0x7ff6511116dd
+	0x7ff65110e228
+	0x7ff6510feba9
+	0x7ff6511009d7
+	0x7ff6510ff160
+	0x7ff6510fe917
+	0x7ff6510fe5db
+	0x7ff6510fc145
+	0x7ff6510fc9dc
+	0x7ff6511159ea
+	0x7ff6511bc8be
+	0x7ff651192b0a
+	0x7ff6511bbaba
+	0x7ff65115b0ed
+	0x7ff65115bf63
+	0x7ff651655d60
+	0x7ff65164fe8a
+	0x7ff651671005
+	0x7ff65139d73e
+	0x7ff6513a4e3f
+	0x7ff65138b7e4
+	0x7ff65138b99f
+	0x7ff651371908
+	0x7ffbab91e8d7
+	0x7ffbac5ac53c
+
+2025-11-26 09:51:45,886 [ERROR] Oy butonu zaman aşımına uğradı.
+2025-11-26 09:51:47,982 [ERROR] Çok hata alındı, 5 saniye bekleniyor ve yeniden denenecek.
+2025-11-26 09:52:26,947 [ERROR] Beklenmeyen hata: Message: unknown error: net::ERR_CONNECTION_RESET
+  (Session info: chrome=142.0.7444.176)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x7ff65162a235
+	0x7ff651382650
+	0x7ff6511116dd
+	0x7ff65110e228
+	0x7ff6510feba9
+	0x7ff6511009d7
+	0x7ff6510ff160
+	0x7ff6510fe917
+	0x7ff6510fe5db
+	0x7ff6510fc145
+	0x7ff6510fc9dc
+	0x7ff6511159ea
+	0x7ff6511bc8be
+	0x7ff651192b0a
+	0x7ff6511bbaba
+	0x7ff65115b0ed
+	0x7ff65115bf63
+	0x7ff651655d60
+	0x7ff65164fe8a
+	0x7ff651671005
+	0x7ff65139d73e
+	0x7ff6513a4e3f
+	0x7ff65138b7e4
+	0x7ff65138b99f
+	0x7ff651371908
+	0x7ffbab91e8d7
+	0x7ffbac5ac53c
+
+2025-11-26 09:52:50,687 [ERROR] Beklenmeyen hata: Message: unknown error: net::ERR_SSL_PROTOCOL_ERROR
+  (Session info: chrome=142.0.7444.176)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x7ff65162a235
+	0x7ff651382650
+	0x7ff6511116dd
+	0x7ff65110e228
+	0x7ff6510feba9
+	0x7ff6511009d7
+	0x7ff6510ff160
+	0x7ff6510fe917
+	0x7ff6510fe5db
+	0x7ff6510fc145
+	0x7ff6510fc9dc
+	0x7ff6511159ea
+	0x7ff6511bc8be
+	0x7ff651192b0a
+	0x7ff6511bbaba
+	0x7ff65115b0ed
+	0x7ff65115bf63
+	0x7ff651655d60
+	0x7ff65164fe8a
+	0x7ff651671005
+	0x7ff65139d73e
+	0x7ff6513a4e3f
+	0x7ff65138b7e4
+	0x7ff65138b99f
+	0x7ff651371908
+	0x7ffbab91e8d7
+	0x7ffbac5ac53c
+
+2025-11-26 09:53:24,148 [ERROR] Beklenmeyen hata: Message: unknown error: net::ERR_CONNECTION_RESET
+  (Session info: chrome=142.0.7444.176)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x7ff65162a235
+	0x7ff651382650
+	0x7ff6511116dd
+	0x7ff65110e228
+	0x7ff6510feba9
+	0x7ff6511009d7
+	0x7ff6510ff160
+	0x7ff6510fe917
+	0x7ff6510fe5db
+	0x7ff6510fc145
+	0x7ff6510fc9dc
+	0x7ff6511159ea
+	0x7ff6511bc8be
+	0x7ff651192b0a
+	0x7ff6511bbaba
+	0x7ff65115b0ed
+	0x7ff65115bf63
+	0x7ff651655d60
+	0x7ff65164fe8a
+	0x7ff651671005
+	0x7ff65139d73e
+	0x7ff6513a4e3f
+	0x7ff65138b7e4
+	0x7ff65138b99f
+	0x7ff651371908
+	0x7ffbab91e8d7
+	0x7ffbac5ac53c
+
+2025-11-26 09:53:26,257 [ERROR] Çok hata alındı, 5 saniye bekleniyor ve yeniden denenecek.
+2025-11-26 09:53:59,249 [ERROR] Beklenmeyen hata: Message: unknown error: net::ERR_SSL_PROTOCOL_ERROR
+  (Session info: chrome=142.0.7444.176)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x7ff65162a235
+	0x7ff651382650
+	0x7ff6511116dd
+	0x7ff65110e228
+	0x7ff6510feba9
+	0x7ff6511009d7
+	0x7ff6510ff160
+	0x7ff6510fe917
+	0x7ff6510fe5db
+	0x7ff6510fc145
+	0x7ff6510fc9dc
+	0x7ff6511159ea
+	0x7ff6511bc8be
+	0x7ff651192b0a
+	0x7ff6511bbaba
+	0x7ff65115b0ed
+	0x7ff65115bf63
+	0x7ff651655d60
+	0x7ff65164fe8a
+	0x7ff651671005
+	0x7ff65139d73e
+	0x7ff6513a4e3f
+	0x7ff65138b7e4
+	0x7ff65138b99f
+	0x7ff651371908
+	0x7ffbab91e8d7
+	0x7ffbac5ac53c
+
+2025-11-26 09:54:42,899 [ERROR] Beklenmeyen hata: Message: unknown error: net::ERR_CONNECTION_RESET
+  (Session info: chrome=142.0.7444.176)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x7ff65162a235
+	0x7ff651382650
+	0x7ff6511116dd
+	0x7ff65110e228
+	0x7ff6510feba9
+	0x7ff6511009d7
+	0x7ff6510ff160
+	0x7ff6510fe917
+	0x7ff6510fe5db
+	0x7ff6510fc145
+	0x7ff6510fc9dc
+	0x7ff6511159ea
+	0x7ff6511bc8be
+	0x7ff651192b0a
+	0x7ff6511bbaba
+	0x7ff65115b0ed
+	0x7ff65115bf63
+	0x7ff651655d60
+	0x7ff65164fe8a
+	0x7ff651671005
+	0x7ff65139d73e
+	0x7ff6513a4e3f
+	0x7ff65138b7e4
+	0x7ff65138b99f
+	0x7ff651371908
+	0x7ffbab91e8d7
+	0x7ffbac5ac53c
+
+2025-11-26 09:55:08,497 [ERROR] Beklenmeyen hata: Message: unknown error: net::ERR_CONNECTION_RESET
+  (Session info: chrome=142.0.7444.176)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x7ff65162a235
+	0x7ff651382650
+	0x7ff6511116dd
+	0x7ff65110e228
+	0x7ff6510feba9
+	0x7ff6511009d7
+	0x7ff6510ff160
+	0x7ff6510fe917
+	0x7ff6510fe5db
+	0x7ff6510fc145
+	0x7ff6510fc9dc
+	0x7ff6511159ea
+	0x7ff6511bc8be
+	0x7ff651192b0a
+	0x7ff6511bbaba
+	0x7ff65115b0ed
+	0x7ff65115bf63
+	0x7ff651655d60
+	0x7ff65164fe8a
+	0x7ff651671005
+	0x7ff65139d73e
+	0x7ff6513a4e3f
+	0x7ff65138b7e4
+	0x7ff65138b99f
+	0x7ff651371908
+	0x7ffbab91e8d7
+	0x7ffbac5ac53c
+
+2025-11-26 09:55:10,613 [ERROR] Çok hata alındı, 5 saniye bekleniyor ve yeniden denenecek.
+2025-11-26 09:55:24,563 [ERROR] Beklenmeyen hata: Message: unknown error: net::ERR_CONNECTION_RESET
+  (Session info: chrome=142.0.7444.176)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x7ff65162a235
+	0x7ff651382650
+	0x7ff6511116dd
+	0x7ff65110e228
+	0x7ff6510feba9
+	0x7ff6511009d7
+	0x7ff6510ff160
+	0x7ff6510fe917
+	0x7ff6510fe5db
+	0x7ff6510fc145
+	0x7ff6510fc9dc
+	0x7ff6511159ea
+	0x7ff6511bc8be
+	0x7ff651192b0a
+	0x7ff6511bbaba
+	0x7ff65115b0ed
+	0x7ff65115bf63
+	0x7ff651655d60
+	0x7ff65164fe8a
+	0x7ff651671005
+	0x7ff65139d73e
+	0x7ff6513a4e3f
+	0x7ff65138b7e4
+	0x7ff65138b99f
+	0x7ff651371908
+	0x7ffbab91e8d7
+	0x7ffbac5ac53c
+
+2025-11-26 09:56:10,087 [ERROR] Beklenmeyen hata: Message: unknown error: net::ERR_CONNECTION_RESET
+  (Session info: chrome=142.0.7444.176)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x7ff65162a235
+	0x7ff651382650
+	0x7ff6511116dd
+	0x7ff65110e228
+	0x7ff6510feba9
+	0x7ff6511009d7
+	0x7ff6510ff160
+	0x7ff6510fe917
+	0x7ff6510fe5db
+	0x7ff6510fc145
+	0x7ff6510fc9dc
+	0x7ff6511159ea
+	0x7ff6511bc8be
+	0x7ff651192b0a
+	0x7ff6511bbaba
+	0x7ff65115b0ed
+	0x7ff65115bf63
+	0x7ff651655d60
+	0x7ff65164fe8a
+	0x7ff651671005
+	0x7ff65139d73e
+	0x7ff6513a4e3f
+	0x7ff65138b7e4
+	0x7ff65138b99f
+	0x7ff651371908
+	0x7ffbab91e8d7
+	0x7ffbac5ac53c
+
+2025-11-26 09:56:40,560 [ERROR] Beklenmeyen hata: Message: unknown error: net::ERR_SSL_PROTOCOL_ERROR
+  (Session info: chrome=142.0.7444.176)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x7ff65162a235
+	0x7ff651382650
+	0x7ff6511116dd
+	0x7ff65110e228
+	0x7ff6510feba9
+	0x7ff6511009d7
+	0x7ff6510ff160
+	0x7ff6510fe917
+	0x7ff6510fe5db
+	0x7ff6510fc145
+	0x7ff6510fc9dc
+	0x7ff6511159ea
+	0x7ff6511bc8be
+	0x7ff651192b0a
+	0x7ff6511bbaba
+	0x7ff65115b0ed
+	0x7ff65115bf63
+	0x7ff651655d60
+	0x7ff65164fe8a
+	0x7ff651671005
+	0x7ff65139d73e
+	0x7ff6513a4e3f
+	0x7ff65138b7e4
+	0x7ff65138b99f
+	0x7ff651371908
+	0x7ffbab91e8d7
+	0x7ffbac5ac53c
+
+2025-11-26 09:56:42,659 [ERROR] Çok hata alındı, 5 saniye bekleniyor ve yeniden denenecek.
+2025-11-26 09:56:54,313 [INFO] Bot durduruluyor...
+2025-11-26 09:56:57,723 [INFO] Log temizlendi
+2025-11-26 09:57:00,528 [ERROR] Beklenmeyen hata: Message: unknown error: net::ERR_CONNECTION_RESET
+  (Session info: chrome=142.0.7444.176)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x7ff65162a235
+	0x7ff651382650
+	0x7ff6511116dd
+	0x7ff65110e228
+	0x7ff6510feba9
+	0x7ff6511009d7
+	0x7ff6510ff160
+	0x7ff6510fe917
+	0x7ff6510fe5db
+	0x7ff6510fc145
+	0x7ff6510fc9dc
+	0x7ff6511159ea
+	0x7ff6511bc8be
+	0x7ff651192b0a
+	0x7ff6511bbaba
+	0x7ff65115b0ed
+	0x7ff65115bf63
+	0x7ff651655d60
+	0x7ff65164fe8a
+	0x7ff651671005
+	0x7ff65139d73e
+	0x7ff6513a4e3f
+	0x7ff65138b7e4
+	0x7ff65138b99f
+	0x7ff651371908
+	0x7ffbab91e8d7
+	0x7ffbac5ac53c
+
+2025-11-26 09:57:08,189 [ERROR] Chrome versiyon okunamadı: Command '['C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', '--version']' timed out after 5 seconds
+2025-11-26 09:57:08,190 [INFO] Sürücü: C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\chromedriver.exe
+2025-11-26 09:57:08,190 [INFO] Chrome: C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-11-26 09:57:09,830 [INFO] Ön kontrol başarılı
+2025-11-26 10:51:27,864 [ERROR] Chrome versiyon okunamadı: Command '['C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', '--version']' timed out after 5 seconds
+2025-11-26 10:51:27,864 [INFO] Sürücü: C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\chromedriver.exe
+2025-11-26 10:51:27,864 [INFO] Chrome: C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-11-26 10:51:27,864 [INFO] Bot başlatıldı
+2025-11-26 10:51:49,452 [INFO] Oy verildi (batch 1/5)
+2025-11-26 10:52:50,486 [ERROR] Oy butonu zaman aşımına uğradı.
+2025-11-26 10:53:16,258 [INFO] Oy verildi (batch 1/5)
+2025-11-26 10:53:37,289 [INFO] Oy verildi (batch 2/5)
+2025-11-26 10:53:53,420 [INFO] Oy verildi (batch 3/5)
+2025-11-26 10:54:09,949 [INFO] Oy verildi (batch 4/5)
+2025-11-26 10:54:28,143 [INFO] Oy verildi (batch 5/5)
+2025-11-26 10:54:48,400 [INFO] Oy verildi (batch 1/5)
+2025-11-26 10:55:09,641 [INFO] Oy verildi (batch 2/5)
+2025-11-26 10:55:26,905 [INFO] Oy verildi (batch 3/5)
+2025-11-26 10:55:43,253 [INFO] Oy verildi (batch 4/5)
+2025-11-26 10:55:59,524 [INFO] Oy verildi (batch 5/5)
+2025-11-26 10:56:21,524 [INFO] Oy verildi (batch 1/5)
+2025-11-26 10:56:42,164 [INFO] Oy verildi (batch 2/5)
+2025-11-26 10:57:14,411 [ERROR] Oy butonu zaman aşımına uğradı.
+2025-11-26 10:57:34,757 [INFO] Oy verildi (batch 1/5)
+2025-11-26 10:57:51,752 [INFO] Oy verildi (batch 2/5)
+2025-11-26 10:58:08,777 [INFO] Oy verildi (batch 3/5)
+2025-11-26 10:58:25,439 [INFO] Oy verildi (batch 4/5)
+2025-11-26 10:58:50,730 [INFO] Oy verildi (batch 5/5)
+2025-11-26 10:59:18,896 [INFO] Oy verildi (batch 1/5)
+2025-11-26 10:59:39,092 [INFO] Oy verildi (batch 2/5)
+2025-11-26 11:00:04,324 [INFO] Oy verildi (batch 3/5)
+2025-11-26 11:00:27,543 [INFO] Oy verildi (batch 4/5)
+2025-11-26 11:00:50,711 [INFO] Oy verildi (batch 5/5)
+2025-11-26 11:01:31,517 [INFO] Oy verildi (batch 1/5)
+2025-11-26 11:01:48,374 [INFO] Oy verildi (batch 2/5)
+2025-11-26 11:02:05,353 [INFO] Oy verildi (batch 3/5)
+2025-11-26 11:02:21,420 [INFO] Oy verildi (batch 4/5)
+2025-11-26 11:02:37,842 [INFO] Oy verildi (batch 5/5)
+2025-11-26 11:02:57,637 [INFO] Oy verildi (batch 1/5)
+2025-11-26 11:03:14,005 [INFO] Oy verildi (batch 2/5)
+2025-11-26 11:03:30,587 [INFO] Oy verildi (batch 3/5)
+2025-11-26 11:03:47,279 [INFO] Oy verildi (batch 4/5)
+2025-11-26 11:04:03,509 [INFO] Oy verildi (batch 5/5)
+2025-11-26 11:04:24,802 [INFO] Oy verildi (batch 1/5)
+2025-11-26 11:04:41,054 [INFO] Oy verildi (batch 2/5)
+2025-11-26 11:04:57,087 [INFO] Oy verildi (batch 3/5)
+2025-11-26 11:05:13,691 [INFO] Oy verildi (batch 4/5)
+2025-11-26 11:05:30,417 [INFO] Oy verildi (batch 5/5)
+2025-11-26 11:05:50,039 [INFO] Oy verildi (batch 1/5)
+2025-11-26 11:06:07,347 [INFO] Oy verildi (batch 2/5)
+2025-11-26 11:06:24,712 [INFO] Oy verildi (batch 3/5)
+2025-11-26 11:06:43,452 [INFO] Oy verildi (batch 4/5)
+2025-11-26 11:06:59,914 [INFO] Oy verildi (batch 5/5)
+2025-11-26 11:07:19,450 [INFO] Oy verildi (batch 1/5)
+2025-11-26 11:07:44,706 [INFO] Oy verildi (batch 2/5)
+2025-11-26 11:08:07,352 [INFO] Oy verildi (batch 3/5)
+2025-11-26 11:08:23,980 [INFO] Oy verildi (batch 4/5)
+2025-11-26 11:08:41,222 [INFO] Oy verildi (batch 5/5)
+2025-11-26 11:09:04,253 [INFO] Oy verildi (batch 1/5)
+2025-11-26 11:09:29,430 [INFO] Oy verildi (batch 2/5)
+2025-11-26 11:09:55,349 [INFO] Oy verildi (batch 3/5)
+2025-11-26 11:10:39,213 [INFO] Oy verildi (batch 4/5)
+2025-11-26 11:11:01,239 [INFO] Oy verildi (batch 5/5)
+2025-11-26 11:11:31,433 [INFO] Oy verildi (batch 1/5)
+2025-11-26 11:12:12,776 [INFO] Oy verildi (batch 2/5)
+2025-11-26 11:13:03,118 [INFO] Oy verildi (batch 3/5)
+2025-11-26 11:13:08,949 [INFO] Bot durduruluyor...
+2025-11-26 11:13:11,682 [INFO] Log temizlendi
+2025-11-26 11:13:53,188 [INFO] Oy verildi (batch 4/5)
+2025-11-26 13:16:34,272 [INFO] Sürücü: C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\chromedriver.exe
+2025-11-26 13:16:34,272 [INFO] Chrome: C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-11-26 13:16:35,319 [INFO] Ön kontrol başarılı
+2025-11-26 13:16:44,997 [ERROR] Chrome versiyon okunamadı: Command '['C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', '--version']' timed out after 5 seconds
+2025-11-26 13:16:44,997 [INFO] Sürücü: C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\chromedriver.exe
+2025-11-26 13:16:44,997 [INFO] Chrome: C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-11-26 13:16:44,997 [INFO] Bot başlatıldı
+2025-11-26 13:17:00,707 [INFO] Oy verildi (batch 1/5)
+2025-11-26 13:17:17,351 [INFO] Oy verildi (batch 2/5)
+2025-11-26 13:17:37,226 [INFO] Oy verildi (batch 3/5)
+2025-11-26 13:18:00,299 [INFO] Oy verildi (batch 4/5)
+2025-11-26 13:18:19,264 [INFO] Oy verildi (batch 5/5)
+2025-11-26 13:18:39,725 [INFO] Oy verildi (batch 1/5)
+2025-11-26 13:18:57,460 [INFO] Oy verildi (batch 2/5)
+2025-11-26 13:19:22,939 [INFO] Oy verildi (batch 3/5)
+2025-11-26 13:19:45,481 [INFO] Oy verildi (batch 4/5)
+2025-11-26 13:20:05,739 [INFO] Oy verildi (batch 5/5)
+2025-11-26 13:20:26,532 [INFO] Oy verildi (batch 1/5)
+2025-11-26 13:20:43,415 [INFO] Oy verildi (batch 2/5)
+2025-11-26 13:21:00,764 [INFO] Oy verildi (batch 3/5)
+2025-11-26 13:21:17,999 [INFO] Oy verildi (batch 4/5)
+2025-11-26 13:21:34,727 [INFO] Oy verildi (batch 5/5)
+2025-11-26 13:21:54,899 [INFO] Oy verildi (batch 1/5)
+2025-11-26 13:22:10,852 [INFO] Oy verildi (batch 2/5)
+2025-11-26 13:22:27,276 [INFO] Oy verildi (batch 3/5)
+2025-11-26 13:22:43,386 [INFO] Oy verildi (batch 4/5)
+2025-11-26 13:23:02,781 [INFO] Oy verildi (batch 5/5)
+2025-11-26 13:23:28,049 [INFO] Oy verildi (batch 1/5)
+2025-11-26 13:23:47,708 [INFO] Oy verildi (batch 2/5)
+2025-11-26 13:24:10,469 [INFO] Oy verildi (batch 3/5)
+2025-11-26 13:24:29,999 [INFO] Oy verildi (batch 4/5)
+2025-11-26 13:25:02,889 [INFO] Oy verildi (batch 5/5)
+2025-11-26 13:25:50,572 [INFO] Oy verildi (batch 1/5)
+2025-11-26 13:26:14,248 [INFO] Oy verildi (batch 2/5)
+2025-11-26 13:26:38,332 [INFO] Oy verildi (batch 3/5)
+2025-11-26 13:27:04,132 [INFO] Oy verildi (batch 4/5)
+2025-11-26 13:27:26,522 [INFO] Oy verildi (batch 5/5)
+2025-11-26 13:27:49,699 [INFO] Oy verildi (batch 1/5)
+2025-11-26 13:28:13,625 [INFO] Oy verildi (batch 2/5)
+2025-11-26 13:28:29,892 [INFO] Oy verildi (batch 3/5)
+2025-11-26 13:28:46,023 [INFO] Oy verildi (batch 4/5)
+2025-11-26 13:29:02,147 [INFO] Oy verildi (batch 5/5)
+2025-11-26 13:29:22,164 [INFO] Oy verildi (batch 1/5)
+2025-11-26 13:29:39,655 [INFO] Oy verildi (batch 2/5)
+2025-11-26 13:29:56,362 [INFO] Oy verildi (batch 3/5)
+2025-11-26 13:30:12,981 [INFO] Oy verildi (batch 4/5)
+2025-11-26 13:30:29,501 [INFO] Oy verildi (batch 5/5)
+2025-11-26 13:30:49,349 [INFO] Oy verildi (batch 1/5)
+2025-11-26 13:31:05,241 [INFO] Oy verildi (batch 2/5)
+2025-11-26 13:31:20,952 [INFO] Oy verildi (batch 3/5)
+2025-11-26 13:31:37,207 [INFO] Oy verildi (batch 4/5)
+2025-11-26 13:31:53,174 [INFO] Oy verildi (batch 5/5)
+2025-11-26 13:32:12,746 [INFO] Oy verildi (batch 1/5)
+2025-11-26 13:32:29,051 [INFO] Oy verildi (batch 2/5)
+2025-11-26 13:32:46,804 [INFO] Oy verildi (batch 3/5)
+2025-11-26 13:33:12,583 [INFO] Oy verildi (batch 4/5)
+2025-11-26 13:33:37,674 [INFO] Oy verildi (batch 5/5)
+2025-11-26 13:34:09,128 [INFO] Oy verildi (batch 1/5)
+2025-11-26 13:34:36,252 [INFO] Oy verildi (batch 2/5)
+2025-11-26 13:35:12,052 [INFO] Oy verildi (batch 3/5)
+2025-11-26 13:35:39,625 [INFO] Oy verildi (batch 4/5)
+2025-11-26 13:36:02,301 [INFO] Oy verildi (batch 5/5)
+2025-11-26 13:36:36,372 [INFO] Oy verildi (batch 1/5)
+2025-11-26 13:37:30,021 [INFO] Oy verildi (batch 2/5)
+2025-11-26 13:37:57,419 [INFO] Oy verildi (batch 3/5)
+2025-11-26 13:38:19,661 [INFO] Oy verildi (batch 4/5)
+2025-11-26 13:38:36,556 [INFO] Oy verildi (batch 5/5)
+2025-11-26 13:38:55,952 [INFO] Oy verildi (batch 1/5)
+2025-11-26 13:39:14,853 [INFO] Oy verildi (batch 2/5)
+2025-11-26 13:39:24,918 [INFO] Bot durduruluyor...
+2025-11-26 13:39:38,165 [INFO] Ayarlar kaydedildi.
+2025-11-26 13:39:40,437 [INFO] Oy verildi (batch 3/20)
+2025-11-26 13:39:43,380 [INFO] Sürücü: C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\chromedriver.exe
+2025-11-26 13:39:43,381 [INFO] Chrome: C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-11-26 13:39:43,381 [INFO] Bot başlatıldı
+2025-11-26 13:40:00,094 [INFO] Log temizlendi
+2025-11-26 13:40:17,106 [INFO] Oy verildi (batch 1/20)
+2025-11-26 13:40:23,826 [INFO] Oy verildi (batch 4/20)
+2025-11-26 13:40:45,109 [INFO] Oy verildi (batch 2/20)
+2025-11-26 13:40:53,526 [INFO] Oy verildi (batch 5/20)
+2025-11-26 13:41:03,331 [INFO] Oy verildi (batch 3/20)
+2025-11-26 13:41:14,024 [INFO] Oy verildi (batch 1/20)
+2025-11-26 13:41:21,068 [INFO] Oy verildi (batch 4/20)
+2025-11-26 13:41:33,464 [INFO] Oy verildi (batch 2/20)
+2025-11-26 13:41:46,751 [INFO] Oy verildi (batch 5/20)
+2025-11-26 13:41:52,572 [INFO] Oy verildi (batch 3/20)
+2025-11-26 13:42:05,141 [INFO] Oy verildi (batch 6/20)
+2025-11-26 13:42:12,593 [INFO] Oy verildi (batch 4/20)
+2025-11-26 13:42:23,404 [INFO] Oy verildi (batch 7/20)
+2025-11-26 13:42:31,578 [INFO] Oy verildi (batch 5/20)
+2025-11-26 13:42:38,289 [INFO] Oy verildi (batch 8/20)
+2025-11-26 13:42:49,537 [INFO] Oy verildi (batch 6/20)
+2025-11-26 13:43:03,576 [ERROR] Oy butonu zaman aşımına uğradı.
+2025-11-26 13:43:07,001 [INFO] Oy verildi (batch 7/20)
+2025-11-26 13:43:35,008 [ERROR] Oy butonu zaman aşımına uğradı.
+2025-11-26 13:43:37,689 [INFO] Oy verildi (batch 8/20)
+2025-11-26 13:44:01,065 [INFO] Oy verildi (batch 9/20)
+2025-11-26 13:44:01,565 [INFO] Oy verildi (batch 1/20)
+2025-11-26 13:44:15,456 [INFO] Oy verildi (batch 10/20)
+2025-11-26 13:44:19,341 [INFO] Oy verildi (batch 2/20)
+2025-11-26 13:44:40,065 [INFO] Oy verildi (batch 11/20)
+2025-11-26 13:44:40,350 [INFO] Oy verildi (batch 3/20)
+2025-11-26 13:44:56,269 [INFO] Oy verildi (batch 4/20)
+2025-11-26 13:44:56,617 [INFO] Oy verildi (batch 12/20)
+2025-11-26 13:45:15,367 [INFO] Oy verildi (batch 13/20)
+2025-11-26 13:45:18,989 [INFO] Oy verildi (batch 5/20)
+2025-11-26 13:45:29,034 [INFO] Oy verildi (batch 14/20)
+2025-11-26 13:45:38,503 [INFO] Oy verildi (batch 6/20)
+2025-11-26 13:45:45,037 [ERROR] Oy butonu zaman aşımına uğradı.
+2025-11-26 13:45:54,403 [INFO] Oy verildi (batch 7/20)
+2025-11-26 13:46:05,960 [INFO] Oy verildi (batch 1/20)
+2025-11-26 13:46:12,563 [INFO] Oy verildi (batch 8/20)
+2025-11-26 13:46:23,037 [INFO] Oy verildi (batch 2/20)
+2025-11-26 13:46:29,467 [INFO] Oy verildi (batch 9/20)
+2025-11-26 13:46:41,544 [INFO] Oy verildi (batch 3/20)
+2025-11-26 13:46:48,863 [INFO] Oy verildi (batch 10/20)
+2025-11-26 13:46:57,930 [INFO] Oy verildi (batch 4/20)
+2025-11-26 13:47:06,366 [INFO] Oy verildi (batch 11/20)
+2025-11-26 13:47:15,259 [INFO] Oy verildi (batch 5/20)
+2025-11-26 13:47:24,698 [INFO] Oy verildi (batch 12/20)
+2025-11-26 13:47:32,463 [INFO] Oy verildi (batch 6/20)
+2025-11-26 13:47:40,809 [INFO] Oy verildi (batch 13/20)
+2025-11-26 13:47:50,850 [INFO] Oy verildi (batch 7/20)
+2025-11-26 13:47:56,916 [INFO] Oy verildi (batch 14/20)
+2025-11-26 13:48:09,911 [INFO] Oy verildi (batch 8/20)
+2025-11-26 13:48:21,494 [INFO] Oy verildi (batch 15/20)
+2025-11-26 13:48:32,879 [INFO] Oy verildi (batch 9/20)
+2025-11-26 13:48:39,298 [INFO] Oy verildi (batch 16/20)
+2025-11-26 13:48:52,947 [INFO] Oy verildi (batch 10/20)
+2025-11-26 13:49:05,623 [INFO] Oy verildi (batch 17/20)
+2025-11-26 13:49:17,957 [INFO] Oy verildi (batch 11/20)
+2025-11-26 13:49:27,627 [INFO] Oy verildi (batch 18/20)
+2025-11-26 13:49:35,497 [INFO] Oy verildi (batch 12/20)
+2025-11-26 13:49:45,041 [INFO] Oy verildi (batch 19/20)
+2025-11-26 13:49:56,046 [INFO] Oy verildi (batch 13/20)
+2025-11-26 13:50:05,930 [INFO] Oy verildi (batch 20/20)
+2025-11-26 13:50:11,942 [INFO] Oy verildi (batch 14/20)
+2025-11-26 13:50:30,331 [INFO] Oy verildi (batch 15/20)
+2025-11-26 13:50:34,552 [INFO] Oy verildi (batch 1/20)
+2025-11-26 13:50:50,844 [INFO] Oy verildi (batch 16/20)
+2025-11-26 13:51:00,113 [INFO] Oy verildi (batch 2/20)
+2025-11-26 13:51:10,543 [ERROR] Oy butonu zaman aşımına uğradı.
+2025-11-26 13:51:18,926 [INFO] Oy verildi (batch 3/20)
+2025-11-26 13:51:29,018 [INFO] Oy verildi (batch 1/20)
+2025-11-26 13:51:42,412 [INFO] Oy verildi (batch 4/20)
+2025-11-26 13:51:47,598 [INFO] Oy verildi (batch 2/20)
+2025-11-26 13:52:05,524 [INFO] Oy verildi (batch 5/20)
+2025-11-26 13:52:10,834 [INFO] Oy verildi (batch 3/20)
+2025-11-26 13:52:22,288 [INFO] Oy verildi (batch 6/20)
+2025-11-26 13:52:27,184 [INFO] Oy verildi (batch 4/20)
+2025-11-26 13:52:43,617 [INFO] Oy verildi (batch 7/20)
+2025-11-26 13:52:51,558 [ERROR] Beklenmeyen hata: Message: element click intercepted: Element <a class="btn btn-vote voteButton" data-songid="87231971">...</a> is not clickable at point (746, 875). Other element would receive the click: <div role="dialog" id="c37c4013-c563-4a15-8487-cbab32cf5402" aria-label="Çerez Onay Başlığı" aria-describedby="c37c4013-c563-4a15-8487-cbab32cf5402__label" class="osano-cm-window__dialog osano-cm-dialog osano-cm-dialog--position_bottom osano-cm-dialog--type_bar">...</div>
+  (Session info: chrome=142.0.7444.176); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementclickinterceptedexception
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x7ff79397a235
+	0x7ff7936d2650
+	0x7ff7934616dd
+	0x7ff7934c24c9
+	0x7ff7934bfe4e
+	0x7ff7934bcd71
+	0x7ff7934bbc10
+	0x7ff7934ad3a8
+	0x7ff7934e2b0a
+	0x7ff7934acc36
+	0x7ff79350baba
+	0x7ff7934ab0ed
+	0x7ff7934abf63
+	0x7ff7939a5d60
+	0x7ff79399fe8a
+	0x7ff7939c1005
+	0x7ff7936ed73e
+	0x7ff7936f4e3f
+	0x7ff7936db7e4
+	0x7ff7936db99f
+	0x7ff7936c1908
+	0x7fffd183e8d7
+	0x7fffd26cc53c
+
+2025-11-26 13:52:53,661 [ERROR] Çok hata alındı, 5 saniye bekleniyor ve yeniden denenecek.
+2025-11-26 13:53:00,723 [INFO] Oy verildi (batch 8/20)
+2025-11-26 13:53:20,015 [INFO] Oy verildi (batch 9/20)
+2025-11-26 13:53:23,820 [INFO] Oy verildi (batch 1/20)
+2025-11-26 13:53:37,222 [INFO] Oy verildi (batch 10/20)
+2025-11-26 13:53:41,799 [INFO] Oy verildi (batch 2/20)
+2025-11-26 13:53:54,736 [INFO] Oy verildi (batch 11/20)
+2025-11-26 13:54:00,426 [INFO] Oy verildi (batch 3/20)
+2025-11-26 13:54:13,308 [INFO] Oy verildi (batch 12/20)
+2025-11-26 13:54:25,380 [INFO] Oy verildi (batch 4/20)
+2025-11-26 13:54:32,235 [INFO] Oy verildi (batch 13/20)
+2025-11-26 13:54:44,383 [INFO] Oy verildi (batch 5/20)
+2025-11-26 13:54:51,752 [INFO] Oy verildi (batch 14/20)
+2025-11-26 13:55:02,933 [INFO] Oy verildi (batch 6/20)
+2025-11-26 13:55:11,671 [INFO] Oy verildi (batch 15/20)
+2025-11-26 13:55:23,506 [INFO] Oy verildi (batch 7/20)
+2025-11-26 13:55:31,644 [INFO] Oy verildi (batch 16/20)
+2025-11-26 13:55:42,208 [INFO] Oy verildi (batch 8/20)
+2025-11-26 13:55:50,943 [INFO] Oy verildi (batch 17/20)
+2025-11-26 13:56:01,172 [INFO] Oy verildi (batch 9/20)
+2025-11-26 13:56:14,739 [INFO] Oy verildi (batch 18/20)
+2025-11-26 13:56:20,362 [INFO] Oy verildi (batch 10/20)
+2025-11-26 13:56:36,317 [INFO] Oy verildi (batch 19/20)
+2025-11-26 13:56:43,276 [INFO] Oy verildi (batch 11/20)
+2025-11-26 13:56:53,144 [INFO] Oy verildi (batch 20/20)
+2025-11-26 13:57:00,255 [INFO] Oy verildi (batch 12/20)
+2025-11-26 13:57:09,736 [INFO] Oy verildi (batch 1/20)
+2025-11-26 13:57:18,663 [INFO] Oy verildi (batch 13/20)
+2025-11-26 13:57:33,107 [INFO] Oy verildi (batch 2/20)
+2025-11-26 13:57:37,500 [INFO] Oy verildi (batch 14/20)
+2025-11-26 13:57:51,154 [INFO] Oy verildi (batch 3/20)
+2025-11-26 13:58:01,652 [INFO] Oy verildi (batch 15/20)
+2025-11-26 13:58:13,242 [INFO] Oy verildi (batch 4/20)
+2025-11-26 13:58:18,868 [INFO] Oy verildi (batch 16/20)
+2025-11-26 13:58:29,730 [INFO] Oy verildi (batch 5/20)
+2025-11-26 13:58:35,934 [INFO] Oy verildi (batch 17/20)
+2025-11-26 13:58:55,784 [INFO] Oy verildi (batch 6/20)
+2025-11-26 13:59:07,215 [INFO] Oy verildi (batch 18/20)
+2025-11-26 13:59:15,746 [INFO] Oy verildi (batch 7/20)
+2025-11-26 13:59:24,988 [INFO] Oy verildi (batch 19/20)
+2025-11-26 13:59:35,834 [INFO] Oy verildi (batch 8/20)
+2025-11-26 13:59:54,578 [INFO] Oy verildi (batch 20/20)
+2025-11-26 14:00:17,931 [INFO] Oy verildi (batch 9/20)
+2025-11-26 14:00:23,833 [INFO] Oy verildi (batch 1/20)
+2025-11-26 14:00:32,632 [INFO] Oy verildi (batch 10/20)
+2025-11-26 14:00:45,187 [INFO] Oy verildi (batch 2/20)
+2025-11-26 14:00:54,558 [INFO] Oy verildi (batch 11/20)
+2025-11-26 14:01:04,447 [INFO] Oy verildi (batch 3/20)
+2025-11-26 14:01:12,173 [INFO] Oy verildi (batch 12/20)
+2025-11-26 14:01:22,445 [INFO] Oy verildi (batch 4/20)
+2025-11-26 14:01:30,645 [INFO] Oy verildi (batch 13/20)
+2025-11-26 14:01:42,042 [INFO] Oy verildi (batch 5/20)
+2025-11-26 14:01:49,326 [INFO] Oy verildi (batch 14/20)
+2025-11-26 14:02:00,390 [INFO] Oy verildi (batch 6/20)
+2025-11-26 14:02:09,596 [INFO] Oy verildi (batch 15/20)
+2025-11-26 14:02:44,164 [INFO] Oy verildi (batch 7/20)
+2025-11-26 14:03:18,405 [INFO] Oy verildi (batch 16/20)
+2025-11-26 14:03:41,225 [INFO] Oy verildi (batch 8/20)
+2025-11-26 14:03:55,238 [INFO] Oy verildi (batch 17/20)
+2025-11-26 14:03:59,273 [INFO] Oy verildi (batch 9/20)
+2025-11-26 14:04:15,552 [INFO] Oy verildi (batch 18/20)
+2025-11-26 14:04:27,239 [INFO] Oy verildi (batch 10/20)
+2025-11-26 14:04:32,100 [INFO] Oy verildi (batch 19/20)
+2025-11-26 14:04:51,229 [INFO] Oy verildi (batch 11/20)
+2025-11-26 14:04:55,319 [INFO] Oy verildi (batch 20/20)
+2025-11-26 14:05:10,945 [INFO] Oy verildi (batch 12/20)
+2025-11-26 14:05:33,268 [INFO] Oy verildi (batch 1/20)
+2025-11-26 14:05:43,907 [INFO] Oy verildi (batch 13/20)
+2025-11-26 14:05:48,552 [INFO] Oy verildi (batch 2/20)
+2025-11-26 14:06:04,350 [INFO] Oy verildi (batch 14/20)
+2025-11-26 14:06:08,124 [INFO] Oy verildi (batch 3/20)
+2025-11-26 14:06:25,885 [INFO] Oy verildi (batch 15/20)
+2025-11-26 14:06:25,923 [INFO] Oy verildi (batch 4/20)
+2025-11-26 14:06:44,879 [INFO] Oy verildi (batch 5/20)
+2025-11-26 14:06:46,164 [INFO] Oy verildi (batch 16/20)
+2025-11-26 14:07:04,688 [INFO] Oy verildi (batch 6/20)
+2025-11-26 14:07:05,046 [INFO] Oy verildi (batch 17/20)
+2025-11-26 14:07:34,112 [INFO] Oy verildi (batch 18/20)
+2025-11-26 14:07:34,228 [INFO] Oy verildi (batch 7/20)
+2025-11-26 14:07:59,840 [INFO] Oy verildi (batch 8/20)
+2025-11-26 14:07:59,923 [INFO] Oy verildi (batch 19/20)
+2025-11-26 14:08:31,419 [INFO] Oy verildi (batch 9/20)
+2025-11-26 14:08:33,400 [INFO] Oy verildi (batch 20/20)
+2025-11-26 14:08:56,507 [INFO] Bot durduruluyor...
+2025-11-26 14:09:00,224 [INFO] Log temizlendi
+2025-11-27 08:34:45,938 [ERROR] Chrome versiyon okunamadı: Command '['C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', '--version']' timed out after 5 seconds
+2025-11-27 08:34:45,938 [INFO] Sürücü: C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\chromedriver.exe
+2025-11-27 08:34:45,938 [INFO] Chrome: C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-11-27 08:34:45,939 [INFO] Bot başlatıldı
+2025-11-27 08:35:04,430 [INFO] Oy verildi (batch 1/20)
+2025-11-27 08:35:19,557 [INFO] Oy verildi (batch 2/20)
+2025-11-27 08:35:35,996 [INFO] Oy verildi (batch 3/20)
+2025-11-27 08:35:50,977 [INFO] Oy verildi (batch 4/20)
+2025-11-27 08:36:06,047 [INFO] Oy verildi (batch 5/20)
+2025-11-27 08:36:21,189 [INFO] Oy verildi (batch 6/20)
+2025-11-27 08:36:36,645 [INFO] Oy verildi (batch 7/20)
+2025-11-27 08:36:51,881 [INFO] Oy verildi (batch 8/20)
+2025-11-27 08:37:06,956 [INFO] Oy verildi (batch 9/20)
+2025-11-27 08:37:21,933 [INFO] Oy verildi (batch 10/20)
+2025-11-27 08:37:37,329 [INFO] Oy verildi (batch 11/20)
+2025-11-27 08:37:52,335 [INFO] Oy verildi (batch 12/20)
+2025-11-27 08:38:07,550 [INFO] Oy verildi (batch 13/20)
+2025-11-27 08:38:22,782 [INFO] Oy verildi (batch 14/20)
+2025-11-27 08:38:37,774 [INFO] Oy verildi (batch 15/20)
+2025-11-27 08:38:52,816 [INFO] Oy verildi (batch 16/20)
+2025-11-27 08:39:08,086 [INFO] Oy verildi (batch 17/20)
+2025-11-27 08:39:23,707 [INFO] Oy verildi (batch 18/20)
+2025-11-27 08:39:38,960 [INFO] Oy verildi (batch 19/20)
+2025-11-27 08:39:54,130 [INFO] Oy verildi (batch 20/20)
+2025-11-27 08:40:11,396 [INFO] Oy verildi (batch 1/20)
+2025-11-27 08:40:26,589 [INFO] Oy verildi (batch 2/20)
+2025-11-27 08:40:41,729 [INFO] Oy verildi (batch 3/20)
+2025-11-27 08:40:57,259 [INFO] Oy verildi (batch 4/20)
+2025-11-27 08:41:12,657 [INFO] Oy verildi (batch 5/20)
+2025-11-27 08:41:28,047 [INFO] Oy verildi (batch 6/20)
+2025-11-27 08:41:43,069 [INFO] Oy verildi (batch 7/20)
+2025-11-27 08:41:58,253 [INFO] Oy verildi (batch 8/20)
+2025-11-27 08:42:13,532 [INFO] Oy verildi (batch 9/20)
+2025-11-27 08:42:28,457 [INFO] Oy verildi (batch 10/20)
+2025-11-27 08:42:43,368 [INFO] Oy verildi (batch 11/20)
+2025-11-27 08:42:58,396 [INFO] Oy verildi (batch 12/20)
+2025-11-27 08:43:13,514 [INFO] Oy verildi (batch 13/20)
+2025-11-27 08:43:28,546 [INFO] Oy verildi (batch 14/20)
+2025-11-27 08:43:44,558 [INFO] Oy verildi (batch 15/20)
+2025-11-27 08:43:59,679 [INFO] Oy verildi (batch 16/20)
+2025-11-27 08:44:15,085 [INFO] Oy verildi (batch 17/20)
+2025-11-27 08:44:30,257 [INFO] Oy verildi (batch 18/20)
+2025-11-27 08:44:45,284 [INFO] Oy verildi (batch 19/20)
+2025-11-27 08:45:00,709 [INFO] Oy verildi (batch 20/20)
+2025-11-27 08:45:18,360 [INFO] Oy verildi (batch 1/20)
+2025-11-27 08:45:33,539 [INFO] Oy verildi (batch 2/20)
+2025-11-27 08:45:48,712 [INFO] Oy verildi (batch 3/20)
+2025-11-27 08:46:03,888 [INFO] Oy verildi (batch 4/20)
+2025-11-27 08:46:19,563 [INFO] Oy verildi (batch 5/20)
+2025-11-27 08:46:34,481 [INFO] Oy verildi (batch 6/20)
+2025-11-27 08:46:49,586 [INFO] Oy verildi (batch 7/20)
+2025-11-27 08:47:05,093 [INFO] Oy verildi (batch 8/20)
+2025-11-27 08:47:20,095 [INFO] Oy verildi (batch 9/20)
+2025-11-27 08:47:35,271 [INFO] Oy verildi (batch 10/20)
+2025-11-27 08:47:50,647 [INFO] Oy verildi (batch 11/20)
+2025-11-27 08:48:05,631 [INFO] Oy verildi (batch 12/20)
+2025-11-27 08:48:20,752 [INFO] Oy verildi (batch 13/20)
+2025-11-27 08:48:36,736 [INFO] Oy verildi (batch 14/20)
+2025-11-27 08:48:53,016 [INFO] Oy verildi (batch 15/20)
+2025-11-27 08:49:08,238 [INFO] Oy verildi (batch 16/20)
+2025-11-27 08:49:23,516 [INFO] Oy verildi (batch 17/20)
+2025-11-27 08:49:38,802 [INFO] Oy verildi (batch 18/20)
+2025-11-27 08:49:53,734 [INFO] Oy verildi (batch 19/20)
+2025-11-27 08:50:09,102 [INFO] Oy verildi (batch 20/20)
+2025-11-27 08:50:26,361 [INFO] Oy verildi (batch 1/20)
+2025-11-27 08:50:41,661 [INFO] Oy verildi (batch 2/20)
+2025-11-27 08:50:56,767 [INFO] Oy verildi (batch 3/20)
+2025-11-27 08:51:12,578 [INFO] Oy verildi (batch 4/20)
+2025-11-27 08:51:27,876 [INFO] Oy verildi (batch 5/20)
+2025-11-27 08:51:42,870 [INFO] Oy verildi (batch 6/20)
+2025-11-27 08:51:55,508 [INFO] Oy verildi (batch 7/20)
+2025-11-27 08:52:10,817 [INFO] Oy verildi (batch 8/20)
+2025-11-27 08:52:26,140 [INFO] Oy verildi (batch 9/20)
+2025-11-27 08:52:41,883 [INFO] Oy verildi (batch 10/20)
+2025-11-27 08:52:57,259 [INFO] Oy verildi (batch 11/20)
+2025-11-27 08:53:12,392 [INFO] Oy verildi (batch 12/20)
+2025-11-27 08:53:27,675 [INFO] Oy verildi (batch 13/20)
+2025-11-27 08:53:42,946 [INFO] Oy verildi (batch 14/20)
+2025-11-27 08:53:58,420 [INFO] Oy verildi (batch 15/20)
+2025-11-27 08:54:13,692 [INFO] Oy verildi (batch 16/20)
+2025-11-27 08:54:29,503 [INFO] Oy verildi (batch 17/20)
+2025-11-27 08:54:44,598 [INFO] Oy verildi (batch 18/20)
+2025-11-27 08:54:59,879 [INFO] Oy verildi (batch 19/20)
+2025-11-27 08:55:15,202 [INFO] Oy verildi (batch 20/20)
+2025-11-27 08:55:32,653 [INFO] Oy verildi (batch 1/20)
+2025-11-27 08:55:47,880 [INFO] Oy verildi (batch 2/20)
+2025-11-27 08:56:03,158 [INFO] Oy verildi (batch 3/20)
+2025-11-27 08:56:18,225 [INFO] Oy verildi (batch 4/20)
+2025-11-27 08:56:33,377 [INFO] Oy verildi (batch 5/20)
+2025-11-27 08:56:48,085 [INFO] Oy verildi (batch 6/20)
+2025-11-27 08:57:03,230 [INFO] Oy verildi (batch 7/20)
+2025-11-27 08:57:18,546 [INFO] Oy verildi (batch 8/20)
+2025-11-27 08:57:33,959 [INFO] Oy verildi (batch 9/20)
+2025-11-27 08:57:49,729 [INFO] Oy verildi (batch 10/20)
+2025-11-27 08:58:04,771 [INFO] Oy verildi (batch 11/20)
+2025-11-27 08:58:19,795 [INFO] Oy verildi (batch 12/20)
+2025-11-27 08:58:35,102 [INFO] Oy verildi (batch 13/20)
+2025-11-27 08:58:50,325 [INFO] Oy verildi (batch 14/20)
+2025-11-27 08:59:05,308 [INFO] Oy verildi (batch 15/20)
+2025-11-27 08:59:20,158 [INFO] Oy verildi (batch 16/20)
+2025-11-27 08:59:35,252 [INFO] Oy verildi (batch 17/20)
+2025-11-27 08:59:50,716 [INFO] Oy verildi (batch 18/20)
+2025-11-27 09:00:06,115 [INFO] Oy verildi (batch 19/20)
+2025-11-27 09:00:21,573 [INFO] Oy verildi (batch 20/20)
+2025-11-27 09:00:38,852 [INFO] Oy verildi (batch 1/20)
+2025-11-27 09:00:54,426 [INFO] Oy verildi (batch 2/20)
+2025-11-27 09:01:09,416 [INFO] Oy verildi (batch 3/20)
+2025-11-27 09:01:27,451 [INFO] Oy verildi (batch 4/20)
+2025-11-27 09:01:42,440 [INFO] Oy verildi (batch 5/20)
+2025-11-27 09:01:57,591 [INFO] Oy verildi (batch 6/20)
+2025-11-27 09:02:14,232 [INFO] Oy verildi (batch 7/20)
+2025-11-27 09:02:29,840 [INFO] Oy verildi (batch 8/20)
+2025-11-27 09:02:45,058 [INFO] Oy verildi (batch 9/20)
+2025-11-27 09:03:00,007 [INFO] Oy verildi (batch 10/20)
+2025-11-27 09:03:15,374 [INFO] Oy verildi (batch 11/20)
+2025-11-27 09:03:30,368 [INFO] Oy verildi (batch 12/20)
+2025-11-27 09:03:46,621 [INFO] Oy verildi (batch 13/20)
+2025-11-27 09:04:02,495 [INFO] Oy verildi (batch 14/20)
+2025-11-27 09:04:18,779 [INFO] Oy verildi (batch 15/20)
+2025-11-27 09:04:36,653 [INFO] Oy verildi (batch 16/20)
+2025-11-27 09:04:53,869 [INFO] Oy verildi (batch 17/20)
+2025-11-27 09:05:14,218 [INFO] Oy verildi (batch 18/20)
+2025-11-27 09:05:30,093 [INFO] Oy verildi (batch 19/20)
+2025-11-27 09:05:45,157 [INFO] Oy verildi (batch 20/20)
+2025-11-27 09:06:02,423 [INFO] Oy verildi (batch 1/20)
+2025-11-27 09:06:17,777 [INFO] Oy verildi (batch 2/20)
+2025-11-27 09:06:32,966 [INFO] Oy verildi (batch 3/20)
+2025-11-27 09:06:48,137 [INFO] Oy verildi (batch 4/20)
+2025-11-27 09:07:03,653 [INFO] Oy verildi (batch 5/20)
+2025-11-27 09:07:18,695 [INFO] Oy verildi (batch 6/20)
+2025-11-27 09:07:33,784 [INFO] Oy verildi (batch 7/20)
+2025-11-27 09:07:48,953 [INFO] Oy verildi (batch 8/20)
+2025-11-27 09:08:04,361 [INFO] Oy verildi (batch 9/20)
+2025-11-27 09:08:19,530 [INFO] Oy verildi (batch 10/20)
+2025-11-27 09:08:34,693 [INFO] Oy verildi (batch 11/20)
+2025-11-27 09:08:49,772 [INFO] Oy verildi (batch 12/20)
+2025-11-27 09:09:06,739 [INFO] Oy verildi (batch 13/20)
+2025-11-27 09:09:21,707 [INFO] Oy verildi (batch 14/20)
+2025-11-27 09:09:36,901 [INFO] Oy verildi (batch 15/20)
+2025-11-27 09:09:54,508 [INFO] Oy verildi (batch 16/20)
+2025-11-27 09:10:09,850 [INFO] Oy verildi (batch 17/20)
+2025-11-27 09:10:25,170 [INFO] Oy verildi (batch 18/20)
+2025-11-27 09:10:40,558 [INFO] Oy verildi (batch 19/20)
+2025-11-27 09:10:56,040 [INFO] Oy verildi (batch 20/20)
+2025-11-27 09:11:13,566 [INFO] Oy verildi (batch 1/20)
+2025-11-27 09:11:28,651 [INFO] Oy verildi (batch 2/20)
+2025-11-27 09:11:50,267 [ERROR] Oy butonu zaman aşımına uğradı.
+2025-11-27 09:12:25,483 [INFO] Oy verildi (batch 1/20)
+2025-11-27 09:12:41,876 [INFO] Oy verildi (batch 2/20)
+2025-11-27 09:12:57,915 [INFO] Oy verildi (batch 3/20)
+2025-11-27 09:13:21,730 [ERROR] Oy butonu zaman aşımına uğradı.
+2025-11-27 09:13:42,646 [INFO] Oy verildi (batch 1/20)
+2025-11-27 09:14:03,366 [ERROR] Oy butonu zaman aşımına uğradı.
+2025-11-27 09:14:05,522 [ERROR] Çok hata alındı, 5 saniye bekleniyor ve yeniden denenecek.
+2025-11-27 09:14:28,356 [INFO] Oy verildi (batch 1/20)
+2025-11-27 09:14:47,433 [INFO] Oy verildi (batch 2/20)
+2025-11-27 09:15:05,571 [INFO] Oy verildi (batch 3/20)
+2025-11-27 09:15:20,732 [INFO] Oy verildi (batch 4/20)
+2025-11-27 09:15:39,656 [INFO] Oy verildi (batch 5/20)
+2025-11-27 09:16:02,360 [INFO] Oy verildi (batch 6/20)
+2025-11-27 09:16:25,829 [ERROR] Oy butonu zaman aşımına uğradı.
+2025-11-27 09:16:43,333 [INFO] Oy verildi (batch 1/20)
+2025-11-27 09:16:58,884 [INFO] Oy verildi (batch 2/20)
+2025-11-27 09:17:14,243 [INFO] Oy verildi (batch 3/20)
+2025-11-27 09:17:29,698 [INFO] Oy verildi (batch 4/20)
+2025-11-27 09:17:44,718 [INFO] Oy verildi (batch 5/20)
+2025-11-27 09:17:59,794 [INFO] Oy verildi (batch 6/20)
+2025-11-27 09:18:15,294 [INFO] Oy verildi (batch 7/20)
+2025-11-27 09:18:30,168 [INFO] Oy verildi (batch 8/20)
+2025-11-27 09:18:45,276 [INFO] Oy verildi (batch 9/20)
+2025-11-27 09:19:00,443 [INFO] Oy verildi (batch 10/20)
+2025-11-27 09:19:15,718 [INFO] Oy verildi (batch 11/20)
+2025-11-27 09:19:31,025 [INFO] Oy verildi (batch 12/20)
+2025-11-27 09:19:46,221 [INFO] Oy verildi (batch 13/20)
+2025-11-27 09:20:01,319 [INFO] Oy verildi (batch 14/20)
+2025-11-27 09:20:16,652 [INFO] Oy verildi (batch 15/20)
+2025-11-27 09:20:31,614 [INFO] Oy verildi (batch 16/20)
+2025-11-27 09:20:46,599 [INFO] Oy verildi (batch 17/20)
+2025-11-27 09:21:01,620 [INFO] Oy verildi (batch 18/20)
+2025-11-27 09:21:16,883 [INFO] Oy verildi (batch 19/20)
+2025-11-27 09:21:31,862 [INFO] Oy verildi (batch 20/20)
+2025-11-27 09:21:49,371 [INFO] Oy verildi (batch 1/20)
+2025-11-27 09:22:04,610 [INFO] Oy verildi (batch 2/20)
+2025-11-27 09:22:20,096 [INFO] Oy verildi (batch 3/20)
+2025-11-27 09:22:35,461 [INFO] Oy verildi (batch 4/20)
+2025-11-27 09:22:50,727 [INFO] Oy verildi (batch 5/20)
+2025-11-27 09:23:06,312 [INFO] Oy verildi (batch 6/20)
+2025-11-27 09:23:22,041 [INFO] Oy verildi (batch 7/20)
+2025-11-27 09:23:37,512 [INFO] Oy verildi (batch 8/20)
+2025-11-27 09:23:52,886 [INFO] Oy verildi (batch 9/20)
+2025-11-27 09:24:08,340 [INFO] Oy verildi (batch 10/20)
+2025-11-27 09:24:23,699 [INFO] Oy verildi (batch 11/20)
+2025-11-27 09:24:38,950 [INFO] Oy verildi (batch 12/20)
+2025-11-27 09:24:53,919 [INFO] Oy verildi (batch 13/20)
+2025-11-27 09:25:09,195 [INFO] Oy verildi (batch 14/20)
+2025-11-27 09:25:24,576 [INFO] Oy verildi (batch 15/20)
+2025-11-27 09:25:40,331 [INFO] Oy verildi (batch 16/20)
+2025-11-27 09:25:55,763 [INFO] Oy verildi (batch 17/20)
+2025-11-27 09:26:11,524 [INFO] Oy verildi (batch 18/20)
+2025-11-27 09:26:26,807 [INFO] Oy verildi (batch 19/20)
+2025-11-27 09:26:42,159 [INFO] Oy verildi (batch 20/20)
+2025-11-27 09:26:59,871 [INFO] Oy verildi (batch 1/20)
+2025-11-27 09:27:15,424 [INFO] Oy verildi (batch 2/20)
+2025-11-27 09:27:30,895 [INFO] Oy verildi (batch 3/20)
+2025-11-27 09:27:45,957 [INFO] Oy verildi (batch 4/20)
+2025-11-27 09:28:01,283 [INFO] Oy verildi (batch 5/20)
+2025-11-27 09:28:16,989 [INFO] Oy verildi (batch 6/20)
+2025-11-27 09:28:32,077 [INFO] Oy verildi (batch 7/20)
+2025-11-27 09:28:47,633 [INFO] Oy verildi (batch 8/20)
+2025-11-27 09:29:02,899 [INFO] Oy verildi (batch 9/20)
+2025-11-27 09:29:17,933 [INFO] Oy verildi (batch 10/20)
+2025-11-27 09:29:32,943 [INFO] Oy verildi (batch 11/20)
+2025-11-27 09:29:48,432 [INFO] Oy verildi (batch 12/20)
+2025-11-27 09:30:05,330 [INFO] Oy verildi (batch 13/20)
+2025-11-27 09:30:20,749 [INFO] Oy verildi (batch 14/20)
+2025-11-27 09:30:36,859 [INFO] Oy verildi (batch 15/20)
+2025-11-27 09:30:52,356 [INFO] Oy verildi (batch 16/20)
+2025-11-27 09:31:07,874 [INFO] Oy verildi (batch 17/20)
+2025-11-27 09:31:22,881 [INFO] Oy verildi (batch 18/20)
+2025-11-27 09:31:37,961 [INFO] Oy verildi (batch 19/20)
+2025-11-27 09:31:53,528 [INFO] Oy verildi (batch 20/20)
+2025-11-27 09:32:11,046 [INFO] Oy verildi (batch 1/20)
+2025-11-27 09:32:27,767 [INFO] Oy verildi (batch 2/20)
+2025-11-27 09:32:53,071 [INFO] Oy verildi (batch 3/20)
+2025-11-27 09:33:09,810 [INFO] Oy verildi (batch 4/20)
+2025-11-27 09:33:25,032 [INFO] Oy verildi (batch 5/20)
+2025-11-27 09:33:50,544 [ERROR] Oy butonu zaman aşımına uğradı.
+2025-11-27 09:34:14,152 [ERROR] Oy butonu zaman aşımına uğradı.
+2025-11-27 09:34:31,553 [INFO] Oy verildi (batch 1/20)
+2025-11-27 09:34:46,766 [INFO] Oy verildi (batch 2/20)
+2025-11-27 09:35:02,123 [INFO] Oy verildi (batch 3/20)
+2025-11-27 09:35:17,306 [INFO] Oy verildi (batch 4/20)
+2025-11-27 09:35:32,554 [INFO] Oy verildi (batch 5/20)
+2025-11-27 09:35:48,139 [INFO] Oy verildi (batch 6/20)
+2025-11-27 09:36:03,388 [INFO] Oy verildi (batch 7/20)
+2025-11-27 09:36:18,800 [INFO] Oy verildi (batch 8/20)
+2025-11-27 09:36:33,942 [INFO] Oy verildi (batch 9/20)
+2025-11-27 09:36:48,941 [INFO] Oy verildi (batch 10/20)
+2025-11-27 09:37:03,990 [INFO] Oy verildi (batch 11/20)
+2025-11-27 09:37:19,406 [INFO] Oy verildi (batch 12/20)
+2025-11-27 09:37:34,566 [INFO] Oy verildi (batch 13/20)
+2025-11-27 09:37:49,679 [INFO] Oy verildi (batch 14/20)
+2025-11-27 09:38:05,175 [INFO] Oy verildi (batch 15/20)
+2025-11-27 09:38:21,029 [INFO] Oy verildi (batch 16/20)
+2025-11-27 09:38:37,152 [INFO] Oy verildi (batch 17/20)
+2025-11-27 09:38:52,457 [INFO] Oy verildi (batch 18/20)
+2025-11-27 09:39:07,915 [INFO] Oy verildi (batch 19/20)
+2025-11-27 09:39:23,049 [INFO] Oy verildi (batch 20/20)
+2025-11-27 09:39:41,029 [INFO] Oy verildi (batch 1/20)
+2025-11-27 09:39:56,974 [INFO] Oy verildi (batch 2/20)
+2025-11-27 09:40:12,223 [INFO] Oy verildi (batch 3/20)
+2025-11-27 09:40:27,619 [INFO] Oy verildi (batch 4/20)
+2025-11-27 09:40:43,001 [INFO] Oy verildi (batch 5/20)
+2025-11-27 09:40:58,153 [INFO] Oy verildi (batch 6/20)
+2025-11-27 09:41:13,931 [INFO] Oy verildi (batch 7/20)
+2025-11-27 09:41:30,505 [INFO] Oy verildi (batch 8/20)
+2025-11-27 09:41:45,479 [INFO] Oy verildi (batch 9/20)
+2025-11-27 09:42:00,646 [INFO] Oy verildi (batch 10/20)
+2025-11-27 09:42:15,799 [INFO] Oy verildi (batch 11/20)
+2025-11-27 09:42:31,037 [INFO] Oy verildi (batch 12/20)
+2025-11-27 09:42:46,387 [INFO] Oy verildi (batch 13/20)
+2025-11-27 09:43:02,095 [INFO] Oy verildi (batch 14/20)
+2025-11-27 09:43:17,604 [INFO] Oy verildi (batch 15/20)
+2025-11-27 09:43:32,680 [INFO] Oy verildi (batch 16/20)
+2025-11-27 09:43:48,584 [INFO] Oy verildi (batch 17/20)
+2025-11-27 09:44:03,877 [INFO] Oy verildi (batch 18/20)
+2025-11-27 09:44:19,197 [INFO] Oy verildi (batch 19/20)
+2025-11-27 09:44:34,470 [INFO] Oy verildi (batch 20/20)
+2025-11-27 09:44:51,938 [INFO] Oy verildi (batch 1/20)
+2025-11-27 09:45:07,205 [INFO] Oy verildi (batch 2/20)
+2025-11-27 09:45:22,554 [INFO] Oy verildi (batch 3/20)
+2025-11-27 09:45:37,697 [INFO] Oy verildi (batch 4/20)
+2025-11-27 09:45:53,021 [INFO] Oy verildi (batch 5/20)
+2025-11-27 09:46:08,501 [INFO] Oy verildi (batch 6/20)
+2025-11-27 09:46:23,657 [INFO] Oy verildi (batch 7/20)
+2025-11-27 09:46:39,170 [INFO] Oy verildi (batch 8/20)
+2025-11-27 09:46:54,775 [INFO] Oy verildi (batch 9/20)
+2025-11-27 09:47:10,402 [INFO] Oy verildi (batch 10/20)
+2025-11-27 09:47:25,890 [INFO] Oy verildi (batch 11/20)
+2025-11-27 09:47:41,224 [INFO] Oy verildi (batch 12/20)
+2025-11-27 09:47:56,448 [INFO] Oy verildi (batch 13/20)
+2025-11-27 09:48:12,668 [INFO] Oy verildi (batch 14/20)
+2025-11-27 09:48:28,123 [INFO] Oy verildi (batch 15/20)
+2025-11-27 09:48:43,613 [INFO] Oy verildi (batch 16/20)
+2025-11-27 09:48:58,857 [INFO] Oy verildi (batch 17/20)
+2025-11-27 09:49:14,377 [INFO] Oy verildi (batch 18/20)
+2025-11-27 09:49:30,489 [INFO] Oy verildi (batch 19/20)
+2025-11-27 09:49:47,555 [INFO] Oy verildi (batch 20/20)
+2025-11-27 09:50:06,293 [INFO] Oy verildi (batch 1/20)
+2025-11-27 09:50:22,006 [INFO] Oy verildi (batch 2/20)
+2025-11-27 09:50:37,268 [INFO] Oy verildi (batch 3/20)
+2025-11-27 09:50:52,572 [INFO] Oy verildi (batch 4/20)
+2025-11-27 09:51:08,183 [INFO] Oy verildi (batch 5/20)
+2025-11-27 09:51:23,530 [INFO] Oy verildi (batch 6/20)
+2025-11-27 09:51:39,282 [INFO] Oy verildi (batch 7/20)
+2025-11-27 09:51:54,512 [INFO] Oy verildi (batch 8/20)
+2025-11-27 09:52:09,572 [INFO] Oy verildi (batch 9/20)
+2025-11-27 09:52:24,988 [INFO] Oy verildi (batch 10/20)
+2025-11-27 09:52:40,177 [INFO] Oy verildi (batch 11/20)
+2025-11-27 09:52:47,435 [INFO] Bot durduruluyor...
+2025-11-27 09:52:56,017 [INFO] Oy verildi (batch 12/20)
+2025-11-27 09:52:59,493 [INFO] Varsayılan ayarlar yüklendi.
+2025-11-27 09:52:59,495 [INFO] Ayarlar kaydedildi.
+2025-11-27 09:53:01,830 [INFO] Log temizlendi
+2025-11-27 09:53:07,972 [ERROR] Chrome versiyon okunamadı: Command '['C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', '--version']' timed out after 5 seconds
+2025-11-27 09:53:07,972 [INFO] Sürücü: C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\chromedriver.exe
+2025-11-27 09:53:07,972 [INFO] Chrome: C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-11-27 09:53:07,972 [INFO] Bot başlatıldı
+2025-11-27 09:53:21,423 [INFO] Oy verildi (batch 1/1)
+2025-11-27 09:53:40,147 [INFO] Oy verildi (batch 1/1)
+2025-11-27 09:53:59,139 [INFO] Oy verildi (batch 1/1)
+2025-11-27 09:54:17,800 [INFO] Oy verildi (batch 1/1)
+2025-11-27 09:54:36,420 [INFO] Oy verildi (batch 1/1)
+2025-11-27 09:54:54,988 [INFO] Oy verildi (batch 1/1)
+2025-11-27 09:55:13,970 [INFO] Oy verildi (batch 1/1)
+2025-11-27 09:55:32,515 [INFO] Oy verildi (batch 1/1)
+2025-11-27 09:55:50,954 [INFO] Oy verildi (batch 1/1)
+2025-11-27 09:56:09,515 [INFO] Oy verildi (batch 1/1)
+2025-11-27 09:56:28,061 [INFO] Oy verildi (batch 1/1)
+2025-11-27 09:56:49,184 [INFO] Oy verildi (batch 1/1)
+2025-11-27 09:57:23,282 [ERROR] Oy butonu zaman aşımına uğradı.
+2025-11-27 09:57:42,031 [INFO] Oy verildi (batch 1/1)
+2025-11-27 09:58:00,602 [INFO] Oy verildi (batch 1/1)
+2025-11-27 09:58:19,508 [INFO] Oy verildi (batch 1/1)
+2025-11-27 09:58:37,888 [INFO] Oy verildi (batch 1/1)
+2025-11-27 09:58:56,301 [INFO] Oy verildi (batch 1/1)
+2025-11-27 09:59:14,796 [INFO] Oy verildi (batch 1/1)
+2025-11-27 09:59:33,520 [INFO] Oy verildi (batch 1/1)
+2025-11-27 09:59:51,917 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:00:10,958 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:00:29,393 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:00:48,013 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:01:06,623 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:01:25,332 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:01:43,922 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:02:02,650 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:02:21,541 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:02:40,196 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:02:59,622 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:03:18,282 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:03:37,221 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:03:55,561 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:04:14,494 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:04:33,411 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:04:52,311 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:05:11,291 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:05:30,759 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:05:55,741 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:06:20,472 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:06:39,482 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:06:58,308 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:07:16,780 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:07:35,478 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:07:54,065 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:08:12,440 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:08:30,836 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:08:49,296 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:09:07,878 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:09:26,325 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:09:45,030 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:10:03,370 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:10:21,896 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:10:40,131 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:10:58,513 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:11:17,222 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:11:35,501 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:11:53,887 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:12:12,331 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:12:30,870 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:12:49,390 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:13:07,875 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:13:26,292 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:13:44,614 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:14:02,953 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:14:21,467 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:14:39,885 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:14:58,278 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:15:16,820 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:15:35,316 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:15:53,740 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:16:12,392 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:16:31,543 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:16:50,174 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:17:08,986 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:17:27,609 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:17:46,021 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:18:04,427 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:18:23,169 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:18:42,197 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:19:00,573 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:19:19,126 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:19:37,833 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:19:56,173 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:20:14,559 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:20:32,914 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:20:51,365 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:21:10,034 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:21:28,544 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:21:47,241 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:22:05,761 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:22:24,251 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:22:42,955 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:23:01,389 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:23:19,718 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:23:38,190 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:23:56,701 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:24:15,205 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:24:33,554 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:24:52,038 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:25:10,406 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:25:52,893 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:26:11,728 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:26:30,230 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:26:49,461 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:27:07,980 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:27:26,305 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:27:44,484 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:28:02,941 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:28:21,381 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:28:39,867 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:29:01,907 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:29:20,266 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:29:38,699 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:29:56,844 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:30:15,243 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:30:33,814 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:30:52,189 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:31:11,148 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:31:41,279 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:32:00,022 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:32:18,914 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:32:51,417 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:33:09,697 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:33:27,922 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:33:46,189 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:34:05,066 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:34:23,767 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:34:42,045 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:35:00,777 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:35:19,311 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:35:37,702 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:35:56,217 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:36:14,517 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:36:33,111 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:36:51,454 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:37:09,872 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:37:28,540 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:37:46,845 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:38:05,218 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:38:23,776 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:38:43,922 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:39:11,412 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:39:29,781 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:39:48,112 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:40:06,665 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:40:25,705 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:40:44,088 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:41:02,680 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:41:21,381 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:41:39,973 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:41:58,141 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:42:16,616 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:42:34,830 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:42:53,687 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:43:12,332 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:43:30,951 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:43:49,256 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:44:07,727 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:44:25,985 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:44:44,321 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:45:02,653 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:45:21,385 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:45:39,916 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:45:58,402 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:46:16,738 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:46:35,006 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:46:53,519 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:47:11,969 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:47:30,623 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:47:49,130 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:48:07,865 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:48:26,287 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:48:44,776 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:49:03,149 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:49:21,611 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:49:40,282 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:49:59,028 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:50:18,798 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:50:37,463 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:50:56,142 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:51:14,644 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:51:33,220 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:51:51,779 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:52:10,444 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:52:29,044 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:52:47,577 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:53:06,073 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:53:24,518 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:53:43,136 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:54:01,596 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:54:20,293 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:54:39,105 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:54:57,524 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:55:16,263 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:55:34,592 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:55:52,901 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:56:11,181 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:56:29,599 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:56:48,222 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:57:06,660 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:57:24,994 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:57:43,340 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:58:01,997 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:58:20,415 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:58:38,818 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:58:57,437 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:59:15,792 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:59:34,301 [INFO] Oy verildi (batch 1/1)
+2025-11-27 10:59:52,764 [INFO] Oy verildi (batch 1/1)
+2025-11-27 11:00:11,285 [INFO] Oy verildi (batch 1/1)
+2025-11-27 11:00:29,934 [INFO] Oy verildi (batch 1/1)
+2025-11-27 11:00:48,377 [INFO] Oy verildi (batch 1/1)
+2025-11-27 11:01:07,135 [INFO] Oy verildi (batch 1/1)
+2025-11-27 11:01:25,542 [INFO] Oy verildi (batch 1/1)
+2025-11-27 11:01:43,879 [INFO] Oy verildi (batch 1/1)
+2025-11-27 11:02:02,183 [INFO] Oy verildi (batch 1/1)
+2025-11-27 11:02:20,477 [INFO] Oy verildi (batch 1/1)
+2025-11-27 11:02:40,468 [INFO] Oy verildi (batch 1/1)
+2025-11-27 11:03:02,885 [INFO] Oy verildi (batch 1/1)
+2025-11-27 11:03:21,184 [INFO] Oy verildi (batch 1/1)
+2025-11-27 11:03:39,810 [INFO] Oy verildi (batch 1/1)
+2025-11-27 11:03:58,437 [INFO] Oy verildi (batch 1/1)
+2025-11-27 11:04:25,188 [INFO] Oy verildi (batch 1/1)
+2025-11-27 11:04:43,798 [INFO] Oy verildi (batch 1/1)
+2025-11-27 11:05:03,173 [INFO] Oy verildi (batch 1/1)
+2025-11-27 11:05:05,034 [INFO] Bot durduruluyor...
+2025-11-27 11:05:33,499 [ERROR] Chrome versiyon okunamadı: Command '['C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', '--version']' timed out after 5 seconds
+2025-11-27 11:05:33,500 [INFO] Sürücü: C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\chromedriver.exe
+2025-11-27 11:05:33,500 [INFO] Chrome: C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-11-27 11:05:33,500 [INFO] Bot başlatıldı
+2025-11-27 11:05:35,657 [INFO] Log temizlendi
+2025-11-27 11:05:46,626 [INFO] Oy verildi (batch 1/1)
+2025-11-27 11:06:05,019 [INFO] Oy verildi (batch 1/1)
+2025-11-27 11:06:23,886 [INFO] Oy verildi (batch 1/1)
+2025-11-27 11:06:43,785 [INFO] Oy verildi (batch 1/1)
+2025-11-27 11:07:03,000 [INFO] Oy verildi (batch 1/1)
