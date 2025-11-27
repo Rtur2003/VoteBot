@@ -1,10 +1,12 @@
 import json
 import logging
 import os
+import random
 import subprocess
 import threading
 import time
 from datetime import datetime
+from logging.handlers import RotatingFileHandler
 from pathlib import Path
 import tkinter as tk
 from tkinter import ttk, scrolledtext, messagebox
@@ -45,9 +47,9 @@ class VoteBot5:
         )
         self.pause_between_votes = float(self.config.get("pause_between_votes", 3))
         self.batch_size = max(1, int(self.config.get("batch_size", 1)))
-        self.max_errors = max(1, int(self.config.get("max_errors", 3)))
         self.headless = bool(self.config.get("headless", True))
         self.timeout_seconds = int(self.config.get("timeout_seconds", 15))
+        self.max_errors = max(1, int(self.config.get("max_errors", 3)))
 
         self.driver_path = None
         self.chrome_path = None
@@ -120,7 +122,9 @@ class VoteBot5:
         logger = logging.getLogger("VoteBot5")
         logger.setLevel(logging.INFO)
         logger.handlers.clear()
-        file_handler = logging.FileHandler(self.log_dir / "votebot5.log", encoding="utf-8")
+        file_handler = RotatingFileHandler(
+            self.log_dir / "votebot5.log", encoding="utf-8", maxBytes=512 * 1024, backupCount=3
+        )
         formatter = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")
         file_handler.setFormatter(formatter)
         logger.addHandler(file_handler)
@@ -446,6 +450,21 @@ class VoteBot5:
             style="Helper.TLabel",
         ).grid(row=7, column=1, sticky="w", pady=(0, 8))
 
+        ttk.Label(
+            settings,
+            text="Maks hata (art arda)",
+            background=self.colors["panel"],
+            foreground=self.colors["text"],
+        ).grid(row=8, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
+        self.max_errors_entry = ttk.Entry(settings, width=10)
+        self.max_errors_entry.insert(0, str(self.max_errors))
+        self.max_errors_entry.grid(row=8, column=1, sticky="w", pady=(4, 0))
+        ttk.Label(
+            settings,
+            text="Bu sayıya ulaşıldığında bekleme ve yeniden deneme yapılır.",
+            style="Helper.TLabel",
+        ).grid(row=9, column=1, sticky="w", pady=(0, 8))
+
         self.headless_var = tk.BooleanVar(value=self.headless)
         self.headless_check = ttk.Checkbutton(
             settings,
@@ -453,15 +472,15 @@ class VoteBot5:
             variable=self.headless_var,
             style="Switch.TCheckbutton",
         )
-        self.headless_check.grid(row=8, column=0, columnspan=2, sticky="w", pady=(4, 0))
+        self.headless_check.grid(row=10, column=0, columnspan=2, sticky="w", pady=(4, 0))
         ttk.Label(
             settings,
             text="Kapalıysa tarayıcıyı görerek izleyebilirsiniz.",
             style="Helper.TLabel",
-        ).grid(row=9, column=0, columnspan=2, sticky="w", pady=(0, 8))
+        ).grid(row=11, column=0, columnspan=2, sticky="w", pady=(0, 8))
 
         actions = ttk.Frame(settings, style="Panel.TFrame")
-        actions.grid(row=10, column=0, columnspan=2, sticky="ew", pady=(6, 0))
+        actions.grid(row=12, column=0, columnspan=2, sticky="ew", pady=(6, 0))
         actions.columnconfigure((0, 1), weight=1)
         self.apply_btn = ttk.Button(
             actions,
@@ -677,7 +696,13 @@ class VoteBot5:
 
     def _set_form_state(self, running: bool):
         state_flag = ["disabled"] if running else ["!disabled"]
-        for entry in [self.url_entry, self.pause_entry, self.batch_entry, self.timeout_entry]:
+        for entry in [
+            self.url_entry,
+            self.pause_entry,
+            self.batch_entry,
+            self.timeout_entry,
+            self.max_errors_entry,
+        ]:
             entry.state(state_flag)
         for btn in [self.apply_btn, self.defaults_btn, self.preflight_btn]:
             btn.state(state_flag)
