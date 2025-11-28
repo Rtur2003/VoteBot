@@ -930,63 +930,96 @@ class VoteBot5:
 
     def run_batch(self):
         self.update_status("Oy veriliyor", tone="running")
-        tasks = []
         successes = 0
         failures = 0
+        prepared = []
         with ThreadPoolExecutor(max_workers=self.parallel_workers) as executor:
+            futures = []
             for i in range(self.batch_size):
                 if self._stop_event.is_set():
                     break
-                tasks.append(executor.submit(self._vote_once, i))
-            for future in as_completed(tasks):
+                futures.append(executor.submit(self._prepare_vote_session, i))
+            for future in as_completed(futures):
                 if self._stop_event.is_set():
                     break
                 try:
-                    ok = future.result()
+                    session = future.result()
                 except Exception as exc:
-                    self.logger.exception("Oy verme hatası", exc_info=exc)
-                    ok = False
-                if ok:
-                    successes += 1
+                    self.logger.exception("Oy hazırlık hatası", exc_info=exc)
+                    session = None
+                if session:
+                    prepared.append(session)
                 else:
                     failures += 1
-        if failures:
+
+        if self._stop_event.is_set():
+            for driver, _ in prepared:
+                try:
+                    driver.quit()
+                except Exception:
+                    pass
+            return False
+
+        for idx, (driver, vote_button) in enumerate(prepared, start=1):
+            if self._stop_event.is_set():
+                break
+            try:
+                vote_button.click()
+                self.log_message(
+                    f"Oy verildi (pencere {idx}/{self.batch_size})", level="success"
+                )
+                self.increment_count()
+                successes += 1
+            except Exception:
+                try:
+                    driver.refresh()
+                    wait = WebDriverWait(driver, self.timeout_seconds)
+                    refreshed_btn = self._locate_vote_button(driver, wait)
+                    refreshed_btn.click()
+                    self.log_message(
+                        f"Oy verildi (yeniden deneme, pencere {idx}/{self.batch_size})",
+                        level="success",
+                    )
+                    self.increment_count()
+                    successes += 1
+                except TimeoutException:
+                    self.log_message("Oy butonu zaman aşımına uğradı.", level="error")
+                    failures += 1
+                except Exception as exc:
+                    self.logger.exception("Oy verme hatası", exc_info=exc)
+                    self.log_message(f"Beklenmeyen hata: {exc}", level="error")
+                    failures += 1
+            finally:
+                try:
+                    driver.quit()
+                except Exception:
+                    pass
+
+        if failures or successes == 0:
             return False
         self.update_status("Bekliyor", tone="idle")
         return True
 
-    def _vote_once(self, batch_index):
+    def _prepare_vote_session(self, batch_index):
         driver = self.create_driver()
         if not driver:
-            return False
+            return None
         driver.set_page_load_timeout(self.timeout_seconds)
         wait = WebDriverWait(driver, self.timeout_seconds)
         try:
             driver.get(self.target_url)
             vote_button = self._locate_vote_button(driver, wait)
-            try:
-                vote_button.click()
-            except Exception:
-                driver.refresh()
-                vote_button = self._locate_vote_button(driver, wait)
-                vote_button.click()
-            self.log_message(
-                f"Oy verildi (pencere {batch_index + 1}/{self.batch_size})", level="success"
-            )
-            self.increment_count()
-            return True
+            return driver, vote_button
         except TimeoutException:
-            self.log_message("Oy butonu zaman aşımına uğradı.", level="error")
-            return False
+            self.log_message("Oy butonu zaman aşımına uğradı (hazırlık).", level="error")
         except Exception as exc:
-            self.logger.exception("Oy verme hatası", exc_info=exc)
-            self.log_message(f"Beklenmeyen hata: {exc}", level="error")
-            return False
-        finally:
-            try:
-                driver.quit()
-            except Exception:
-                pass
+            self.logger.exception("Oy hazırlık hatası", exc_info=exc)
+            self.log_message(f"Beklenmeyen hata (hazırlık): {exc}", level="error")
+        try:
+            driver.quit()
+        except Exception:
+            pass
+        return None
 
     def _locate_vote_button(self, driver, wait):
         selectors = [

@@ -7,6 +7,7 @@ Profesyonel, GUI tabanlı DistroKid oy botu. Sürüm 5, yol/doğrulama kontrolle
 - **Başlat/Durdur güvenliği**: İş parçacığı güvenli UI, temiz durdurma, durum göstergeleri.
 - **Batch oy**: Ayarlanabilir batch sayısı ve oy aralığı; her oyda sürücü aç/kapat.
 - **Paralel oy**: Aynı anda birden fazla pencere açarak batch süresini kısaltma (1-10 işçi).
+- **Senkronsuz oy tıklaması**: Tüm pencereler açıldıktan sonra butonlar topluca tıklanır; yarım açılan pencereler diğerlerini engellemez.
 - **Kapsamlı log**: UI log + `logs/votebot5.log` dosyası.
 - **Temiz tema**: Koyu lacivert arka plan, amber/azure aksanlı kartlar.
 
