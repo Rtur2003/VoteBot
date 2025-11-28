@@ -2627,3 +2627,54 @@ Symbols not available. Dumping unresolved backtrace:
 2025-11-27 16:13:11,613 [INFO] Oy verildi (batch 1/1)
 2025-11-27 16:13:33,398 [INFO] Oy verildi (batch 1/1)
 2025-11-27 16:13:40,353 [INFO] Bot durduruluyor...
+2025-11-29 00:02:51,985 [ERROR] Chrome versiyon okunamadı: Command '['C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', '--version']' timed out after 5 seconds
+2025-11-29 00:02:51,985 [INFO] Sürücü: C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\chromedriver.exe
+2025-11-29 00:02:51,986 [INFO] Chrome: C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-11-29 00:02:53,534 [INFO] Ön kontrol başarılı
+2025-11-29 00:02:55,626 [INFO] Varsayılan ayarlar yüklendi.
+2025-11-29 00:02:55,627 [INFO] Ayarlar kaydedildi.
+2025-11-29 00:02:57,693 [INFO] Ayarlar kaydedildi.
+2025-11-29 00:03:04,727 [INFO] Log temizlendi
+2025-11-29 00:03:41,954 [ERROR] Chrome versiyon okunamadı: Command '['C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', '--version']' timed out after 5 seconds
+2025-11-29 00:03:41,955 [INFO] Sürücü: C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\chromedriver.exe
+2025-11-29 00:03:41,955 [INFO] Chrome: C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-11-29 00:03:41,955 [INFO] Bot başlatıldı
+2025-11-29 00:03:59,236 [INFO] Oy verildi (pencere 1/1)
+2025-11-29 00:04:09,173 [INFO] Log temizlendi
+2025-11-29 00:04:21,265 [INFO] Oy verildi (pencere 1/1)
+2025-11-29 00:04:30,017 [INFO] Bot durduruluyor...
+2025-11-29 00:04:33,115 [INFO] Log temizlendi
+2025-11-29 00:04:33,408 [INFO] Log temizlendi
+2025-11-29 00:04:58,680 [ERROR] Oy butonu bulunamadı, ekran görüntüsü: C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\logs\vote_fail_20251129_000458.png
+2025-11-29 00:04:59,775 [ERROR] Oy butonu bulunamadı, ekran görüntüsü alınamadı.
+2025-11-29 00:05:00,869 [ERROR] Oy hazırlık hatası
+Traceback (most recent call last):
+  File "c:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\Code_EXE\VoteBot(5)\VoteBot5.py", line 1042, in _locate_vote_button
+    self.log_message(f"Oy butonu bulunamadı, ekran görüntüsü: {screenshot}", level="error")
+  File "c:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\Code_EXE\VoteBot(5)\VoteBot5.py", line 662, in log_message
+    self._schedule(append)
+  File "c:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\Code_EXE\VoteBot(5)\VoteBot5.py", line 633, in _schedule
+    self.root.after(0, func)
+  File "C:\Users\MONSTER\AppData\Local\Programs\Python\Python39\lib\tkinter\__init__.py", line 813, in after
+    name = self._register(callit)
+  File "C:\Users\MONSTER\AppData\Local\Programs\Python\Python39\lib\tkinter\__init__.py", line 1521, in _register
+    self.tk.createcommand(name, f)
+RuntimeError: main thread is not in main loop
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\Code_EXE\VoteBot(5)\VoteBot5.py", line 1011, in _prepare_vote_session
+    vote_button = self._locate_vote_button(driver, wait)
+  File "c:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\Code_EXE\VoteBot(5)\VoteBot5.py", line 1044, in _locate_vote_button
+    self.log_message("Oy butonu bulunamadı, ekran görüntüsü alınamadı.", level="error")
+  File "c:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\Code_EXE\VoteBot(5)\VoteBot5.py", line 662, in log_message
+    self._schedule(append)
+  File "c:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\Code_EXE\VoteBot(5)\VoteBot5.py", line 633, in _schedule
+    self.root.after(0, func)
+  File "C:\Users\MONSTER\AppData\Local\Programs\Python\Python39\lib\tkinter\__init__.py", line 813, in after
+    name = self._register(callit)
+  File "C:\Users\MONSTER\AppData\Local\Programs\Python\Python39\lib\tkinter\__init__.py", line 1521, in _register
+    self.tk.createcommand(name, f)
+RuntimeError: main thread is not in main loop
+2025-11-29 00:05:00,895 [ERROR] Beklenmeyen hata (hazırlık): main thread is not in main loop

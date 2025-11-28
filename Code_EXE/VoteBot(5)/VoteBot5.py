@@ -77,12 +77,14 @@ class VoteBot5:
             "bg": "#0f172a",
             "panel": "#0b1220",
             "card": "#111827",
+            "border": "#1f2937",
             "accent": "#f59e0b",
             "accent2": "#22d3ee",
             "text": "#e5e7eb",
             "muted": "#94a3b8",
             "error": "#f87171",
             "success": "#34d399",
+            "danger": "#ef4444",
         }
 
         self.brand_icon = self._build_icon_image()
