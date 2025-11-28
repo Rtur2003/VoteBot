@@ -64,6 +64,7 @@ class VoteBot5:
         self.worker = None
         self._stop_event = threading.Event()
         self.log_records = []
+        self.log_history_limit = 500
         self.success_count = 0
         self.failure_count = 0
         self.autoscroll_var = tk.BooleanVar(value=True)
@@ -649,6 +650,8 @@ class VoteBot5:
             self._update_log_counts_badges()
 
         self.log_records.append((timestamp, level, message))
+        if len(self.log_records) > self.log_history_limit:
+            self.log_records = self.log_records[-self.log_history_limit :]
         if level == "error":
             self.failure_count += 1
             self.logger.error(message)
@@ -869,6 +872,8 @@ class VoteBot5:
     def start_bot(self):
         if self.is_running:
             return
+        if not self._update_settings_from_form(persist=True, notify=False):
+            return
         if not self._validate_paths(show_message=True):
             return
         self.is_running = True
@@ -1042,6 +1047,9 @@ class VoteBot5:
         self.apply_settings()
 
     def apply_settings(self):
+        return self._update_settings_from_form(persist=True, notify=True)
+
+    def _update_settings_from_form(self, persist=False, notify=True):
         try:
             pause = float(self.pause_entry.get())
             batch = max(1, int(self.batch_entry.get()))
@@ -1049,9 +1057,22 @@ class VoteBot5:
             max_err = max(1, int(self.max_errors_entry.get()))
             parallel = max(1, min(10, int(self.parallel_entry.get())))
         except ValueError:
-            messagebox.showerror("Hata", "Sayısal alanlar geçerli bir sayı olmalı.")
-            return
-        self.target_url = self.url_entry.get().strip()
+            messagebox.showerror("Hata", "Sayısal alanlar geçerli ve pozitif olmalı.")
+            self.log_message("Ayarlar okunamadı: sayısal alan hatalı.", level="error")
+            return False
+
+        if pause <= 0:
+            messagebox.showerror("Hata", "Oy aralığı 0'dan büyük olmalı.")
+            self.log_message("Geçersiz oy aralığı değeri girildi.", level="error")
+            return False
+
+        url = self.url_entry.get().strip()
+        if not url or not url.startswith(("http://", "https://")):
+            messagebox.showerror("Hata", "Geçerli bir hedef URL girin (http/https ile).")
+            self.log_message("Geçersiz hedef URL girildi.", level="error")
+            return False
+
+        self.target_url = url
         self.pause_between_votes = pause
         self.batch_size = batch
         self.timeout_seconds = timeout_val
@@ -1068,14 +1089,20 @@ class VoteBot5:
         self.config.setdefault("paths", self.paths)
         self.config["paths"].setdefault("driver", self.paths.get("driver", ""))
         self.config["paths"].setdefault("chrome", self.paths.get("chrome", ""))
-        try:
-            with self.config_path.open("w", encoding="utf-8") as f:
-                json.dump(self.config, f, ensure_ascii=False, indent=4)
-            self.log_message("Ayarlar kaydedildi.")
-            messagebox.showinfo("Ayarlar", "Ayarlar güncellendi.")
-        except Exception as exc:
-            self.log_message(f"Ayarlar kaydedilemedi: {exc}", level="error")
-            messagebox.showerror("Hata", f"Ayarlar kaydedilemedi: {exc}")
+        self.config["paths"].setdefault("logs", self.paths.get("logs", "logs"))
+
+        if persist:
+            try:
+                with self.config_path.open("w", encoding="utf-8") as f:
+                    json.dump(self.config, f, ensure_ascii=False, indent=4)
+                if notify:
+                    self.log_message("Ayarlar kaydedildi.")
+                    messagebox.showinfo("Ayarlar", "Ayarlar güncellendi.")
+            except Exception as exc:
+                self.log_message(f"Ayarlar kaydedilemedi: {exc}", level="error")
+                messagebox.showerror("Hata", f"Ayarlar kaydedilemedi: {exc}")
+                return False
+        return True
 
     def open_logs(self):
         try:

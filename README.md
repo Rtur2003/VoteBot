@@ -6,6 +6,7 @@ Profesyonel, GUI tabanlı DistroKid oy botu. Sürüm 5, yol/doğrulama kontrolle
 - **Ön kontrol**: Chrome/ChromeDriver yolları ve sürüm uyumluluğu otomatik denetlenir.
 - **Başlat/Durdur güvenliği**: İş parçacığı güvenli UI, temiz durdurma, durum göstergeleri.
 - **Batch oy**: Ayarlanabilir batch sayısı ve oy aralığı; her oyda sürücü aç/kapat.
+- **Paralel oy**: Aynı anda birden fazla pencere açarak batch süresini kısaltma (1-10 işçi).
 - **Kapsamlı log**: UI log + `logs/votebot5.log` dosyası.
 - **Temiz tema**: Koyu lacivert arka plan, amber/azure aksanlı kartlar.
 
@@ -41,11 +42,13 @@ pip install -r requirements.txt
   "pause_between_votes": 3,
   "batch_size": 1,
   "max_errors": 3,
+  "parallel_workers": 2,
   "headless": true,
   "timeout_seconds": 15
 }
 ```
 - `driver` ve `logs` göreli bırakılırsa kök klasöre göre çözümlenir.
+- `parallel_workers`: Aynı anda açılacak pencere sayısı (1-10 arası).
 - `headless` kapatırsanız tarayıcıyı görerek izleyebilirsiniz.
 
 ## Çalıştırma

@@ -9,6 +9,7 @@
     "pause_between_votes": 3,
     "batch_size": 1,
     "max_errors": 3,
+    "parallel_workers": 2,
     "headless": true,
     "timeout_seconds": 15
 }

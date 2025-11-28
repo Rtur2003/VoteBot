@@ -1,12 +1,15 @@
 {
     "paths": {
         "driver": "",
-        "chrome": ""
+        "chrome": "",
+        "logs": "logs",
+        "config": "config.json"
     },
     "target_url": "https://distrokid.com/spotlight/hasanarthuraltunta/vote/",
     "pause_between_votes": 3.0,
     "batch_size": 1,
     "max_errors": 3,
+    "parallel_workers": 2,
     "headless": true,
     "timeout_seconds": 15
 }
