@@ -2691,3 +2691,14 @@ RuntimeError: main thread is not in main loop
 2025-11-29 17:10:01,205 [ERROR] Oy butonu zaman aşımına uğradı (hazırlık).
 2025-11-29 17:10:03,291 [ERROR] Çok hata alındı, 5 saniye bekleniyor ve yeniden denenecek.
 2025-11-29 17:11:45,996 [INFO] Oy verildi (pencere 1/1)
+2025-11-29 17:14:43,055 [ERROR] Oy butonu bulunamadı, ekran görüntüsü: C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\logs\vote_fail_20251129_171347.png
+2025-11-29 17:14:43,055 [ERROR] Oy butonu zaman aşımına uğradı (hazırlık).
+2025-11-29 17:16:16,408 [INFO] Bot durduruluyor...
+2025-11-29 17:16:20,351 [INFO] Log temizlendi
+2025-11-29 17:16:29,339 [INFO] Ayarlar kaydedildi.
+2025-11-29 17:16:37,627 [ERROR] Chrome versiyon okunamadı: Command '['C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', '--version']' timed out after 5 seconds
+2025-11-29 17:16:37,627 [INFO] Sürücü: C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\chromedriver.exe
+2025-11-29 17:16:37,627 [INFO] Chrome: C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-11-29 17:16:37,628 [INFO] Bot başlatıldı
+2025-11-29 17:17:22,132 [ERROR] Oy butonu bulunamadı, ekran görüntüsü alınamadı.
+2025-11-29 17:17:22,133 [ERROR] Oy butonu zaman aşımına uğradı (hazırlık).

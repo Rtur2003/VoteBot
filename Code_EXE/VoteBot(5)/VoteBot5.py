@@ -591,8 +591,38 @@ window.chrome.runtime = {};
             style="Helper.TLabel",
         ).grid(row=15, column=0, columnspan=2, sticky="w", pady=(0, 8))
 
+        ttk.Label(
+            settings,
+            text="Oy buton seçicileri (satır satır CSS/XPath)",
+            background=self.colors["panel"],
+            foreground=self.colors["text"],
+        ).grid(row=16, column=0, sticky="nw", pady=(4, 0), padx=(0, 8))
+        self.selectors_text = scrolledtext.ScrolledText(
+            settings,
+            height=4,
+            width=40,
+            background=self.colors["panel"],
+            foreground=self.colors["text"],
+            insertbackground=self.colors["text"],
+            font=("Consolas", 9),
+            borderwidth=1,
+            relief=tk.FLAT,
+            highlightthickness=1,
+            highlightbackground=self.colors["card"],
+        )
+        self.selectors_text.grid(row=16, column=1, sticky="ew", pady=(4, 0))
+        selectors_helper = (
+            "Örnekler: a[data-action='vote'], button[data-action='vote'], "
+            "xpath://button[contains(.,'vote')]"
+        )
+        ttk.Label(settings, text=selectors_helper, style="Helper.TLabel").grid(
+            row=17, column=1, sticky="w", pady=(0, 8)
+        )
+        for line in self.config.get("vote_selectors", []):
+            self.selectors_text.insert(tk.END, f"{line}\n")
+
         actions = ttk.Frame(settings, style="Panel.TFrame")
-        actions.grid(row=16, column=0, columnspan=2, sticky="ew", pady=(6, 0))
+        actions.grid(row=18, column=0, columnspan=2, sticky="ew", pady=(6, 0))
         actions.columnconfigure((0, 1), weight=1)
         self.apply_btn = ttk.Button(
             actions,
@@ -826,6 +856,10 @@ window.chrome.runtime = {};
                 check.state(["disabled"])
             else:
                 check.state(["!disabled"])
+        if running:
+            self.selectors_text.config(state=tk.DISABLED)
+        else:
+            self.selectors_text.config(state=tk.NORMAL)
 
     def _insert_log_line(self, timestamp, message, level):
         tag = "info"
@@ -1229,6 +1263,11 @@ window.chrome.runtime = {};
             timeout_val = max(5, int(self.timeout_entry.get()))
             max_err = max(1, int(self.max_errors_entry.get()))
             parallel = max(1, min(10, int(self.parallel_entry.get())))
+            selector_lines = [
+                line.strip()
+                for line in self.selectors_text.get("1.0", tk.END).splitlines()
+                if line.strip()
+            ]
         except ValueError:
             messagebox.showerror("Hata", "Sayısal alanlar geçerli ve pozitif olmalı.")
             self.log_message("Ayarlar okunamadı: sayısal alan hatalı.", level="error")
@@ -1261,6 +1300,7 @@ window.chrome.runtime = {};
         self.config["headless"] = self.headless
         self.config["timeout_seconds"] = self.timeout_seconds
         self.config["use_selenium_manager"] = self.use_selenium_manager
+        self.config["vote_selectors"] = selector_lines
         self.config.setdefault("paths", self.paths)
         self.config["paths"].setdefault("driver", self.paths.get("driver", ""))
         self.config["paths"].setdefault("chrome", self.paths.get("chrome", ""))
