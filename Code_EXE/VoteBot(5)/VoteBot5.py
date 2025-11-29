@@ -1127,7 +1127,9 @@ window.chrome.runtime = {};
                     pass
 
         if failures or successes == 0:
+            self.log_message(f"Batch tamamlanamadı. Başarılı: {successes}, Hata: {failures}", level="error")
             return False
+        self.log_message(f"Batch tamamlandı. Başarılı: {successes}, Hata: {failures}", level="success")
         self.update_status("Bekliyor", tone="idle")
         return True
 
