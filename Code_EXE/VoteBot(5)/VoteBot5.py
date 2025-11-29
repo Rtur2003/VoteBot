@@ -1211,6 +1211,9 @@ window.chrome.runtime = {};
         self.parallel_entry.delete(0, tk.END)
         self.parallel_entry.insert(0, str(defaults["parallel_workers"]))
         self.headless_var.set(defaults["headless"])
+        self.use_selenium_manager = defaults["use_selenium_manager"]
+        self.auto_driver_var.set(defaults["use_selenium_manager"])
+        self.vote_selectors = self._build_vote_selectors(defaults.get("vote_selectors"))
         self.log_message("Varsayılan ayarlar yüklendi.")
         self.apply_settings()
 
@@ -1260,6 +1263,7 @@ window.chrome.runtime = {};
         self.config["paths"].setdefault("driver", self.paths.get("driver", ""))
         self.config["paths"].setdefault("chrome", self.paths.get("chrome", ""))
         self.config["paths"].setdefault("logs", self.paths.get("logs", "logs"))
+        self.vote_selectors = self._build_vote_selectors(self.config.get("vote_selectors"))
 
         if persist:
             try:
