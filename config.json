@@ -11,5 +11,7 @@
     "max_errors": 3,
     "parallel_workers": 10,
     "headless": true,
-    "timeout_seconds": 15
+    "timeout_seconds": 15,
+    "use_selenium_manager": false,
+    "vote_selectors": []
 }

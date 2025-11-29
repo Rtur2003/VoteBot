@@ -10,6 +10,8 @@ Profesyonel, GUI tabanlı DistroKid oy botu. Sürüm 5, yol/doğrulama kontrolle
 - **Senkronsuz oy tıklaması**: Tüm pencereler açıldıktan sonra butonlar topluca tıklanır; yarım açılan pencereler diğerlerini engellemez.
 - **Kapsamlı log**: UI log + `logs/votebot5.log` dosyası.
 - **Temiz tema**: Koyu lacivert arka plan, amber/azure aksanlı kartlar.
+- **Otomatik sürücü seçeneği**: Selenium Manager ile ChromeDriver'ı otomatik indir/güncelle (opsiyonel).
+- **Esnek buton bulma**: CSS/XPath listesiyle oy butonu fallback'li bulunur.
 
 ## Gereksinimler
 - Python 3.9+
@@ -28,6 +30,7 @@ pip install -r requirements.txt
 - Aynı major sürüme sahip ChromeDriver indirin (örn. Chrome 142 için `142.x` driver):  
   https://googlechromelabs.github.io/chrome-for-testing/
 - İnen `chromedriver.exe`yi proje köküne koyun: `C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\chromedriver.exe`
+- Alternatif: `use_selenium_manager` ayarını `true` yaparsanız driver'ı Selenium otomatik indirir (internet gerekir).
 
 ## Yapılandırma
 `config.json` (kök) veya `Code_EXE/VoteBot(5)/config.json`:
@@ -45,12 +48,20 @@ pip install -r requirements.txt
   "max_errors": 3,
   "parallel_workers": 2,
   "headless": true,
-  "timeout_seconds": 15
+  "timeout_seconds": 15,
+  "use_selenium_manager": false,
+  "vote_selectors": [
+    "a[data-action='vote']",
+    "button[data-action='vote']",
+    "xpath://a[contains(translate(., 'VOTE', 'vote'), 'vote')]"
+  ]
 }
 ```
 - `driver` ve `logs` göreli bırakılırsa kök klasöre göre çözümlenir.
 - `parallel_workers`: Aynı anda açılacak pencere sayısı (1-10 arası).
 - `headless` kapatırsanız tarayıcıyı görerek izleyebilirsiniz.
+- `use_selenium_manager`: `true` yaparsanız ChromeDriver otomatik indirilir/güncellenir (internet gerekir).
+- `vote_selectors`: Oy butonunu bulmak için ek CSS/XPath seçimi; ilk eşleşen kullanılır.
 
 ## Çalıştırma
 ```bash

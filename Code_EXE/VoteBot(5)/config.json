@@ -11,5 +11,12 @@
     "max_errors": 3,
     "parallel_workers": 2,
     "headless": true,
-    "timeout_seconds": 15
+    "timeout_seconds": 15,
+    "use_selenium_manager": false,
+    "vote_selectors": [
+        "a[data-action='vote']",
+        "button[data-action='vote']",
+        "a[href*='/vote'][role='button']",
+        "xpath://a[contains(translate(., 'VOTE', 'vote'), 'vote')]"
+    ]
 }
