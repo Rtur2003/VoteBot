@@ -821,10 +821,11 @@ window.chrome.runtime = {};
             entry.state(state_flag)
         for btn in [self.apply_btn, self.defaults_btn, self.preflight_btn]:
             btn.state(state_flag)
-        if running:
-            self.headless_check.state(["disabled"])
-        else:
-            self.headless_check.state(["!disabled"])
+        for check in [self.headless_check, self.auto_driver_check]:
+            if running:
+                check.state(["disabled"])
+            else:
+                check.state(["!disabled"])
 
     def _insert_log_line(self, timestamp, message, level):
         tag = "info"
@@ -912,54 +913,91 @@ window.chrome.runtime = {};
         return True
 
     def _validate_paths(self, show_message=True):
-        driver_path = self._resolve_driver_path()
+        driver_path = None if self.use_selenium_manager else self._resolve_driver_path()
         chrome_path = self._resolve_chrome_path()
         problems = []
-        if not driver_path or not driver_path.exists():
+        if not self.use_selenium_manager and (not driver_path or not driver_path.exists()):
             problems.append("chromedriver bulunamadı. config.json'daki 'paths.driver' yolunu kontrol edin.")
         if not chrome_path or not chrome_path.exists():
-            problems.append("Chrome bulunamadı. 'paths.chrome' yolunu kontrol edin.")
+            if self.use_selenium_manager:
+                self.log_message(
+                    "Chrome yolu bulunamadı; Selenium Manager Chrome for Testing deneyecek.", level="info"
+                )
+            else:
+                problems.append("Chrome bulunamadı. 'paths.chrome' yolunu kontrol edin.")
         if problems:
             if show_message:
                 messagebox.showerror("Yol Hatası", "\n".join(problems))
             for msg in problems:
                 self.log_message(msg, level="error")
             return False
-        if not self._check_version_compatibility(driver_path, chrome_path):
+        if not self.use_selenium_manager and not self._check_version_compatibility(driver_path, chrome_path):
             if show_message:
                 messagebox.showerror(
                     "Sürüm Uyumsuzluğu",
                     "ChromeDriver ve Chrome sürümleri farklı. Lütfen sürümü eşleştirin.",
                 )
             return False
-        self.driver_path = str(driver_path)
-        self.chrome_path = str(chrome_path)
-        self.log_message(f"Sürücü: {self.driver_path}")
-        self.log_message(f"Chrome: {self.chrome_path}")
+        self.driver_path = str(driver_path) if driver_path else None
+        self.chrome_path = str(chrome_path) if chrome_path and chrome_path.exists() else None
+        if self.use_selenium_manager:
+            self.log_message("ChromeDriver Selenium Manager tarafından otomatik yönetilecek.")
+        else:
+            self.log_message(f"Sürücü: {self.driver_path}")
+        if self.chrome_path:
+            self.log_message(f"Chrome: {self.chrome_path}")
         return True
 
     def get_chrome_options(self):
         chrome_options = Options()
-        chrome_options.binary_location = self.chrome_path
+        if self.chrome_path:
+            chrome_options.binary_location = self.chrome_path
         if self.headless:
             chrome_options.add_argument("--headless=new")
         chrome_options.add_argument("--disable-gpu")
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--window-size=1920,1080")
         chrome_options.add_argument("--disable-extensions")
         chrome_options.add_argument("--disable-blink-features=AutomationControlled")
-        chrome_options.add_argument(
-            "--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-        )
+        chrome_options.add_argument("--remote-allow-origins=*")
+        chrome_options.add_argument("--disable-notifications")
+        chrome_options.add_argument("--log-level=3")
         chrome_options.page_load_strategy = "none"
-        chrome_options.add_experimental_option("excludeSwitches", ["enable-logging"])
+        chrome_options.add_experimental_option(
+            "excludeSwitches", ["enable-logging", "enable-automation"]
+        )
+        chrome_options.add_experimental_option("useAutomationExtension", False)
+        chrome_options.add_experimental_option(
+            "prefs",
+            {
+                "credentials_enable_service": False,
+                "profile.password_manager_enabled": False,
+                "intl.accept_languages": "tr-TR,tr",
+            },
+        )
         return chrome_options
 
     def create_driver(self):
+        options = self.get_chrome_options()
         try:
-            service = Service(executable_path=self.driver_path)
-            return webdriver.Chrome(service=service, options=self.get_chrome_options())
+            if self.use_selenium_manager or not self.driver_path:
+                driver = webdriver.Chrome(options=options)
+            else:
+                service = Service(executable_path=self.driver_path)
+                driver = webdriver.Chrome(service=service, options=options)
+            self._apply_stealth_patches(driver)
+            return driver
         except WebDriverException as exc:
             self.log_message(f"ChromeDriver başlatılamadı: {exc}", level="error")
+            if not self.use_selenium_manager:
+                self.log_message("Selenium Manager ile otomatik indirme deneniyor...", level="info")
+                try:
+                    driver = webdriver.Chrome(options=options)
+                    self._apply_stealth_patches(driver)
+                    return driver
+                except Exception as exc2:
+                    self.log_message(f"Selenium Manager da başarısız: {exc2}", level="error")
             return None
 
     def start_bot(self):
@@ -1097,10 +1135,14 @@ window.chrome.runtime = {};
         driver = self.create_driver()
         if not driver:
             return None
+        if self._stop_event.is_set():
+            driver.quit()
+            return None
         driver.set_page_load_timeout(self.timeout_seconds)
         wait = WebDriverWait(driver, self.timeout_seconds)
         try:
             driver.get(self.target_url)
+            self._wait_for_document_ready(driver, timeout=self.timeout_seconds)
             vote_button = self._locate_vote_button(driver, wait)
             return driver, vote_button
         except TimeoutException:
@@ -1115,17 +1157,17 @@ window.chrome.runtime = {};
         return None
 
     def _locate_vote_button(self, driver, wait):
-        selectors = [
-            (By.CSS_SELECTOR, "a[data-action='vote']"),
-            (
-                By.XPATH,
-                '//*[@id="distroListContainer"]/div[3]/div[3]/div[1]/div[1]/div[2]/div[2]/a[1]',
-            ),
-        ]
         last_exc = None
-        for by, value in selectors:
+        for by, value in self.vote_selectors:
+            if self._stop_event.is_set():
+                break
             try:
-                return wait.until(EC.element_to_be_clickable((by, value)))
+                button = wait.until(EC.element_to_be_clickable((by, value)))
+                try:
+                    driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", button)
+                except Exception:
+                    pass
+                return button
             except Exception as exc:
                 last_exc = exc
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
