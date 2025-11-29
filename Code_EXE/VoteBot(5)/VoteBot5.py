@@ -39,6 +39,8 @@ class VoteBot5:
             "parallel_workers": 2,
             "headless": True,
             "timeout_seconds": 15,
+            "use_selenium_manager": False,
+            "vote_selectors": [],
         }
         self.config_path = self._find_config_path()
         self.config = self._load_config()
@@ -53,6 +55,8 @@ class VoteBot5:
         self.timeout_seconds = int(self.config.get("timeout_seconds", 15))
         self.max_errors = max(1, int(self.config.get("max_errors", 3)))
         self.parallel_workers = max(1, min(10, int(self.config.get("parallel_workers", 2))))
+        self.use_selenium_manager = bool(self.config.get("use_selenium_manager", False))
+        self.vote_selectors = self._build_vote_selectors(self.config.get("vote_selectors"))
 
         self.driver_path = None
         self.chrome_path = None
@@ -115,6 +119,31 @@ class VoteBot5:
                 return merged
         except Exception:
             return dict(self.defaults)
+
+    def _build_vote_selectors(self, custom_selectors):
+        defaults = [
+            (By.CSS_SELECTOR, "a[data-action='vote']"),
+            (By.CSS_SELECTOR, "button[data-action='vote']"),
+            (By.CSS_SELECTOR, "a[href*='/vote'][role='button']"),
+            (By.XPATH, "//a[contains(translate(., 'VOTE', 'vote'), 'vote')]"),
+            (By.XPATH, "//button[contains(translate(., 'VOTE', 'vote'), 'vote')]"),
+            (
+                By.XPATH,
+                "//*[@id='distroListContainer']//a[contains(@class,'vote') or contains(@href,'/vote')]",
+            ),
+        ]
+        selectors = list(defaults)
+        for raw in custom_selectors or []:
+            if not isinstance(raw, str):
+                continue
+            lower = raw.lower()
+            if lower.startswith("xpath:"):
+                selectors.append((By.XPATH, raw.split(":", 1)[1].strip()))
+            elif lower.startswith("css:"):
+                selectors.append((By.CSS_SELECTOR, raw.split(":", 1)[1].strip()))
+            else:
+                selectors.append((By.CSS_SELECTOR, raw.strip()))
+        return selectors
 
     def _resolve_logs_dir(self):
         log_path = self.paths.get("logs") or "logs"
@@ -216,7 +245,13 @@ class VoteBot5:
 
         style.configure("Main.TFrame", background=self.colors["bg"])
         style.configure("Panel.TFrame", background=self.colors["panel"])
-        style.configure("Card.TFrame", background=self.colors["card"])
+        style.configure(
+            "Card.TFrame",
+            background=self.colors["card"],
+            borderwidth=1,
+            relief="flat",
+            bordercolor=self.colors["border"],
+        )
         style.configure(
             "TLabelFrame",
             background=self.colors["panel"],
@@ -260,34 +295,43 @@ class VoteBot5:
             foreground=self.colors["muted"],
         )
         style.configure(
+            "FieldLabel.TLabel",
+            font=("Segoe UI", 10, "bold"),
+            background=self.colors["panel"],
+            foreground=self.colors["text"],
+        )
+        style.configure(
             "Badge.TLabel",
             font=("Segoe UI", 10, "bold"),
             background=self.colors["card"],
             foreground=self.colors["text"],
             padding=(10, 6),
         )
-        style.configure(
-            "Accent.TButton",
-            font=("Segoe UI", 11, "bold"),
-            background=self.colors["accent"],
-            foreground="#0f172a",
-            padding=8,
-        )
-        style.map(
-            "Accent.TButton",
-            background=[("active", self.colors["accent2"]), ("disabled", "#6b7280")],
-        )
-        style.configure(
-            "Ghost.TButton",
-            font=("Segoe UI", 10),
-            background=self.colors["panel"],
-            foreground=self.colors["text"],
-            padding=6,
-        )
-        style.map(
-            "Ghost.TButton",
-            background=[("active", "#1f2937"), ("disabled", "#1f2937")],
-        )
+        def button_style(name, bg, fg, active=None, disabled=None, border=None, padding=8, bold=True):
+            active = active or bg
+            disabled = disabled or "#1f2937"
+            font = ("Segoe UI", 11, "bold") if bold else ("Segoe UI", 10)
+            kwargs = {
+                "font": font,
+                "background": bg,
+                "foreground": fg,
+                "padding": padding,
+                "relief": "flat",
+                "borderwidth": 0,
+            }
+            if border:
+                kwargs.update({"bordercolor": border, "focuscolor": border})
+            style.configure(name, **kwargs)
+            style.map(
+                name,
+                background=[("active", active), ("disabled", disabled)],
+                foreground=[("disabled", "#9ca3af")],
+            )
+
+        button_style("Accent.TButton", self.colors["accent"], "#0f172a", active=self.colors["accent2"], disabled="#6b7280")
+        button_style("Ghost.TButton", self.colors["panel"], self.colors["text"], active="#1f2937", disabled="#1f2937", bold=False, padding=7)
+        button_style("Outline.TButton", self.colors["panel"], self.colors["text"], active=self.colors["card"], disabled="#1f2937", border=self.colors["accent2"], bold=False, padding=7)
+        button_style("Danger.TButton", self.colors["danger"], "#0f172a", active="#dc2626", disabled="#7f1d1d")
         style.configure(
             "Switch.TCheckbutton",
             background=self.colors["panel"],
