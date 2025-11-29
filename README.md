@@ -12,6 +12,7 @@ Profesyonel, GUI tabanlı DistroKid oy botu. Sürüm 5, yol/doğrulama kontrolle
 - **Temiz tema**: Koyu lacivert arka plan, amber/azure aksanlı kartlar.
 - **Otomatik sürücü seçeneği**: Selenium Manager ile ChromeDriver'ı otomatik indir/güncelle (opsiyonel).
 - **Esnek buton bulma**: CSS/XPath listesiyle oy butonu fallback'li bulunur.
+- **Akıllı bekleme**: Art arda hatalarda üstel backoff ile yeniden deneme.
 
 ## Gereksinimler
 - Python 3.9+
@@ -54,7 +55,9 @@ pip install -r requirements.txt
     "a[data-action='vote']",
     "button[data-action='vote']",
     "xpath://a[contains(translate(., 'VOTE', 'vote'), 'vote')]"
-  ]
+  ],
+  "backoff_seconds": 5,
+  "backoff_cap_seconds": 60
 }
 ```
 - `driver` ve `logs` göreli bırakılırsa kök klasöre göre çözümlenir.
@@ -62,6 +65,7 @@ pip install -r requirements.txt
 - `headless` kapatırsanız tarayıcıyı görerek izleyebilirsiniz.
 - `use_selenium_manager`: `true` yaparsanız ChromeDriver otomatik indirilir/güncellenir (internet gerekir).
 - `vote_selectors`: Oy butonunu bulmak için ek CSS/XPath seçimi; ilk eşleşen kullanılır.
+- `backoff_seconds` / `backoff_cap_seconds`: Art arda çok hata olduğunda bekleme süresi (üstel olarak katlanır, üst sınır cap).
 
 ## Çalıştırma
 ```bash

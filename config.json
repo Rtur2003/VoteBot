@@ -13,5 +13,7 @@
     "headless": true,
     "timeout_seconds": 20,
     "use_selenium_manager": false,
-    "vote_selectors": []
+    "vote_selectors": [],
+    "backoff_seconds": 5,
+    "backoff_cap_seconds": 60
 }

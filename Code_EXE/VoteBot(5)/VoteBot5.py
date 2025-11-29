@@ -41,6 +41,8 @@ class VoteBot5:
             "timeout_seconds": 15,
             "use_selenium_manager": False,
             "vote_selectors": [],
+            "backoff_seconds": 5,
+            "backoff_cap_seconds": 60,
         }
         self.config_path = self._find_config_path()
         self.config = self._load_config()
@@ -57,6 +59,8 @@ class VoteBot5:
         self.parallel_workers = max(1, min(10, int(self.config.get("parallel_workers", 2))))
         self.use_selenium_manager = bool(self.config.get("use_selenium_manager", False))
         self.vote_selectors = self._build_vote_selectors(self.config.get("vote_selectors"))
+        self.backoff_seconds = float(self.config.get("backoff_seconds", 5))
+        self.backoff_cap_seconds = float(self.config.get("backoff_cap_seconds", 60))
 
         self.driver_path = None
         self.chrome_path = None
@@ -1068,21 +1072,24 @@ window.chrome.runtime = {};
 
     def run_bot(self):
         consecutive_errors = 0
+        backoff_delay = self.backoff_seconds
         while not self._stop_event.is_set():
             batch_ok = self.run_batch()
             if batch_ok:
                 consecutive_errors = 0
+                backoff_delay = self.backoff_seconds
             else:
                 consecutive_errors += 1
-                self.increment_error()
             if consecutive_errors >= self.max_errors:
+                wait_for = min(backoff_delay, self.backoff_cap_seconds)
                 self.log_message(
-                    "Çok hata alındı, 5 saniye bekleniyor ve yeniden denenecek.",
+                    f"Art arda {consecutive_errors} hata alındı, {wait_for} sn bekleniyor ve yeniden denenecek.",
                     level="error",
                 )
                 consecutive_errors = 0
-                if not self._sleep_with_checks(5):
+                if not self._sleep_with_checks(wait_for):
                     break
+                backoff_delay = min(backoff_delay * 2, self.backoff_cap_seconds)
             jitter = random.uniform(-0.3, 0.3)
             pause = max(0.5, self.pause_between_votes + jitter)
             if not self._sleep_with_checks(pause):
@@ -1115,6 +1122,7 @@ window.chrome.runtime = {};
                 if session:
                     prepared.append(session)
                 else:
+                    self.increment_error()
                     failures += 1
 
         if self._stop_event.is_set():
@@ -1149,10 +1157,12 @@ window.chrome.runtime = {};
                     successes += 1
                 except TimeoutException:
                     self.log_message("Oy butonu zaman aşımına uğradı.", level="error")
+                    self.increment_error()
                     failures += 1
                 except Exception as exc:
                     self.logger.exception("Oy verme hatası", exc_info=exc)
                     self.log_message(f"Beklenmeyen hata: {exc}", level="error")
+                    self.increment_error()
                     failures += 1
             finally:
                 try:
@@ -1250,6 +1260,12 @@ window.chrome.runtime = {};
         self.use_selenium_manager = defaults["use_selenium_manager"]
         self.auto_driver_var.set(defaults["use_selenium_manager"])
         self.vote_selectors = self._build_vote_selectors(defaults.get("vote_selectors"))
+        self.backoff_seconds = defaults["backoff_seconds"]
+        self.backoff_cap_seconds = defaults["backoff_cap_seconds"]
+        self.selectors_text.config(state=tk.NORMAL)
+        self.selectors_text.delete("1.0", tk.END)
+        for line in defaults.get("vote_selectors", []):
+            self.selectors_text.insert(tk.END, f"{line}\n")
         self.log_message("Varsayılan ayarlar yüklendi.")
         self.apply_settings()
 
@@ -1301,6 +1317,8 @@ window.chrome.runtime = {};
         self.config["timeout_seconds"] = self.timeout_seconds
         self.config["use_selenium_manager"] = self.use_selenium_manager
         self.config["vote_selectors"] = selector_lines
+        self.config["backoff_seconds"] = self.backoff_seconds
+        self.config["backoff_cap_seconds"] = self.backoff_cap_seconds
         self.config.setdefault("paths", self.paths)
         self.config["paths"].setdefault("driver", self.paths.get("driver", ""))
         self.config["paths"].setdefault("chrome", self.paths.get("chrome", ""))

@@ -18,5 +18,7 @@
         "button[data-action='vote']",
         "a[href*='/vote'][role='button']",
         "xpath://a[contains(translate(., 'VOTE', 'vote'), 'vote')]"
-    ]
+    ],
+    "backoff_seconds": 5,
+    "backoff_cap_seconds": 60
 }
