@@ -165,6 +165,39 @@ class VoteBot5:
         logger.addHandler(file_handler)
         return logger
 
+    def _wait_for_document_ready(self, driver, timeout=None):
+        deadline = time.time() + (timeout or self.timeout_seconds)
+        while time.time() < deadline and not self._stop_event.is_set():
+            try:
+                state = driver.execute_script("return document.readyState")
+                if state == "complete":
+                    return True
+            except Exception:
+                pass
+            time.sleep(0.2)
+        return False
+
+    def _apply_stealth_patches(self, driver):
+        try:
+            driver.execute_cdp_cmd(
+                "Page.addScriptToEvaluateOnNewDocument",
+                {
+                    "source": """
+Object.defineProperty(navigator, 'webdriver', {get: () => undefined});
+window.chrome = window.chrome || {};
+window.chrome.runtime = {};
+"""
+                },
+            )
+            browser_info = driver.execute_cdp_cmd("Browser.getVersion", {})
+            user_agent = browser_info.get("userAgent")
+            if user_agent:
+                driver.execute_cdp_cmd(
+                    "Network.setUserAgentOverride", {"userAgent": user_agent}
+                )
+        except Exception as exc:
+            self.logger.warning("Stealth ayarları uygulanamadı: %s", exc)
+
     def _build_icon_image(self, size=48):
         # Build a simple geometric icon for header/title bar.
         icon = tk.PhotoImage(width=size, height=size)
@@ -544,8 +577,22 @@ class VoteBot5:
             style="Helper.TLabel",
         ).grid(row=13, column=0, columnspan=2, sticky="w", pady=(0, 8))
 
+        self.auto_driver_var = tk.BooleanVar(value=self.use_selenium_manager)
+        self.auto_driver_check = ttk.Checkbutton(
+            settings,
+            text="ChromeDriver'ı Selenium Manager yönetsin",
+            variable=self.auto_driver_var,
+            style="Switch.TCheckbutton",
+        )
+        self.auto_driver_check.grid(row=14, column=0, columnspan=2, sticky="w", pady=(2, 0))
+        ttk.Label(
+            settings,
+            text="Driver yoksa/uyumsuzsa otomatik indirir (internet gerekir).",
+            style="Helper.TLabel",
+        ).grid(row=15, column=0, columnspan=2, sticky="w", pady=(0, 8))
+
         actions = ttk.Frame(settings, style="Panel.TFrame")
-        actions.grid(row=14, column=0, columnspan=2, sticky="ew", pady=(6, 0))
+        actions.grid(row=16, column=0, columnspan=2, sticky="ew", pady=(6, 0))
         actions.columnconfigure((0, 1), weight=1)
         self.apply_btn = ttk.Button(
             actions,
