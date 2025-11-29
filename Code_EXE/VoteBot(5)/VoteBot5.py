@@ -1247,6 +1247,7 @@ window.chrome.runtime = {};
         self.max_errors = max_err
         self.parallel_workers = parallel
         self.headless = bool(self.headless_var.get())
+        self.use_selenium_manager = bool(self.auto_driver_var.get())
         self.config["target_url"] = self.target_url
         self.config["pause_between_votes"] = self.pause_between_votes
         self.config["batch_size"] = self.batch_size
@@ -1254,6 +1255,7 @@ window.chrome.runtime = {};
         self.config["parallel_workers"] = self.parallel_workers
         self.config["headless"] = self.headless
         self.config["timeout_seconds"] = self.timeout_seconds
+        self.config["use_selenium_manager"] = self.use_selenium_manager
         self.config.setdefault("paths", self.paths)
         self.config["paths"].setdefault("driver", self.paths.get("driver", ""))
         self.config["paths"].setdefault("chrome", self.paths.get("chrome", ""))
