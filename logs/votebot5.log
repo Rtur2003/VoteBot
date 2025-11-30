@@ -35,3 +35,14 @@
 2025-11-30 12:55:42,055 [INFO] Batch tamamlandı. Başarılı: 1, Hata: 0
 2025-11-30 12:56:13,942 [INFO] Bot durduruluyor...
 2025-11-30 12:57:27,172 [ERROR] chromedriver bulunamadı. config.json'daki 'paths.driver' yolunu kontrol edin.
+2025-11-30 12:58:45,658 [INFO] Sürücü: C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\chromedriver.exe
+2025-11-30 12:58:45,658 [INFO] Chrome: C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-11-30 12:58:46,868 [INFO] Ön kontrol başarılı
+2025-11-30 12:59:40,931 [ERROR] Chrome versiyon okunamadı: Command '['C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', '--version']' timed out after 5 seconds
+2025-11-30 12:59:40,931 [INFO] Sürücü: C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\chromedriver.exe
+2025-11-30 12:59:40,931 [INFO] Chrome: C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-11-30 12:59:42,041 [INFO] Ön kontrol başarılı
+2025-11-30 12:59:50,936 [ERROR] Chrome versiyon okunamadı: Command '['C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', '--version']' timed out after 5 seconds
+2025-11-30 12:59:50,937 [INFO] Sürücü: C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\chromedriver.exe
+2025-11-30 12:59:50,937 [INFO] Chrome: C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-11-30 12:59:50,937 [INFO] Bot başlatıldı
