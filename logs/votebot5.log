@@ -8,3 +8,30 @@
 2025-11-30 12:36:30,740 [INFO] Batch tamamlandı. Başarılı: 1, Hata: 0
 2025-11-30 12:37:59,406 [INFO] Oy verildi (pencere 1/1)
 2025-11-30 12:38:01,510 [INFO] Batch tamamlandı. Başarılı: 1, Hata: 0
+2025-11-30 12:38:57,490 [INFO] Oy verildi (pencere 1/1)
+2025-11-30 12:38:59,693 [INFO] Batch tamamlandı. Başarılı: 1, Hata: 0
+2025-11-30 12:40:26,199 [INFO] Oy verildi (pencere 1/1)
+2025-11-30 12:40:28,344 [INFO] Batch tamamlandı. Başarılı: 1, Hata: 0
+2025-11-30 12:41:55,263 [INFO] Oy verildi (pencere 1/1)
+2025-11-30 12:41:57,381 [INFO] Batch tamamlandı. Başarılı: 1, Hata: 0
+2025-11-30 12:43:23,420 [INFO] Oy verildi (pencere 1/1)
+2025-11-30 12:43:25,589 [INFO] Batch tamamlandı. Başarılı: 1, Hata: 0
+2025-11-30 12:44:52,877 [INFO] Oy verildi (pencere 1/1)
+2025-11-30 12:44:55,049 [INFO] Batch tamamlandı. Başarılı: 1, Hata: 0
+2025-11-30 12:46:22,430 [INFO] Oy verildi (pencere 1/1)
+2025-11-30 12:46:24,553 [INFO] Batch tamamlandı. Başarılı: 1, Hata: 0
+2025-11-30 12:47:51,368 [INFO] Oy verildi (pencere 1/1)
+2025-11-30 12:47:53,493 [INFO] Batch tamamlandı. Başarılı: 1, Hata: 0
+2025-11-30 12:49:19,615 [INFO] Oy verildi (pencere 1/1)
+2025-11-30 12:49:21,747 [INFO] Batch tamamlandı. Başarılı: 1, Hata: 0
+2025-11-30 12:50:48,594 [INFO] Oy verildi (pencere 1/1)
+2025-11-30 12:50:50,706 [INFO] Batch tamamlandı. Başarılı: 1, Hata: 0
+2025-11-30 12:52:43,241 [ERROR] Oy butonu bulunamadı, ekran görüntüsü: C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\logs\vote_fail_20251130_125243.png
+2025-11-30 12:52:43,241 [ERROR] Oy butonu zaman aşımına uğradı (hazırlık).
+2025-11-30 12:52:45,324 [ERROR] Batch tamamlanamadı. Başarılı: 0, Hata: 1
+2025-11-30 12:54:11,449 [INFO] Oy verildi (pencere 1/1)
+2025-11-30 12:54:13,551 [INFO] Batch tamamlandı. Başarılı: 1, Hata: 0
+2025-11-30 12:55:39,941 [INFO] Oy verildi (pencere 1/1)
+2025-11-30 12:55:42,055 [INFO] Batch tamamlandı. Başarılı: 1, Hata: 0
+2025-11-30 12:56:13,942 [INFO] Bot durduruluyor...
+2025-11-30 12:57:27,172 [ERROR] chromedriver bulunamadı. config.json'daki 'paths.driver' yolunu kontrol edin.

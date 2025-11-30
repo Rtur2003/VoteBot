@@ -1,7 +1,7 @@
 ﻿{
     "paths": {
         "chrome": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
-        "driver": "chromedriver.exe",
+        "driver": "",
         "logs": "logs",
         "config": "config.json"
     },
@@ -12,7 +12,7 @@
     "parallel_workers": 2,
     "headless": true,
     "timeout_seconds": 15,
-    "use_selenium_manager": false,
+    "use_selenium_manager": true,
     "vote_selectors": [
         "a[data-action='vote']",
         "button[data-action='vote']",
