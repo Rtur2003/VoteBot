@@ -1335,6 +1335,8 @@ window.chrome.runtime = {};
             batch = max(1, int(self.batch_entry.get()))
             timeout_val = max(5, int(self.timeout_entry.get()))
             max_err = max(1, int(self.max_errors_entry.get()))
+            backoff_val = float(self.backoff_entry.get())
+            backoff_cap = float(self.backoff_cap_entry.get())
             parallel = max(1, min(10, int(self.parallel_entry.get())))
             selector_lines = [
                 line.strip()
@@ -1350,6 +1352,14 @@ window.chrome.runtime = {};
             messagebox.showerror("Hata", "Oy aralığı 0'dan büyük olmalı.")
             self.log_message("Geçersiz oy aralığı değeri girildi.", level="error")
             return False
+        if backoff_val <= 0 or backoff_cap <= 0:
+            messagebox.showerror("Hata", "Backoff süreleri 0'dan büyük olmalı.")
+            self.log_message("Geçersiz backoff değeri girildi.", level="error")
+            return False
+        if backoff_cap < backoff_val:
+            messagebox.showerror("Hata", "Backoff üst sınırı başlangıç değerinden küçük olamaz.")
+            self.log_message("Geçersiz backoff üst sınırı girildi.", level="error")
+            return False
 
         url = self.url_entry.get().strip()
         if not url or not url.startswith(("http://", "https://")):
@@ -1362,6 +1372,8 @@ window.chrome.runtime = {};
         self.batch_size = batch
         self.timeout_seconds = timeout_val
         self.max_errors = max_err
+        self.backoff_seconds = backoff_val
+        self.backoff_cap_seconds = backoff_cap
         self.parallel_workers = parallel
         self.headless = bool(self.headless_var.get())
         self.use_selenium_manager = bool(self.auto_driver_var.get())
