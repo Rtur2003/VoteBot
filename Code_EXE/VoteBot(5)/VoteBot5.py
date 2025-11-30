@@ -1092,6 +1092,7 @@ window.chrome.runtime = {};
         self.log_message("Bot durduruluyor...")
         self.is_running = False
         self._stop_event.set()
+        self._cleanup_drivers()
         if self.worker and self.worker.is_alive():
             self.worker.join(timeout=1.0)
         self.update_status("Durduruldu", tone="stopped")
@@ -1124,6 +1125,7 @@ window.chrome.runtime = {};
             if not self._sleep_with_checks(pause):
                 break
         self.is_running = False
+        self._cleanup_drivers()
         self._schedule(lambda: self.update_status("Durduruldu", tone="stopped"))
         self._schedule(lambda: self.start_btn.config(state=tk.NORMAL, text="Başlat"))
         self._schedule(lambda: self.stop_btn.config(state=tk.DISABLED))
