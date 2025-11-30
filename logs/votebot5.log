@@ -1,0 +1,10 @@
+2025-11-30 12:35:15,360 [INFO] Varsayılan ayarlar yüklendi.
+2025-11-30 12:35:15,362 [INFO] Ayarlar kaydedildi.
+2025-11-30 12:35:23,253 [ERROR] Chrome versiyon okunamadı: Command '['C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', '--version']' timed out after 5 seconds
+2025-11-30 12:35:23,254 [INFO] Sürücü: C:\Users\MONSTER\Desktop\Yeni klasör\VoteBot\chromedriver.exe
+2025-11-30 12:35:23,254 [INFO] Chrome: C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-11-30 12:35:23,254 [INFO] Bot başlatıldı
+2025-11-30 12:36:28,632 [INFO] Oy verildi (pencere 1/1)
+2025-11-30 12:36:30,740 [INFO] Batch tamamlandı. Başarılı: 1, Hata: 0
+2025-11-30 12:37:59,406 [INFO] Oy verildi (pencere 1/1)
+2025-11-30 12:38:01,510 [INFO] Batch tamamlandı. Başarılı: 1, Hata: 0
