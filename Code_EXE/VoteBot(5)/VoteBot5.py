@@ -1304,6 +1304,12 @@ window.chrome.runtime = {};
         self.max_errors = defaults["max_errors"]
         self.max_errors_entry.delete(0, tk.END)
         self.max_errors_entry.insert(0, str(defaults["max_errors"]))
+        self.backoff_seconds = defaults["backoff_seconds"]
+        self.backoff_entry.delete(0, tk.END)
+        self.backoff_entry.insert(0, str(defaults["backoff_seconds"]))
+        self.backoff_cap_seconds = defaults["backoff_cap_seconds"]
+        self.backoff_cap_entry.delete(0, tk.END)
+        self.backoff_cap_entry.insert(0, str(defaults["backoff_cap_seconds"]))
         self.parallel_workers = defaults["parallel_workers"]
         self.parallel_entry.delete(0, tk.END)
         self.parallel_entry.insert(0, str(defaults["parallel_workers"]))
