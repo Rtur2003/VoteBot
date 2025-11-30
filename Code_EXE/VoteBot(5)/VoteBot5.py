@@ -1160,6 +1160,7 @@ window.chrome.runtime = {};
                     driver.quit()
                 except Exception:
                     pass
+                self._unregister_driver(driver)
             return False
 
         for idx, (driver, vote_button) in enumerate(prepared, start=1):
@@ -1198,11 +1199,18 @@ window.chrome.runtime = {};
                     driver.quit()
                 except Exception:
                     pass
+                self._unregister_driver(driver)
 
-        if failures or successes == 0:
+        if successes == 0:
             self.log_message(f"Batch tamamlanamadı. Başarılı: {successes}, Hata: {failures}", level="error")
             return False
-        self.log_message(f"Batch tamamlandı. Başarılı: {successes}, Hata: {failures}", level="success")
+        if failures:
+            self.log_message(
+                f"Batch kısmen tamamlandı. Başarılı: {successes}, Hata: {failures}",
+                level="success",
+            )
+        else:
+            self.log_message(f"Batch tamamlandı. Başarılı: {successes}, Hata: {failures}", level="success")
         self.update_status("Bekliyor", tone="idle")
         return True
 
