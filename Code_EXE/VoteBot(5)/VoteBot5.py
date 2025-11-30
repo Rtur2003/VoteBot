@@ -71,6 +71,8 @@ class VoteBot5:
         self.start_time = None
         self.worker = None
         self._stop_event = threading.Event()
+        self._driver_lock = threading.Lock()
+        self.active_drivers = set()
         self.log_records = []
         self.log_history_limit = 500
         self.success_count = 0
@@ -80,6 +82,13 @@ class VoteBot5:
 
         self.log_dir = self._resolve_logs_dir()
         self.logger = self._build_logger()
+        if getattr(self, "ignored_config_paths", []):
+            ignored = ", ".join(str(p) for p in self.ignored_config_paths)
+            self.logger.info(
+                "Birden fazla config bulundu. Kullanılan: %s, yok sayılan: %s",
+                self.config_path,
+                ignored,
+            )
 
         self.colors = {
             "bg": "#0f172a",
@@ -109,9 +118,12 @@ class VoteBot5:
             self.base_dir / "config.json",
             self.code_dir / "config.json",
         ]
-        for path in candidates:
-            if path.exists():
-                return path
+        existing = [path for path in candidates if path.exists()]
+        self.ignored_config_paths = []
+        if existing:
+            selected = existing[0]
+            self.ignored_config_paths = [path for path in existing[1:] if path != selected]
+            return selected
         return candidates[0]
 
     def _load_config(self):
@@ -768,6 +780,24 @@ window.chrome.runtime = {};
             self.runtime_label.config(text=f"{hours:02d}:{minutes:02d}:{seconds:02d}")
         self.root.after(1000, self._update_runtime)
 
+    def _register_driver(self, driver):
+        with self._driver_lock:
+            self.active_drivers.add(driver)
+
+    def _unregister_driver(self, driver):
+        with self._driver_lock:
+            self.active_drivers.discard(driver)
+
+    def _cleanup_drivers(self):
+        with self._driver_lock:
+            drivers = list(self.active_drivers)
+            self.active_drivers.clear()
+        for driver in drivers:
+            try:
+                driver.quit()
+            except Exception:
+                pass
+
     def log_message(self, message, level="info"):
         timestamp = datetime.now().strftime("%H:%M:%S")
 
@@ -1001,7 +1031,6 @@ window.chrome.runtime = {};
         chrome_options.add_argument("--remote-allow-origins=*")
         chrome_options.add_argument("--disable-notifications")
         chrome_options.add_argument("--log-level=3")
-        chrome_options.page_load_strategy = "none"
         chrome_options.add_experimental_option(
             "excludeSwitches", ["enable-logging", "enable-automation"]
         )
