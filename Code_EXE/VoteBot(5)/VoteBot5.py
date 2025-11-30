@@ -1210,8 +1210,14 @@ window.chrome.runtime = {};
         driver = self.create_driver()
         if not driver:
             return None
+        self._register_driver(driver)
+        keep_driver = False
         if self._stop_event.is_set():
-            driver.quit()
+            try:
+                driver.quit()
+            except Exception:
+                pass
+            self._unregister_driver(driver)
             return None
         driver.set_page_load_timeout(self.timeout_seconds)
         wait = WebDriverWait(driver, self.timeout_seconds)
@@ -1219,16 +1225,20 @@ window.chrome.runtime = {};
             driver.get(self.target_url)
             self._wait_for_document_ready(driver, timeout=self.timeout_seconds)
             vote_button = self._locate_vote_button(driver, wait)
+            keep_driver = True
             return driver, vote_button
         except TimeoutException:
             self.log_message("Oy butonu zaman aşımına uğradı (hazırlık).", level="error")
         except Exception as exc:
             self.logger.exception("Oy hazırlık hatası", exc_info=exc)
             self.log_message(f"Beklenmeyen hata (hazırlık): {exc}", level="error")
-        try:
-            driver.quit()
-        except Exception:
-            pass
+        finally:
+            if not keep_driver:
+                try:
+                    driver.quit()
+                except Exception:
+                    pass
+                self._unregister_driver(driver)
         return None
 
     def _locate_vote_button(self, driver, wait):
