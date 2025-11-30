@@ -566,18 +566,48 @@ window.chrome.runtime = {};
 
         ttk.Label(
             settings,
-            text="Paralel pencere",
+            text="Backoff (sn)",
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=10, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
+        self.backoff_entry = ttk.Entry(settings, width=10)
+        self.backoff_entry.insert(0, str(self.backoff_seconds))
+        self.backoff_entry.grid(row=10, column=1, sticky="w", pady=(4, 0))
+        ttk.Label(
+            settings,
+            text="Hata sonrası ilk bekleme süresi.",
+            style="Helper.TLabel",
+        ).grid(row=11, column=1, sticky="w", pady=(0, 8))
+
+        ttk.Label(
+            settings,
+            text="Backoff üst sınır (sn)",
+            background=self.colors["panel"],
+            foreground=self.colors["text"],
+        ).grid(row=12, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
+        self.backoff_cap_entry = ttk.Entry(settings, width=10)
+        self.backoff_cap_entry.insert(0, str(self.backoff_cap_seconds))
+        self.backoff_cap_entry.grid(row=12, column=1, sticky="w", pady=(4, 0))
+        ttk.Label(
+            settings,
+            text="Backoff için maksimum bekleme süresi.",
+            style="Helper.TLabel",
+        ).grid(row=13, column=1, sticky="w", pady=(0, 8))
+
+        ttk.Label(
+            settings,
+            text="Paralel pencere",
+            background=self.colors["panel"],
+            foreground=self.colors["text"],
+        ).grid(row=14, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
         self.parallel_entry = ttk.Entry(settings, width=10)
         self.parallel_entry.insert(0, str(self.parallel_workers))
-        self.parallel_entry.grid(row=10, column=1, sticky="w", pady=(4, 0))
+        self.parallel_entry.grid(row=14, column=1, sticky="w", pady=(4, 0))
         ttk.Label(
             settings,
             text="Aynı anda açılacak tarayıcı sayısı (her biri tek oy).",
             style="Helper.TLabel",
-        ).grid(row=11, column=1, sticky="w", pady=(0, 8))
+        ).grid(row=15, column=1, sticky="w", pady=(0, 8))
 
         self.headless_var = tk.BooleanVar(value=self.headless)
         self.headless_check = ttk.Checkbutton(
@@ -586,12 +616,12 @@ window.chrome.runtime = {};
             variable=self.headless_var,
             style="Switch.TCheckbutton",
         )
-        self.headless_check.grid(row=12, column=0, columnspan=2, sticky="w", pady=(4, 0))
+        self.headless_check.grid(row=16, column=0, columnspan=2, sticky="w", pady=(4, 0))
         ttk.Label(
             settings,
             text="Kapalıysa tarayıcıyı görerek izleyebilirsiniz.",
             style="Helper.TLabel",
-        ).grid(row=13, column=0, columnspan=2, sticky="w", pady=(0, 8))
+        ).grid(row=17, column=0, columnspan=2, sticky="w", pady=(0, 8))
 
         self.auto_driver_var = tk.BooleanVar(value=self.use_selenium_manager)
         self.auto_driver_check = ttk.Checkbutton(
@@ -600,19 +630,19 @@ window.chrome.runtime = {};
             variable=self.auto_driver_var,
             style="Switch.TCheckbutton",
         )
-        self.auto_driver_check.grid(row=14, column=0, columnspan=2, sticky="w", pady=(2, 0))
+        self.auto_driver_check.grid(row=18, column=0, columnspan=2, sticky="w", pady=(2, 0))
         ttk.Label(
             settings,
             text="Driver yoksa/uyumsuzsa otomatik indirir (internet gerekir).",
             style="Helper.TLabel",
-        ).grid(row=15, column=0, columnspan=2, sticky="w", pady=(0, 8))
+        ).grid(row=19, column=0, columnspan=2, sticky="w", pady=(0, 8))
 
         ttk.Label(
             settings,
             text="Oy buton seçicileri (satır satır CSS/XPath)",
             background=self.colors["panel"],
             foreground=self.colors["text"],
-        ).grid(row=16, column=0, sticky="nw", pady=(4, 0), padx=(0, 8))
+        ).grid(row=20, column=0, sticky="nw", pady=(4, 0), padx=(0, 8))
         self.selectors_text = scrolledtext.ScrolledText(
             settings,
             height=4,
@@ -626,19 +656,19 @@ window.chrome.runtime = {};
             highlightthickness=1,
             highlightbackground=self.colors["card"],
         )
-        self.selectors_text.grid(row=16, column=1, sticky="ew", pady=(4, 0))
+        self.selectors_text.grid(row=20, column=1, sticky="ew", pady=(4, 0))
         selectors_helper = (
             "Örnekler: a[data-action='vote'], button[data-action='vote'], "
             "xpath://button[contains(.,'vote')]"
         )
         ttk.Label(settings, text=selectors_helper, style="Helper.TLabel").grid(
-            row=17, column=1, sticky="w", pady=(0, 8)
+            row=21, column=1, sticky="w", pady=(0, 8)
         )
         for line in self.config.get("vote_selectors", []):
             self.selectors_text.insert(tk.END, f"{line}\n")
 
         actions = ttk.Frame(settings, style="Panel.TFrame")
-        actions.grid(row=18, column=0, columnspan=2, sticky="ew", pady=(6, 0))
+        actions.grid(row=22, column=0, columnspan=2, sticky="ew", pady=(6, 0))
         actions.columnconfigure((0, 1), weight=1)
         self.apply_btn = ttk.Button(
             actions,
