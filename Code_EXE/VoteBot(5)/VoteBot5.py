@@ -880,6 +880,8 @@ window.chrome.runtime = {};
             self.batch_entry,
             self.timeout_entry,
             self.max_errors_entry,
+            self.backoff_entry,
+            self.backoff_cap_entry,
             self.parallel_entry,
         ]:
             entry.state(state_flag)
