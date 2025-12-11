@@ -1,14 +1,18 @@
+import atexit
 import json
 import logging
 import os
 import random
+import shutil
 import subprocess
+import tempfile
 import threading
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from logging.handlers import RotatingFileHandler
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
+from urllib.parse import urlparse
 import tkinter as tk
 from tkinter import ttk, scrolledtext, messagebox
 
@@ -51,6 +55,7 @@ class VoteBot5:
         self.target_url = self.config.get(
             "target_url", "https://distrokid.com/spotlight/hasanarthuraltunta/vote/"
         )
+        self.target_origin = self._extract_origin(self.target_url)
         self.pause_between_votes = float(self.config.get("pause_between_votes", 3))
         self.batch_size = max(1, int(self.config.get("batch_size", 1)))
         self.headless = bool(self.config.get("headless", True))
@@ -73,6 +78,8 @@ class VoteBot5:
         self._stop_event = threading.Event()
         self._driver_lock = threading.Lock()
         self.active_drivers = set()
+        self.driver_profiles = {}
+        self.temp_root = Path(tempfile.mkdtemp(prefix="votebot-profiles-"))
         self.log_records = []
         self.log_history_limit = 500
         self.success_count = 0
@@ -82,6 +89,7 @@ class VoteBot5:
 
         self.log_dir = self._resolve_logs_dir()
         self.logger = self._build_logger()
+        atexit.register(self._cleanup_temp_profiles)
         if getattr(self, "ignored_config_paths", []):
             ignored = ", ".join(str(p) for p in self.ignored_config_paths)
             self.logger.info(
@@ -161,6 +169,15 @@ class VoteBot5:
                 selectors.append((By.CSS_SELECTOR, raw.strip()))
         return selectors
 
+    def _extract_origin(self, url):
+        try:
+            parsed = urlparse(url)
+            if parsed.scheme and parsed.netloc:
+                return f"{parsed.scheme}://{parsed.netloc}"
+        except Exception:
+            pass
+        return None
+
     def _resolve_logs_dir(self):
         log_path = self.paths.get("logs") or "logs"
         path = Path(log_path)
@@ -186,7 +203,7 @@ class VoteBot5:
         while time.time() < deadline and not self._stop_event.is_set():
             try:
                 state = driver.execute_script("return document.readyState")
-                if state == "complete":
+                if state in ("interactive", "complete"):
                     return True
             except Exception:
                 pass
@@ -810,23 +827,74 @@ window.chrome.runtime = {};
             self.runtime_label.config(text=f"{hours:02d}:{minutes:02d}:{seconds:02d}")
         self.root.after(1000, self._update_runtime)
 
-    def _register_driver(self, driver):
+    def _create_temp_profile_dir(self):
+        try:
+            return Path(tempfile.mkdtemp(prefix="profile-", dir=self.temp_root))
+        except Exception as exc:
+            self.log_message(f"Geçici profil oluşturulamadı: {exc}", level="error")
+            return None
+
+    def _discard_profile_dir(self, profile_dir):
+        if profile_dir and Path(profile_dir).exists():
+            shutil.rmtree(profile_dir, ignore_errors=True)
+
+    def _register_driver(self, driver, profile_dir=None):
         with self._driver_lock:
             self.active_drivers.add(driver)
+            if profile_dir:
+                self.driver_profiles[driver] = profile_dir
 
     def _unregister_driver(self, driver):
+        profile_dir = None
         with self._driver_lock:
             self.active_drivers.discard(driver)
+            profile_dir = self.driver_profiles.pop(driver, None)
+        self._discard_profile_dir(profile_dir)
+
+    def _clear_browser_state(self, driver):
+        try:
+            driver.delete_all_cookies()
+        except Exception:
+            pass
+        if self.target_origin:
+            try:
+                driver.execute_cdp_cmd(
+                    "Storage.clearDataForOrigin",
+                    {"origin": self.target_origin, "storageTypes": "all"},
+                )
+            except Exception:
+                pass
+        try:
+            driver.execute_cdp_cmd("Network.clearBrowserCache", {})
+        except Exception:
+            pass
+        try:
+            driver.execute_cdp_cmd("Network.clearBrowserCookies", {})
+        except Exception:
+            pass
+
+    def _teardown_driver(self, driver):
+        try:
+            driver.quit()
+        except Exception:
+            pass
+        self._unregister_driver(driver)
 
     def _cleanup_drivers(self):
         with self._driver_lock:
             drivers = list(self.active_drivers)
-            self.active_drivers.clear()
         for driver in drivers:
-            try:
-                driver.quit()
-            except Exception:
-                pass
+            self._teardown_driver(driver)
+
+    def _cleanup_temp_profiles(self):
+        self._cleanup_drivers()
+        with self._driver_lock:
+            remaining = list(self.driver_profiles.values())
+            self.driver_profiles.clear()
+        for path in remaining:
+            self._discard_profile_dir(path)
+        if self.temp_root.exists():
+            shutil.rmtree(self.temp_root, ignore_errors=True)
 
     def log_message(self, message, level="info"):
         timestamp = datetime.now().strftime("%H:%M:%S")
@@ -1048,18 +1116,28 @@ window.chrome.runtime = {};
             self.log_message(f"Chrome: {self.chrome_path}")
         return True
 
-    def get_chrome_options(self):
+    def get_chrome_options(self, profile_dir=None):
         chrome_options = Options()
+        chrome_options.page_load_strategy = "eager"
         if self.chrome_path:
             chrome_options.binary_location = self.chrome_path
         if self.headless:
             chrome_options.add_argument("--headless=new")
+        if profile_dir:
+            chrome_options.add_argument(f"--user-data-dir={profile_dir}")
+        chrome_options.add_argument("--incognito")
         chrome_options.add_argument("--disable-gpu")
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--window-size=1920,1080")
         chrome_options.add_argument("--disable-extensions")
-        chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+        chrome_options.add_argument("--disable-application-cache")
+        chrome_options.add_argument("--disk-cache-size=0")
+        chrome_options.add_argument("--media-cache-size=0")
+        chrome_options.add_argument("--no-first-run")
+        chrome_options.add_argument("--no-default-browser-check")
+        chrome_options.add_argument("--disable-sync")
+        chrome_options.add_argument("--disable-blink-features=AutomationControlled,Translate,BackForwardCache")
         chrome_options.add_argument("--remote-allow-origins=*")
         chrome_options.add_argument("--disable-notifications")
         chrome_options.add_argument("--log-level=3")
@@ -1077,8 +1155,8 @@ window.chrome.runtime = {};
         )
         return chrome_options
 
-    def create_driver(self):
-        options = self.get_chrome_options()
+    def create_driver(self, profile_dir=None):
+        options = self.get_chrome_options(profile_dir=profile_dir)
         try:
             if self.use_selenium_manager or not self.driver_path:
                 driver = webdriver.Chrome(options=options)
@@ -1167,73 +1245,31 @@ window.chrome.runtime = {};
         self.update_status("Oy veriliyor", tone="running")
         successes = 0
         failures = 0
-        prepared = []
+        total = self.batch_size
         with ThreadPoolExecutor(max_workers=self.parallel_workers) as executor:
             futures = []
-            for i in range(self.batch_size):
+            for i in range(total):
                 if self._stop_event.is_set():
                     break
                 futures.append(executor.submit(self._prepare_vote_session, i))
-            for future in as_completed(futures):
-                if self._stop_event.is_set():
-                    break
+            for idx, future in enumerate(as_completed(futures), start=1):
                 try:
                     session = future.result()
                 except Exception as exc:
                     self.logger.exception("Oy hazırlık hatası", exc_info=exc)
                     session = None
-                if session:
-                    prepared.append(session)
-                else:
+                if not session:
                     self.increment_error()
                     failures += 1
-
-        if self._stop_event.is_set():
-            for driver, _ in prepared:
-                try:
-                    driver.quit()
-                except Exception:
-                    pass
-                self._unregister_driver(driver)
-            return False
-
-        for idx, (driver, vote_button) in enumerate(prepared, start=1):
-            if self._stop_event.is_set():
-                break
-            try:
-                vote_button.click()
-                self.log_message(
-                    f"Oy verildi (pencere {idx}/{self.batch_size})", level="success"
-                )
-                self.increment_count()
-                successes += 1
-            except Exception:
-                try:
-                    driver.refresh()
-                    wait = WebDriverWait(driver, self.timeout_seconds)
-                    refreshed_btn = self._locate_vote_button(driver, wait)
-                    refreshed_btn.click()
-                    self.log_message(
-                        f"Oy verildi (yeniden deneme, pencere {idx}/{self.batch_size})",
-                        level="success",
-                    )
-                    self.increment_count()
+                    continue
+                driver, vote_button, _ = session
+                if self._stop_event.is_set():
+                    self._teardown_driver(driver)
+                    continue
+                if self._complete_vote(driver, vote_button, idx, total):
                     successes += 1
-                except TimeoutException:
-                    self.log_message("Oy butonu zaman aşımına uğradı.", level="error")
-                    self.increment_error()
+                else:
                     failures += 1
-                except Exception as exc:
-                    self.logger.exception("Oy verme hatası", exc_info=exc)
-                    self.log_message(f"Beklenmeyen hata: {exc}", level="error")
-                    self.increment_error()
-                    failures += 1
-            finally:
-                try:
-                    driver.quit()
-                except Exception:
-                    pass
-                self._unregister_driver(driver)
 
         if successes == 0:
             self.log_message(f"Batch tamamlanamadı. Başarılı: {successes}, Hata: {failures}", level="error")
@@ -1248,18 +1284,46 @@ window.chrome.runtime = {};
         self.update_status("Bekliyor", tone="idle")
         return True
 
+    def _complete_vote(self, driver, vote_button, idx, total):
+        try:
+            vote_button.click()
+            self.log_message(f"Oy verildi (pencere {idx}/{total})", level="success")
+            self.increment_count()
+            return True
+        except Exception:
+            try:
+                driver.refresh()
+                wait = WebDriverWait(driver, self.timeout_seconds)
+                refreshed_btn = self._locate_vote_button(driver, wait)
+                refreshed_btn.click()
+                self.log_message(
+                    f"Oy verildi (yeniden deneme, pencere {idx}/{total})",
+                    level="success",
+                )
+                self.increment_count()
+                return True
+            except TimeoutException:
+                self.log_message("Oy butonu zaman aşımına uğradı.", level="error")
+                self.increment_error()
+            except Exception as exc:
+                self.logger.exception("Oy verme hatası", exc_info=exc)
+                self.log_message(f"Beklenmeyen hata: {exc}", level="error")
+                self.increment_error()
+        finally:
+            self._clear_browser_state(driver)
+            self._teardown_driver(driver)
+        return False
+
     def _prepare_vote_session(self, batch_index):
-        driver = self.create_driver()
+        profile_dir = self._create_temp_profile_dir()
+        driver = self.create_driver(profile_dir=profile_dir)
         if not driver:
+            self._discard_profile_dir(profile_dir)
             return None
-        self._register_driver(driver)
+        self._register_driver(driver, profile_dir)
         keep_driver = False
         if self._stop_event.is_set():
-            try:
-                driver.quit()
-            except Exception:
-                pass
-            self._unregister_driver(driver)
+            self._teardown_driver(driver)
             return None
         driver.set_page_load_timeout(self.timeout_seconds)
         wait = WebDriverWait(driver, self.timeout_seconds)
@@ -1268,7 +1332,7 @@ window.chrome.runtime = {};
             self._wait_for_document_ready(driver, timeout=self.timeout_seconds)
             vote_button = self._locate_vote_button(driver, wait)
             keep_driver = True
-            return driver, vote_button
+            return driver, vote_button, profile_dir
         except TimeoutException:
             self.log_message("Oy butonu zaman aşımına uğradı (hazırlık).", level="error")
         except Exception as exc:
@@ -1276,11 +1340,7 @@ window.chrome.runtime = {};
             self.log_message(f"Beklenmeyen hata (hazırlık): {exc}", level="error")
         finally:
             if not keep_driver:
-                try:
-                    driver.quit()
-                except Exception:
-                    pass
-                self._unregister_driver(driver)
+                self._teardown_driver(driver)
         return None
 
     def _locate_vote_button(self, driver, wait):
@@ -1398,6 +1458,7 @@ window.chrome.runtime = {};
             return False
 
         self.target_url = url
+        self.target_origin = self._extract_origin(self.target_url)
         self.pause_between_votes = pause
         self.batch_size = batch
         self.timeout_seconds = timeout_val
@@ -1445,6 +1506,7 @@ window.chrome.runtime = {};
 
     def on_close(self):
         self.stop_bot()
+        self._cleanup_temp_profiles()
         self.root.destroy()
 
 

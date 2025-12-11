@@ -8,11 +8,14 @@ Profesyonel, GUI tabanlı DistroKid oy botu. Sürüm 5, yol/doğrulama kontrolle
 - **Batch oy**: Ayarlanabilir batch sayısı ve oy aralığı; her oyda sürücü aç/kapat.
 - **Paralel oy**: Aynı anda birden fazla pencere açarak batch süresini kısaltma (1-10 işçi).
 - **Senkronsuz oy tıklaması**: Tüm pencereler açıldıktan sonra butonlar topluca tıklanır; yarım açılan pencereler diğerlerini engellemez.
+- **Hızlı tık akışı**: Pencereler hazır olur olmaz oy tıklanır; en yavaş oturumlar beklenmez.
+- **Hızlı yükleme**: `page_load_strategy=eager` ve hafif profil seçenekleriyle sayfaya daha hızlı ulaşır.
 - **Kapsamlı log**: UI log + `logs/votebot5.log` dosyası.
 - **Temiz tema**: Koyu lacivert arka plan, amber/azure aksanlı kartlar.
 - **Otomatik sürücü seçeneği**: Selenium Manager ile ChromeDriver'ı otomatik indir/güncelle (opsiyonel).
 - **Esnek buton bulma**: CSS/XPath listesiyle oy butonu fallback'li bulunur.
 - **Akıllı bekleme**: Art arda hatalarda üstel backoff ile yeniden deneme.
+- **İz temizleme**: Her tarayıcı oturumu geçici profille açılır, CDP ile çerez/önbellek temizlenir ve profil klasörleri bot kapanışında silinir.
 
 ## Gereksinimler
 - Python 3.9+
