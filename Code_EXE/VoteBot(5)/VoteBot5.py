@@ -56,6 +56,7 @@ class VoteBot5:
         self.config_path = self._find_config_path()
         self.config = self._load_config()
         self.paths = self.config.setdefault("paths", {})
+        self.config["user_agents"] = self._normalize_user_agents(self.config.get("user_agents", []))
 
         self.target_url = self.config.get(
             "target_url", "https://distrokid.com/spotlight/hasanarthuraltunta/vote/"
@@ -207,6 +208,21 @@ class VoteBot5:
         except Exception:
             pass
         return None
+
+    def _normalize_user_agents(self, agents):
+        cleaned = []
+        seen = set()
+        for ua in agents or []:
+            if not isinstance(ua, str):
+                continue
+            stripped = ua.strip()
+            if not stripped or len(stripped) < 10:
+                continue
+            if stripped.lower() in seen:
+                continue
+            seen.add(stripped.lower())
+            cleaned.append(stripped)
+        return cleaned
 
     def _pick_user_agent(self):
         pool = self.custom_user_agents or [
@@ -1609,6 +1625,8 @@ ttk.Label(
                 for line in self.ua_text.get("1.0", tk.END).splitlines()
                 if line.strip()
             ]
+            ua_lines = self._normalize_user_agents(ua_lines)
+
         except ValueError:
             messagebox.showerror("Hata", "Sayısal alanlar geçerli ve pozitif olmalı.")
             self.log_message("Ayarlar okunamadı: sayısal alan hatalı.", level="error")
