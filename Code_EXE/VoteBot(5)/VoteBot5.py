@@ -45,6 +45,9 @@ class VoteBot5:
             "timeout_seconds": 15,
             "use_selenium_manager": False,
             "use_random_user_agent": True,
+            "block_images": True,
+            "user_agents": [],
+            "use_random_user_agent": True,
             "user_agents": [],
             "vote_selectors": [],
             "backoff_seconds": 5,
@@ -65,6 +68,9 @@ class VoteBot5:
         self.max_errors = max(1, int(self.config.get("max_errors", 3)))
         self.parallel_workers = max(1, min(10, int(self.config.get("parallel_workers", 2))))
         self.use_selenium_manager = bool(self.config.get("use_selenium_manager", False))
+        self.use_random_user_agent = bool(self.config.get("use_random_user_agent", True))
+        self.custom_user_agents = self.config.get("user_agents") or []
+        self.block_images = bool(self.config.get("block_images", True))
         self.use_random_user_agent = bool(self.config.get("use_random_user_agent", True))
         self.custom_user_agents = self.config.get("user_agents") or []
         self.vote_selectors = self._build_vote_selectors(self.config.get("vote_selectors"))
@@ -91,8 +97,10 @@ class VoteBot5:
         self.autoscroll_var = tk.BooleanVar(value=True)
         self.errors_only_var = tk.BooleanVar(value=False)
         self.random_ua_var = tk.BooleanVar(value=self.use_random_user_agent)
+        self.block_images_var = tk.BooleanVar(value=self.block_images)
+        self.random_ua_var = tk.BooleanVar(value=self.use_random_user_agent)
 
-        self.log_dir = self._resolve_logs_dir()
+        self.log_dir, self.log_dir_warning = self._resolve_logs_dir()
         self.logger = self._build_logger()
         atexit.register(self._cleanup_temp_profiles)
         if getattr(self, "ignored_config_paths", []):
@@ -104,13 +112,13 @@ class VoteBot5:
             )
 
         self.colors = {
-            "bg": "#0f172a",
-            "panel": "#0b1220",
-            "card": "#111827",
-            "border": "#1f2937",
-            "accent": "#f59e0b",
-            "accent2": "#22d3ee",
-            "text": "#e5e7eb",
+            "bg": "#0a0f1f",
+            "panel": "#0d152a",
+            "card": "#0f172a",
+            "border": "#1e293b",
+            "accent": "#f97316",
+            "accent2": "#38bdf8",
+            "text": "#e2e8f0",
             "muted": "#94a3b8",
             "error": "#f87171",
             "success": "#34d399",
@@ -122,6 +130,8 @@ class VoteBot5:
 
         self._build_styles()
         self._build_ui()
+        if self.log_dir_warning:
+            self.log_message(self.log_dir_warning, level="info")
         self._set_state_badge("Bekliyor", "idle")
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
         self._update_runtime()
@@ -148,6 +158,21 @@ class VoteBot5:
                 return merged
         except Exception:
             return dict(self.defaults)
+
+    def _persist_config(self):
+        target_dir = self.config_path.parent
+        target_dir.mkdir(parents=True, exist_ok=True)
+        fd, temp_path = tempfile.mkstemp(prefix="config-", suffix=".json", dir=target_dir)
+        try:
+            with os.fdopen(fd, "w", encoding="utf-8") as temp_file:
+                json.dump(self.config, temp_file, ensure_ascii=False, indent=4)
+            Path(temp_path).replace(self.config_path)
+        except Exception:
+            try:
+                Path(temp_path).unlink(missing_ok=True)
+            except Exception:
+                pass
+            raise
 
     def _build_vote_selectors(self, custom_selectors):
         defaults = [
@@ -193,13 +218,30 @@ class VoteBot5:
             return None
         return random.choice(pool)
 
+    def _pick_user_agent(self):
+        pool = self.custom_user_agents or [
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36",
+        ]
+        if not pool or not self.use_random_user_agent:
+            return None
+        return random.choice(pool)
+
     def _resolve_logs_dir(self):
         log_path = self.paths.get("logs") or "logs"
         path = Path(log_path)
         if not path.is_absolute():
             path = self.base_dir / path
-        path.mkdir(parents=True, exist_ok=True)
-        return path
+        try:
+            path.mkdir(parents=True, exist_ok=True)
+            return path, None
+        except Exception as exc:
+            fallback = Path(tempfile.mkdtemp(prefix="votebot-logs-"))
+            warning = (
+                f"Log klasoru '{path}' olusturulamadi ({exc}); gecici '{fallback}' kullaniliyor."
+            )
+            return fallback, warning
 
     def _build_logger(self):
         logger = logging.getLogger("VoteBot5")
@@ -250,28 +292,13 @@ window.chrome.runtime = {};
         # Build a simple geometric icon for header/title bar.
         icon = tk.PhotoImage(width=size, height=size)
         icon.put(self.colors["bg"], to=(0, 0, size, size))
-        icon.put(self.colors["card"], to=(1, 1, size - 1, size - 1))
+        icon.put(self.colors["card"], to=(2, 2, size - 2, size - 2))
         icon.put(self.colors["accent2"], to=(0, 0, size, int(size * 0.35)))
-        icon.put(self.colors["accent"], to=(0, int(size * 0.65), size, size))
-        check_color = "#0f172a"
-        icon.put(
-            check_color,
-            to=(
-                int(size * 0.30),
-                int(size * 0.50),
-                int(size * 0.38),
-                int(size * 0.70),
-            ),
-        )
-        icon.put(
-            check_color,
-            to=(
-                int(size * 0.38),
-                int(size * 0.64),
-                int(size * 0.78),
-                int(size * 0.74),
-            ),
-        )
+        icon.put(self.colors["accent"], to=(0, int(size * 0.55), size, size))
+        core = "#0b1220"
+        # stylized tick
+        icon.put(core, to=(int(size * 0.26), int(size * 0.46), int(size * 0.36), int(size * 0.68)))
+        icon.put(core, to=(int(size * 0.34), int(size * 0.62), int(size * 0.76), int(size * 0.74)))
         return icon
 
     def _draw_brand_mark(self, canvas, size=60):
@@ -324,7 +351,11 @@ window.chrome.runtime = {};
         except tk.TclError:
             pass
 
-        style.configure("Main.TFrame", background=self.colors["bg"])
+        base_font = ("Segoe UI", 10)
+        title_font = ("Segoe UI", 20, "bold")
+        subtitle_font = ("Segoe UI", 11)
+
+        style.configure("Main.TFrame", background=self.colors["bg"], padding=0)
         style.configure("Panel.TFrame", background=self.colors["panel"])
         style.configure(
             "Card.TFrame",
@@ -332,6 +363,7 @@ window.chrome.runtime = {};
             borderwidth=1,
             relief="flat",
             bordercolor=self.colors["border"],
+            padding=12,
         )
         style.configure(
             "TLabelFrame",
@@ -347,19 +379,19 @@ window.chrome.runtime = {};
         )
         style.configure(
             "Title.TLabel",
-            font=("Segoe UI", 18, "bold"),
+            font=title_font,
             background=self.colors["bg"],
             foreground=self.colors["text"],
         )
         style.configure(
             "StatLabel.TLabel",
-            font=("Segoe UI", 12),
+            font=("Segoe UI", 11),
             background=self.colors["card"],
             foreground=self.colors["muted"],
         )
         style.configure(
             "StatValue.TLabel",
-            font=("Segoe UI", 20, "bold"),
+            font=("Segoe UI", 22, "bold"),
             background=self.colors["card"],
             foreground=self.colors["text"],
         )
@@ -388,7 +420,7 @@ window.chrome.runtime = {};
             foreground=self.colors["text"],
             padding=(10, 6),
         )
-        def button_style(name, bg, fg, active=None, disabled=None, border=None, padding=8, bold=True):
+        def button_style(name, bg, fg, active=None, disabled=None, border=None, padding=10, bold=True):
             active = active or bg
             disabled = disabled or "#1f2937"
             font = ("Segoe UI", 11, "bold") if bold else ("Segoe UI", 10)
@@ -712,11 +744,38 @@ ttk.Label(
             style="Helper.TLabel",
         ).grid(row=19, column=0, columnspan=2, sticky="w", pady=(0, 8))
 
+        self.random_ua_check = ttk.Checkbutton(
+            settings,
+            text="Rastgele user-agent kullan",
+            variable=self.random_ua_var,
+            style="Switch.TCheckbutton",
+        )
+        self.random_ua_check.grid(row=20, column=0, columnspan=2, sticky="w", pady=(2, 0))
+        ttk.Label(
+            settings,
+            text="Acikken her pencere icin UA havuzundan secilir; kapaliysa Chrome varsayilani kullanilir.",
+            style="Helper.TLabel",
+        ).grid(row=21, column=0, columnspan=2, sticky="w", pady=(0, 8))
+
+        self.block_images_check = ttk.Checkbutton(
+            settings,
+            text="Gorselleri engelle (daha hizli yukleme)",
+            variable=self.block_images_var,
+            style="Switch.TCheckbutton",
+        )
+        self.block_images_check.grid(row=22, column=0, columnspan=2, sticky="w", pady=(2, 0))
+        ttk.Label(
+            settings,
+            text="Acikken sayfa gorselleri yuklenmez; kapaliysa varsayilan yukleme kullanilir.",
+            style="Helper.TLabel",
+        ).grid(row=23, column=0, columnspan=2, sticky="w", pady=(0, 8))
+
         ttk.Label(
             settings,
             text="Oy buton seçicileri (satır satır CSS/XPath)",
             background=self.colors["panel"],
             foreground=self.colors["text"],
+        ).grid(row=24, column=0, sticky="nw", pady=(4, 0), padx=(0, 8))
         ).grid(row=24, column=0, sticky="nw", pady=(4, 0), padx=(0, 8))
         self.selectors_text = scrolledtext.ScrolledText(
             settings,
@@ -732,17 +791,20 @@ ttk.Label(
             highlightbackground=self.colors["card"],
         )
         self.selectors_text.grid(row=24, column=1, sticky="ew", pady=(4, 0))
+        self.selectors_text.grid(row=24, column=1, sticky="ew", pady=(4, 0))
         selectors_helper = (
             "Örnekler: a[data-action='vote'], button[data-action='vote'], "
             "xpath://button[contains(.,'vote')]"
         )
         ttk.Label(settings, text=selectors_helper, style="Helper.TLabel").grid(
             row=25, column=1, sticky="w", pady=(0, 8)
+            row=25, column=1, sticky="w", pady=(0, 8)
         )
         for line in self.config.get("vote_selectors", []):
             self.selectors_text.insert(tk.END, f"{line}\n")
 
         actions = ttk.Frame(settings, style="Panel.TFrame")
+        actions.grid(row=26, column=0, columnspan=2, sticky="ew", pady=(6, 0))
         actions.grid(row=26, column=0, columnspan=2, sticky="ew", pady=(6, 0))
         actions.columnconfigure((0, 1), weight=1)
         self.apply_btn = ttk.Button(
@@ -765,7 +827,7 @@ ttk.Label(
         controls_wrap.columnconfigure(0, weight=1)
         controls = ttk.Frame(controls_wrap, style="Panel.TFrame", padding=(0, 0))
         controls.grid(row=0, column=0, sticky="ew")
-        controls.columnconfigure((0, 1, 2, 3), weight=1)
+        controls.columnconfigure((0, 1, 2, 3, 4), weight=1)
 
         self.start_btn = ttk.Button(
             controls, text="Başlat", command=self.start_bot, style="Accent.TButton"
@@ -787,6 +849,10 @@ ttk.Label(
             controls, text="Log klasörünü aç", command=self.open_logs, style="Ghost.TButton"
         )
         self.logs_btn.grid(row=0, column=3, padx=4, pady=4, sticky="ew")
+        self.reset_btn = ttk.Button(
+            controls, text="Sayaclari sifirla", command=self.reset_counters, style="Ghost.TButton"
+        )
+        self.reset_btn.grid(row=0, column=4, padx=4, pady=4, sticky="ew")
 
         log_frame = ttk.LabelFrame(main, text="Log", style="Panel.TFrame", padding=12)
         log_frame.grid(row=2, column=1, sticky="nsew")
@@ -1008,6 +1074,22 @@ ttk.Label(
         self._update_log_counts_badges()
         self.log_message("Log temizlendi")
 
+    def reset_counters(self):
+        if self.is_running:
+            self.log_message("Bot çalişirken sayaçlar sifirlanamaz.", level="error")
+            return
+        self.vote_count = 0
+        self.error_count = 0
+        self.success_count = 0
+        self.failure_count = 0
+        self.start_time = None
+        self.count_label.config(text="0")
+        self.error_label.config(text="0")
+        self.runtime_label.config(text="00:00:00")
+        self._update_log_counts_badges()
+        self._refresh_stat_colors()
+        self.log_message("Sayaçlar sifirlandi.")
+
     def _set_state_badge(self, text, tone="idle"):
         colors = {
             "running": (self.colors["accent2"], "#0f172a"),
@@ -1041,8 +1123,14 @@ ttk.Label(
             self.parallel_entry,
         ]:
             entry.state(state_flag)
-        for btn in [self.apply_btn, self.defaults_btn, self.preflight_btn]:
+        for btn in [self.apply_btn, self.defaults_btn, self.preflight_btn, self.reset_btn]:
             btn.state(state_flag)
+        for check in [
+            self.headless_check,
+            self.auto_driver_check,
+            self.random_ua_check,
+            self.block_images_check,
+        ]:
         for check in [self.headless_check, self.auto_driver_check, getattr(self, "random_ua_check", None)]:
             if running:
                 if check:
@@ -1208,6 +1296,9 @@ ttk.Label(
         user_agent = self._pick_user_agent()
         if user_agent:
             chrome_options.add_argument(f"--user-agent={user_agent}")
+        user_agent = self._pick_user_agent()
+        if user_agent:
+            chrome_options.add_argument(f"--user-agent={user_agent}")
         chrome_options.add_experimental_option(
             "excludeSwitches", ["enable-logging", "enable-automation"]
         )
@@ -1218,6 +1309,7 @@ ttk.Label(
                 "credentials_enable_service": False,
                 "profile.password_manager_enabled": False,
                 "intl.accept_languages": "tr-TR,tr",
+                "profile.managed_default_content_settings.images": 2 if self.block_images else 1,
             },
         )
         return chrome_options
@@ -1475,6 +1567,10 @@ ttk.Label(
         self.auto_driver_var.set(defaults["use_selenium_manager"])
         self.use_random_user_agent = defaults["use_random_user_agent"]
         self.random_ua_var.set(defaults["use_random_user_agent"])
+        self.block_images = defaults["block_images"]
+        self.block_images_var.set(defaults["block_images"])
+        self.use_random_user_agent = defaults["use_random_user_agent"]
+        self.random_ua_var.set(defaults["use_random_user_agent"])
         self.custom_user_agents = defaults.get("user_agents", [])
         if hasattr(self, "ua_text"):
             self.ua_text.config(state=tk.NORMAL)
@@ -1549,6 +1645,8 @@ ttk.Label(
         self.headless = bool(self.headless_var.get())
         self.use_selenium_manager = bool(self.auto_driver_var.get())
         self.use_random_user_agent = bool(self.random_ua_var.get())
+        self.block_images = bool(self.block_images_var.get())
+        self.use_random_user_agent = bool(self.random_ua_var.get())
         self.custom_user_agents = ua_lines
         self.config["target_url"] = self.target_url
         self.config["pause_between_votes"] = self.pause_between_votes
@@ -1558,6 +1656,8 @@ ttk.Label(
         self.config["headless"] = self.headless
         self.config["timeout_seconds"] = self.timeout_seconds
         self.config["use_selenium_manager"] = self.use_selenium_manager
+        self.config["use_random_user_agent"] = self.use_random_user_agent
+        self.config["block_images"] = self.block_images
         self.config["use_random_user_agent"] = self.use_random_user_agent
         self.config["user_agents"] = self.custom_user_agents
         self.config["vote_selectors"] = selector_lines
@@ -1571,8 +1671,7 @@ ttk.Label(
 
         if persist:
             try:
-                with self.config_path.open("w", encoding="utf-8") as f:
-                    json.dump(self.config, f, ensure_ascii=False, indent=4)
+                self._persist_config()
                 if notify:
                     self.log_message("Ayarlar kaydedildi.")
                     messagebox.showinfo("Ayarlar", "Ayarlar güncellendi.")
