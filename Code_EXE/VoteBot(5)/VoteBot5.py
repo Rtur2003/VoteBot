@@ -44,6 +44,8 @@ class VoteBot5:
             "headless": True,
             "timeout_seconds": 15,
             "use_selenium_manager": False,
+            "use_random_user_agent": True,
+            "user_agents": [],
             "vote_selectors": [],
             "backoff_seconds": 5,
             "backoff_cap_seconds": 60,
@@ -63,6 +65,8 @@ class VoteBot5:
         self.max_errors = max(1, int(self.config.get("max_errors", 3)))
         self.parallel_workers = max(1, min(10, int(self.config.get("parallel_workers", 2))))
         self.use_selenium_manager = bool(self.config.get("use_selenium_manager", False))
+        self.use_random_user_agent = bool(self.config.get("use_random_user_agent", True))
+        self.custom_user_agents = self.config.get("user_agents") or []
         self.vote_selectors = self._build_vote_selectors(self.config.get("vote_selectors"))
         self.backoff_seconds = float(self.config.get("backoff_seconds", 5))
         self.backoff_cap_seconds = float(self.config.get("backoff_cap_seconds", 60))
@@ -86,6 +90,7 @@ class VoteBot5:
         self.failure_count = 0
         self.autoscroll_var = tk.BooleanVar(value=True)
         self.errors_only_var = tk.BooleanVar(value=False)
+        self.random_ua_var = tk.BooleanVar(value=self.use_random_user_agent)
 
         self.log_dir = self._resolve_logs_dir()
         self.logger = self._build_logger()
@@ -177,6 +182,16 @@ class VoteBot5:
         except Exception:
             pass
         return None
+
+    def _pick_user_agent(self):
+        pool = self.custom_user_agents or [
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36",
+        ]
+        if not pool or not self.use_random_user_agent:
+            return None
+        return random.choice(pool)
 
     def _resolve_logs_dir(self):
         log_path = self.paths.get("logs") or "logs"
@@ -1141,6 +1156,9 @@ window.chrome.runtime = {};
         chrome_options.add_argument("--remote-allow-origins=*")
         chrome_options.add_argument("--disable-notifications")
         chrome_options.add_argument("--log-level=3")
+        user_agent = self._pick_user_agent()
+        if user_agent:
+            chrome_options.add_argument(f"--user-agent={user_agent}")
         chrome_options.add_experimental_option(
             "excludeSwitches", ["enable-logging", "enable-automation"]
         )
