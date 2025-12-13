@@ -667,10 +667,9 @@ window.chrome.runtime = {};
             style="Helper.TLabel",
         ).grid(row=23, column=1, sticky="w", pady=(0, 8))
         for line in self.custom_user_agents:
-            self.ua_text.insert(tk.END, f"{line}
-")
+            self.ua_text.insert(tk.END, f"{line}\n")
 
-ttk.Label(
+        ttk.Label(
             settings,
             text="Oy butonu görünmezse bekleme sınırı",
             style="Helper.TLabel",
@@ -796,7 +795,6 @@ ttk.Label(
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=24, column=0, sticky="nw", pady=(4, 0), padx=(0, 8))
-        ).grid(row=24, column=0, sticky="nw", pady=(4, 0), padx=(0, 8))
         self.selectors_text = scrolledtext.ScrolledText(
             settings,
             height=4,
@@ -817,7 +815,6 @@ ttk.Label(
             "xpath://button[contains(.,'vote')]"
         )
         ttk.Label(settings, text=selectors_helper, style="Helper.TLabel").grid(
-            row=25, column=1, sticky="w", pady=(0, 8)
             row=25, column=1, sticky="w", pady=(0, 8)
         )
         for line in self.config.get("vote_selectors", []):
@@ -1148,10 +1145,9 @@ ttk.Label(
         for check in [
             self.headless_check,
             self.auto_driver_check,
-            self.random_ua_check,
-            self.block_images_check,
+            getattr(self, "random_ua_check", None),
+            getattr(self, "block_images_check", None),
         ]:
-        for check in [self.headless_check, self.auto_driver_check, getattr(self, "random_ua_check", None)]:
             if running:
                 if check:
                     check.state(["disabled"])
