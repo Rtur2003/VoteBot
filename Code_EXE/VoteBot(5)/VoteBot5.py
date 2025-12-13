@@ -144,6 +144,21 @@ class VoteBot5:
         except Exception:
             return dict(self.defaults)
 
+    def _persist_config(self):
+        target_dir = self.config_path.parent
+        target_dir.mkdir(parents=True, exist_ok=True)
+        fd, temp_path = tempfile.mkstemp(prefix="config-", suffix=".json", dir=target_dir)
+        try:
+            with os.fdopen(fd, "w", encoding="utf-8") as temp_file:
+                json.dump(self.config, temp_file, ensure_ascii=False, indent=4)
+            Path(temp_path).replace(self.config_path)
+        except Exception:
+            try:
+                Path(temp_path).unlink(missing_ok=True)
+            except Exception:
+                pass
+            raise
+
     def _build_vote_selectors(self, custom_selectors):
         defaults = [
             (By.CSS_SELECTOR, "a[data-action='vote']"),
@@ -1487,8 +1502,7 @@ window.chrome.runtime = {};
 
         if persist:
             try:
-                with self.config_path.open("w", encoding="utf-8") as f:
-                    json.dump(self.config, f, ensure_ascii=False, indent=4)
+                self._persist_config()
                 if notify:
                     self.log_message("Ayarlar kaydedildi.")
                     messagebox.showinfo("Ayarlar", "Ayarlar güncellendi.")
