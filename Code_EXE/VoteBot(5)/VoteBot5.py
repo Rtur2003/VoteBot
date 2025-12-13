@@ -56,6 +56,7 @@ class VoteBot5:
         self.config_path = self._find_config_path()
         self.config = self._load_config()
         self.paths = self.config.setdefault("paths", {})
+        self.config["user_agents"] = self._normalize_user_agents(self.config.get("user_agents", []))
 
         self.target_url = self.config.get(
             "target_url", "https://distrokid.com/spotlight/hasanarthuraltunta/vote/"
@@ -68,6 +69,8 @@ class VoteBot5:
         self.max_errors = max(1, int(self.config.get("max_errors", 3)))
         self.parallel_workers = max(1, min(10, int(self.config.get("parallel_workers", 2))))
         self.use_selenium_manager = bool(self.config.get("use_selenium_manager", False))
+        self.use_random_user_agent = bool(self.config.get("use_random_user_agent", True))
+        self.custom_user_agents = self.config.get("user_agents") or []
         self.use_random_user_agent = bool(self.config.get("use_random_user_agent", True))
         self.custom_user_agents = self.config.get("user_agents") or []
         self.block_images = bool(self.config.get("block_images", True))
@@ -96,6 +99,7 @@ class VoteBot5:
         self.failure_count = 0
         self.autoscroll_var = tk.BooleanVar(value=True)
         self.errors_only_var = tk.BooleanVar(value=False)
+        self.random_ua_var = tk.BooleanVar(value=self.use_random_user_agent)
         self.random_ua_var = tk.BooleanVar(value=self.use_random_user_agent)
         self.block_images_var = tk.BooleanVar(value=self.block_images)
         self.random_ua_var = tk.BooleanVar(value=self.use_random_user_agent)
@@ -207,6 +211,22 @@ class VoteBot5:
         except Exception:
             pass
         return None
+
+    def _normalize_user_agents(self, agents):
+        cleaned = []
+        seen = set()
+        for ua in agents or []:
+            if not isinstance(ua, str):
+                continue
+            stripped = ua.strip()
+            if not stripped or len(stripped) < 10:
+                continue
+            lowered = stripped.lower()
+            if lowered in seen:
+                continue
+            seen.add(lowered)
+            cleaned.append(stripped)
+        return cleaned
 
     def _pick_user_agent(self):
         pool = self.custom_user_agents or [
