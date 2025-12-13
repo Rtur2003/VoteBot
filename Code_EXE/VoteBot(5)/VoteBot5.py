@@ -99,13 +99,13 @@ class VoteBot5:
             )
 
         self.colors = {
-            "bg": "#0f172a",
-            "panel": "#0b1220",
-            "card": "#111827",
-            "border": "#1f2937",
-            "accent": "#f59e0b",
-            "accent2": "#22d3ee",
-            "text": "#e5e7eb",
+            "bg": "#0a0f1f",
+            "panel": "#0d152a",
+            "card": "#0f172a",
+            "border": "#1e293b",
+            "accent": "#f97316",
+            "accent2": "#38bdf8",
+            "text": "#e2e8f0",
             "muted": "#94a3b8",
             "error": "#f87171",
             "success": "#34d399",
@@ -235,28 +235,13 @@ window.chrome.runtime = {};
         # Build a simple geometric icon for header/title bar.
         icon = tk.PhotoImage(width=size, height=size)
         icon.put(self.colors["bg"], to=(0, 0, size, size))
-        icon.put(self.colors["card"], to=(1, 1, size - 1, size - 1))
+        icon.put(self.colors["card"], to=(2, 2, size - 2, size - 2))
         icon.put(self.colors["accent2"], to=(0, 0, size, int(size * 0.35)))
-        icon.put(self.colors["accent"], to=(0, int(size * 0.65), size, size))
-        check_color = "#0f172a"
-        icon.put(
-            check_color,
-            to=(
-                int(size * 0.30),
-                int(size * 0.50),
-                int(size * 0.38),
-                int(size * 0.70),
-            ),
-        )
-        icon.put(
-            check_color,
-            to=(
-                int(size * 0.38),
-                int(size * 0.64),
-                int(size * 0.78),
-                int(size * 0.74),
-            ),
-        )
+        icon.put(self.colors["accent"], to=(0, int(size * 0.55), size, size))
+        core = "#0b1220"
+        # stylized tick
+        icon.put(core, to=(int(size * 0.26), int(size * 0.46), int(size * 0.36), int(size * 0.68)))
+        icon.put(core, to=(int(size * 0.34), int(size * 0.62), int(size * 0.76), int(size * 0.74)))
         return icon
 
     def _draw_brand_mark(self, canvas, size=60):
@@ -309,7 +294,11 @@ window.chrome.runtime = {};
         except tk.TclError:
             pass
 
-        style.configure("Main.TFrame", background=self.colors["bg"])
+        base_font = ("Segoe UI", 10)
+        title_font = ("Segoe UI", 20, "bold")
+        subtitle_font = ("Segoe UI", 11)
+
+        style.configure("Main.TFrame", background=self.colors["bg"], padding=0)
         style.configure("Panel.TFrame", background=self.colors["panel"])
         style.configure(
             "Card.TFrame",
@@ -317,6 +306,7 @@ window.chrome.runtime = {};
             borderwidth=1,
             relief="flat",
             bordercolor=self.colors["border"],
+            padding=12,
         )
         style.configure(
             "TLabelFrame",
@@ -332,19 +322,19 @@ window.chrome.runtime = {};
         )
         style.configure(
             "Title.TLabel",
-            font=("Segoe UI", 18, "bold"),
+            font=title_font,
             background=self.colors["bg"],
             foreground=self.colors["text"],
         )
         style.configure(
             "StatLabel.TLabel",
-            font=("Segoe UI", 12),
+            font=("Segoe UI", 11),
             background=self.colors["card"],
             foreground=self.colors["muted"],
         )
         style.configure(
             "StatValue.TLabel",
-            font=("Segoe UI", 20, "bold"),
+            font=("Segoe UI", 22, "bold"),
             background=self.colors["card"],
             foreground=self.colors["text"],
         )
@@ -373,7 +363,7 @@ window.chrome.runtime = {};
             foreground=self.colors["text"],
             padding=(10, 6),
         )
-        def button_style(name, bg, fg, active=None, disabled=None, border=None, padding=8, bold=True):
+        def button_style(name, bg, fg, active=None, disabled=None, border=None, padding=10, bold=True):
             active = active or bg
             disabled = disabled or "#1f2937"
             font = ("Segoe UI", 11, "bold") if bold else ("Segoe UI", 10)
