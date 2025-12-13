@@ -765,7 +765,7 @@ window.chrome.runtime = {};
         controls_wrap.columnconfigure(0, weight=1)
         controls = ttk.Frame(controls_wrap, style="Panel.TFrame", padding=(0, 0))
         controls.grid(row=0, column=0, sticky="ew")
-        controls.columnconfigure((0, 1, 2, 3), weight=1)
+        controls.columnconfigure((0, 1, 2, 3, 4), weight=1)
 
         self.start_btn = ttk.Button(
             controls, text="Başlat", command=self.start_bot, style="Accent.TButton"
@@ -787,6 +787,10 @@ window.chrome.runtime = {};
             controls, text="Log klasörünü aç", command=self.open_logs, style="Ghost.TButton"
         )
         self.logs_btn.grid(row=0, column=3, padx=4, pady=4, sticky="ew")
+        self.reset_btn = ttk.Button(
+            controls, text="Sayaclari sifirla", command=self.reset_counters, style="Ghost.TButton"
+        )
+        self.reset_btn.grid(row=0, column=4, padx=4, pady=4, sticky="ew")
 
         log_frame = ttk.LabelFrame(main, text="Log", style="Panel.TFrame", padding=12)
         log_frame.grid(row=2, column=1, sticky="nsew")
@@ -1008,6 +1012,22 @@ window.chrome.runtime = {};
         self._update_log_counts_badges()
         self.log_message("Log temizlendi")
 
+    def reset_counters(self):
+        if self.is_running:
+            self.log_message("Bot çalişirken sayaçlar sifirlanamaz.", level="error")
+            return
+        self.vote_count = 0
+        self.error_count = 0
+        self.success_count = 0
+        self.failure_count = 0
+        self.start_time = None
+        self.count_label.config(text="0")
+        self.error_label.config(text="0")
+        self.runtime_label.config(text="00:00:00")
+        self._update_log_counts_badges()
+        self._refresh_stat_colors()
+        self.log_message("Sayaçlar sifirlandi.")
+
     def _set_state_badge(self, text, tone="idle"):
         colors = {
             "running": (self.colors["accent2"], "#0f172a"),
@@ -1041,7 +1061,7 @@ window.chrome.runtime = {};
             self.parallel_entry,
         ]:
             entry.state(state_flag)
-        for btn in [self.apply_btn, self.defaults_btn, self.preflight_btn]:
+        for btn in [self.apply_btn, self.defaults_btn, self.preflight_btn, self.reset_btn]:
             btn.state(state_flag)
         for check in [
             self.headless_check,
