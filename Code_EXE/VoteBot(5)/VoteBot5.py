@@ -44,6 +44,9 @@ class VoteBot5:
             "headless": True,
             "timeout_seconds": 15,
             "use_selenium_manager": False,
+            "use_random_user_agent": True,
+            "block_images": True,
+            "user_agents": [],
             "vote_selectors": [],
             "backoff_seconds": 5,
             "backoff_cap_seconds": 60,
@@ -63,6 +66,9 @@ class VoteBot5:
         self.max_errors = max(1, int(self.config.get("max_errors", 3)))
         self.parallel_workers = max(1, min(10, int(self.config.get("parallel_workers", 2))))
         self.use_selenium_manager = bool(self.config.get("use_selenium_manager", False))
+        self.use_random_user_agent = bool(self.config.get("use_random_user_agent", True))
+        self.custom_user_agents = self.config.get("user_agents") or []
+        self.block_images = bool(self.config.get("block_images", True))
         self.vote_selectors = self._build_vote_selectors(self.config.get("vote_selectors"))
         self.backoff_seconds = float(self.config.get("backoff_seconds", 5))
         self.backoff_cap_seconds = float(self.config.get("backoff_cap_seconds", 60))
@@ -86,6 +92,8 @@ class VoteBot5:
         self.failure_count = 0
         self.autoscroll_var = tk.BooleanVar(value=True)
         self.errors_only_var = tk.BooleanVar(value=False)
+        self.random_ua_var = tk.BooleanVar(value=self.use_random_user_agent)
+        self.block_images_var = tk.BooleanVar(value=self.block_images)
 
         self.log_dir = self._resolve_logs_dir()
         self.logger = self._build_logger()
@@ -177,6 +185,16 @@ class VoteBot5:
         except Exception:
             pass
         return None
+
+    def _pick_user_agent(self):
+        pool = self.custom_user_agents or [
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36",
+        ]
+        if not pool or not self.use_random_user_agent:
+            return None
+        return random.choice(pool)
 
     def _resolve_logs_dir(self):
         log_path = self.paths.get("logs") or "logs"
@@ -654,12 +672,38 @@ window.chrome.runtime = {};
             style="Helper.TLabel",
         ).grid(row=19, column=0, columnspan=2, sticky="w", pady=(0, 8))
 
+        self.random_ua_check = ttk.Checkbutton(
+            settings,
+            text="Rastgele user-agent kullan",
+            variable=self.random_ua_var,
+            style="Switch.TCheckbutton",
+        )
+        self.random_ua_check.grid(row=20, column=0, columnspan=2, sticky="w", pady=(2, 0))
+        ttk.Label(
+            settings,
+            text="Acikken her pencere icin UA havuzundan secilir; kapaliysa Chrome varsayilani kullanilir.",
+            style="Helper.TLabel",
+        ).grid(row=21, column=0, columnspan=2, sticky="w", pady=(0, 8))
+
+        self.block_images_check = ttk.Checkbutton(
+            settings,
+            text="Gorselleri engelle (daha hizli yukleme)",
+            variable=self.block_images_var,
+            style="Switch.TCheckbutton",
+        )
+        self.block_images_check.grid(row=22, column=0, columnspan=2, sticky="w", pady=(2, 0))
+        ttk.Label(
+            settings,
+            text="Acikken sayfa gorselleri yuklenmez; kapaliysa varsayilan yukleme kullanilir.",
+            style="Helper.TLabel",
+        ).grid(row=23, column=0, columnspan=2, sticky="w", pady=(0, 8))
+
         ttk.Label(
             settings,
             text="Oy buton seçicileri (satır satır CSS/XPath)",
             background=self.colors["panel"],
             foreground=self.colors["text"],
-        ).grid(row=20, column=0, sticky="nw", pady=(4, 0), padx=(0, 8))
+        ).grid(row=24, column=0, sticky="nw", pady=(4, 0), padx=(0, 8))
         self.selectors_text = scrolledtext.ScrolledText(
             settings,
             height=4,
@@ -673,19 +717,19 @@ window.chrome.runtime = {};
             highlightthickness=1,
             highlightbackground=self.colors["card"],
         )
-        self.selectors_text.grid(row=20, column=1, sticky="ew", pady=(4, 0))
+        self.selectors_text.grid(row=24, column=1, sticky="ew", pady=(4, 0))
         selectors_helper = (
             "Örnekler: a[data-action='vote'], button[data-action='vote'], "
             "xpath://button[contains(.,'vote')]"
         )
         ttk.Label(settings, text=selectors_helper, style="Helper.TLabel").grid(
-            row=21, column=1, sticky="w", pady=(0, 8)
+            row=25, column=1, sticky="w", pady=(0, 8)
         )
         for line in self.config.get("vote_selectors", []):
             self.selectors_text.insert(tk.END, f"{line}\n")
 
         actions = ttk.Frame(settings, style="Panel.TFrame")
-        actions.grid(row=22, column=0, columnspan=2, sticky="ew", pady=(6, 0))
+        actions.grid(row=26, column=0, columnspan=2, sticky="ew", pady=(6, 0))
         actions.columnconfigure((0, 1), weight=1)
         self.apply_btn = ttk.Button(
             actions,
@@ -985,7 +1029,12 @@ window.chrome.runtime = {};
             entry.state(state_flag)
         for btn in [self.apply_btn, self.defaults_btn, self.preflight_btn]:
             btn.state(state_flag)
-        for check in [self.headless_check, self.auto_driver_check]:
+        for check in [
+            self.headless_check,
+            self.auto_driver_check,
+            self.random_ua_check,
+            self.block_images_check,
+        ]:
             if running:
                 check.state(["disabled"])
             else:
@@ -1141,6 +1190,9 @@ window.chrome.runtime = {};
         chrome_options.add_argument("--remote-allow-origins=*")
         chrome_options.add_argument("--disable-notifications")
         chrome_options.add_argument("--log-level=3")
+        user_agent = self._pick_user_agent()
+        if user_agent:
+            chrome_options.add_argument(f"--user-agent={user_agent}")
         chrome_options.add_experimental_option(
             "excludeSwitches", ["enable-logging", "enable-automation"]
         )
@@ -1151,6 +1203,7 @@ window.chrome.runtime = {};
                 "credentials_enable_service": False,
                 "profile.password_manager_enabled": False,
                 "intl.accept_languages": "tr-TR,tr",
+                "profile.managed_default_content_settings.images": 2 if self.block_images else 1,
             },
         )
         return chrome_options
@@ -1406,6 +1459,10 @@ window.chrome.runtime = {};
         self.headless_var.set(defaults["headless"])
         self.use_selenium_manager = defaults["use_selenium_manager"]
         self.auto_driver_var.set(defaults["use_selenium_manager"])
+        self.use_random_user_agent = defaults["use_random_user_agent"]
+        self.random_ua_var.set(defaults["use_random_user_agent"])
+        self.block_images = defaults["block_images"]
+        self.block_images_var.set(defaults["block_images"])
         self.vote_selectors = self._build_vote_selectors(defaults.get("vote_selectors"))
         self.backoff_seconds = defaults["backoff_seconds"]
         self.backoff_cap_seconds = defaults["backoff_cap_seconds"]
@@ -1468,6 +1525,8 @@ window.chrome.runtime = {};
         self.parallel_workers = parallel
         self.headless = bool(self.headless_var.get())
         self.use_selenium_manager = bool(self.auto_driver_var.get())
+        self.use_random_user_agent = bool(self.random_ua_var.get())
+        self.block_images = bool(self.block_images_var.get())
         self.config["target_url"] = self.target_url
         self.config["pause_between_votes"] = self.pause_between_votes
         self.config["batch_size"] = self.batch_size
@@ -1476,6 +1535,8 @@ window.chrome.runtime = {};
         self.config["headless"] = self.headless
         self.config["timeout_seconds"] = self.timeout_seconds
         self.config["use_selenium_manager"] = self.use_selenium_manager
+        self.config["use_random_user_agent"] = self.use_random_user_agent
+        self.config["block_images"] = self.block_images
         self.config["vote_selectors"] = selector_lines
         self.config["backoff_seconds"] = self.backoff_seconds
         self.config["backoff_cap_seconds"] = self.backoff_cap_seconds
