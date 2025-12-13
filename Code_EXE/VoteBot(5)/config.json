@@ -13,6 +13,7 @@
     "timeout_seconds": 15,
     "use_selenium_manager": false,
     "use_random_user_agent": true,
+    "block_images": true,
     "user_agents": [],
     "vote_selectors": [],
     "backoff_seconds": 5.0,
