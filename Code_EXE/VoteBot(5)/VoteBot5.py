@@ -575,7 +575,50 @@ window.chrome.runtime = {};
         self.timeout_entry = ttk.Entry(settings, width=10)
         self.timeout_entry.insert(0, str(self.timeout_seconds))
         self.timeout_entry.grid(row=6, column=1, sticky="w", pady=(4, 0))
+        
+        self.random_ua_check = ttk.Checkbutton(
+            settings,
+            text="Rastgele user-agent kullan",
+            variable=self.random_ua_var,
+            style="Switch.TCheckbutton",
+        )
+        self.random_ua_check.grid(row=20, column=0, columnspan=2, sticky="w", pady=(2, 0))
         ttk.Label(
+            settings,
+            text="Acikken liste veya varsayilan havuzdan UA secilir.",
+            style="Helper.TLabel",
+        ).grid(row=21, column=0, columnspan=2, sticky="w", pady=(0, 8))
+
+        ttk.Label(
+            settings,
+            text="User-Agent listesi (satir satir)",
+            background=self.colors["panel"],
+            foreground=self.colors["text"],
+        ).grid(row=22, column=0, sticky="nw", pady=(4, 0), padx=(0, 8))
+        self.ua_text = scrolledtext.ScrolledText(
+            settings,
+            height=3,
+            width=40,
+            background=self.colors["panel"],
+            foreground=self.colors["text"],
+            insertbackground=self.colors["text"],
+            font=("Consolas", 9),
+            borderwidth=1,
+            relief=tk.FLAT,
+            highlightthickness=1,
+            highlightbackground=self.colors["card"],
+        )
+        self.ua_text.grid(row=22, column=1, sticky="ew", pady=(4, 0))
+        ttk.Label(
+            settings,
+            text="Bos birakilirsa varsayilan UA havuzu kullanilir.",
+            style="Helper.TLabel",
+        ).grid(row=23, column=1, sticky="w", pady=(0, 8))
+        for line in self.custom_user_agents:
+            self.ua_text.insert(tk.END, f"{line}
+")
+
+ttk.Label(
             settings,
             text="Oy butonu görünmezse bekleme sınırı",
             style="Helper.TLabel",
@@ -674,7 +717,7 @@ window.chrome.runtime = {};
             text="Oy buton seçicileri (satır satır CSS/XPath)",
             background=self.colors["panel"],
             foreground=self.colors["text"],
-        ).grid(row=20, column=0, sticky="nw", pady=(4, 0), padx=(0, 8))
+        ).grid(row=24, column=0, sticky="nw", pady=(4, 0), padx=(0, 8))
         self.selectors_text = scrolledtext.ScrolledText(
             settings,
             height=4,
@@ -688,19 +731,19 @@ window.chrome.runtime = {};
             highlightthickness=1,
             highlightbackground=self.colors["card"],
         )
-        self.selectors_text.grid(row=20, column=1, sticky="ew", pady=(4, 0))
+        self.selectors_text.grid(row=24, column=1, sticky="ew", pady=(4, 0))
         selectors_helper = (
             "Örnekler: a[data-action='vote'], button[data-action='vote'], "
             "xpath://button[contains(.,'vote')]"
         )
         ttk.Label(settings, text=selectors_helper, style="Helper.TLabel").grid(
-            row=21, column=1, sticky="w", pady=(0, 8)
+            row=25, column=1, sticky="w", pady=(0, 8)
         )
         for line in self.config.get("vote_selectors", []):
             self.selectors_text.insert(tk.END, f"{line}\n")
 
         actions = ttk.Frame(settings, style="Panel.TFrame")
-        actions.grid(row=22, column=0, columnspan=2, sticky="ew", pady=(6, 0))
+        actions.grid(row=26, column=0, columnspan=2, sticky="ew", pady=(6, 0))
         actions.columnconfigure((0, 1), weight=1)
         self.apply_btn = ttk.Button(
             actions,
@@ -1000,15 +1043,21 @@ window.chrome.runtime = {};
             entry.state(state_flag)
         for btn in [self.apply_btn, self.defaults_btn, self.preflight_btn]:
             btn.state(state_flag)
-        for check in [self.headless_check, self.auto_driver_check]:
+        for check in [self.headless_check, self.auto_driver_check, getattr(self, "random_ua_check", None)]:
             if running:
-                check.state(["disabled"])
+                if check:
+                    check.state(["disabled"])
             else:
-                check.state(["!disabled"])
+                if check:
+                    check.state(["!disabled"])
         if running:
             self.selectors_text.config(state=tk.DISABLED)
+            if hasattr(self, "ua_text"):
+                self.ua_text.config(state=tk.DISABLED)
         else:
             self.selectors_text.config(state=tk.NORMAL)
+            if hasattr(self, "ua_text"):
+                self.ua_text.config(state=tk.NORMAL)
 
     def _insert_log_line(self, timestamp, message, level):
         tag = "info"
@@ -1424,6 +1473,14 @@ window.chrome.runtime = {};
         self.headless_var.set(defaults["headless"])
         self.use_selenium_manager = defaults["use_selenium_manager"]
         self.auto_driver_var.set(defaults["use_selenium_manager"])
+        self.use_random_user_agent = defaults["use_random_user_agent"]
+        self.random_ua_var.set(defaults["use_random_user_agent"])
+        self.custom_user_agents = defaults.get("user_agents", [])
+        if hasattr(self, "ua_text"):
+            self.ua_text.config(state=tk.NORMAL)
+            self.ua_text.delete("1.0", tk.END)
+            for line in self.custom_user_agents:
+                self.ua_text.insert(tk.END, f"{line}\n")
         self.vote_selectors = self._build_vote_selectors(defaults.get("vote_selectors"))
         self.backoff_seconds = defaults["backoff_seconds"]
         self.backoff_cap_seconds = defaults["backoff_cap_seconds"]
@@ -1449,6 +1506,11 @@ window.chrome.runtime = {};
             selector_lines = [
                 line.strip()
                 for line in self.selectors_text.get("1.0", tk.END).splitlines()
+                if line.strip()
+            ]
+            ua_lines = [
+                line.strip()
+                for line in self.ua_text.get("1.0", tk.END).splitlines()
                 if line.strip()
             ]
         except ValueError:
@@ -1486,6 +1548,8 @@ window.chrome.runtime = {};
         self.parallel_workers = parallel
         self.headless = bool(self.headless_var.get())
         self.use_selenium_manager = bool(self.auto_driver_var.get())
+        self.use_random_user_agent = bool(self.random_ua_var.get())
+        self.custom_user_agents = ua_lines
         self.config["target_url"] = self.target_url
         self.config["pause_between_votes"] = self.pause_between_votes
         self.config["batch_size"] = self.batch_size
@@ -1494,6 +1558,8 @@ window.chrome.runtime = {};
         self.config["headless"] = self.headless
         self.config["timeout_seconds"] = self.timeout_seconds
         self.config["use_selenium_manager"] = self.use_selenium_manager
+        self.config["use_random_user_agent"] = self.use_random_user_agent
+        self.config["user_agents"] = self.custom_user_agents
         self.config["vote_selectors"] = selector_lines
         self.config["backoff_seconds"] = self.backoff_seconds
         self.config["backoff_cap_seconds"] = self.backoff_cap_seconds
