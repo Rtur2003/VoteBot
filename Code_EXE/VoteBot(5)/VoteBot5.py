@@ -87,7 +87,7 @@ class VoteBot5:
         self.autoscroll_var = tk.BooleanVar(value=True)
         self.errors_only_var = tk.BooleanVar(value=False)
 
-        self.log_dir = self._resolve_logs_dir()
+        self.log_dir, self.log_dir_warning = self._resolve_logs_dir()
         self.logger = self._build_logger()
         atexit.register(self._cleanup_temp_profiles)
         if getattr(self, "ignored_config_paths", []):
@@ -117,6 +117,8 @@ class VoteBot5:
 
         self._build_styles()
         self._build_ui()
+        if self.log_dir_warning:
+            self.log_message(self.log_dir_warning, level="info")
         self._set_state_badge("Bekliyor", "idle")
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
         self._update_runtime()
@@ -183,8 +185,15 @@ class VoteBot5:
         path = Path(log_path)
         if not path.is_absolute():
             path = self.base_dir / path
-        path.mkdir(parents=True, exist_ok=True)
-        return path
+        try:
+            path.mkdir(parents=True, exist_ok=True)
+            return path, None
+        except Exception as exc:
+            fallback = Path(tempfile.mkdtemp(prefix="votebot-logs-"))
+            warning = (
+                f"Log klasoru '{path}' olusturulamadi ({exc}); gecici '{fallback}' kullaniliyor."
+            )
+            return fallback, warning
 
     def _build_logger(self):
         logger = logging.getLogger("VoteBot5")
