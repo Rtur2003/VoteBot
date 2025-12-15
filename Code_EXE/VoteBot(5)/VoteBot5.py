@@ -763,19 +763,6 @@ window.chrome.runtime = {};
             style="Helper.TLabel",
         ).grid(row=19, column=0, columnspan=2, sticky="w", pady=(0, 8))
 
-        self.random_ua_check = ttk.Checkbutton(
-            settings,
-            text="Rastgele user-agent kullan",
-            variable=self.random_ua_var,
-            style="Switch.TCheckbutton",
-        )
-        self.random_ua_check.grid(row=20, column=0, columnspan=2, sticky="w", pady=(2, 0))
-        ttk.Label(
-            settings,
-            text="Acikken her pencere icin UA havuzundan secilir; kapaliysa Chrome varsayilani kullanilir.",
-            style="Helper.TLabel",
-        ).grid(row=21, column=0, columnspan=2, sticky="w", pady=(0, 8))
-
         self.block_images_check = ttk.Checkbutton(
             settings,
             text="Gorselleri engelle (daha hizli yukleme)",
@@ -809,7 +796,6 @@ window.chrome.runtime = {};
             highlightbackground=self.colors["card"],
         )
         self.selectors_text.grid(row=24, column=1, sticky="ew", pady=(4, 0))
-        self.selectors_text.grid(row=24, column=1, sticky="ew", pady=(4, 0))
         selectors_helper = (
             "Örnekler: a[data-action='vote'], button[data-action='vote'], "
             "xpath://button[contains(.,'vote')]"
@@ -821,7 +807,6 @@ window.chrome.runtime = {};
             self.selectors_text.insert(tk.END, f"{line}\n")
 
         actions = ttk.Frame(settings, style="Panel.TFrame")
-        actions.grid(row=26, column=0, columnspan=2, sticky="ew", pady=(6, 0))
         actions.grid(row=26, column=0, columnspan=2, sticky="ew", pady=(6, 0))
         actions.columnconfigure((0, 1), weight=1)
         self.apply_btn = ttk.Button(
