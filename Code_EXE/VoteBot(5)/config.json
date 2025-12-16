@@ -15,8 +15,6 @@
     "use_random_user_agent": true,
     "block_images": true,
     "user_agents": [],
-    "use_random_user_agent": true,
-    "user_agents": [],
     "vote_selectors": [],
     "backoff_seconds": 5.0,
     "backoff_cap_seconds": 60.0
