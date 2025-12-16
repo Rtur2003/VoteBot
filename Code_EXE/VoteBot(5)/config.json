@@ -19,4 +19,3 @@
     "backoff_seconds": 5.0,
     "backoff_cap_seconds": 60.0
 }
-
