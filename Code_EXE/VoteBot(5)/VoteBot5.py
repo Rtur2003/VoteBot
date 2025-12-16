@@ -418,6 +418,7 @@ window.chrome.runtime = {};
             font=("Segoe UI", 9),
             background=self.colors["panel"],
             foreground=self.colors["muted"],
+            wraplength=320,
         )
         style.configure(
             "FieldLabel.TLabel",
