@@ -47,8 +47,6 @@ class VoteBot5:
             "use_random_user_agent": True,
             "block_images": True,
             "user_agents": [],
-            "use_random_user_agent": True,
-            "user_agents": [],
             "vote_selectors": [],
             "backoff_seconds": 5,
             "backoff_cap_seconds": 60,
@@ -70,11 +68,7 @@ class VoteBot5:
         self.parallel_workers = max(1, min(10, int(self.config.get("parallel_workers", 2))))
         self.use_selenium_manager = bool(self.config.get("use_selenium_manager", False))
         self.use_random_user_agent = bool(self.config.get("use_random_user_agent", True))
-        self.custom_user_agents = self.config.get("user_agents") or []
-        self.use_random_user_agent = bool(self.config.get("use_random_user_agent", True))
-        self.custom_user_agents = self.config.get("user_agents") or []
         self.block_images = bool(self.config.get("block_images", True))
-        self.use_random_user_agent = bool(self.config.get("use_random_user_agent", True))
         self.custom_user_agents = self.config.get("user_agents") or []
         self.vote_selectors = self._build_vote_selectors(self.config.get("vote_selectors"))
         self.backoff_seconds = float(self.config.get("backoff_seconds", 5))
@@ -100,9 +94,7 @@ class VoteBot5:
         self.autoscroll_var = tk.BooleanVar(value=True)
         self.errors_only_var = tk.BooleanVar(value=False)
         self.random_ua_var = tk.BooleanVar(value=self.use_random_user_agent)
-        self.random_ua_var = tk.BooleanVar(value=self.use_random_user_agent)
         self.block_images_var = tk.BooleanVar(value=self.block_images)
-        self.random_ua_var = tk.BooleanVar(value=self.use_random_user_agent)
 
         self.log_dir, self.log_dir_warning = self._resolve_logs_dir()
         self.logger = self._build_logger()
@@ -763,19 +755,6 @@ window.chrome.runtime = {};
             style="Helper.TLabel",
         ).grid(row=19, column=0, columnspan=2, sticky="w", pady=(0, 8))
 
-        self.random_ua_check = ttk.Checkbutton(
-            settings,
-            text="Rastgele user-agent kullan",
-            variable=self.random_ua_var,
-            style="Switch.TCheckbutton",
-        )
-        self.random_ua_check.grid(row=20, column=0, columnspan=2, sticky="w", pady=(2, 0))
-        ttk.Label(
-            settings,
-            text="Acikken her pencere icin UA havuzundan secilir; kapaliysa Chrome varsayilani kullanilir.",
-            style="Helper.TLabel",
-        ).grid(row=21, column=0, columnspan=2, sticky="w", pady=(0, 8))
-
         self.block_images_check = ttk.Checkbutton(
             settings,
             text="Gorselleri engelle (daha hizli yukleme)",
@@ -809,7 +788,6 @@ window.chrome.runtime = {};
             highlightbackground=self.colors["card"],
         )
         self.selectors_text.grid(row=24, column=1, sticky="ew", pady=(4, 0))
-        self.selectors_text.grid(row=24, column=1, sticky="ew", pady=(4, 0))
         selectors_helper = (
             "Örnekler: a[data-action='vote'], button[data-action='vote'], "
             "xpath://button[contains(.,'vote')]"
@@ -821,7 +799,6 @@ window.chrome.runtime = {};
             self.selectors_text.insert(tk.END, f"{line}\n")
 
         actions = ttk.Frame(settings, style="Panel.TFrame")
-        actions.grid(row=26, column=0, columnspan=2, sticky="ew", pady=(6, 0))
         actions.grid(row=26, column=0, columnspan=2, sticky="ew", pady=(6, 0))
         actions.columnconfigure((0, 1), weight=1)
         self.apply_btn = ttk.Button(
@@ -1585,8 +1562,6 @@ window.chrome.runtime = {};
         self.random_ua_var.set(defaults["use_random_user_agent"])
         self.block_images = defaults["block_images"]
         self.block_images_var.set(defaults["block_images"])
-        self.use_random_user_agent = defaults["use_random_user_agent"]
-        self.random_ua_var.set(defaults["use_random_user_agent"])
         self.custom_user_agents = defaults.get("user_agents", [])
         if hasattr(self, "ua_text"):
             self.ua_text.config(state=tk.NORMAL)
@@ -1594,8 +1569,6 @@ window.chrome.runtime = {};
             for line in self.custom_user_agents:
                 self.ua_text.insert(tk.END, f"{line}\n")
         self.vote_selectors = self._build_vote_selectors(defaults.get("vote_selectors"))
-        self.backoff_seconds = defaults["backoff_seconds"]
-        self.backoff_cap_seconds = defaults["backoff_cap_seconds"]
         self.selectors_text.config(state=tk.NORMAL)
         self.selectors_text.delete("1.0", tk.END)
         for line in defaults.get("vote_selectors", []):
@@ -1662,7 +1635,6 @@ window.chrome.runtime = {};
         self.use_selenium_manager = bool(self.auto_driver_var.get())
         self.use_random_user_agent = bool(self.random_ua_var.get())
         self.block_images = bool(self.block_images_var.get())
-        self.use_random_user_agent = bool(self.random_ua_var.get())
         self.custom_user_agents = ua_lines
         self.config["target_url"] = self.target_url
         self.config["pause_between_votes"] = self.pause_between_votes
@@ -1674,7 +1646,6 @@ window.chrome.runtime = {};
         self.config["use_selenium_manager"] = self.use_selenium_manager
         self.config["use_random_user_agent"] = self.use_random_user_agent
         self.config["block_images"] = self.block_images
-        self.config["use_random_user_agent"] = self.use_random_user_agent
         self.config["user_agents"] = self.custom_user_agents
         self.config["vote_selectors"] = selector_lines
         self.config["backoff_seconds"] = self.backoff_seconds
