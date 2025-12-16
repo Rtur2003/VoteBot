@@ -25,10 +25,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 
-class VoteBot5:
+class VotryxApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("VoteBot 5 - DistroKid Spotlight")
+        self.root.title("VOTRYX - DistroKid Spotlight")
         self.root.geometry("1080x760")
         self.root.minsize(960, 680)
 
@@ -86,7 +86,7 @@ class VoteBot5:
         self._driver_lock = threading.Lock()
         self.active_drivers = set()
         self.driver_profiles = {}
-        self.temp_root = Path(tempfile.mkdtemp(prefix="votebot-profiles-"))
+        self.temp_root = Path(tempfile.mkdtemp(prefix="votryx-profiles-"))
         self.log_records = []
         self.log_history_limit = 500
         self.success_count = 0
@@ -248,18 +248,16 @@ class VoteBot5:
             path.mkdir(parents=True, exist_ok=True)
             return path, None
         except Exception as exc:
-            fallback = Path(tempfile.mkdtemp(prefix="votebot-logs-"))
-            warning = (
-                f"Log klasoru '{path}' olusturulamadi ({exc}); gecici '{fallback}' kullaniliyor."
-            )
+            fallback = Path(tempfile.mkdtemp(prefix="votryx-logs-"))
+            warning = f"Log klasoru '{path}' olusturulamadi ({exc}); gecici '{fallback}' kullaniliyor."
             return fallback, warning
 
     def _build_logger(self):
-        logger = logging.getLogger("VoteBot5")
+        logger = logging.getLogger("Votryx")
         logger.setLevel(logging.INFO)
         logger.handlers.clear()
         file_handler = RotatingFileHandler(
-            self.log_dir / "votebot5.log", encoding="utf-8", maxBytes=512 * 1024, backupCount=3
+            self.log_dir / "votryx.log", encoding="utf-8", maxBytes=512 * 1024, backupCount=3
         )
         formatter = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")
         file_handler.setFormatter(formatter)
@@ -350,7 +348,11 @@ window.chrome.runtime = {};
         canvas.create_text(
             size * 0.52,
             size * 0.78,
+<<<<<<< HEAD:Code_EXE/Votryx/VotryxApp.py
+            text="VX",
+=======
             text="V5",
+>>>>>>> 999522b6648e3d4981ccb925f73c632814a46299:Code_EXE/VoteBot(5)/VoteBot5.py
             fill=self.colors["bg"],
             font=("Bahnschrift SemiBold", 11),
         )
@@ -517,10 +519,15 @@ window.chrome.runtime = {};
         self._draw_brand_mark(logo_canvas, size=60)
         logo_canvas.grid(row=0, column=0, rowspan=2, padx=(0, 12), pady=(0, 8), sticky="w")
         title_block = ttk.Frame(header, style="Main.TFrame")
+<<<<<<< HEAD:Code_EXE/Votryx/VotryxApp.py
+        title_block.grid(row=0, column=1, rowspan=2, sticky="w")
+        title = ttk.Label(title_block, text="VOTRYX - DistroKid Spotlight", style="Title.TLabel")
+=======
         title_block.grid(row=0, column=1, rowspan=2, sticky="nsew")
         title_block.columnconfigure(0, weight=0)
         title_block.columnconfigure(1, weight=1)
         title = ttk.Label(title_block, text="VoteBot 5 - DistroKid Spotlight", style="Title.TLabel")
+>>>>>>> 999522b6648e3d4981ccb925f73c632814a46299:Code_EXE/VoteBot(5)/VoteBot5.py
         title.grid(row=0, column=0, sticky="w")
         pill_frame = ttk.Frame(title_block, style="Main.TFrame")
         pill_frame.grid(row=0, column=1, padx=(6, 0), sticky="w")
@@ -1690,7 +1697,7 @@ window.chrome.runtime = {};
 
 def main():
     root = tk.Tk()
-    app = VoteBot5(root)
+    app = VotryxApp(root)
     root.mainloop()
 
 
