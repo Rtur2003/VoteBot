@@ -549,8 +549,8 @@ window.chrome.runtime = {};
         )
         self.state_badge.grid(row=0, column=2, rowspan=2, sticky="e")
 
-        stats_wrapper = ttk.LabelFrame(main, text="Gösterge Paneli", style="Panel.TFrame", padding=12)
-        stats_wrapper.grid(row=1, column=0, sticky="nsew", padx=(0, 12))
+        stats_wrapper = ttk.LabelFrame(main, text="Gösterge Paneli", style="Panel.TFrame", padding=10)
+        stats_wrapper.grid(row=1, column=0, sticky="nsew", padx=(0, 10))
         stats_wrapper.columnconfigure(0, weight=1)
         stats_frame = ttk.Frame(stats_wrapper, style="Panel.TFrame")
         stats_frame.grid(row=0, column=0, sticky="nsew")
@@ -561,8 +561,8 @@ window.chrome.runtime = {};
         self._make_stat_card(stats_frame, 0, 2, "Durum", "Bekliyor", "status")
         self._make_stat_card(stats_frame, 0, 3, "Süre", "00:00:00", "runtime")
 
-        settings = ttk.LabelFrame(main, text="Ayarlar", style="Panel.TFrame", padding=12)
-        settings.grid(row=1, column=1, sticky="nsew")
+        settings = ttk.LabelFrame(main, text="Ayarlar", style="Panel.TFrame", padding=10)
+        settings.grid(row=1, column=1, sticky="nsew", padx=(10, 0))
         settings.columnconfigure(1, weight=1)
 
         ttk.Label(
@@ -586,7 +586,7 @@ window.chrome.runtime = {};
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=2, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.pause_entry = ttk.Entry(settings, width=10)
+        self.pause_entry = ttk.Entry(settings, width=12)
         self.pause_entry.insert(0, str(self.pause_between_votes))
         self.pause_entry.grid(row=2, column=1, sticky="w", pady=(4, 0))
         ttk.Label(
@@ -601,7 +601,7 @@ window.chrome.runtime = {};
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=4, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.batch_entry = ttk.Entry(settings, width=10)
+        self.batch_entry = ttk.Entry(settings, width=12)
         self.batch_entry.insert(0, str(self.batch_size))
         self.batch_entry.grid(row=4, column=1, sticky="w", pady=(4, 0))
         ttk.Label(
@@ -616,7 +616,7 @@ window.chrome.runtime = {};
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=6, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.timeout_entry = ttk.Entry(settings, width=10)
+        self.timeout_entry = ttk.Entry(settings, width=12)
         self.timeout_entry.insert(0, str(self.timeout_seconds))
         self.timeout_entry.grid(row=6, column=1, sticky="w", pady=(4, 0))
         
@@ -641,8 +641,8 @@ window.chrome.runtime = {};
         ).grid(row=22, column=0, sticky="nw", pady=(4, 0), padx=(0, 8))
         self.ua_text = scrolledtext.ScrolledText(
             settings,
-            height=3,
-            width=40,
+            height=4,
+            width=36,
             background=self.colors["panel"],
             foreground=self.colors["text"],
             insertbackground=self.colors["text"],
@@ -673,7 +673,7 @@ window.chrome.runtime = {};
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=8, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.max_errors_entry = ttk.Entry(settings, width=10)
+        self.max_errors_entry = ttk.Entry(settings, width=12)
         self.max_errors_entry.insert(0, str(self.max_errors))
         self.max_errors_entry.grid(row=8, column=1, sticky="w", pady=(4, 0))
         ttk.Label(
@@ -688,7 +688,7 @@ window.chrome.runtime = {};
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=10, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.backoff_entry = ttk.Entry(settings, width=10)
+        self.backoff_entry = ttk.Entry(settings, width=12)
         self.backoff_entry.insert(0, str(self.backoff_seconds))
         self.backoff_entry.grid(row=10, column=1, sticky="w", pady=(4, 0))
         ttk.Label(
@@ -703,7 +703,7 @@ window.chrome.runtime = {};
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=12, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.backoff_cap_entry = ttk.Entry(settings, width=10)
+        self.backoff_cap_entry = ttk.Entry(settings, width=12)
         self.backoff_cap_entry.insert(0, str(self.backoff_cap_seconds))
         self.backoff_cap_entry.grid(row=12, column=1, sticky="w", pady=(4, 0))
         ttk.Label(
@@ -718,7 +718,7 @@ window.chrome.runtime = {};
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=14, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.parallel_entry = ttk.Entry(settings, width=10)
+        self.parallel_entry = ttk.Entry(settings, width=12)
         self.parallel_entry.insert(0, str(self.parallel_workers))
         self.parallel_entry.grid(row=14, column=1, sticky="w", pady=(4, 0))
         ttk.Label(
