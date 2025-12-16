@@ -47,8 +47,6 @@ class VoteBot5:
             "use_random_user_agent": True,
             "block_images": True,
             "user_agents": [],
-            "use_random_user_agent": True,
-            "user_agents": [],
             "vote_selectors": [],
             "backoff_seconds": 5,
             "backoff_cap_seconds": 60,
@@ -70,9 +68,7 @@ class VoteBot5:
         self.parallel_workers = max(1, min(10, int(self.config.get("parallel_workers", 2))))
         self.use_selenium_manager = bool(self.config.get("use_selenium_manager", False))
         self.use_random_user_agent = bool(self.config.get("use_random_user_agent", True))
-        self.custom_user_agents = self.config.get("user_agents") or []
         self.block_images = bool(self.config.get("block_images", True))
-        self.use_random_user_agent = bool(self.config.get("use_random_user_agent", True))
         self.custom_user_agents = self.config.get("user_agents") or []
         self.vote_selectors = self._build_vote_selectors(self.config.get("vote_selectors"))
         self.backoff_seconds = float(self.config.get("backoff_seconds", 5))
@@ -99,7 +95,6 @@ class VoteBot5:
         self.errors_only_var = tk.BooleanVar(value=False)
         self.random_ua_var = tk.BooleanVar(value=self.use_random_user_agent)
         self.block_images_var = tk.BooleanVar(value=self.block_images)
-        self.random_ua_var = tk.BooleanVar(value=self.use_random_user_agent)
 
         self.log_dir, self.log_dir_warning = self._resolve_logs_dir()
         self.logger = self._build_logger()
@@ -113,17 +108,17 @@ class VoteBot5:
             )
 
         self.colors = {
-            "bg": "#0a0f1f",
-            "panel": "#0d152a",
-            "card": "#0f172a",
-            "border": "#1e293b",
-            "accent": "#f97316",
-            "accent2": "#38bdf8",
-            "text": "#e2e8f0",
-            "muted": "#94a3b8",
-            "error": "#f87171",
-            "success": "#34d399",
-            "danger": "#ef4444",
+            "bg": "#0b1224",
+            "panel": "#0f1a30",
+            "card": "#13213b",
+            "border": "#1f2f4a",
+            "accent": "#ff7a1a",
+            "accent2": "#23c4ff",
+            "text": "#e6edf7",
+            "muted": "#a5b4ce",
+            "error": "#f97070",
+            "success": "#38e0a3",
+            "danger": "#f43f5e",
         }
 
         self.brand_icon = self._build_icon_image()
@@ -307,14 +302,14 @@ window.chrome.runtime = {};
     def _build_icon_image(self, size=48):
         # Build a simple geometric icon for header/title bar.
         icon = tk.PhotoImage(width=size, height=size)
-        icon.put(self.colors["bg"], to=(0, 0, size, size))
-        icon.put(self.colors["card"], to=(2, 2, size - 2, size - 2))
-        icon.put(self.colors["accent2"], to=(0, 0, size, int(size * 0.35)))
-        icon.put(self.colors["accent"], to=(0, int(size * 0.55), size, size))
-        core = "#0b1220"
+        icon.put(self.colors["panel"], to=(0, 0, size, size))
+        icon.put(self.colors["card"], to=(3, 3, size - 3, size - 3))
+        icon.put(self.colors["accent2"], to=(0, 0, size, int(size * 0.42)))
+        icon.put(self.colors["accent"], to=(0, int(size * 0.58), size, size))
+        core = "#0c162a"
         # stylized tick
-        icon.put(core, to=(int(size * 0.26), int(size * 0.46), int(size * 0.36), int(size * 0.68)))
-        icon.put(core, to=(int(size * 0.34), int(size * 0.62), int(size * 0.76), int(size * 0.74)))
+        icon.put(core, to=(int(size * 0.24), int(size * 0.48), int(size * 0.36), int(size * 0.70)))
+        icon.put(core, to=(int(size * 0.34), int(size * 0.64), int(size * 0.78), int(size * 0.76)))
         return icon
 
     def _draw_brand_mark(self, canvas, size=60):
@@ -356,8 +351,8 @@ window.chrome.runtime = {};
             size * 0.52,
             size * 0.78,
             text="V5",
-            fill="#0f172a",
-            font=("Segoe UI", 11, "bold"),
+            fill=self.colors["bg"],
+            font=("Bahnschrift SemiBold", 11),
         )
 
     def _build_styles(self):
@@ -367,9 +362,9 @@ window.chrome.runtime = {};
         except tk.TclError:
             pass
 
-        base_font = ("Segoe UI", 10)
-        title_font = ("Segoe UI", 20, "bold")
-        subtitle_font = ("Segoe UI", 11)
+        base_font = ("Bahnschrift SemiBold", 10)
+        title_font = ("Bahnschrift SemiBold", 20)
+        subtitle_font = ("Bahnschrift", 11)
 
         style.configure("Main.TFrame", background=self.colors["bg"], padding=0)
         style.configure("Panel.TFrame", background=self.colors["panel"])
@@ -407,31 +402,32 @@ window.chrome.runtime = {};
         )
         style.configure(
             "StatValue.TLabel",
-            font=("Segoe UI", 22, "bold"),
+            font=("Bahnschrift SemiBold", 22),
             background=self.colors["card"],
             foreground=self.colors["text"],
         )
         style.configure(
             "Status.TLabel",
-            font=("Segoe UI", 12, "bold"),
+            font=("Bahnschrift SemiBold", 12),
             background=self.colors["panel"],
             foreground=self.colors["text"],
         )
         style.configure(
             "Helper.TLabel",
-            font=("Segoe UI", 9),
+            font=("Bahnschrift", 9),
             background=self.colors["panel"],
             foreground=self.colors["muted"],
+            wraplength=320,
         )
         style.configure(
             "FieldLabel.TLabel",
-            font=("Segoe UI", 10, "bold"),
+            font=("Bahnschrift SemiBold", 10),
             background=self.colors["panel"],
             foreground=self.colors["text"],
         )
         style.configure(
             "Badge.TLabel",
-            font=("Segoe UI", 10, "bold"),
+            font=("Bahnschrift SemiBold", 10),
             background=self.colors["card"],
             foreground=self.colors["text"],
             padding=(10, 6),
@@ -439,7 +435,7 @@ window.chrome.runtime = {};
         def button_style(name, bg, fg, active=None, disabled=None, border=None, padding=10, bold=True):
             active = active or bg
             disabled = disabled or "#1f2937"
-            font = ("Segoe UI", 11, "bold") if bold else ("Segoe UI", 10)
+            font = ("Bahnschrift SemiBold", 11) if bold else ("Bahnschrift", 10)
             kwargs = {
                 "font": font,
                 "background": bg,
@@ -449,23 +445,25 @@ window.chrome.runtime = {};
                 "borderwidth": 0,
             }
             if border:
-                kwargs.update({"bordercolor": border, "focuscolor": border})
+                kwargs.update({"bordercolor": border, "focuscolor": border, "lightcolor": border})
             style.configure(name, **kwargs)
             style.map(
                 name,
                 background=[("active", active), ("disabled", disabled)],
-                foreground=[("disabled", "#9ca3af")],
+                foreground=[("disabled", "#9ca3af"), ("pressed", fg)],
+                focuscolor=[("focus", border or self.colors["accent2"])],
+                bordercolor=[("focus", border or self.colors["accent2"])],
             )
 
-        button_style("Accent.TButton", self.colors["accent"], "#0f172a", active=self.colors["accent2"], disabled="#6b7280")
-        button_style("Ghost.TButton", self.colors["panel"], self.colors["text"], active="#1f2937", disabled="#1f2937", bold=False, padding=7)
-        button_style("Outline.TButton", self.colors["panel"], self.colors["text"], active=self.colors["card"], disabled="#1f2937", border=self.colors["accent2"], bold=False, padding=7)
-        button_style("Danger.TButton", self.colors["danger"], "#0f172a", active="#dc2626", disabled="#7f1d1d")
+        button_style("Accent.TButton", self.colors["accent"], "#0f172a", active=self.colors["accent2"], disabled="#1f2a3d")
+        button_style("Ghost.TButton", self.colors["card"], self.colors["text"], active="#1f2f4a", disabled="#1f2a3d", border=self.colors["border"], bold=False, padding=9)
+        button_style("Outline.TButton", self.colors["panel"], self.colors["text"], active=self.colors["card"], disabled="#1f2a3d", border=self.colors["accent2"], bold=False, padding=9)
+        button_style("Danger.TButton", self.colors["danger"], "#0f172a", active="#e11d48", disabled="#7f1d1d")
         style.configure(
             "Switch.TCheckbutton",
             background=self.colors["panel"],
             foreground=self.colors["text"],
-            font=("Segoe UI", 10),
+            font=("Bahnschrift", 10),
         )
         style.map("Switch.TCheckbutton", background=[("active", "#1f2937")])
         style.configure(
@@ -483,16 +481,16 @@ window.chrome.runtime = {};
         )
         style.configure(
             "Section.TLabel",
-            font=("Segoe UI", 12, "bold"),
+            font=("Bahnschrift SemiBold", 12),
             background=self.colors["bg"],
             foreground=self.colors["text"],
         )
         style.configure(
             "Pill.TLabel",
-            font=("Segoe UI", 9, "bold"),
-            background="#17233b",
-            foreground=self.colors["accent2"],
-            padding=(10, 4),
+            font=("Bahnschrift SemiBold", 9),
+            background="#182645",
+            foreground=self.colors["accent"],
+            padding=(12, 5),
         )
 
     def _build_ui(self):
@@ -507,6 +505,7 @@ window.chrome.runtime = {};
         header = ttk.Frame(main, style="Main.TFrame")
         header.grid(row=0, column=0, columnspan=2, sticky="ew", pady=(0, 4))
         header.columnconfigure(2, weight=1)
+        header.columnconfigure(1, weight=1)
         logo_canvas = tk.Canvas(
             header,
             width=60,
@@ -518,11 +517,13 @@ window.chrome.runtime = {};
         self._draw_brand_mark(logo_canvas, size=60)
         logo_canvas.grid(row=0, column=0, rowspan=2, padx=(0, 12), pady=(0, 8), sticky="w")
         title_block = ttk.Frame(header, style="Main.TFrame")
-        title_block.grid(row=0, column=1, rowspan=2, sticky="w")
+        title_block.grid(row=0, column=1, rowspan=2, sticky="nsew")
+        title_block.columnconfigure(0, weight=0)
+        title_block.columnconfigure(1, weight=1)
         title = ttk.Label(title_block, text="VoteBot 5 - DistroKid Spotlight", style="Title.TLabel")
         title.grid(row=0, column=0, sticky="w")
         pill_frame = ttk.Frame(title_block, style="Main.TFrame")
-        pill_frame.grid(row=0, column=1, padx=(10, 0), sticky="w")
+        pill_frame.grid(row=0, column=1, padx=(6, 0), sticky="w")
         ttk.Label(pill_frame, text="Headless hazır", style="Pill.TLabel").grid(row=0, column=0, padx=(0, 6))
         ttk.Label(pill_frame, text="Batch oy", style="Pill.TLabel").grid(row=0, column=1, padx=(0, 6))
         ttk.Label(pill_frame, text="Log kaydı", style="Pill.TLabel").grid(row=0, column=2)
@@ -663,10 +664,9 @@ window.chrome.runtime = {};
             style="Helper.TLabel",
         ).grid(row=23, column=1, sticky="w", pady=(0, 8))
         for line in self.custom_user_agents:
-            self.ua_text.insert(tk.END, f"{line}
-")
+            self.ua_text.insert(tk.END, f"{line}\n")
 
-ttk.Label(
+        ttk.Label(
             settings,
             text="Oy butonu görünmezse bekleme sınırı",
             style="Helper.TLabel",
@@ -760,19 +760,6 @@ ttk.Label(
             style="Helper.TLabel",
         ).grid(row=19, column=0, columnspan=2, sticky="w", pady=(0, 8))
 
-        self.random_ua_check = ttk.Checkbutton(
-            settings,
-            text="Rastgele user-agent kullan",
-            variable=self.random_ua_var,
-            style="Switch.TCheckbutton",
-        )
-        self.random_ua_check.grid(row=20, column=0, columnspan=2, sticky="w", pady=(2, 0))
-        ttk.Label(
-            settings,
-            text="Acikken her pencere icin UA havuzundan secilir; kapaliysa Chrome varsayilani kullanilir.",
-            style="Helper.TLabel",
-        ).grid(row=21, column=0, columnspan=2, sticky="w", pady=(0, 8))
-
         self.block_images_check = ttk.Checkbutton(
             settings,
             text="Gorselleri engelle (daha hizli yukleme)",
@@ -792,7 +779,6 @@ ttk.Label(
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=24, column=0, sticky="nw", pady=(4, 0), padx=(0, 8))
-        ).grid(row=24, column=0, sticky="nw", pady=(4, 0), padx=(0, 8))
         self.selectors_text = scrolledtext.ScrolledText(
             settings,
             height=4,
@@ -807,20 +793,17 @@ ttk.Label(
             highlightbackground=self.colors["card"],
         )
         self.selectors_text.grid(row=24, column=1, sticky="ew", pady=(4, 0))
-        self.selectors_text.grid(row=24, column=1, sticky="ew", pady=(4, 0))
         selectors_helper = (
             "Örnekler: a[data-action='vote'], button[data-action='vote'], "
             "xpath://button[contains(.,'vote')]"
         )
         ttk.Label(settings, text=selectors_helper, style="Helper.TLabel").grid(
             row=25, column=1, sticky="w", pady=(0, 8)
-            row=25, column=1, sticky="w", pady=(0, 8)
         )
         for line in self.config.get("vote_selectors", []):
             self.selectors_text.insert(tk.END, f"{line}\n")
 
         actions = ttk.Frame(settings, style="Panel.TFrame")
-        actions.grid(row=26, column=0, columnspan=2, sticky="ew", pady=(6, 0))
         actions.grid(row=26, column=0, columnspan=2, sticky="ew", pady=(6, 0))
         actions.columnconfigure((0, 1), weight=1)
         self.apply_btn = ttk.Button(
@@ -919,19 +902,20 @@ ttk.Label(
             log_frame,
             width=60,
             height=18,
-            background="#0b1220",
+            background="#0c1528",
             foreground=self.colors["text"],
             insertbackground=self.colors["text"],
-            font=("Consolas", 10),
+            font=("Consolas", 9),
             borderwidth=1,
             relief=tk.FLAT,
             highlightthickness=1,
-            highlightbackground=self.colors["card"],
+            highlightbackground=self.colors["border"],
         )
         self.log_area.grid(row=1, column=0, sticky="nsew", pady=(0, 8))
         self.log_area.tag_configure("info", foreground=self.colors["text"])
         self.log_area.tag_configure("success", foreground=self.colors["success"])
         self.log_area.tag_configure("error", foreground=self.colors["error"])
+        self.log_area.tag_configure("muted", foreground=self.colors["muted"])
         clear_btn = ttk.Button(log_frame, text="Log temizle", command=self.clear_log, style="Ghost.TButton")
         clear_btn.grid(row=2, column=0, sticky="e")
         self._set_form_state(False)
@@ -1144,10 +1128,9 @@ ttk.Label(
         for check in [
             self.headless_check,
             self.auto_driver_check,
-            self.random_ua_check,
-            self.block_images_check,
+            getattr(self, "random_ua_check", None),
+            getattr(self, "block_images_check", None),
         ]:
-        for check in [self.headless_check, self.auto_driver_check, getattr(self, "random_ua_check", None)]:
             if running:
                 if check:
                     check.state(["disabled"])
@@ -1585,8 +1568,6 @@ ttk.Label(
         self.random_ua_var.set(defaults["use_random_user_agent"])
         self.block_images = defaults["block_images"]
         self.block_images_var.set(defaults["block_images"])
-        self.use_random_user_agent = defaults["use_random_user_agent"]
-        self.random_ua_var.set(defaults["use_random_user_agent"])
         self.custom_user_agents = defaults.get("user_agents", [])
         if hasattr(self, "ua_text"):
             self.ua_text.config(state=tk.NORMAL)
@@ -1594,8 +1575,6 @@ ttk.Label(
             for line in self.custom_user_agents:
                 self.ua_text.insert(tk.END, f"{line}\n")
         self.vote_selectors = self._build_vote_selectors(defaults.get("vote_selectors"))
-        self.backoff_seconds = defaults["backoff_seconds"]
-        self.backoff_cap_seconds = defaults["backoff_cap_seconds"]
         self.selectors_text.config(state=tk.NORMAL)
         self.selectors_text.delete("1.0", tk.END)
         for line in defaults.get("vote_selectors", []):
@@ -1664,7 +1643,6 @@ ttk.Label(
         self.use_selenium_manager = bool(self.auto_driver_var.get())
         self.use_random_user_agent = bool(self.random_ua_var.get())
         self.block_images = bool(self.block_images_var.get())
-        self.use_random_user_agent = bool(self.random_ua_var.get())
         self.custom_user_agents = ua_lines
         self.config["target_url"] = self.target_url
         self.config["pause_between_votes"] = self.pause_between_votes
@@ -1676,7 +1654,6 @@ ttk.Label(
         self.config["use_selenium_manager"] = self.use_selenium_manager
         self.config["use_random_user_agent"] = self.use_random_user_agent
         self.config["block_images"] = self.block_images
-        self.config["use_random_user_agent"] = self.use_random_user_agent
         self.config["user_agents"] = self.custom_user_agents
         self.config["vote_selectors"] = selector_lines
         self.config["backoff_seconds"] = self.backoff_seconds
