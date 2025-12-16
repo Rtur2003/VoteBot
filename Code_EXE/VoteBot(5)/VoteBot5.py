@@ -503,6 +503,7 @@ window.chrome.runtime = {};
         header = ttk.Frame(main, style="Main.TFrame")
         header.grid(row=0, column=0, columnspan=2, sticky="ew", pady=(0, 4))
         header.columnconfigure(2, weight=1)
+        header.columnconfigure(1, weight=1)
         logo_canvas = tk.Canvas(
             header,
             width=60,
@@ -514,11 +515,13 @@ window.chrome.runtime = {};
         self._draw_brand_mark(logo_canvas, size=60)
         logo_canvas.grid(row=0, column=0, rowspan=2, padx=(0, 12), pady=(0, 8), sticky="w")
         title_block = ttk.Frame(header, style="Main.TFrame")
-        title_block.grid(row=0, column=1, rowspan=2, sticky="w")
+        title_block.grid(row=0, column=1, rowspan=2, sticky="nsew")
+        title_block.columnconfigure(0, weight=0)
+        title_block.columnconfigure(1, weight=1)
         title = ttk.Label(title_block, text="VoteBot 5 - DistroKid Spotlight", style="Title.TLabel")
         title.grid(row=0, column=0, sticky="w")
         pill_frame = ttk.Frame(title_block, style="Main.TFrame")
-        pill_frame.grid(row=0, column=1, padx=(10, 0), sticky="w")
+        pill_frame.grid(row=0, column=1, padx=(6, 0), sticky="w")
         ttk.Label(pill_frame, text="Headless hazır", style="Pill.TLabel").grid(row=0, column=0, padx=(0, 6))
         ttk.Label(pill_frame, text="Batch oy", style="Pill.TLabel").grid(row=0, column=1, padx=(0, 6))
         ttk.Label(pill_frame, text="Log kaydı", style="Pill.TLabel").grid(row=0, column=2)
