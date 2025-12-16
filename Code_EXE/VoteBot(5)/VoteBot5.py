@@ -897,19 +897,20 @@ window.chrome.runtime = {};
             log_frame,
             width=60,
             height=18,
-            background="#0b1220",
+            background="#0c1528",
             foreground=self.colors["text"],
             insertbackground=self.colors["text"],
-            font=("Consolas", 10),
+            font=("Consolas", 9),
             borderwidth=1,
             relief=tk.FLAT,
             highlightthickness=1,
-            highlightbackground=self.colors["card"],
+            highlightbackground=self.colors["border"],
         )
         self.log_area.grid(row=1, column=0, sticky="nsew", pady=(0, 8))
         self.log_area.tag_configure("info", foreground=self.colors["text"])
         self.log_area.tag_configure("success", foreground=self.colors["success"])
         self.log_area.tag_configure("error", foreground=self.colors["error"])
+        self.log_area.tag_configure("muted", foreground=self.colors["muted"])
         clear_btn = ttk.Button(log_frame, text="Log temizle", command=self.clear_log, style="Ghost.TButton")
         clear_btn.grid(row=2, column=0, sticky="e")
         self._set_form_state(False)
