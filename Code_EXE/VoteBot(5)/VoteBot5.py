@@ -213,10 +213,9 @@ class VoteBot5:
             stripped = ua.strip()
             if not stripped or len(stripped) < 10:
                 continue
-            lowered = stripped.lower()
-            if lowered in seen:
+            if stripped.lower() in seen:
                 continue
-            seen.add(lowered)
+            seen.add(stripped.lower())
             cleaned.append(stripped)
         return cleaned
 
@@ -1605,6 +1604,8 @@ window.chrome.runtime = {};
                 for line in self.ua_text.get("1.0", tk.END).splitlines()
                 if line.strip()
             ]
+            ua_lines = self._normalize_user_agents(ua_lines)
+
         except ValueError:
             messagebox.showerror("Hata", "Sayısal alanlar geçerli ve pozitif olmalı.")
             self.log_message("Ayarlar okunamadı: sayısal alan hatalı.", level="error")
