@@ -108,17 +108,17 @@ class VotryxApp:
             )
 
         self.colors = {
-            "bg": "#0a0f1f",
-            "panel": "#0d152a",
-            "card": "#0f172a",
-            "border": "#1e293b",
-            "accent": "#f97316",
-            "accent2": "#38bdf8",
-            "text": "#e2e8f0",
-            "muted": "#94a3b8",
-            "error": "#f87171",
-            "success": "#34d399",
-            "danger": "#ef4444",
+            "bg": "#0b1224",
+            "panel": "#0f1a30",
+            "card": "#13213b",
+            "border": "#1f2f4a",
+            "accent": "#ff7a1a",
+            "accent2": "#23c4ff",
+            "text": "#e6edf7",
+            "muted": "#a5b4ce",
+            "error": "#f97070",
+            "success": "#38e0a3",
+            "danger": "#f43f5e",
         }
 
         self.brand_icon = self._build_icon_image()
@@ -213,10 +213,9 @@ class VotryxApp:
             stripped = ua.strip()
             if not stripped or len(stripped) < 10:
                 continue
-            lowered = stripped.lower()
-            if lowered in seen:
+            if stripped.lower() in seen:
                 continue
-            seen.add(lowered)
+            seen.add(stripped.lower())
             cleaned.append(stripped)
         return cleaned
 
@@ -301,14 +300,14 @@ window.chrome.runtime = {};
     def _build_icon_image(self, size=48):
         # Build a simple geometric icon for header/title bar.
         icon = tk.PhotoImage(width=size, height=size)
-        icon.put(self.colors["bg"], to=(0, 0, size, size))
-        icon.put(self.colors["card"], to=(2, 2, size - 2, size - 2))
-        icon.put(self.colors["accent2"], to=(0, 0, size, int(size * 0.35)))
-        icon.put(self.colors["accent"], to=(0, int(size * 0.55), size, size))
-        core = "#0b1220"
+        icon.put(self.colors["panel"], to=(0, 0, size, size))
+        icon.put(self.colors["card"], to=(3, 3, size - 3, size - 3))
+        icon.put(self.colors["accent2"], to=(0, 0, size, int(size * 0.42)))
+        icon.put(self.colors["accent"], to=(0, int(size * 0.58), size, size))
+        core = "#0c162a"
         # stylized tick
-        icon.put(core, to=(int(size * 0.26), int(size * 0.46), int(size * 0.36), int(size * 0.68)))
-        icon.put(core, to=(int(size * 0.34), int(size * 0.62), int(size * 0.76), int(size * 0.74)))
+        icon.put(core, to=(int(size * 0.24), int(size * 0.48), int(size * 0.36), int(size * 0.70)))
+        icon.put(core, to=(int(size * 0.34), int(size * 0.64), int(size * 0.78), int(size * 0.76)))
         return icon
 
     def _draw_brand_mark(self, canvas, size=60):
@@ -349,7 +348,11 @@ window.chrome.runtime = {};
         canvas.create_text(
             size * 0.52,
             size * 0.78,
+<<<<<<< HEAD:Code_EXE/Votryx/VotryxApp.py
             text="VX",
+=======
+            text="V5",
+>>>>>>> 999522b6648e3d4981ccb925f73c632814a46299:Code_EXE/VoteBot(5)/VoteBot5.py
             fill=self.colors["bg"],
             font=("Bahnschrift SemiBold", 11),
         )
@@ -361,9 +364,9 @@ window.chrome.runtime = {};
         except tk.TclError:
             pass
 
-        base_font = ("Segoe UI", 10)
-        title_font = ("Segoe UI", 20, "bold")
-        subtitle_font = ("Segoe UI", 11)
+        base_font = ("Bahnschrift SemiBold", 10)
+        title_font = ("Bahnschrift SemiBold", 20)
+        subtitle_font = ("Bahnschrift", 11)
 
         style.configure("Main.TFrame", background=self.colors["bg"], padding=0)
         style.configure("Panel.TFrame", background=self.colors["panel"])
@@ -401,31 +404,32 @@ window.chrome.runtime = {};
         )
         style.configure(
             "StatValue.TLabel",
-            font=("Segoe UI", 22, "bold"),
+            font=("Bahnschrift SemiBold", 22),
             background=self.colors["card"],
             foreground=self.colors["text"],
         )
         style.configure(
             "Status.TLabel",
-            font=("Segoe UI", 12, "bold"),
+            font=("Bahnschrift SemiBold", 12),
             background=self.colors["panel"],
             foreground=self.colors["text"],
         )
         style.configure(
             "Helper.TLabel",
-            font=("Segoe UI", 9),
+            font=("Bahnschrift", 9),
             background=self.colors["panel"],
             foreground=self.colors["muted"],
+            wraplength=320,
         )
         style.configure(
             "FieldLabel.TLabel",
-            font=("Segoe UI", 10, "bold"),
+            font=("Bahnschrift SemiBold", 10),
             background=self.colors["panel"],
             foreground=self.colors["text"],
         )
         style.configure(
             "Badge.TLabel",
-            font=("Segoe UI", 10, "bold"),
+            font=("Bahnschrift SemiBold", 10),
             background=self.colors["card"],
             foreground=self.colors["text"],
             padding=(10, 6),
@@ -433,7 +437,7 @@ window.chrome.runtime = {};
         def button_style(name, bg, fg, active=None, disabled=None, border=None, padding=10, bold=True):
             active = active or bg
             disabled = disabled or "#1f2937"
-            font = ("Segoe UI", 11, "bold") if bold else ("Segoe UI", 10)
+            font = ("Bahnschrift SemiBold", 11) if bold else ("Bahnschrift", 10)
             kwargs = {
                 "font": font,
                 "background": bg,
@@ -443,23 +447,25 @@ window.chrome.runtime = {};
                 "borderwidth": 0,
             }
             if border:
-                kwargs.update({"bordercolor": border, "focuscolor": border})
+                kwargs.update({"bordercolor": border, "focuscolor": border, "lightcolor": border})
             style.configure(name, **kwargs)
             style.map(
                 name,
                 background=[("active", active), ("disabled", disabled)],
-                foreground=[("disabled", "#9ca3af")],
+                foreground=[("disabled", "#9ca3af"), ("pressed", fg)],
+                focuscolor=[("focus", border or self.colors["accent2"])],
+                bordercolor=[("focus", border or self.colors["accent2"])],
             )
 
-        button_style("Accent.TButton", self.colors["accent"], "#0f172a", active=self.colors["accent2"], disabled="#6b7280")
-        button_style("Ghost.TButton", self.colors["panel"], self.colors["text"], active="#1f2937", disabled="#1f2937", bold=False, padding=7)
-        button_style("Outline.TButton", self.colors["panel"], self.colors["text"], active=self.colors["card"], disabled="#1f2937", border=self.colors["accent2"], bold=False, padding=7)
-        button_style("Danger.TButton", self.colors["danger"], "#0f172a", active="#dc2626", disabled="#7f1d1d")
+        button_style("Accent.TButton", self.colors["accent"], "#0f172a", active=self.colors["accent2"], disabled="#1f2a3d")
+        button_style("Ghost.TButton", self.colors["card"], self.colors["text"], active="#1f2f4a", disabled="#1f2a3d", border=self.colors["border"], bold=False, padding=9)
+        button_style("Outline.TButton", self.colors["panel"], self.colors["text"], active=self.colors["card"], disabled="#1f2a3d", border=self.colors["accent2"], bold=False, padding=9)
+        button_style("Danger.TButton", self.colors["danger"], "#0f172a", active="#e11d48", disabled="#7f1d1d")
         style.configure(
             "Switch.TCheckbutton",
             background=self.colors["panel"],
             foreground=self.colors["text"],
-            font=("Segoe UI", 10),
+            font=("Bahnschrift", 10),
         )
         style.map("Switch.TCheckbutton", background=[("active", "#1f2937")])
         style.configure(
@@ -477,16 +483,16 @@ window.chrome.runtime = {};
         )
         style.configure(
             "Section.TLabel",
-            font=("Segoe UI", 12, "bold"),
+            font=("Bahnschrift SemiBold", 12),
             background=self.colors["bg"],
             foreground=self.colors["text"],
         )
         style.configure(
             "Pill.TLabel",
-            font=("Segoe UI", 9, "bold"),
-            background="#17233b",
-            foreground=self.colors["accent2"],
-            padding=(10, 4),
+            font=("Bahnschrift SemiBold", 9),
+            background="#182645",
+            foreground=self.colors["accent"],
+            padding=(12, 5),
         )
 
     def _build_ui(self):
@@ -501,6 +507,7 @@ window.chrome.runtime = {};
         header = ttk.Frame(main, style="Main.TFrame")
         header.grid(row=0, column=0, columnspan=2, sticky="ew", pady=(0, 4))
         header.columnconfigure(2, weight=1)
+        header.columnconfigure(1, weight=1)
         logo_canvas = tk.Canvas(
             header,
             width=60,
@@ -512,11 +519,18 @@ window.chrome.runtime = {};
         self._draw_brand_mark(logo_canvas, size=60)
         logo_canvas.grid(row=0, column=0, rowspan=2, padx=(0, 12), pady=(0, 8), sticky="w")
         title_block = ttk.Frame(header, style="Main.TFrame")
+<<<<<<< HEAD:Code_EXE/Votryx/VotryxApp.py
         title_block.grid(row=0, column=1, rowspan=2, sticky="w")
         title = ttk.Label(title_block, text="VOTRYX - DistroKid Spotlight", style="Title.TLabel")
+=======
+        title_block.grid(row=0, column=1, rowspan=2, sticky="nsew")
+        title_block.columnconfigure(0, weight=0)
+        title_block.columnconfigure(1, weight=1)
+        title = ttk.Label(title_block, text="VoteBot 5 - DistroKid Spotlight", style="Title.TLabel")
+>>>>>>> 999522b6648e3d4981ccb925f73c632814a46299:Code_EXE/VoteBot(5)/VoteBot5.py
         title.grid(row=0, column=0, sticky="w")
         pill_frame = ttk.Frame(title_block, style="Main.TFrame")
-        pill_frame.grid(row=0, column=1, padx=(10, 0), sticky="w")
+        pill_frame.grid(row=0, column=1, padx=(6, 0), sticky="w")
         ttk.Label(pill_frame, text="Headless hazır", style="Pill.TLabel").grid(row=0, column=0, padx=(0, 6))
         ttk.Label(pill_frame, text="Batch oy", style="Pill.TLabel").grid(row=0, column=1, padx=(0, 6))
         ttk.Label(pill_frame, text="Log kaydı", style="Pill.TLabel").grid(row=0, column=2)
@@ -895,19 +909,20 @@ window.chrome.runtime = {};
             log_frame,
             width=60,
             height=18,
-            background="#0b1220",
+            background="#0c1528",
             foreground=self.colors["text"],
             insertbackground=self.colors["text"],
-            font=("Consolas", 10),
+            font=("Consolas", 9),
             borderwidth=1,
             relief=tk.FLAT,
             highlightthickness=1,
-            highlightbackground=self.colors["card"],
+            highlightbackground=self.colors["border"],
         )
         self.log_area.grid(row=1, column=0, sticky="nsew", pady=(0, 8))
         self.log_area.tag_configure("info", foreground=self.colors["text"])
         self.log_area.tag_configure("success", foreground=self.colors["success"])
         self.log_area.tag_configure("error", foreground=self.colors["error"])
+        self.log_area.tag_configure("muted", foreground=self.colors["muted"])
         clear_btn = ttk.Button(log_frame, text="Log temizle", command=self.clear_log, style="Ghost.TButton")
         clear_btn.grid(row=2, column=0, sticky="e")
         self._set_form_state(False)
@@ -1596,6 +1611,8 @@ window.chrome.runtime = {};
                 for line in self.ua_text.get("1.0", tk.END).splitlines()
                 if line.strip()
             ]
+            ua_lines = self._normalize_user_agents(ua_lines)
+
         except ValueError:
             messagebox.showerror("Hata", "Sayısal alanlar geçerli ve pozitif olmalı.")
             self.log_message("Ayarlar okunamadı: sayısal alan hatalı.", level="error")
