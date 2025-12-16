@@ -516,11 +516,11 @@ window.chrome.runtime = {};
         self._draw_brand_mark(logo_canvas, size=60)
         logo_canvas.grid(row=0, column=0, rowspan=2, padx=(0, 12), pady=(0, 8), sticky="w")
         title_block = ttk.Frame(header, style="Main.TFrame")
-        title_block.grid(row=0, column=1, rowspan=2, sticky="w")
+        title_block.grid(row=0, column=1, rowspan=2, sticky="w", padx=(0, 8))
         title = ttk.Label(title_block, text="VoteBot 5 - DistroKid Spotlight", style="Title.TLabel")
         title.grid(row=0, column=0, sticky="w")
         pill_frame = ttk.Frame(title_block, style="Main.TFrame")
-        pill_frame.grid(row=0, column=1, padx=(10, 0), sticky="w")
+        pill_frame.grid(row=0, column=1, padx=(8, 0), sticky="w")
         ttk.Label(pill_frame, text="Headless hazır", style="Pill.TLabel").grid(row=0, column=0, padx=(0, 6))
         ttk.Label(pill_frame, text="Batch oy", style="Pill.TLabel").grid(row=0, column=1, padx=(0, 6))
         ttk.Label(pill_frame, text="Log kaydı", style="Pill.TLabel").grid(row=0, column=2)
@@ -551,8 +551,8 @@ window.chrome.runtime = {};
         )
         self.state_badge.grid(row=0, column=2, rowspan=2, sticky="e")
 
-        stats_wrapper = ttk.LabelFrame(main, text="Gösterge Paneli", style="Panel.TFrame", padding=12)
-        stats_wrapper.grid(row=1, column=0, sticky="nsew", padx=(0, 12))
+        stats_wrapper = ttk.LabelFrame(main, text="Gösterge Paneli", style="Panel.TFrame", padding=10)
+        stats_wrapper.grid(row=1, column=0, sticky="nsew", padx=(0, 10))
         stats_wrapper.columnconfigure(0, weight=1)
         stats_frame = ttk.Frame(stats_wrapper, style="Panel.TFrame")
         stats_frame.grid(row=0, column=0, sticky="nsew")
@@ -563,7 +563,7 @@ window.chrome.runtime = {};
         self._make_stat_card(stats_frame, 0, 2, "Durum", "Bekliyor", "status")
         self._make_stat_card(stats_frame, 0, 3, "Süre", "00:00:00", "runtime")
 
-        settings = ttk.LabelFrame(main, text="Ayarlar", style="Panel.TFrame", padding=12)
+        settings = ttk.LabelFrame(main, text="Ayarlar", style="Panel.TFrame", padding=10)
         settings.grid(row=1, column=1, sticky="nsew")
         settings.columnconfigure(1, weight=1)
 
@@ -603,7 +603,7 @@ window.chrome.runtime = {};
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=4, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.batch_entry = ttk.Entry(settings, width=10)
+        self.batch_entry = ttk.Entry(settings, width=12)
         self.batch_entry.insert(0, str(self.batch_size))
         self.batch_entry.grid(row=4, column=1, sticky="w", pady=(4, 0))
         ttk.Label(
@@ -618,7 +618,7 @@ window.chrome.runtime = {};
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=6, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.timeout_entry = ttk.Entry(settings, width=10)
+        self.timeout_entry = ttk.Entry(settings, width=12)
         self.timeout_entry.insert(0, str(self.timeout_seconds))
         self.timeout_entry.grid(row=6, column=1, sticky="w", pady=(4, 0))
         
@@ -628,7 +628,7 @@ window.chrome.runtime = {};
             variable=self.random_ua_var,
             style="Switch.TCheckbutton",
         )
-        self.random_ua_check.grid(row=20, column=0, columnspan=2, sticky="w", pady=(2, 0))
+        self.random_ua_check.grid(row=20, column=0, columnspan=2, sticky="w", pady=(4, 2))
         ttk.Label(
             settings,
             text="Acikken liste veya varsayilan havuzdan UA secilir.",
@@ -643,8 +643,8 @@ window.chrome.runtime = {};
         ).grid(row=22, column=0, sticky="nw", pady=(4, 0), padx=(0, 8))
         self.ua_text = scrolledtext.ScrolledText(
             settings,
-            height=3,
-            width=40,
+            height=4,
+            width=36,
             background=self.colors["panel"],
             foreground=self.colors["text"],
             insertbackground=self.colors["text"],
@@ -675,7 +675,7 @@ window.chrome.runtime = {};
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=8, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.max_errors_entry = ttk.Entry(settings, width=10)
+        self.max_errors_entry = ttk.Entry(settings, width=12)
         self.max_errors_entry.insert(0, str(self.max_errors))
         self.max_errors_entry.grid(row=8, column=1, sticky="w", pady=(4, 0))
         ttk.Label(
@@ -690,7 +690,7 @@ window.chrome.runtime = {};
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=10, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.backoff_entry = ttk.Entry(settings, width=10)
+        self.backoff_entry = ttk.Entry(settings, width=12)
         self.backoff_entry.insert(0, str(self.backoff_seconds))
         self.backoff_entry.grid(row=10, column=1, sticky="w", pady=(4, 0))
         ttk.Label(
@@ -705,7 +705,7 @@ window.chrome.runtime = {};
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=12, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.backoff_cap_entry = ttk.Entry(settings, width=10)
+        self.backoff_cap_entry = ttk.Entry(settings, width=12)
         self.backoff_cap_entry.insert(0, str(self.backoff_cap_seconds))
         self.backoff_cap_entry.grid(row=12, column=1, sticky="w", pady=(4, 0))
         ttk.Label(
@@ -720,7 +720,7 @@ window.chrome.runtime = {};
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=14, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.parallel_entry = ttk.Entry(settings, width=10)
+        self.parallel_entry = ttk.Entry(settings, width=12)
         self.parallel_entry.insert(0, str(self.parallel_workers))
         self.parallel_entry.grid(row=14, column=1, sticky="w", pady=(4, 0))
         ttk.Label(
@@ -779,7 +779,7 @@ window.chrome.runtime = {};
         self.selectors_text = scrolledtext.ScrolledText(
             settings,
             height=4,
-            width=40,
+            width=36,
             background=self.colors["panel"],
             foreground=self.colors["text"],
             insertbackground=self.colors["text"],
@@ -801,7 +801,7 @@ window.chrome.runtime = {};
             self.selectors_text.insert(tk.END, f"{line}\n")
 
         actions = ttk.Frame(settings, style="Panel.TFrame")
-        actions.grid(row=26, column=0, columnspan=2, sticky="ew", pady=(6, 0))
+        actions.grid(row=26, column=0, columnspan=2, sticky="ew", pady=(10, 0))
         actions.columnconfigure((0, 1), weight=1)
         self.apply_btn = ttk.Button(
             actions,
@@ -819,7 +819,7 @@ window.chrome.runtime = {};
         self.defaults_btn.grid(row=0, column=1, sticky="ew")
 
         controls_wrap = ttk.LabelFrame(main, text="Eylemler", style="Panel.TFrame", padding=10)
-        controls_wrap.grid(row=2, column=0, sticky="ew", padx=(0, 12), pady=(8, 0))
+        controls_wrap.grid(row=2, column=0, sticky="ew", padx=(0, 10), pady=(8, 0))
         controls_wrap.columnconfigure(0, weight=1)
         controls = ttk.Frame(controls_wrap, style="Panel.TFrame", padding=(0, 0))
         controls.grid(row=0, column=0, sticky="ew")
