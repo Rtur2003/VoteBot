@@ -107,6 +107,7 @@ class VotryxApp:
                 ignored,
             )
 
+        self.brand_image = self._load_brand_image()
         self.colors = {
             "bg": "#0b1224",
             "panel": "#0f1a30",
@@ -287,6 +288,18 @@ window.chrome.runtime = {};
         except Exception as exc:
             self.logger.warning("Stealth ayarları uygulanamadı: %s", exc)
 
+    def _load_brand_image(self):
+        """
+        Try to load the official VOTRYX logo; fall back to vector mark if not available.
+        """
+        candidate = self.base_dir / "docs" / "screenshots" / "votryx-logo-transparent.png"
+        if candidate.exists():
+            try:
+                return tk.PhotoImage(file=str(candidate))
+            except Exception as exc:
+                self.logger.warning("Logo yüklenemedi: %s", exc)
+        return None
+
     def _build_icon_image(self, size=48):
         # Build a simple geometric icon for header/title bar.
         icon = tk.PhotoImage(width=size, height=size)
@@ -419,6 +432,25 @@ window.chrome.runtime = {};
             foreground=self.colors["text"],
             padding=(10, 6),
         )
+        style.configure(
+            "TNotebook",
+            background=self.colors["panel"],
+            borderwidth=0,
+            tabmargins=(0, 0, 0, 0),
+        )
+        style.configure(
+            "TNotebook.Tab",
+            font=("Bahnschrift SemiBold", 10),
+            padding=(12, 6),
+            background=self.colors["card"],
+            foreground=self.colors["text"],
+            borderwidth=0,
+        )
+        style.map(
+            "TNotebook.Tab",
+            background=[("selected", self.colors["accent2"]), ("active", "#1d2d46")],
+            foreground=[("selected", "#0f172a"), ("active", self.colors["text"])],
+        )
         def button_style(name, bg, fg, active=None, disabled=None, border=None, padding=10, bold=True):
             active = active or bg
             disabled = disabled or "#1f2937"
@@ -492,16 +524,25 @@ window.chrome.runtime = {};
         header = ttk.Frame(main, style="Main.TFrame")
         header.grid(row=0, column=0, columnspan=2, sticky="ew", pady=(0, 4))
         header.columnconfigure(2, weight=1)
-        logo_canvas = tk.Canvas(
-            header,
-            width=60,
-            height=60,
-            bg=self.colors["bg"],
-            highlightthickness=0,
-            bd=0,
-        )
-        self._draw_brand_mark(logo_canvas, size=60)
-        logo_canvas.grid(row=0, column=0, rowspan=2, padx=(0, 12), pady=(0, 8), sticky="w")
+        if self.brand_image:
+            logo_widget = tk.Label(
+                header,
+                image=self.brand_image,
+                bg=self.colors["bg"],
+                bd=0,
+                highlightthickness=0,
+            )
+        else:
+            logo_widget = tk.Canvas(
+                header,
+                width=60,
+                height=60,
+                bg=self.colors["bg"],
+                highlightthickness=0,
+                bd=0,
+            )
+            self._draw_brand_mark(logo_widget, size=60)
+        logo_widget.grid(row=0, column=0, rowspan=2, padx=(0, 12), pady=(0, 8), sticky="w")
         title_block = ttk.Frame(header, style="Main.TFrame")
         title_block.grid(row=0, column=1, rowspan=2, sticky="w", padx=(0, 8))
         title = ttk.Label(title_block, text="VOTRYX - DistroKid Spotlight", style="Title.TLabel")
