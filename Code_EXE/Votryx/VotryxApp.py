@@ -80,7 +80,6 @@ class VotryxApp:
         self.general_tab = None  # will be assigned during UI build
         self.advanced_tab = None  # will be assigned during UI build
         self.stats_wrapper = None
-        self.right_notebook = None
         self.actions_frame = None
         self.log_frame = None
         self.main = None
