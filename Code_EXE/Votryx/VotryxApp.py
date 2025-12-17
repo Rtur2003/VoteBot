@@ -138,14 +138,35 @@ class VotryxApp:
 
         self._build_styles()
         self._build_ui()
+        self.ui_ready = True
+        self._apply_responsive_layout(compact=self.root.winfo_width() < 1200)
         if self.log_dir_warning:
             self.log_message(self.log_dir_warning, level="info")
         self._set_state_badge("Bekliyor", "idle")
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
-        self.ui_ready = True
         self._update_runtime()
 
     def _make_maximized(self):
+        def _zoom():
+            try:
+                self.root.state("zoomed")
+            except Exception:
+                try:
+                    self.root.attributes("-zoomed", True)
+                except Exception:
+                    try:
+                        w = self.root.winfo_screenwidth()
+                        h = self.root.winfo_screenheight()
+                        self.root.geometry(f"{w}x{h}+0+0")
+                    except Exception:
+                        pass
+
+        try:
+            self.root.update_idletasks()
+        except Exception:
+            pass
+        _zoom()
+        self.root.after(150, _zoom)
         try:
             self.root.state("zoomed")
         except Exception:
@@ -578,7 +599,7 @@ window.chrome.runtime = {};
         main.rowconfigure(1, weight=1)
         main.rowconfigure(2, weight=1)
         main.rowconfigure(3, weight=0)
-        main.rowconfigure(4, weight=1)
+        main.rowconfigure(4, weight=0)
 
         header = ttk.Frame(main, style="Main.TFrame")
         header.grid(row=0, column=0, columnspan=2, sticky="ew", pady=(0, 4))
@@ -679,129 +700,79 @@ window.chrome.runtime = {};
         advanced_tab.columnconfigure(1, weight=1)
         settings_nb.add(general_tab, text="Genel")
         settings_nb.add(advanced_tab, text="Gelişmiş")
-
+        general_tab.columnconfigure((0, 1), weight=1)
+        url_block = ttk.Frame(general_tab, style="Panel.TFrame")
+        url_block.grid(row=0, column=0, columnspan=2, sticky="ew")
+        url_block.columnconfigure(1, weight=1)
         ttk.Label(
-            general_tab,
+            url_block,
             text="Hedef URL",
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=0, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.url_entry = ttk.Entry(general_tab)
+        self.url_entry = ttk.Entry(url_block)
         self.url_entry.insert(0, self.target_url)
         self.url_entry.grid(row=0, column=1, sticky="ew", pady=(4, 0))
         ttk.Label(
-            general_tab,
+            url_block,
             text="Oylama sayfasının bağlantısı",
             style="Helper.TLabel",
+            wraplength=520,
         ).grid(row=1, column=1, sticky="w", pady=(0, 6))
 
-        ttk.Label(
-            general_tab,
-            text="Oy aralığı (sn)",
-            background=self.colors["panel"],
-            foreground=self.colors["text"],
-        ).grid(row=2, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.pause_entry = ttk.Entry(general_tab, width=12)
-        self.pause_entry.insert(0, str(self.pause_between_votes))
-        self.pause_entry.grid(row=2, column=1, sticky="w", pady=(4, 0))
-        ttk.Label(
-            general_tab,
-            text="Her batch sonrası bekleme süresi",
-            style="Helper.TLabel",
-        ).grid(row=3, column=1, sticky="w", pady=(0, 6))
+        general_grid = ttk.Frame(general_tab, style="Panel.TFrame")
+        general_grid.grid(row=1, column=0, columnspan=2, sticky="nsew", pady=(6, 0))
+        general_grid.columnconfigure((0, 2), weight=0)
+        general_grid.columnconfigure((1, 3), weight=1)
 
-        ttk.Label(
-            general_tab,
-            text="Batch (kaç oy)",
-            background=self.colors["panel"],
-            foreground=self.colors["text"],
-        ).grid(row=4, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.batch_entry = ttk.Entry(general_tab, width=12)
-        self.batch_entry.insert(0, str(self.batch_size))
-        self.batch_entry.grid(row=4, column=1, sticky="w", pady=(4, 0))
-        ttk.Label(
-            general_tab,
-            text="Tek seferde verilecek oy sayısı",
-            style="Helper.TLabel",
-        ).grid(row=5, column=1, sticky="w", pady=(0, 6))
+        def add_field(grid, row_idx, col_base, label_text, default_value, helper_text):
+            ttk.Label(
+                grid,
+                text=label_text,
+                background=self.colors["panel"],
+                foreground=self.colors["text"],
+            ).grid(row=row_idx * 2, column=col_base, sticky="w", pady=(6, 0), padx=(0, 8))
+            entry = ttk.Entry(grid, width=12)
+            entry.insert(0, str(default_value))
+            entry.grid(row=row_idx * 2, column=col_base + 1, sticky="ew", pady=(6, 0))
+            ttk.Label(
+                grid,
+                text=helper_text,
+                style="Helper.TLabel",
+                wraplength=240,
+            ).grid(row=row_idx * 2 + 1, column=col_base + 1, sticky="w", pady=(0, 8))
+            return entry
 
-        ttk.Label(
-            general_tab,
-            text="Zaman aşımı (sn)",
-            background=self.colors["panel"],
-            foreground=self.colors["text"],
-        ).grid(row=6, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.timeout_entry = ttk.Entry(general_tab, width=12)
-        self.timeout_entry.insert(0, str(self.timeout_seconds))
-        self.timeout_entry.grid(row=6, column=1, sticky="w", pady=(4, 0))
-        ttk.Label(
-            general_tab,
-            text="Oy butonu görünmezse bekleme sınırı",
-            style="Helper.TLabel",
-        ).grid(row=7, column=1, sticky="w", pady=(0, 6))
-
-        ttk.Label(
-            general_tab,
-            text="Maks hata (art arda)",
-            background=self.colors["panel"],
-            foreground=self.colors["text"],
-        ).grid(row=8, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.max_errors_entry = ttk.Entry(general_tab, width=12)
-        self.max_errors_entry.insert(0, str(self.max_errors))
-        self.max_errors_entry.grid(row=8, column=1, sticky="w", pady=(4, 0))
-        ttk.Label(
-            general_tab,
-            text="Bu sayıya ulaşıldığında bekleme ve yeniden deneme yapılır.",
-            style="Helper.TLabel",
-        ).grid(row=9, column=1, sticky="w", pady=(0, 6))
-
-        ttk.Label(
-            general_tab,
-            text="Backoff (sn)",
-            background=self.colors["panel"],
-            foreground=self.colors["text"],
-        ).grid(row=10, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.backoff_entry = ttk.Entry(general_tab, width=12)
-        self.backoff_entry.insert(0, str(self.backoff_seconds))
-        self.backoff_entry.grid(row=10, column=1, sticky="w", pady=(4, 0))
-        ttk.Label(
-            general_tab,
-            text="Hata sonrası ilk bekleme süresi.",
-            style="Helper.TLabel",
-        ).grid(row=11, column=1, sticky="w", pady=(0, 6))
-
-        ttk.Label(
-            general_tab,
-            text="Backoff üst sınır (sn)",
-            background=self.colors["panel"],
-            foreground=self.colors["text"],
-        ).grid(row=12, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.backoff_cap_entry = ttk.Entry(general_tab, width=12)
-        self.backoff_cap_entry.insert(0, str(self.backoff_cap_seconds))
-        self.backoff_cap_entry.grid(row=12, column=1, sticky="w", pady=(4, 0))
-        ttk.Label(
-            general_tab,
-            text="Backoff için maksimum bekleme süresi.",
-            style="Helper.TLabel",
-        ).grid(row=13, column=1, sticky="w", pady=(0, 6))
-
-        ttk.Label(
-            general_tab,
-            text="Paralel pencere",
-            background=self.colors["panel"],
-            foreground=self.colors["text"],
-        ).grid(row=14, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.parallel_entry = ttk.Entry(general_tab, width=12)
-        self.parallel_entry.insert(0, str(self.parallel_workers))
-        self.parallel_entry.grid(row=14, column=1, sticky="w", pady=(4, 0))
-        ttk.Label(
-            general_tab,
-            text="Aynı anda açılacak tarayıcı sayısı (her biri tek oy).",
-            style="Helper.TLabel",
-        ).grid(row=15, column=1, sticky="w", pady=(0, 6))
+        self.pause_entry = add_field(
+            general_grid, 0, 0, "Oy aralığı (sn)", self.pause_between_votes, "Her oy arasında bekleme süresi"
+        )
+        self.batch_entry = add_field(
+            general_grid, 0, 2, "Batch (kaç oy)", self.batch_size, "Tek seferde verilecek oy sayısı"
+        )
+        self.timeout_entry = add_field(
+            general_grid, 1, 0, "Zaman aşımı (sn)", self.timeout_seconds, "Oy butonu için bekleme sınırı"
+        )
+        self.max_errors_entry = add_field(
+            general_grid, 1, 2, "Maks hata", self.max_errors, "Bu sayıya ulaşınca bekleme ve yeniden deneme"
+        )
+        self.backoff_entry = add_field(
+            general_grid, 2, 0, "Backoff (sn)", self.backoff_seconds, "Hata sonrası ilk bekleme"
+        )
+        self.backoff_cap_entry = add_field(
+            general_grid, 2, 2, "Backoff üst sınır", self.backoff_cap_seconds, "Maksimum bekleme sınırı"
+        )
+        self.parallel_entry = add_field(
+            general_grid,
+            3,
+            0,
+            "Paralel pencere",
+            self.parallel_workers,
+            "Aynı anda açılacak tarayıcı sayısı",
+        )
 
         toggles = ttk.Frame(general_tab, style="Panel.TFrame")
-        toggles.grid(row=16, column=0, columnspan=2, sticky="w", pady=(6, 0))
+        toggles.grid(row=2, column=0, columnspan=2, sticky="ew", pady=(4, 0))
+        toggles.columnconfigure((0, 1), weight=1)
         self.headless_var = tk.BooleanVar(value=self.headless)
         self.headless_check = ttk.Checkbutton(
             toggles,
@@ -819,10 +790,11 @@ window.chrome.runtime = {};
         )
         self.auto_driver_check.grid(row=0, column=1, sticky="w")
         ttk.Label(
-            general_tab,
+            toggles,
             text="Headless kapalıysa tarayıcıyı izleyebilirsiniz; Selenium Manager uyumsuz sürücüleri indirir.",
             style="Helper.TLabel",
-        ).grid(row=17, column=0, columnspan=2, sticky="w", pady=(2, 2))
+            wraplength=520,
+        ).grid(row=1, column=0, columnspan=2, sticky="w", pady=(6, 0))
 
         # Gelişmiş sekme
         self.random_ua_check = ttk.Checkbutton(
@@ -1060,6 +1032,10 @@ window.chrome.runtime = {};
         if compact:
             self.main.columnconfigure(0, weight=1)
             self.main.columnconfigure(1, weight=0)
+            self.main.rowconfigure(1, weight=1)
+            self.main.rowconfigure(2, weight=1)
+            self.main.rowconfigure(3, weight=1)
+            self.main.rowconfigure(4, weight=0)
             self.stats_wrapper.grid_configure(row=1, column=0, columnspan=2, padx=(0, 0))
             self.settings_frame.master.grid_configure(row=2, column=0, columnspan=2, padx=(0, 0))
             self.log_frame.master.grid_configure(row=3, column=0, columnspan=2, padx=(0, 0))
@@ -1067,6 +1043,10 @@ window.chrome.runtime = {};
         else:
             self.main.columnconfigure(0, weight=2)
             self.main.columnconfigure(1, weight=1)
+            self.main.rowconfigure(1, weight=1)
+            self.main.rowconfigure(2, weight=2)
+            self.main.rowconfigure(3, weight=0)
+            self.main.rowconfigure(4, weight=0)
             self.stats_wrapper.grid_configure(row=1, column=0, columnspan=2, padx=(0, 0))
             self.settings_frame.master.grid_configure(row=2, column=0, columnspan=1, padx=(0, 8))
             self.log_frame.master.grid_configure(row=2, column=1, columnspan=1, padx=(8, 0))
