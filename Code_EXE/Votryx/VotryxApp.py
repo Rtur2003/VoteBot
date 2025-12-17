@@ -81,11 +81,12 @@ class VotryxApp:
         self.advanced_tab = None  # will be assigned during UI build
         self.stats_wrapper = None
         self.right_notebook = None
-        self.controls_wrap = None
+        self.actions_frame = None
         self.log_frame = None
         self.main = None
         self.welcome_frame = None
         self.hero_image = None
+        self.ui_ready = False
 
         self.is_running = False
         self.vote_count = 0
@@ -142,6 +143,7 @@ class VotryxApp:
             self.log_message(self.log_dir_warning, level="info")
         self._set_state_badge("Bekliyor", "idle")
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
+        self.ui_ready = True
         self._update_runtime()
 
     def _make_maximized(self):
@@ -567,28 +569,11 @@ window.chrome.runtime = {};
         self.root.columnconfigure(0, weight=1)
         self.root.rowconfigure(0, weight=1)
 
-        container = ttk.Frame(self.root, style="Main.TFrame")
-        container.grid(row=0, column=0, sticky="nsew")
-
-        canvas = tk.Canvas(container, bg=self.colors["bg"], highlightthickness=0)
-        vscroll = ttk.Scrollbar(container, orient="vertical", command=canvas.yview)
-        canvas.configure(yscrollcommand=vscroll.set)
-        vscroll.pack(side="right", fill="y")
-        canvas.pack(side="left", fill="both", expand=True)
-
-        main = ttk.Frame(canvas, style="Main.TFrame", padding=16)
-        canvas.create_window((0, 0), window=main, anchor="nw")
-        main.bind(
-            "<Configure>",
-            lambda e: canvas.configure(scrollregion=canvas.bbox("all")),
-        )
-        self.canvas = canvas
-        self.scroll_container = container
+        main = ttk.Frame(self.root, style="Main.TFrame", padding=16)
+        main.grid(row=0, column=0, sticky="nsew")
         self.main = main
         self.root.bind("<Configure>", self._on_root_resize)
 
-        self.root.columnconfigure(0, weight=1)
-        self.root.rowconfigure(0, weight=1)
         main.columnconfigure(0, weight=2)
         main.columnconfigure(1, weight=1)
         main.rowconfigure(1, weight=1)
@@ -1068,7 +1053,7 @@ window.chrome.runtime = {};
             self.runtime_label = label
 
     def _apply_responsive_layout(self, compact: bool):
-        if not all([self.main, self.stats_wrapper, self.settings_frame, self.log_frame, self.actions_frame]):
+        if not self.ui_ready or not all([self.main, self.stats_wrapper, self.settings_frame, self.log_frame, self.actions_frame]):
             return
         if getattr(self, "_is_compact_layout", None) == compact:
             return
@@ -1089,11 +1074,8 @@ window.chrome.runtime = {};
             self.actions_frame.grid_configure(row=3, column=0, columnspan=2, padx=(0, 0))
 
     def _on_root_resize(self, event):
-        if getattr(self, "canvas", None):
-            try:
-                self.canvas.configure(width=event.width)
-            except Exception:
-                pass
+        if not self.ui_ready:
+            return
         self._apply_responsive_layout(compact=event.width < 1200)
 
     def _build_welcome_overlay(self):
