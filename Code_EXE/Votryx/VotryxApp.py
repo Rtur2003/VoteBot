@@ -799,14 +799,10 @@ window.chrome.runtime = {};
         )
         self.auto_driver_check.grid(row=0, column=1, sticky="w")
         ttk.Label(
-            general_tab,
+            self.general_tab,
             text="Headless kapalıysa tarayıcıyı izleyebilirsiniz; Selenium Manager uyumsuz sürücüleri indirir.",
             style="Helper.TLabel",
         ).grid(row=17, column=0, columnspan=2, sticky="w", pady=(2, 2))
-
-        advanced_tab = ttk.Frame(settings, style="Panel.TFrame")
-        advanced_tab.grid(row=0, column=0, sticky="nsew")
-        advanced_tab.columnconfigure(1, weight=1)
 
         # Gelişmiş sekme
         self.random_ua_check = ttk.Checkbutton(
