@@ -31,6 +31,7 @@ class VotryxApp:
         self.root.title("VOTRYX - DistroKid Spotlight")
         self.root.geometry("1080x760")
         self.root.minsize(960, 680)
+        self._make_maximized()
 
         self.base_dir = Path(__file__).resolve().parent.parent.parent
         self.code_dir = Path(__file__).resolve().parent
@@ -142,6 +143,15 @@ class VotryxApp:
         self._set_state_badge("Bekliyor", "idle")
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
         self._update_runtime()
+
+    def _make_maximized(self):
+        try:
+            self.root.state("zoomed")
+        except Exception:
+            try:
+                self.root.attributes("-zoomed", True)
+            except Exception:
+                pass
 
     def _find_config_path(self):
         candidates = [
@@ -579,10 +589,12 @@ window.chrome.runtime = {};
 
         self.root.columnconfigure(0, weight=1)
         self.root.rowconfigure(0, weight=1)
-        main.columnconfigure(0, weight=3)
-        main.columnconfigure(1, weight=2)
+        main.columnconfigure(0, weight=2)
+        main.columnconfigure(1, weight=1)
         main.rowconfigure(1, weight=1)
         main.rowconfigure(2, weight=1)
+        main.rowconfigure(3, weight=0)
+        main.rowconfigure(4, weight=1)
 
         header = ttk.Frame(main, style="Main.TFrame")
         header.grid(row=0, column=0, columnspan=2, sticky="ew", pady=(0, 4))
@@ -642,8 +654,9 @@ window.chrome.runtime = {};
         )
         self.state_badge.grid(row=0, column=2, rowspan=2, sticky="e")
 
+        # Stats
         self.stats_wrapper = ttk.LabelFrame(main, text="Gösterge Paneli", style="Panel.TFrame", padding=10)
-        self.stats_wrapper.grid(row=1, column=0, sticky="nsew", padx=(0, 10))
+        self.stats_wrapper.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=(0, 0), pady=(6, 6))
         self.stats_wrapper.columnconfigure(0, weight=1)
         stats_frame = ttk.Frame(self.stats_wrapper, style="Panel.TFrame")
         stats_frame.grid(row=0, column=0, sticky="nsew")
@@ -654,22 +667,21 @@ window.chrome.runtime = {};
         self._make_stat_card(stats_frame, 0, 2, "Durum", "Bekliyor", "status")
         self._make_stat_card(stats_frame, 0, 3, "Süre", "00:00:00", "runtime")
 
-        notebook = ttk.Notebook(main, style="Panel.TFrame")
-        notebook.grid(row=1, column=1, rowspan=2, sticky="nsew", padx=(8, 0))
+        # Settings + Log side by side (desktop)
+        settings_shell = ttk.Frame(main, style="Panel.TFrame")
+        settings_shell.grid(row=2, column=0, sticky="nsew", padx=(0, 8), pady=(0, 8))
+        settings_shell.columnconfigure(0, weight=1)
+        settings_shell.rowconfigure(0, weight=1)
 
-        settings_tab = ttk.Frame(notebook, style="Panel.TFrame")
-        controls_tab = ttk.Frame(notebook, style="Panel.TFrame")
-        log_tab = ttk.Frame(notebook, style="Panel.TFrame")
-        notebook.add(controls_tab, text="Eylemler")
-        notebook.add(settings_tab, text="Ayarlar")
-        notebook.add(log_tab, text="Log")
+        log_shell = ttk.Frame(main, style="Panel.TFrame")
+        log_shell.grid(row=2, column=1, sticky="nsew", padx=(8, 0), pady=(0, 8))
+        log_shell.columnconfigure(0, weight=1)
+        log_shell.rowconfigure(0, weight=1)
 
-        settings = ttk.LabelFrame(settings_tab, text="Ayarlar", style="Panel.TFrame", padding=12)
+        settings = ttk.LabelFrame(settings_shell, text="Ayarlar", style="Panel.TFrame", padding=12)
         settings.grid(row=0, column=0, sticky="nsew")
         settings.columnconfigure(0, weight=1)
         settings.rowconfigure(0, weight=1)
-        settings_tab.columnconfigure(0, weight=1)
-        settings_tab.rowconfigure(0, weight=1)
 
         settings_nb = ttk.Notebook(settings, style="TNotebook")
         settings_nb.grid(row=0, column=0, sticky="nsew", pady=(0, 8))
@@ -932,11 +944,10 @@ window.chrome.runtime = {};
         )
         self.defaults_btn.grid(row=0, column=1, sticky="ew")
 
-        self.controls_wrap = ttk.LabelFrame(controls_tab, text="Eylemler", style="Panel.TFrame", padding=10)
-        controls_wrap = self.controls_wrap
-        controls_wrap.grid(row=0, column=0, sticky="nsew")
-        controls_wrap.columnconfigure(0, weight=1)
-        controls = ttk.Frame(controls_wrap, style="Panel.TFrame", padding=(0, 0))
+        self.actions_frame = ttk.LabelFrame(main, text="Eylemler", style="Panel.TFrame", padding=10)
+        self.actions_frame.grid(row=3, column=0, columnspan=2, sticky="ew", pady=(0, 8))
+        self.actions_frame.columnconfigure(0, weight=1)
+        controls = ttk.Frame(self.actions_frame, style="Panel.TFrame", padding=(0, 0))
         controls.grid(row=0, column=0, sticky="ew")
         controls.columnconfigure((0, 1, 2, 3, 4), weight=1)
 
@@ -965,14 +976,13 @@ window.chrome.runtime = {};
         )
         self.reset_btn.grid(row=0, column=4, padx=4, pady=4, sticky="ew")
 
-        log_frame = ttk.LabelFrame(log_tab, text="Log", style="Panel.TFrame", padding=12)
+        log_frame = ttk.LabelFrame(log_shell, text="Log", style="Panel.TFrame", padding=12)
         log_frame.grid(row=0, column=0, sticky="nsew")
         log_frame.rowconfigure(1, weight=1)
         log_frame.columnconfigure(0, weight=1)
-        log_tab.columnconfigure(0, weight=1)
-        log_tab.rowconfigure(0, weight=1)
 
-        log_controls = ttk.Frame(self.log_frame, style="Panel.TFrame")
+        self.log_frame = log_frame
+        log_controls = ttk.Frame(log_frame, style="Panel.TFrame")
         log_controls.grid(row=0, column=0, sticky="ew", pady=(0, 6))
         log_controls.columnconfigure(2, weight=1)
         self.success_badge = tk.Label(
@@ -1058,7 +1068,7 @@ window.chrome.runtime = {};
             self.runtime_label = label
 
     def _apply_responsive_layout(self, compact: bool):
-        if not all([self.main, self.stats_wrapper, self.right_notebook]):
+        if not all([self.main, self.stats_wrapper, self.settings_frame, self.log_frame, self.actions_frame]):
             return
         if getattr(self, "_is_compact_layout", None) == compact:
             return
@@ -1067,12 +1077,16 @@ window.chrome.runtime = {};
             self.main.columnconfigure(0, weight=1)
             self.main.columnconfigure(1, weight=0)
             self.stats_wrapper.grid_configure(row=1, column=0, columnspan=2, padx=(0, 0))
-            self.right_notebook.grid_configure(row=2, column=0, columnspan=2, padx=(0, 0), pady=(8, 0))
+            self.settings_frame.master.grid_configure(row=2, column=0, columnspan=2, padx=(0, 0))
+            self.log_frame.master.grid_configure(row=3, column=0, columnspan=2, padx=(0, 0))
+            self.actions_frame.grid_configure(row=4, column=0, columnspan=2, padx=(0, 0))
         else:
-            self.main.columnconfigure(0, weight=3)
-            self.main.columnconfigure(1, weight=2)
-            self.stats_wrapper.grid_configure(row=1, column=0, columnspan=1, padx=(0, 10))
-            self.right_notebook.grid_configure(row=1, column=1, columnspan=1, padx=(0, 0), pady=(0, 0))
+            self.main.columnconfigure(0, weight=2)
+            self.main.columnconfigure(1, weight=1)
+            self.stats_wrapper.grid_configure(row=1, column=0, columnspan=2, padx=(0, 0))
+            self.settings_frame.master.grid_configure(row=2, column=0, columnspan=1, padx=(0, 8))
+            self.log_frame.master.grid_configure(row=2, column=1, columnspan=1, padx=(8, 0))
+            self.actions_frame.grid_configure(row=3, column=0, columnspan=2, padx=(0, 0))
 
     def _on_root_resize(self, event):
         if getattr(self, "canvas", None):
