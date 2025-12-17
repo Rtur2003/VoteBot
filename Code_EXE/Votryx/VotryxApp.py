@@ -25,10 +25,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 
-class VoteBot5:
+class VotryxApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("VoteBot 5 - DistroKid Spotlight")
+        self.root.title("VOTRYX - DistroKid Spotlight")
         self.root.geometry("1080x760")
         self.root.minsize(960, 680)
 
@@ -86,7 +86,7 @@ class VoteBot5:
         self._driver_lock = threading.Lock()
         self.active_drivers = set()
         self.driver_profiles = {}
-        self.temp_root = Path(tempfile.mkdtemp(prefix="votebot-profiles-"))
+        self.temp_root = Path(tempfile.mkdtemp(prefix="votryx-profiles-"))
         self.log_records = []
         self.log_history_limit = 500
         self.success_count = 0
@@ -107,6 +107,7 @@ class VoteBot5:
                 ignored,
             )
 
+        self.brand_image = self._load_brand_image()
         self.colors = {
             "bg": "#0b1224",
             "panel": "#0f1a30",
@@ -213,22 +214,11 @@ class VoteBot5:
             stripped = ua.strip()
             if not stripped or len(stripped) < 10:
                 continue
-            lowered = stripped.lower()
-            if lowered in seen:
+            if stripped.lower() in seen:
                 continue
-            seen.add(lowered)
+            seen.add(stripped.lower())
             cleaned.append(stripped)
         return cleaned
-
-    def _pick_user_agent(self):
-        pool = self.custom_user_agents or [
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36",
-        ]
-        if not pool or not self.use_random_user_agent:
-            return None
-        return random.choice(pool)
 
     def _pick_user_agent(self):
         pool = self.custom_user_agents or [
@@ -249,18 +239,16 @@ class VoteBot5:
             path.mkdir(parents=True, exist_ok=True)
             return path, None
         except Exception as exc:
-            fallback = Path(tempfile.mkdtemp(prefix="votebot-logs-"))
-            warning = (
-                f"Log klasoru '{path}' olusturulamadi ({exc}); gecici '{fallback}' kullaniliyor."
-            )
+            fallback = Path(tempfile.mkdtemp(prefix="votryx-logs-"))
+            warning = f"Log klasoru '{path}' olusturulamadi ({exc}); gecici '{fallback}' kullaniliyor."
             return fallback, warning
 
     def _build_logger(self):
-        logger = logging.getLogger("VoteBot5")
+        logger = logging.getLogger("Votryx")
         logger.setLevel(logging.INFO)
         logger.handlers.clear()
         file_handler = RotatingFileHandler(
-            self.log_dir / "votebot5.log", encoding="utf-8", maxBytes=512 * 1024, backupCount=3
+            self.log_dir / "votryx.log", encoding="utf-8", maxBytes=512 * 1024, backupCount=3
         )
         formatter = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")
         file_handler.setFormatter(formatter)
@@ -299,6 +287,18 @@ window.chrome.runtime = {};
                 )
         except Exception as exc:
             self.logger.warning("Stealth ayarları uygulanamadı: %s", exc)
+
+    def _load_brand_image(self):
+        """
+        Try to load the official VOTRYX logo; fall back to vector mark if not available.
+        """
+        candidate = self.base_dir / "docs" / "screenshots" / "votryx-logo-transparent.png"
+        if candidate.exists():
+            try:
+                return tk.PhotoImage(file=str(candidate))
+            except Exception as exc:
+                self.logger.warning("Logo yüklenemedi: %s", exc)
+        return None
 
     def _build_icon_image(self, size=48):
         # Build a simple geometric icon for header/title bar.
@@ -351,7 +351,7 @@ window.chrome.runtime = {};
         canvas.create_text(
             size * 0.52,
             size * 0.78,
-            text="V5",
+            text="VX",
             fill=self.colors["bg"],
             font=("Bahnschrift SemiBold", 11),
         )
@@ -432,6 +432,25 @@ window.chrome.runtime = {};
             foreground=self.colors["text"],
             padding=(10, 6),
         )
+        style.configure(
+            "TNotebook",
+            background=self.colors["panel"],
+            borderwidth=0,
+            tabmargins=(0, 0, 0, 0),
+        )
+        style.configure(
+            "TNotebook.Tab",
+            font=("Bahnschrift SemiBold", 10),
+            padding=(12, 6),
+            background=self.colors["card"],
+            foreground=self.colors["text"],
+            borderwidth=0,
+        )
+        style.map(
+            "TNotebook.Tab",
+            background=[("selected", self.colors["accent2"]), ("active", "#1d2d46")],
+            foreground=[("selected", "#0f172a"), ("active", self.colors["text"])],
+        )
         def button_style(name, bg, fg, active=None, disabled=None, border=None, padding=10, bold=True):
             active = active or bg
             disabled = disabled or "#1f2937"
@@ -505,22 +524,31 @@ window.chrome.runtime = {};
         header = ttk.Frame(main, style="Main.TFrame")
         header.grid(row=0, column=0, columnspan=2, sticky="ew", pady=(0, 4))
         header.columnconfigure(2, weight=1)
-        logo_canvas = tk.Canvas(
-            header,
-            width=60,
-            height=60,
-            bg=self.colors["bg"],
-            highlightthickness=0,
-            bd=0,
-        )
-        self._draw_brand_mark(logo_canvas, size=60)
-        logo_canvas.grid(row=0, column=0, rowspan=2, padx=(0, 12), pady=(0, 8), sticky="w")
+        if self.brand_image:
+            logo_widget = tk.Label(
+                header,
+                image=self.brand_image,
+                bg=self.colors["bg"],
+                bd=0,
+                highlightthickness=0,
+            )
+        else:
+            logo_widget = tk.Canvas(
+                header,
+                width=60,
+                height=60,
+                bg=self.colors["bg"],
+                highlightthickness=0,
+                bd=0,
+            )
+            self._draw_brand_mark(logo_widget, size=60)
+        logo_widget.grid(row=0, column=0, rowspan=2, padx=(0, 12), pady=(0, 8), sticky="w")
         title_block = ttk.Frame(header, style="Main.TFrame")
-        title_block.grid(row=0, column=1, rowspan=2, sticky="w")
-        title = ttk.Label(title_block, text="VoteBot 5 - DistroKid Spotlight", style="Title.TLabel")
+        title_block.grid(row=0, column=1, rowspan=2, sticky="w", padx=(0, 8))
+        title = ttk.Label(title_block, text="VOTRYX - DistroKid Spotlight", style="Title.TLabel")
         title.grid(row=0, column=0, sticky="w")
         pill_frame = ttk.Frame(title_block, style="Main.TFrame")
-        pill_frame.grid(row=0, column=1, padx=(10, 0), sticky="w")
+        pill_frame.grid(row=0, column=1, padx=(8, 0), sticky="w")
         ttk.Label(pill_frame, text="Headless hazır", style="Pill.TLabel").grid(row=0, column=0, padx=(0, 6))
         ttk.Label(pill_frame, text="Batch oy", style="Pill.TLabel").grid(row=0, column=1, padx=(0, 6))
         ttk.Label(pill_frame, text="Log kaydı", style="Pill.TLabel").grid(row=0, column=2)
@@ -551,8 +579,8 @@ window.chrome.runtime = {};
         )
         self.state_badge.grid(row=0, column=2, rowspan=2, sticky="e")
 
-        stats_wrapper = ttk.LabelFrame(main, text="Gösterge Paneli", style="Panel.TFrame", padding=12)
-        stats_wrapper.grid(row=1, column=0, sticky="nsew", padx=(0, 12))
+        stats_wrapper = ttk.LabelFrame(main, text="Gösterge Paneli", style="Panel.TFrame", padding=10)
+        stats_wrapper.grid(row=1, column=0, sticky="nsew", padx=(0, 10))
         stats_wrapper.columnconfigure(0, weight=1)
         stats_frame = ttk.Frame(stats_wrapper, style="Panel.TFrame")
         stats_frame.grid(row=0, column=0, sticky="nsew")
@@ -563,223 +591,202 @@ window.chrome.runtime = {};
         self._make_stat_card(stats_frame, 0, 2, "Durum", "Bekliyor", "status")
         self._make_stat_card(stats_frame, 0, 3, "Süre", "00:00:00", "runtime")
 
-        settings = ttk.LabelFrame(main, text="Ayarlar", style="Panel.TFrame", padding=12)
+        settings = ttk.LabelFrame(main, text="Ayarlar", style="Panel.TFrame", padding=10)
         settings.grid(row=1, column=1, sticky="nsew")
-        settings.columnconfigure(1, weight=1)
+        settings.columnconfigure(0, weight=1)
+        settings.rowconfigure(0, weight=1)
+
+        notebook = ttk.Notebook(settings)
+        notebook.grid(row=0, column=0, sticky="nsew", pady=(0, 8))
+
+        general_tab = ttk.Frame(notebook, style="Panel.TFrame", padding=8)
+        advanced_tab = ttk.Frame(notebook, style="Panel.TFrame", padding=8)
+        general_tab.columnconfigure(1, weight=1)
+        advanced_tab.columnconfigure(1, weight=1)
+        notebook.add(general_tab, text="Genel")
+        notebook.add(advanced_tab, text="Gelişmiş")
 
         ttk.Label(
-            settings,
+            general_tab,
             text="Hedef URL",
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=0, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.url_entry = ttk.Entry(settings)
+        self.url_entry = ttk.Entry(general_tab)
         self.url_entry.insert(0, self.target_url)
         self.url_entry.grid(row=0, column=1, sticky="ew", pady=(4, 0))
         ttk.Label(
-            settings,
+            general_tab,
             text="Oylama sayfasının bağlantısı",
             style="Helper.TLabel",
         ).grid(row=1, column=1, sticky="w", pady=(0, 6))
 
         ttk.Label(
-            settings,
+            general_tab,
             text="Oy aralığı (sn)",
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=2, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.pause_entry = ttk.Entry(settings, width=10)
+        self.pause_entry = ttk.Entry(general_tab, width=12)
         self.pause_entry.insert(0, str(self.pause_between_votes))
         self.pause_entry.grid(row=2, column=1, sticky="w", pady=(4, 0))
         ttk.Label(
-            settings,
+            general_tab,
             text="Her batch sonrası bekleme süresi",
             style="Helper.TLabel",
         ).grid(row=3, column=1, sticky="w", pady=(0, 6))
 
         ttk.Label(
-            settings,
+            general_tab,
             text="Batch (kaç oy)",
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=4, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.batch_entry = ttk.Entry(settings, width=10)
+        self.batch_entry = ttk.Entry(general_tab, width=12)
         self.batch_entry.insert(0, str(self.batch_size))
         self.batch_entry.grid(row=4, column=1, sticky="w", pady=(4, 0))
         ttk.Label(
-            settings,
+            general_tab,
             text="Tek seferde verilecek oy sayısı",
             style="Helper.TLabel",
         ).grid(row=5, column=1, sticky="w", pady=(0, 6))
 
         ttk.Label(
-            settings,
+            general_tab,
             text="Zaman aşımı (sn)",
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=6, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.timeout_entry = ttk.Entry(settings, width=10)
+        self.timeout_entry = ttk.Entry(general_tab, width=12)
         self.timeout_entry.insert(0, str(self.timeout_seconds))
         self.timeout_entry.grid(row=6, column=1, sticky="w", pady=(4, 0))
-        
-        self.random_ua_check = ttk.Checkbutton(
-            settings,
-            text="Rastgele user-agent kullan",
-            variable=self.random_ua_var,
-            style="Switch.TCheckbutton",
-        )
-        self.random_ua_check.grid(row=20, column=0, columnspan=2, sticky="w", pady=(2, 0))
         ttk.Label(
-            settings,
-            text="Acikken liste veya varsayilan havuzdan UA secilir.",
-            style="Helper.TLabel",
-        ).grid(row=21, column=0, columnspan=2, sticky="w", pady=(0, 8))
-
-        ttk.Label(
-            settings,
-            text="User-Agent listesi (satir satir)",
-            background=self.colors["panel"],
-            foreground=self.colors["text"],
-        ).grid(row=22, column=0, sticky="nw", pady=(4, 0), padx=(0, 8))
-        self.ua_text = scrolledtext.ScrolledText(
-            settings,
-            height=3,
-            width=40,
-            background=self.colors["panel"],
-            foreground=self.colors["text"],
-            insertbackground=self.colors["text"],
-            font=("Consolas", 9),
-            borderwidth=1,
-            relief=tk.FLAT,
-            highlightthickness=1,
-            highlightbackground=self.colors["card"],
-        )
-        self.ua_text.grid(row=22, column=1, sticky="ew", pady=(4, 0))
-        ttk.Label(
-            settings,
-            text="Bos birakilirsa varsayilan UA havuzu kullanilir.",
-            style="Helper.TLabel",
-        ).grid(row=23, column=1, sticky="w", pady=(0, 8))
-        for line in self.custom_user_agents:
-            self.ua_text.insert(tk.END, f"{line}\n")
-
-        ttk.Label(
-            settings,
+            general_tab,
             text="Oy butonu görünmezse bekleme sınırı",
             style="Helper.TLabel",
-        ).grid(row=7, column=1, sticky="w", pady=(0, 8))
+        ).grid(row=7, column=1, sticky="w", pady=(0, 6))
 
         ttk.Label(
-            settings,
+            general_tab,
             text="Maks hata (art arda)",
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=8, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.max_errors_entry = ttk.Entry(settings, width=10)
+        self.max_errors_entry = ttk.Entry(general_tab, width=12)
         self.max_errors_entry.insert(0, str(self.max_errors))
         self.max_errors_entry.grid(row=8, column=1, sticky="w", pady=(4, 0))
         ttk.Label(
-            settings,
+            general_tab,
             text="Bu sayıya ulaşıldığında bekleme ve yeniden deneme yapılır.",
             style="Helper.TLabel",
-        ).grid(row=9, column=1, sticky="w", pady=(0, 8))
+        ).grid(row=9, column=1, sticky="w", pady=(0, 6))
 
         ttk.Label(
-            settings,
+            general_tab,
             text="Backoff (sn)",
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=10, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.backoff_entry = ttk.Entry(settings, width=10)
+        self.backoff_entry = ttk.Entry(general_tab, width=12)
         self.backoff_entry.insert(0, str(self.backoff_seconds))
         self.backoff_entry.grid(row=10, column=1, sticky="w", pady=(4, 0))
         ttk.Label(
-            settings,
+            general_tab,
             text="Hata sonrası ilk bekleme süresi.",
             style="Helper.TLabel",
-        ).grid(row=11, column=1, sticky="w", pady=(0, 8))
+        ).grid(row=11, column=1, sticky="w", pady=(0, 6))
 
         ttk.Label(
-            settings,
+            general_tab,
             text="Backoff üst sınır (sn)",
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=12, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.backoff_cap_entry = ttk.Entry(settings, width=10)
+        self.backoff_cap_entry = ttk.Entry(general_tab, width=12)
         self.backoff_cap_entry.insert(0, str(self.backoff_cap_seconds))
         self.backoff_cap_entry.grid(row=12, column=1, sticky="w", pady=(4, 0))
         ttk.Label(
-            settings,
+            general_tab,
             text="Backoff için maksimum bekleme süresi.",
             style="Helper.TLabel",
-        ).grid(row=13, column=1, sticky="w", pady=(0, 8))
+        ).grid(row=13, column=1, sticky="w", pady=(0, 6))
 
         ttk.Label(
-            settings,
+            general_tab,
             text="Paralel pencere",
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=14, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.parallel_entry = ttk.Entry(settings, width=10)
+        self.parallel_entry = ttk.Entry(general_tab, width=12)
         self.parallel_entry.insert(0, str(self.parallel_workers))
         self.parallel_entry.grid(row=14, column=1, sticky="w", pady=(4, 0))
         ttk.Label(
-            settings,
+            general_tab,
             text="Aynı anda açılacak tarayıcı sayısı (her biri tek oy).",
             style="Helper.TLabel",
-        ).grid(row=15, column=1, sticky="w", pady=(0, 8))
+        ).grid(row=15, column=1, sticky="w", pady=(0, 6))
 
+        toggles = ttk.Frame(general_tab, style="Panel.TFrame")
+        toggles.grid(row=16, column=0, columnspan=2, sticky="w", pady=(6, 0))
         self.headless_var = tk.BooleanVar(value=self.headless)
         self.headless_check = ttk.Checkbutton(
-            settings,
+            toggles,
             text="Görünmez (headless) çalıştır",
             variable=self.headless_var,
             style="Switch.TCheckbutton",
         )
-        self.headless_check.grid(row=16, column=0, columnspan=2, sticky="w", pady=(4, 0))
-        ttk.Label(
-            settings,
-            text="Kapalıysa tarayıcıyı görerek izleyebilirsiniz.",
-            style="Helper.TLabel",
-        ).grid(row=17, column=0, columnspan=2, sticky="w", pady=(0, 8))
-
+        self.headless_check.grid(row=0, column=0, sticky="w", padx=(0, 16))
         self.auto_driver_var = tk.BooleanVar(value=self.use_selenium_manager)
         self.auto_driver_check = ttk.Checkbutton(
-            settings,
+            toggles,
             text="ChromeDriver'ı Selenium Manager yönetsin",
             variable=self.auto_driver_var,
             style="Switch.TCheckbutton",
         )
-        self.auto_driver_check.grid(row=18, column=0, columnspan=2, sticky="w", pady=(2, 0))
+        self.auto_driver_check.grid(row=0, column=1, sticky="w")
         ttk.Label(
-            settings,
-            text="Driver yoksa/uyumsuzsa otomatik indirir (internet gerekir).",
+            general_tab,
+            text="Headless kapalıysa tarayıcıyı izleyebilirsiniz; Selenium Manager uyumsuz sürücüleri indirir.",
             style="Helper.TLabel",
-        ).grid(row=19, column=0, columnspan=2, sticky="w", pady=(0, 8))
+        ).grid(row=17, column=0, columnspan=2, sticky="w", pady=(2, 2))
+
+        # Gelişmiş sekme
+        self.random_ua_check = ttk.Checkbutton(
+            advanced_tab,
+            text="Rastgele user-agent kullan",
+            variable=self.random_ua_var,
+            style="Switch.TCheckbutton",
+        )
+        self.random_ua_check.grid(row=0, column=0, columnspan=2, sticky="w", pady=(4, 2))
+        ttk.Label(
+            advanced_tab,
+            text="Açıkken liste veya varsayılan havuzdan UA seçilir; kapalıysa Chrome varsayılanı kullanılır.",
+            style="Helper.TLabel",
+        ).grid(row=1, column=0, columnspan=2, sticky="w", pady=(0, 6))
 
         self.block_images_check = ttk.Checkbutton(
-            settings,
-            text="Gorselleri engelle (daha hizli yukleme)",
+            advanced_tab,
+            text="Görselleri engelle (daha hızlı yükleme)",
             variable=self.block_images_var,
             style="Switch.TCheckbutton",
         )
-        self.block_images_check.grid(row=22, column=0, columnspan=2, sticky="w", pady=(2, 0))
+        self.block_images_check.grid(row=2, column=0, columnspan=2, sticky="w", pady=(2, 0))
         ttk.Label(
-            settings,
-            text="Acikken sayfa gorselleri yuklenmez; kapaliysa varsayilan yukleme kullanilir.",
+            advanced_tab,
+            text="Açıkken sayfa görselleri yüklenmez; kapalıysa varsayılan yükleme kullanılır.",
             style="Helper.TLabel",
-        ).grid(row=23, column=0, columnspan=2, sticky="w", pady=(0, 8))
+        ).grid(row=3, column=0, columnspan=2, sticky="w", pady=(0, 8))
 
         ttk.Label(
-            settings,
-            text="Oy buton seçicileri (satır satır CSS/XPath)",
+            advanced_tab,
+            text="User-Agent listesi (satır satır)",
             background=self.colors["panel"],
             foreground=self.colors["text"],
-        ).grid(row=24, column=0, sticky="nw", pady=(4, 0), padx=(0, 8))
-        self.selectors_text = scrolledtext.ScrolledText(
-            settings,
+        ).grid(row=4, column=0, sticky="nw", pady=(4, 0), padx=(0, 8))
+        self.ua_text = scrolledtext.ScrolledText(
+            advanced_tab,
             height=4,
-            width=40,
+            width=36,
             background=self.colors["panel"],
             foreground=self.colors["text"],
             insertbackground=self.colors["text"],
@@ -789,19 +796,47 @@ window.chrome.runtime = {};
             highlightthickness=1,
             highlightbackground=self.colors["card"],
         )
-        self.selectors_text.grid(row=24, column=1, sticky="ew", pady=(4, 0))
+        self.ua_text.grid(row=4, column=1, sticky="ew", pady=(4, 0))
+        ttk.Label(
+            advanced_tab,
+            text="Boş bırakılırsa varsayılan UA havuzu kullanılır.",
+            style="Helper.TLabel",
+        ).grid(row=5, column=1, sticky="w", pady=(0, 8))
+        for line in self.custom_user_agents:
+            self.ua_text.insert(tk.END, f"{line}\n")
+
+        ttk.Label(
+            advanced_tab,
+            text="Oy buton seçicileri (satır satır CSS/XPath)",
+            background=self.colors["panel"],
+            foreground=self.colors["text"],
+        ).grid(row=6, column=0, sticky="nw", pady=(4, 0), padx=(0, 8))
+        self.selectors_text = scrolledtext.ScrolledText(
+            advanced_tab,
+            height=4,
+            width=36,
+            background=self.colors["panel"],
+            foreground=self.colors["text"],
+            insertbackground=self.colors["text"],
+            font=("Consolas", 9),
+            borderwidth=1,
+            relief=tk.FLAT,
+            highlightthickness=1,
+            highlightbackground=self.colors["card"],
+        )
+        self.selectors_text.grid(row=6, column=1, sticky="ew", pady=(4, 0))
         selectors_helper = (
             "Örnekler: a[data-action='vote'], button[data-action='vote'], "
             "xpath://button[contains(.,'vote')]"
         )
-        ttk.Label(settings, text=selectors_helper, style="Helper.TLabel").grid(
-            row=25, column=1, sticky="w", pady=(0, 8)
+        ttk.Label(advanced_tab, text=selectors_helper, style="Helper.TLabel").grid(
+            row=7, column=1, sticky="w", pady=(0, 8)
         )
         for line in self.config.get("vote_selectors", []):
             self.selectors_text.insert(tk.END, f"{line}\n")
 
         actions = ttk.Frame(settings, style="Panel.TFrame")
-        actions.grid(row=26, column=0, columnspan=2, sticky="ew", pady=(6, 0))
+        actions.grid(row=1, column=0, sticky="ew", pady=(0, 0))
         actions.columnconfigure((0, 1), weight=1)
         self.apply_btn = ttk.Button(
             actions,
@@ -819,7 +854,7 @@ window.chrome.runtime = {};
         self.defaults_btn.grid(row=0, column=1, sticky="ew")
 
         controls_wrap = ttk.LabelFrame(main, text="Eylemler", style="Panel.TFrame", padding=10)
-        controls_wrap.grid(row=2, column=0, sticky="ew", padx=(0, 12), pady=(8, 0))
+        controls_wrap.grid(row=2, column=0, sticky="ew", padx=(0, 10), pady=(8, 0))
         controls_wrap.columnconfigure(0, weight=1)
         controls = ttk.Frame(controls_wrap, style="Panel.TFrame", padding=(0, 0))
         controls.grid(row=0, column=0, sticky="ew")
@@ -912,6 +947,7 @@ window.chrome.runtime = {};
         self.log_area.tag_configure("info", foreground=self.colors["text"])
         self.log_area.tag_configure("success", foreground=self.colors["success"])
         self.log_area.tag_configure("error", foreground=self.colors["error"])
+        self.log_area.tag_configure("muted", foreground=self.colors["muted"])
         clear_btn = ttk.Button(log_frame, text="Log temizle", command=self.clear_log, style="Ghost.TButton")
         clear_btn.grid(row=2, column=0, sticky="e")
         self._set_form_state(False)
@@ -1291,9 +1327,6 @@ window.chrome.runtime = {};
         user_agent = self._pick_user_agent()
         if user_agent:
             chrome_options.add_argument(f"--user-agent={user_agent}")
-        user_agent = self._pick_user_agent()
-        if user_agent:
-            chrome_options.add_argument(f"--user-agent={user_agent}")
         chrome_options.add_experimental_option(
             "excludeSwitches", ["enable-logging", "enable-automation"]
         )
@@ -1600,6 +1633,8 @@ window.chrome.runtime = {};
                 for line in self.ua_text.get("1.0", tk.END).splitlines()
                 if line.strip()
             ]
+            ua_lines = self._normalize_user_agents(ua_lines)
+
         except ValueError:
             messagebox.showerror("Hata", "Sayısal alanlar geçerli ve pozitif olmalı.")
             self.log_message("Ayarlar okunamadı: sayısal alan hatalı.", level="error")
@@ -1684,7 +1719,7 @@ window.chrome.runtime = {};
 
 def main():
     root = tk.Tk()
-    app = VoteBot5(root)
+    app = VotryxApp(root)
     root.mainloop()
 
 
