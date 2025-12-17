@@ -78,6 +78,11 @@ class VotryxApp:
         self.chrome_path = None
         self.general_tab = None  # will be assigned during UI build
         self.advanced_tab = None  # will be assigned during UI build
+        self.stats_wrapper = None
+        self.right_notebook = None
+        self.controls_wrap = None
+        self.log_frame = None
+        self.main = None
 
         self.is_running = False
         self.vote_count = 0
@@ -1036,6 +1041,8 @@ window.chrome.runtime = {};
             self.runtime_label = label
 
     def _apply_responsive_layout(self, compact: bool):
+        if not all([self.main, self.stats_wrapper, self.right_notebook]):
+            return
         if getattr(self, "_is_compact_layout", None) == compact:
             return
         self._is_compact_layout = compact
