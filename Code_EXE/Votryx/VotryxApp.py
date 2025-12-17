@@ -519,6 +519,7 @@ window.chrome.runtime = {};
         self.root.rowconfigure(0, weight=1)
         main.columnconfigure(0, weight=3)
         main.columnconfigure(1, weight=2)
+        main.rowconfigure(1, weight=1)
         main.rowconfigure(2, weight=1)
 
         header = ttk.Frame(main, style="Main.TFrame")
@@ -591,20 +592,21 @@ window.chrome.runtime = {};
         self._make_stat_card(stats_frame, 0, 2, "Durum", "Bekliyor", "status")
         self._make_stat_card(stats_frame, 0, 3, "Süre", "00:00:00", "runtime")
 
-        settings = ttk.LabelFrame(main, text="Ayarlar", style="Panel.TFrame", padding=10)
-        settings.grid(row=1, column=1, sticky="nsew")
-        settings.columnconfigure(0, weight=1)
-        settings.rowconfigure(0, weight=1)
+        notebook = ttk.Notebook(main, style="Panel.TFrame")
+        notebook.grid(row=1, column=1, rowspan=2, sticky="nsew", padx=(8, 0))
 
-        notebook = ttk.Notebook(settings)
-        notebook.grid(row=0, column=0, sticky="nsew", pady=(0, 8))
+        settings_tab = ttk.Frame(notebook, style="Panel.TFrame")
+        controls_tab = ttk.Frame(notebook, style="Panel.TFrame")
+        log_tab = ttk.Frame(notebook, style="Panel.TFrame")
+        notebook.add(controls_tab, text="Eylemler")
+        notebook.add(settings_tab, text="Ayarlar")
+        notebook.add(log_tab, text="Log")
 
-        general_tab = ttk.Frame(notebook, style="Panel.TFrame", padding=8)
-        advanced_tab = ttk.Frame(notebook, style="Panel.TFrame", padding=8)
-        general_tab.columnconfigure(1, weight=1)
-        advanced_tab.columnconfigure(1, weight=1)
-        notebook.add(general_tab, text="Genel")
-        notebook.add(advanced_tab, text="Gelişmiş")
+        settings = ttk.LabelFrame(settings_tab, text="Ayarlar", style="Panel.TFrame", padding=12)
+        settings.grid(row=0, column=0, sticky="nsew")
+        settings.columnconfigure(1, weight=1)
+        settings_tab.columnconfigure(0, weight=1)
+        settings_tab.rowconfigure(0, weight=1)
 
         ttk.Label(
             general_tab,
@@ -853,8 +855,8 @@ window.chrome.runtime = {};
         )
         self.defaults_btn.grid(row=0, column=1, sticky="ew")
 
-        controls_wrap = ttk.LabelFrame(main, text="Eylemler", style="Panel.TFrame", padding=10)
-        controls_wrap.grid(row=2, column=0, sticky="ew", padx=(0, 10), pady=(8, 0))
+        controls_wrap = ttk.LabelFrame(controls_tab, text="Eylemler", style="Panel.TFrame", padding=10)
+        controls_wrap.grid(row=0, column=0, sticky="nsew")
         controls_wrap.columnconfigure(0, weight=1)
         controls = ttk.Frame(controls_wrap, style="Panel.TFrame", padding=(0, 0))
         controls.grid(row=0, column=0, sticky="ew")
@@ -885,10 +887,12 @@ window.chrome.runtime = {};
         )
         self.reset_btn.grid(row=0, column=4, padx=4, pady=4, sticky="ew")
 
-        log_frame = ttk.LabelFrame(main, text="Log", style="Panel.TFrame", padding=12)
-        log_frame.grid(row=2, column=1, sticky="nsew")
+        log_frame = ttk.LabelFrame(log_tab, text="Log", style="Panel.TFrame", padding=12)
+        log_frame.grid(row=0, column=0, sticky="nsew")
         log_frame.rowconfigure(1, weight=1)
         log_frame.columnconfigure(0, weight=1)
+        log_tab.columnconfigure(0, weight=1)
+        log_tab.rowconfigure(0, weight=1)
 
         log_controls = ttk.Frame(log_frame, style="Panel.TFrame")
         log_controls.grid(row=0, column=0, sticky="ew", pady=(0, 6))
