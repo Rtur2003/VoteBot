@@ -511,10 +511,50 @@ window.chrome.runtime = {};
             foreground=self.colors["accent"],
             padding=(12, 5),
         )
+        style.configure(
+            "TNotebook",
+            background=self.colors["panel"],
+            borderwidth=0,
+            tabmargins=(0, 0, 0, 0),
+        )
+        style.configure(
+            "TNotebook.Tab",
+            font=("Bahnschrift SemiBold", 10),
+            padding=(12, 6),
+            background=self.colors["card"],
+            foreground=self.colors["text"],
+            borderwidth=0,
+        )
+        style.map(
+            "TNotebook.Tab",
+            background=[("selected", self.colors["accent2"]), ("active", "#1d2d46")],
+            foreground=[("selected", "#0f172a"), ("active", self.colors["text"])],
+        )
 
     def _build_ui(self):
-        main = ttk.Frame(self.root, style="Main.TFrame", padding=16)
-        main.grid(row=0, column=0, sticky="nsew")
+        self.root.columnconfigure(0, weight=1)
+        self.root.rowconfigure(0, weight=1)
+
+        container = ttk.Frame(self.root, style="Main.TFrame")
+        container.grid(row=0, column=0, sticky="nsew")
+
+        canvas = tk.Canvas(container, bg=self.colors["bg"], highlightthickness=0)
+        vscroll = ttk.Scrollbar(container, orient="vertical", command=canvas.yview)
+        canvas.configure(yscrollcommand=vscroll.set)
+        vscroll.pack(side="right", fill="y")
+        canvas.pack(side="left", fill="both", expand=True)
+
+        main = ttk.Frame(canvas, style="Main.TFrame", padding=16)
+        canvas.create_window((0, 0), window=main, anchor="nw")
+        main.bind(
+            "<Configure>",
+            lambda e: canvas.configure(scrollregion=canvas.bbox("all")),
+        )
+        self.canvas = canvas
+        self.scroll_container = container
+        self.main = main
+        self.root.bind("<Configure>", self._on_root_resize)
+
         self.root.columnconfigure(0, weight=1)
         self.root.rowconfigure(0, weight=1)
         main.columnconfigure(0, weight=3)
@@ -579,10 +619,10 @@ window.chrome.runtime = {};
         )
         self.state_badge.grid(row=0, column=2, rowspan=2, sticky="e")
 
-        stats_wrapper = ttk.LabelFrame(main, text="Gösterge Paneli", style="Panel.TFrame", padding=10)
-        stats_wrapper.grid(row=1, column=0, sticky="nsew", padx=(0, 10))
-        stats_wrapper.columnconfigure(0, weight=1)
-        stats_frame = ttk.Frame(stats_wrapper, style="Panel.TFrame")
+        self.stats_wrapper = ttk.LabelFrame(main, text="Gösterge Paneli", style="Panel.TFrame", padding=10)
+        self.stats_wrapper.grid(row=1, column=0, sticky="nsew", padx=(0, 10))
+        self.stats_wrapper.columnconfigure(0, weight=1)
+        stats_frame = ttk.Frame(self.stats_wrapper, style="Panel.TFrame")
         stats_frame.grid(row=0, column=0, sticky="nsew")
         stats_frame.columnconfigure((0, 1, 2, 3), weight=1)
 
@@ -591,12 +631,12 @@ window.chrome.runtime = {};
         self._make_stat_card(stats_frame, 0, 2, "Durum", "Bekliyor", "status")
         self._make_stat_card(stats_frame, 0, 3, "Süre", "00:00:00", "runtime")
 
-        settings = ttk.LabelFrame(main, text="Ayarlar", style="Panel.TFrame", padding=10)
-        settings.grid(row=1, column=1, sticky="nsew")
-        settings.columnconfigure(0, weight=1)
-        settings.rowconfigure(0, weight=1)
+        self.settings_frame = ttk.LabelFrame(main, text="Ayarlar", style="Panel.TFrame", padding=10)
+        self.settings_frame.grid(row=1, column=1, sticky="nsew")
+        self.settings_frame.columnconfigure(0, weight=1)
+        self.settings_frame.rowconfigure(0, weight=1)
 
-        notebook = ttk.Notebook(settings)
+        notebook = ttk.Notebook(self.settings_frame)
         notebook.grid(row=0, column=0, sticky="nsew", pady=(0, 8))
 
         general_tab = ttk.Frame(notebook, style="Panel.TFrame", padding=8)
@@ -835,7 +875,7 @@ window.chrome.runtime = {};
         for line in self.config.get("vote_selectors", []):
             self.selectors_text.insert(tk.END, f"{line}\n")
 
-        actions = ttk.Frame(settings, style="Panel.TFrame")
+        actions = ttk.Frame(self.settings_frame, style="Panel.TFrame")
         actions.grid(row=1, column=0, sticky="ew", pady=(0, 0))
         actions.columnconfigure((0, 1), weight=1)
         self.apply_btn = ttk.Button(
@@ -853,10 +893,10 @@ window.chrome.runtime = {};
         )
         self.defaults_btn.grid(row=0, column=1, sticky="ew")
 
-        controls_wrap = ttk.LabelFrame(main, text="Eylemler", style="Panel.TFrame", padding=10)
-        controls_wrap.grid(row=2, column=0, sticky="ew", padx=(0, 10), pady=(8, 0))
-        controls_wrap.columnconfigure(0, weight=1)
-        controls = ttk.Frame(controls_wrap, style="Panel.TFrame", padding=(0, 0))
+        self.controls_wrap = ttk.LabelFrame(main, text="Eylemler", style="Panel.TFrame", padding=10)
+        self.controls_wrap.grid(row=2, column=0, sticky="ew", padx=(0, 10), pady=(8, 0))
+        self.controls_wrap.columnconfigure(0, weight=1)
+        controls = ttk.Frame(self.controls_wrap, style="Panel.TFrame", padding=(0, 0))
         controls.grid(row=0, column=0, sticky="ew")
         controls.columnconfigure((0, 1, 2, 3, 4), weight=1)
 
@@ -885,12 +925,12 @@ window.chrome.runtime = {};
         )
         self.reset_btn.grid(row=0, column=4, padx=4, pady=4, sticky="ew")
 
-        log_frame = ttk.LabelFrame(main, text="Log", style="Panel.TFrame", padding=12)
-        log_frame.grid(row=2, column=1, sticky="nsew")
-        log_frame.rowconfigure(1, weight=1)
-        log_frame.columnconfigure(0, weight=1)
+        self.log_frame = ttk.LabelFrame(main, text="Log", style="Panel.TFrame", padding=12)
+        self.log_frame.grid(row=2, column=1, sticky="nsew")
+        self.log_frame.rowconfigure(1, weight=1)
+        self.log_frame.columnconfigure(0, weight=1)
 
-        log_controls = ttk.Frame(log_frame, style="Panel.TFrame")
+        log_controls = ttk.Frame(self.log_frame, style="Panel.TFrame")
         log_controls.grid(row=0, column=0, sticky="ew", pady=(0, 6))
         log_controls.columnconfigure(2, weight=1)
         self.success_badge = tk.Label(
@@ -931,7 +971,7 @@ window.chrome.runtime = {};
         error_check.grid(row=0, column=3, sticky="e")
 
         self.log_area = scrolledtext.ScrolledText(
-            log_frame,
+            self.log_frame,
             width=60,
             height=18,
             background="#0b1220",
@@ -948,9 +988,10 @@ window.chrome.runtime = {};
         self.log_area.tag_configure("success", foreground=self.colors["success"])
         self.log_area.tag_configure("error", foreground=self.colors["error"])
         self.log_area.tag_configure("muted", foreground=self.colors["muted"])
-        clear_btn = ttk.Button(log_frame, text="Log temizle", command=self.clear_log, style="Ghost.TButton")
+        clear_btn = ttk.Button(self.log_frame, text="Log temizle", command=self.clear_log, style="Ghost.TButton")
         clear_btn.grid(row=2, column=0, sticky="e")
         self._set_form_state(False)
+        self._apply_responsive_layout(compact=self.root.winfo_width() < 1200)
 
     def _make_stat_card(self, parent, row, col, title, value, key):
         card = ttk.Frame(parent, style="Card.TFrame", padding=12)
@@ -970,6 +1011,33 @@ window.chrome.runtime = {};
             self.status_label = label
         elif key == "runtime":
             self.runtime_label = label
+
+    def _apply_responsive_layout(self, compact: bool):
+        if getattr(self, "_is_compact_layout", None) == compact:
+            return
+        self._is_compact_layout = compact
+        if compact:
+            self.main.columnconfigure(0, weight=1)
+            self.main.columnconfigure(1, weight=0)
+            self.stats_wrapper.grid_configure(row=1, column=0, columnspan=2, padx=(0, 0))
+            self.settings_frame.grid_configure(row=2, column=0, columnspan=2, padx=(0, 0), pady=(8, 0))
+            self.controls_wrap.grid_configure(row=3, column=0, columnspan=2, padx=(0, 0), pady=(8, 0))
+            self.log_frame.grid_configure(row=4, column=0, columnspan=2, padx=(0, 0), pady=(8, 0))
+        else:
+            self.main.columnconfigure(0, weight=3)
+            self.main.columnconfigure(1, weight=2)
+            self.stats_wrapper.grid_configure(row=1, column=0, columnspan=1, padx=(0, 10))
+            self.settings_frame.grid_configure(row=1, column=1, columnspan=1, padx=(0, 0), pady=(0, 0))
+            self.controls_wrap.grid_configure(row=2, column=0, columnspan=1, padx=(0, 10), pady=(8, 0))
+            self.log_frame.grid_configure(row=2, column=1, columnspan=1, padx=(0, 0), pady=(0, 0))
+
+    def _on_root_resize(self, event):
+        if getattr(self, "canvas", None):
+            try:
+                self.canvas.configure(width=event.width)
+            except Exception:
+                pass
+        self._apply_responsive_layout(compact=event.width < 1200)
 
     def _schedule(self, func):
         self.root.after(0, func)
