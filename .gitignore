@@ -18,4 +18,4 @@ logs/
 *.log
 
 # Cached bytecode inside packaged code
-Code_EXE/VoteBot(5)/__pycache__/
+Code_EXE/Votryx/__pycache__/
