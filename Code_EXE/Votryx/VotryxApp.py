@@ -76,6 +76,8 @@ class VotryxApp:
 
         self.driver_path = None
         self.chrome_path = None
+        self.general_tab = None  # will be assigned during UI build
+        self.advanced_tab = None  # will be assigned during UI build
 
         self.is_running = False
         self.vote_count = 0
