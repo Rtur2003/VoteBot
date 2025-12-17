@@ -653,134 +653,134 @@ window.chrome.runtime = {};
         settings_nb.grid(row=0, column=0, sticky="nsew", pady=(0, 8))
         settings.columnconfigure(0, weight=1)
         settings.rowconfigure(0, weight=1)
-        general_tab: ttk.Frame = ttk.Frame(settings_nb, style="Panel.TFrame", padding=8)
-        advanced_tab: ttk.Frame = ttk.Frame(settings_nb, style="Panel.TFrame", padding=8)
-        general_tab.columnconfigure(1, weight=1)
-        advanced_tab.columnconfigure(1, weight=1)
-        settings_nb.add(general_tab, text="Genel")
-        settings_nb.add(advanced_tab, text="Gelişmiş")
+        self.general_tab: ttk.Frame = ttk.Frame(settings_nb, style="Panel.TFrame", padding=8)
+        self.advanced_tab: ttk.Frame = ttk.Frame(settings_nb, style="Panel.TFrame", padding=8)
+        self.general_tab.columnconfigure(1, weight=1)
+        self.advanced_tab.columnconfigure(1, weight=1)
+        settings_nb.add(self.general_tab, text="Genel")
+        settings_nb.add(self.advanced_tab, text="Gelişmiş")
 
         ttk.Label(
-            general_tab,
+            self.general_tab,
             text="Hedef URL",
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=0, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.url_entry = ttk.Entry(general_tab)
+        self.url_entry = ttk.Entry(self.general_tab)
         self.url_entry.insert(0, self.target_url)
         self.url_entry.grid(row=0, column=1, sticky="ew", pady=(4, 0))
         ttk.Label(
-            general_tab,
+            self.general_tab,
             text="Oylama sayfasının bağlantısı",
             style="Helper.TLabel",
         ).grid(row=1, column=1, sticky="w", pady=(0, 6))
 
         ttk.Label(
-            general_tab,
+            self.general_tab,
             text="Oy aralığı (sn)",
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=2, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.pause_entry = ttk.Entry(general_tab, width=12)
+        self.pause_entry = ttk.Entry(self.general_tab, width=12)
         self.pause_entry.insert(0, str(self.pause_between_votes))
         self.pause_entry.grid(row=2, column=1, sticky="w", pady=(4, 0))
         ttk.Label(
-            general_tab,
+            self.general_tab,
             text="Her batch sonrası bekleme süresi",
             style="Helper.TLabel",
         ).grid(row=3, column=1, sticky="w", pady=(0, 6))
 
         ttk.Label(
-            general_tab,
+            self.general_tab,
             text="Batch (kaç oy)",
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=4, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.batch_entry = ttk.Entry(general_tab, width=12)
+        self.batch_entry = ttk.Entry(self.general_tab, width=12)
         self.batch_entry.insert(0, str(self.batch_size))
         self.batch_entry.grid(row=4, column=1, sticky="w", pady=(4, 0))
         ttk.Label(
-            general_tab,
+            self.general_tab,
             text="Tek seferde verilecek oy sayısı",
             style="Helper.TLabel",
         ).grid(row=5, column=1, sticky="w", pady=(0, 6))
 
         ttk.Label(
-            general_tab,
+            self.general_tab,
             text="Zaman aşımı (sn)",
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=6, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.timeout_entry = ttk.Entry(general_tab, width=12)
+        self.timeout_entry = ttk.Entry(self.general_tab, width=12)
         self.timeout_entry.insert(0, str(self.timeout_seconds))
         self.timeout_entry.grid(row=6, column=1, sticky="w", pady=(4, 0))
         ttk.Label(
-            general_tab,
+            self.general_tab,
             text="Oy butonu görünmezse bekleme sınırı",
             style="Helper.TLabel",
         ).grid(row=7, column=1, sticky="w", pady=(0, 6))
 
         ttk.Label(
-            general_tab,
+            self.general_tab,
             text="Maks hata (art arda)",
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=8, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.max_errors_entry = ttk.Entry(general_tab, width=12)
+        self.max_errors_entry = ttk.Entry(self.general_tab, width=12)
         self.max_errors_entry.insert(0, str(self.max_errors))
         self.max_errors_entry.grid(row=8, column=1, sticky="w", pady=(4, 0))
         ttk.Label(
-            general_tab,
+            self.general_tab,
             text="Bu sayıya ulaşıldığında bekleme ve yeniden deneme yapılır.",
             style="Helper.TLabel",
         ).grid(row=9, column=1, sticky="w", pady=(0, 6))
 
         ttk.Label(
-            general_tab,
+            self.general_tab,
             text="Backoff (sn)",
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=10, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.backoff_entry = ttk.Entry(general_tab, width=12)
+        self.backoff_entry = ttk.Entry(self.general_tab, width=12)
         self.backoff_entry.insert(0, str(self.backoff_seconds))
         self.backoff_entry.grid(row=10, column=1, sticky="w", pady=(4, 0))
         ttk.Label(
-            general_tab,
+            self.general_tab,
             text="Hata sonrası ilk bekleme süresi.",
             style="Helper.TLabel",
         ).grid(row=11, column=1, sticky="w", pady=(0, 6))
 
         ttk.Label(
-            general_tab,
+            self.general_tab,
             text="Backoff üst sınır (sn)",
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=12, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.backoff_cap_entry = ttk.Entry(general_tab, width=12)
+        self.backoff_cap_entry = ttk.Entry(self.general_tab, width=12)
         self.backoff_cap_entry.insert(0, str(self.backoff_cap_seconds))
         self.backoff_cap_entry.grid(row=12, column=1, sticky="w", pady=(4, 0))
         ttk.Label(
-            general_tab,
+            self.general_tab,
             text="Backoff için maksimum bekleme süresi.",
             style="Helper.TLabel",
         ).grid(row=13, column=1, sticky="w", pady=(0, 6))
 
         ttk.Label(
-            general_tab,
+            self.general_tab,
             text="Paralel pencere",
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=14, column=0, sticky="w", pady=(4, 0), padx=(0, 8))
-        self.parallel_entry = ttk.Entry(general_tab, width=12)
+        self.parallel_entry = ttk.Entry(self.general_tab, width=12)
         self.parallel_entry.insert(0, str(self.parallel_workers))
         self.parallel_entry.grid(row=14, column=1, sticky="w", pady=(4, 0))
         ttk.Label(
-            general_tab,
+            self.general_tab,
             text="Aynı anda açılacak tarayıcı sayısı (her biri tek oy).",
             style="Helper.TLabel",
         ).grid(row=15, column=1, sticky="w", pady=(0, 6))
 
-        toggles = ttk.Frame(general_tab, style="Panel.TFrame")
+        toggles = ttk.Frame(self.general_tab, style="Panel.TFrame")
         toggles.grid(row=16, column=0, columnspan=2, sticky="w", pady=(6, 0))
         self.headless_var = tk.BooleanVar(value=self.headless)
         self.headless_check = ttk.Checkbutton(
@@ -810,39 +810,39 @@ window.chrome.runtime = {};
 
         # Gelişmiş sekme
         self.random_ua_check = ttk.Checkbutton(
-            advanced_tab,
+            self.advanced_tab,
             text="Rastgele user-agent kullan",
             variable=self.random_ua_var,
             style="Switch.TCheckbutton",
         )
         self.random_ua_check.grid(row=0, column=0, columnspan=2, sticky="w", pady=(4, 2))
         ttk.Label(
-            advanced_tab,
+            self.advanced_tab,
             text="Açıkken liste veya varsayılan havuzdan UA seçilir; kapalıysa Chrome varsayılanı kullanılır.",
             style="Helper.TLabel",
         ).grid(row=1, column=0, columnspan=2, sticky="w", pady=(0, 6))
 
         self.block_images_check = ttk.Checkbutton(
-            advanced_tab,
+            self.advanced_tab,
             text="Görselleri engelle (daha hızlı yükleme)",
             variable=self.block_images_var,
             style="Switch.TCheckbutton",
         )
         self.block_images_check.grid(row=2, column=0, columnspan=2, sticky="w", pady=(2, 0))
         ttk.Label(
-            advanced_tab,
+            self.advanced_tab,
             text="Açıkken sayfa görselleri yüklenmez; kapalıysa varsayılan yükleme kullanılır.",
             style="Helper.TLabel",
         ).grid(row=3, column=0, columnspan=2, sticky="w", pady=(0, 8))
 
         ttk.Label(
-            advanced_tab,
+            self.advanced_tab,
             text="User-Agent listesi (satır satır)",
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=4, column=0, sticky="nw", pady=(4, 0), padx=(0, 8))
         self.ua_text = scrolledtext.ScrolledText(
-            advanced_tab,
+            self.advanced_tab,
             height=4,
             width=36,
             background=self.colors["panel"],
@@ -856,7 +856,7 @@ window.chrome.runtime = {};
         )
         self.ua_text.grid(row=4, column=1, sticky="ew", pady=(4, 0))
         ttk.Label(
-            advanced_tab,
+            self.advanced_tab,
             text="Boş bırakılırsa varsayılan UA havuzu kullanılır.",
             style="Helper.TLabel",
         ).grid(row=5, column=1, sticky="w", pady=(0, 8))
@@ -864,13 +864,13 @@ window.chrome.runtime = {};
             self.ua_text.insert(tk.END, f"{line}\n")
 
         ttk.Label(
-            advanced_tab,
+            self.advanced_tab,
             text="Oy buton seçicileri (satır satır CSS/XPath)",
             background=self.colors["panel"],
             foreground=self.colors["text"],
         ).grid(row=6, column=0, sticky="nw", pady=(4, 0), padx=(0, 8))
         self.selectors_text = scrolledtext.ScrolledText(
-            advanced_tab,
+            self.advanced_tab,
             height=4,
             width=36,
             background=self.colors["panel"],
@@ -887,7 +887,7 @@ window.chrome.runtime = {};
             "Örnekler: a[data-action='vote'], button[data-action='vote'], "
             "xpath://button[contains(.,'vote')]"
         )
-        ttk.Label(advanced_tab, text=selectors_helper, style="Helper.TLabel").grid(
+        ttk.Label(self.advanced_tab, text=selectors_helper, style="Helper.TLabel").grid(
             row=7, column=1, sticky="w", pady=(0, 8)
         )
         for line in self.config.get("vote_selectors", []):
