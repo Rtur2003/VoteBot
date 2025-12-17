@@ -76,6 +76,15 @@ class VotryxApp:
 
         self.driver_path = None
         self.chrome_path = None
+        self.general_tab = None  # will be assigned during UI build
+        self.advanced_tab = None  # will be assigned during UI build
+        self.stats_wrapper = None
+        self.right_notebook = None
+        self.controls_wrap = None
+        self.log_frame = None
+        self.main = None
+        self.welcome_frame = None
+        self.hero_image = None
 
         self.is_running = False
         self.vote_count = 0
@@ -108,6 +117,7 @@ class VotryxApp:
             )
 
         self.brand_image = self._load_brand_image()
+        self.hero_image = self._load_hero_image()
         self.colors = {
             "bg": "#0b1224",
             "panel": "#0f1a30",
@@ -298,6 +308,18 @@ window.chrome.runtime = {};
                 return tk.PhotoImage(file=str(candidate))
             except Exception as exc:
                 self.logger.warning("Logo yüklenemedi: %s", exc)
+        return None
+
+    def _load_hero_image(self):
+        """
+        Load hero/banner for welcome screen if available.
+        """
+        candidate = self.base_dir / "docs" / "screenshots" / "votryx-banner-dark.png"
+        if candidate.exists():
+            try:
+                return tk.PhotoImage(file=str(candidate))
+            except Exception as exc:
+                self.logger.warning("Hero görseli yüklenemedi: %s", exc)
         return None
 
     def _build_icon_image(self, size=48):
@@ -644,9 +666,23 @@ window.chrome.runtime = {};
 
         settings = ttk.LabelFrame(settings_tab, text="Ayarlar", style="Panel.TFrame", padding=12)
         settings.grid(row=0, column=0, sticky="nsew")
-        settings.columnconfigure(1, weight=1)
+        settings.columnconfigure(0, weight=1)
+        settings.rowconfigure(0, weight=1)
         settings_tab.columnconfigure(0, weight=1)
         settings_tab.rowconfigure(0, weight=1)
+
+        settings_nb = ttk.Notebook(settings, style="TNotebook")
+        settings_nb.grid(row=0, column=0, sticky="nsew", pady=(0, 8))
+        settings.columnconfigure(0, weight=1)
+        settings.rowconfigure(0, weight=1)
+        self.general_tab = ttk.Frame(settings_nb, style="Panel.TFrame", padding=8)  # type: ignore[var-annotated]
+        self.advanced_tab = ttk.Frame(settings_nb, style="Panel.TFrame", padding=8)  # type: ignore[var-annotated]
+        general_tab = self.general_tab
+        advanced_tab = self.advanced_tab
+        general_tab.columnconfigure(1, weight=1)
+        advanced_tab.columnconfigure(1, weight=1)
+        settings_nb.add(general_tab, text="Genel")
+        settings_nb.add(advanced_tab, text="Gelişmiş")
 
         ttk.Label(
             general_tab,
@@ -871,13 +907,14 @@ window.chrome.runtime = {};
             "Örnekler: a[data-action='vote'], button[data-action='vote'], "
             "xpath://button[contains(.,'vote')]"
         )
-        ttk.Label(advanced_tab, text=selectors_helper, style="Helper.TLabel").grid(
+        ttk.Label(self.advanced_tab, text=selectors_helper, style="Helper.TLabel").grid(
             row=7, column=1, sticky="w", pady=(0, 8)
         )
         for line in self.config.get("vote_selectors", []):
             self.selectors_text.insert(tk.END, f"{line}\n")
 
-        actions = ttk.Frame(self.settings_frame, style="Panel.TFrame")
+        self.settings_frame = settings
+        actions = ttk.Frame(settings, style="Panel.TFrame")
         actions.grid(row=1, column=0, sticky="ew", pady=(0, 0))
         actions.columnconfigure((0, 1), weight=1)
         self.apply_btn = ttk.Button(
@@ -895,7 +932,8 @@ window.chrome.runtime = {};
         )
         self.defaults_btn.grid(row=0, column=1, sticky="ew")
 
-        controls_wrap = ttk.LabelFrame(controls_tab, text="Eylemler", style="Panel.TFrame", padding=10)
+        self.controls_wrap = ttk.LabelFrame(controls_tab, text="Eylemler", style="Panel.TFrame", padding=10)
+        controls_wrap = self.controls_wrap
         controls_wrap.grid(row=0, column=0, sticky="nsew")
         controls_wrap.columnconfigure(0, weight=1)
         controls = ttk.Frame(controls_wrap, style="Panel.TFrame", padding=(0, 0))
@@ -992,10 +1030,13 @@ window.chrome.runtime = {};
         self.log_area.tag_configure("success", foreground=self.colors["success"])
         self.log_area.tag_configure("error", foreground=self.colors["error"])
         self.log_area.tag_configure("muted", foreground=self.colors["muted"])
-        clear_btn = ttk.Button(self.log_frame, text="Log temizle", command=self.clear_log, style="Ghost.TButton")
+        clear_btn = ttk.Button(log_frame, text="Log temizle", command=self.clear_log, style="Ghost.TButton")
         clear_btn.grid(row=2, column=0, sticky="e")
+        self.log_frame = log_frame
         self._set_form_state(False)
         self._apply_responsive_layout(compact=self.root.winfo_width() < 1200)
+        self._build_welcome_overlay()
+        self._show_welcome()
 
     def _make_stat_card(self, parent, row, col, title, value, key):
         card = ttk.Frame(parent, style="Card.TFrame", padding=12)
@@ -1017,6 +1058,8 @@ window.chrome.runtime = {};
             self.runtime_label = label
 
     def _apply_responsive_layout(self, compact: bool):
+        if not all([self.main, self.stats_wrapper, self.right_notebook]):
+            return
         if getattr(self, "_is_compact_layout", None) == compact:
             return
         self._is_compact_layout = compact
@@ -1024,16 +1067,12 @@ window.chrome.runtime = {};
             self.main.columnconfigure(0, weight=1)
             self.main.columnconfigure(1, weight=0)
             self.stats_wrapper.grid_configure(row=1, column=0, columnspan=2, padx=(0, 0))
-            self.settings_frame.grid_configure(row=2, column=0, columnspan=2, padx=(0, 0), pady=(8, 0))
-            self.controls_wrap.grid_configure(row=3, column=0, columnspan=2, padx=(0, 0), pady=(8, 0))
-            self.log_frame.grid_configure(row=4, column=0, columnspan=2, padx=(0, 0), pady=(8, 0))
+            self.right_notebook.grid_configure(row=2, column=0, columnspan=2, padx=(0, 0), pady=(8, 0))
         else:
             self.main.columnconfigure(0, weight=3)
             self.main.columnconfigure(1, weight=2)
             self.stats_wrapper.grid_configure(row=1, column=0, columnspan=1, padx=(0, 10))
-            self.settings_frame.grid_configure(row=1, column=1, columnspan=1, padx=(0, 0), pady=(0, 0))
-            self.controls_wrap.grid_configure(row=2, column=0, columnspan=1, padx=(0, 10), pady=(8, 0))
-            self.log_frame.grid_configure(row=2, column=1, columnspan=1, padx=(0, 0), pady=(0, 0))
+            self.right_notebook.grid_configure(row=1, column=1, columnspan=1, padx=(0, 0), pady=(0, 0))
 
     def _on_root_resize(self, event):
         if getattr(self, "canvas", None):
@@ -1042,6 +1081,72 @@ window.chrome.runtime = {};
             except Exception:
                 pass
         self._apply_responsive_layout(compact=event.width < 1200)
+
+    def _build_welcome_overlay(self):
+        if self.welcome_frame:
+            try:
+                self.welcome_frame.destroy()
+            except Exception:
+                pass
+        self.welcome_frame = tk.Frame(self.root, bg=self.colors["bg"])
+        self.welcome_frame.place(relx=0, rely=0, relwidth=1, relheight=1)
+
+        wrapper = ttk.Frame(self.welcome_frame, style="Main.TFrame", padding=32)
+        wrapper.pack(fill="both", expand=True)
+        wrapper.columnconfigure(1, weight=1)
+        wrapper.rowconfigure(0, weight=1)
+
+        if self.hero_image:
+            hero_widget = tk.Label(wrapper, image=self.hero_image, bg=self.colors["bg"], bd=0, highlightthickness=0)
+        elif self.brand_image:
+            hero_widget = tk.Label(wrapper, image=self.brand_image, bg=self.colors["bg"], bd=0, highlightthickness=0)
+        else:
+            hero_widget = tk.Canvas(wrapper, width=340, height=260, bg=self.colors["bg"], highlightthickness=0, bd=0)
+            self._draw_brand_mark(hero_widget, size=200)
+        hero_widget.grid(row=0, column=0, sticky="nsew", padx=(0, 24))
+
+        info = ttk.Frame(wrapper, style="Main.TFrame")
+        info.grid(row=0, column=1, sticky="nsew")
+        info.columnconfigure(0, weight=1)
+
+        ttk.Label(info, text="VOTRYX - DistroKid Spotlight", style="Title.TLabel").grid(
+            row=0, column=0, sticky="w", pady=(0, 8)
+        )
+        ttk.Label(
+            info,
+            text="Stabil, hızlı, şeffaf otomatik oy",
+            foreground=self.colors["muted"],
+            background=self.colors["bg"],
+            font=("Segoe UI", 12),
+        ).grid(row=1, column=0, sticky="w", pady=(0, 12))
+        bullets = [
+            "Chromedriver/Chrome ön kontrol, batch/parallel oy",
+            "Loglama, ekran görüntüsü, backoff ve zaman aşımı korumaları",
+            "Sekmeli ayarlar, gelişmiş UA ve selector yönetimi",
+        ]
+        for idx, text in enumerate(bullets):
+            ttk.Label(
+                info,
+                text=f"• {text}",
+                foreground=self.colors["text"],
+                background=self.colors["bg"],
+                font=("Segoe UI", 10),
+            ).grid(row=2 + idx, column=0, sticky="w", pady=(0, 4))
+
+        cta = ttk.Button(info, text="Kontrol Paneline Gir", style="Accent.TButton", command=self._show_app)
+        cta.grid(row=2 + len(bullets), column=0, sticky="w", pady=(14, 4))
+        sub = ttk.Button(info, text="Log klasörünü aç", style="Ghost.TButton", command=self.open_logs)
+        sub.grid(row=3 + len(bullets), column=0, sticky="w", pady=(0, 4))
+
+    def _show_welcome(self):
+        if self.welcome_frame:
+            self.welcome_frame.lift()
+            self.welcome_frame.place(relx=0, rely=0, relwidth=1, relheight=1)
+
+    def _show_app(self):
+        if self.welcome_frame:
+            self.welcome_frame.place_forget()
+        self._apply_responsive_layout(compact=self.root.winfo_width() < 1200)
 
     def _schedule(self, func):
         self.root.after(0, func)
