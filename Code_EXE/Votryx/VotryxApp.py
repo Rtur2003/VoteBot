@@ -653,8 +653,8 @@ window.chrome.runtime = {};
         settings_nb.grid(row=0, column=0, sticky="nsew", pady=(0, 8))
         settings.columnconfigure(0, weight=1)
         settings.rowconfigure(0, weight=1)
-        self.general_tab: ttk.Frame = ttk.Frame(settings_nb, style="Panel.TFrame", padding=8)
-        self.advanced_tab: ttk.Frame = ttk.Frame(settings_nb, style="Panel.TFrame", padding=8)
+        self.general_tab = ttk.Frame(settings_nb, style="Panel.TFrame", padding=8)  # type: ignore[var-annotated]
+        self.advanced_tab = ttk.Frame(settings_nb, style="Panel.TFrame", padding=8)  # type: ignore[var-annotated]
         self.general_tab.columnconfigure(1, weight=1)
         self.advanced_tab.columnconfigure(1, weight=1)
         settings_nb.add(self.general_tab, text="Genel")
