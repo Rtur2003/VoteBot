@@ -35,6 +35,18 @@ class DriverManager:
         block_images: bool = True,
         custom_user_agents: Optional[List[str]] = None,
     ):
+        """Initialize driver manager with configuration.
+
+        Args:
+            base_dir: Base directory for resolving paths
+            chrome_path: Optional Chrome executable path
+            driver_path: Optional ChromeDriver path
+            headless: Run browser in headless mode
+            use_selenium_manager: Use Selenium Manager for driver
+            use_random_user_agent: Randomize user agent
+            block_images: Block image loading
+            custom_user_agents: Optional list of custom user agents
+        """
         self.base_dir = base_dir
         self.chrome_path = chrome_path
         self.driver_path = driver_path

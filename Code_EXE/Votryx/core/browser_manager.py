@@ -14,6 +14,11 @@ class BrowserLifecycleManager:
     """Manages browser driver lifecycle and cleanup."""
 
     def __init__(self, target_url: Optional[str] = None):
+        """Initialize browser lifecycle manager.
+
+        Args:
+            target_url: Optional target URL for origin extraction
+        """
         self.target_url = target_url
         self.target_origin = self._extract_origin(target_url)
         self._driver_lock = threading.Lock()

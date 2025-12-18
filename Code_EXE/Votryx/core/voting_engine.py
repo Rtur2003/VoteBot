@@ -21,6 +21,14 @@ class VotingSession:
         timeout_seconds: int,
         vote_selectors: list,
     ):
+        """Initialize voting session.
+
+        Args:
+            driver: Chrome WebDriver instance
+            target_url: Target voting page URL
+            timeout_seconds: Page load timeout
+            vote_selectors: List of selector tuples for vote button
+        """
         self.driver = driver
         self.target_url = target_url
         self.timeout_seconds = timeout_seconds
@@ -94,6 +102,19 @@ class VotingEngine:
         backoff_seconds: float,
         backoff_cap_seconds: float,
     ):
+        """Initialize voting engine with configuration.
+
+        Args:
+            target_url: Target voting page URL
+            batch_size: Number of votes per batch
+            parallel_workers: Number of parallel browser windows
+            timeout_seconds: Page load timeout
+            vote_selectors: List of selector tuples for vote button
+            pause_between_votes: Delay between votes in seconds
+            max_errors: Maximum consecutive errors before stopping
+            backoff_seconds: Initial backoff delay on error
+            backoff_cap_seconds: Maximum backoff delay
+        """
         self.target_url = target_url
         self.batch_size = batch_size
         self.parallel_workers = parallel_workers
