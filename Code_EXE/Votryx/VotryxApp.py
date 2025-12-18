@@ -685,11 +685,11 @@ window.chrome.runtime = {};
             text="Bekliyor",
             bg=self.colors["card"],
             fg=self.colors["text"],
-            font=("Segoe UI", 10, "bold"),
-            padx=12,
-            pady=6,
+            font=("Bahnschrift SemiBold", 11),
+            padx=14,
+            pady=8,
         )
-        self.state_badge.grid(row=0, column=2, rowspan=2, sticky="e")
+        self.state_badge.grid(row=0, column=2, rowspan=2, sticky="e", padx=(0, 0))
 
         # Stats
         self.stats_wrapper = ttk.LabelFrame(
