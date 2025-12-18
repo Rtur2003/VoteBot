@@ -1633,6 +1633,48 @@ window.chrome.runtime = {};
             self.log_message(f"Chrome: {self.chrome_path}")
         return True
 
+    def _validate_config_integrity(self) -> bool:
+        """Validate configuration values are within acceptable ranges.
+
+        Returns:
+            True if configuration is valid, False otherwise
+        """
+        # Validate timeout
+        if self.timeout_seconds <= 0:
+            self.log_message("Timeout değeri pozitif olmalı", level="error")
+            return False
+
+        # Validate pause duration
+        if self.pause_between_votes < 0:
+            self.log_message("Oy aralığı negatif olamaz", level="error")
+            return False
+
+        # Validate batch size
+        if self.batch_size <= 0:
+            self.log_message("Batch boyutu pozitif olmalı", level="error")
+            return False
+
+        # Validate parallel workers
+        if self.parallel_workers < 1 or self.parallel_workers > 10:
+            self.log_message("Paralel worker sayısı 1-10 arasında olmalı", level="error")
+            return False
+
+        # Validate backoff values
+        if self.backoff_seconds <= 0 or self.backoff_cap_seconds <= 0:
+            self.log_message("Backoff süreleri pozitif olmalı", level="error")
+            return False
+
+        if self.backoff_cap_seconds < self.backoff_seconds:
+            self.log_message("Backoff üst sınırı başlangıç değerinden küçük olamaz", level="error")
+            return False
+
+        # Validate target URL
+        if not self.target_url or not self.target_url.strip():
+            self.log_message("Hedef URL boş olamaz", level="error")
+            return False
+
+        return True
+
     def get_chrome_options(self, profile_dir=None):
         """Build Chrome options with configured flags and profile.
 
@@ -1721,6 +1763,9 @@ window.chrome.runtime = {};
         if self.is_running:
             return
         if not self._update_settings_from_form(persist=True, notify=False):
+            return
+        if not self._validate_config_integrity():
+            messagebox.showerror("Yapılandırma Hatası", "Lütfen yapılandırmayı kontrol edin.")
             return
         if not self._validate_paths(show_message=True):
             return
