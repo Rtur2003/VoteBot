@@ -1066,13 +1066,15 @@ window.chrome.runtime = {};
         self._show_welcome()
 
     def _make_stat_card(self, parent, row, col, title, value, key):
-        card = ttk.Frame(parent, style="Card.TFrame", padding=12)
+        card = ttk.Frame(parent, style="Card.TFrame", padding=14)
         card.grid(row=row, column=col, padx=6, pady=6, sticky="nsew")
         parent.rowconfigure(row, weight=1)
         parent.columnconfigure(col, weight=1)
-        accent_bar = tk.Frame(card, bg=self.colors["accent2"], width=4, height=60)
-        accent_bar.grid(row=0, column=0, rowspan=2, sticky="nsw", padx=(0, 10))
-        ttk.Label(card, text=title, style="StatLabel.TLabel").grid(row=0, column=1, sticky="w")
+        accent_bar = tk.Frame(card, bg=self.colors["accent2"], width=5, height=64)
+        accent_bar.grid(row=0, column=0, rowspan=2, sticky="nsw", padx=(0, 12))
+        ttk.Label(card, text=title, style="StatLabel.TLabel").grid(
+            row=0, column=1, sticky="w", pady=(0, 4)
+        )
         label = ttk.Label(card, text=value, style="StatValue.TLabel")
         label.grid(row=1, column=1, sticky="w")
         if key == "count":
