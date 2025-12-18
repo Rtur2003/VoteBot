@@ -1354,6 +1354,12 @@ window.chrome.runtime = {};
             shutil.rmtree(self.temp_root, ignore_errors=True)
 
     def log_message(self, message, level="info"):
+        """Add message to application log with timestamp.
+
+        Args:
+            message: Log message text
+            level: Severity level (info, success, error)
+        """
         timestamp = datetime.now().strftime("%H:%M:%S")
 
         def append():
@@ -1374,6 +1380,12 @@ window.chrome.runtime = {};
         self._schedule(append)
 
     def update_status(self, text, tone=None):
+        """Update status label with new message and visual tone.
+
+        Args:
+            text: Status message to display
+            tone: Visual styling (running, idle, error, success)
+        """
         def apply():
             self.status_label.config(text=text)
             badge_tone = tone or ("running" if "Çalış" in text or "Oy ver" in text else "idle")
@@ -1382,6 +1394,7 @@ window.chrome.runtime = {};
         self._schedule(apply)
 
     def increment_count(self):
+        """Increment successful vote counter and update UI."""
         self.vote_count += 1
         self._schedule(
             lambda: (
@@ -1391,6 +1404,7 @@ window.chrome.runtime = {};
         )
 
     def increment_error(self):
+        """Increment error counter and update UI."""
         self.error_count += 1
         self._schedule(
             lambda: (
@@ -1400,6 +1414,7 @@ window.chrome.runtime = {};
         )
 
     def clear_log(self):
+        """Clear log display and reset log counters."""
         self.log_records.clear()
         self.success_count = 0
         self.failure_count = 0
@@ -1408,6 +1423,7 @@ window.chrome.runtime = {};
         self.log_message("Log temizlendi")
 
     def reset_counters(self):
+        """Reset vote and error counters to zero."""
         if self.is_running:
             self.log_message("Bot çalişirken sayaçlar sifirlanamaz.", level="error")
             return
@@ -1501,6 +1517,7 @@ window.chrome.runtime = {};
         self._schedule(render)
 
     def toggle_errors_only(self):
+        """Toggle error-only filter for log display."""
         self._render_log()
 
     def _resolve_driver_path(self):
@@ -1606,6 +1623,14 @@ window.chrome.runtime = {};
         return True
 
     def get_chrome_options(self, profile_dir=None):
+        """Build Chrome options with configured flags and profile.
+
+        Args:
+            profile_dir: Optional path to user profile directory
+
+        Returns:
+            Configured Options instance
+        """
         chrome_options = Options()
         chrome_options.page_load_strategy = "eager"
         if self.chrome_path:
@@ -1651,6 +1676,14 @@ window.chrome.runtime = {};
         return chrome_options
 
     def create_driver(self, profile_dir=None):
+        """Create and initialize ChromeDriver instance.
+
+        Args:
+            profile_dir: Optional profile directory path
+
+        Returns:
+            WebDriver instance or None on failure
+        """
         options = self.get_chrome_options(profile_dir=profile_dir)
         try:
             if self.use_selenium_manager or not self.driver_path:
@@ -1673,6 +1706,7 @@ window.chrome.runtime = {};
             return None
 
     def start_bot(self):
+        """Start voting automation in background thread."""
         if self.is_running:
             return
         if not self._update_settings_from_form(persist=True, notify=False):
@@ -1692,6 +1726,7 @@ window.chrome.runtime = {};
         self.worker.start()
 
     def stop_bot(self):
+        """Stop voting automation and cleanup resources."""
         if not self.is_running:
             return
         self.log_message("Bot durduruluyor...")
@@ -1706,6 +1741,7 @@ window.chrome.runtime = {};
         self._set_form_state(False)
 
     def run_bot(self):
+        """Main bot execution loop with error handling and backoff."""
         consecutive_errors = 0
         backoff_delay = self.backoff_seconds
         while not self._stop_event.is_set():
@@ -1737,6 +1773,7 @@ window.chrome.runtime = {};
         self._schedule(lambda: self._set_form_state(False))
 
     def run_batch(self):
+        """Execute a batch of votes in parallel workers."""
         self.update_status("Oy veriliyor", tone="running")
         successes = 0
         failures = 0
@@ -1876,11 +1913,13 @@ window.chrome.runtime = {};
         return True
 
     def run_preflight(self):
+        """Run preflight checks and display results."""
         if self._validate_paths(show_message=True):
             messagebox.showinfo("Ön kontrol", "Yollar ve ayarlar geçerli görünüyor.")
             self.log_message("Ön kontrol başarılı")
 
     def reset_to_defaults(self):
+        """Reset all configuration fields to default values."""
         defaults = dict(self.defaults)
         self.url_entry.delete(0, tk.END)
         self.url_entry.insert(0, defaults["target_url"])
@@ -1924,6 +1963,7 @@ window.chrome.runtime = {};
         self.apply_settings()
 
     def apply_settings(self):
+        """Apply configuration changes from UI form."""
         return self._update_settings_from_form(persist=True, notify=True)
 
     def _update_settings_from_form(self, persist=False, notify=True):
@@ -2018,18 +2058,21 @@ window.chrome.runtime = {};
         return True
 
     def open_logs(self):
+        """Open log directory in system file browser."""
         try:
             os.startfile(self.log_dir)
         except Exception:
             messagebox.showinfo("Log klasörü", str(self.log_dir))
 
     def on_close(self):
+        """Handle application close event with cleanup."""
         self.stop_bot()
         self._cleanup_temp_profiles()
         self.root.destroy()
 
 
 def main():
+    """Application entry point."""
     root = tk.Tk()
     app = VotryxApp(root)  # noqa: F841 - app instance must be kept alive
     root.mainloop()
