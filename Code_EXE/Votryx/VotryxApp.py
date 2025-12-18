@@ -698,9 +698,12 @@ window.chrome.runtime = {};
             row=1, column=0, columnspan=2, sticky="nsew", padx=(0, 0), pady=(6, 6)
         )
         self.stats_wrapper.columnconfigure(0, weight=1)
+        self.stats_wrapper.rowconfigure(0, weight=1)
         stats_frame = ttk.Frame(self.stats_wrapper, style="Panel.TFrame")
         stats_frame.grid(row=0, column=0, sticky="nsew")
-        stats_frame.columnconfigure((0, 1, 2, 3), weight=1)
+        for i in range(4):
+            stats_frame.columnconfigure(i, weight=1, minsize=180)
+        stats_frame.rowconfigure(0, weight=1)
 
         self._make_stat_card(stats_frame, 0, 0, "Toplam Oy", "0", "count")
         self._make_stat_card(stats_frame, 0, 1, "Hata", "0", "errors")
