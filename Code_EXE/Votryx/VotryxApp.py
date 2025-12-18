@@ -959,7 +959,7 @@ window.chrome.runtime = {};
         )
         self.defaults_btn.grid(row=0, column=1, sticky="ew")
 
-        self.actions_frame = ttk.LabelFrame(main, text="Eylemler", style="Panel.TFrame", padding=10)
+        self.actions_frame = ttk.LabelFrame(main, text="Eylemler", style="Panel.TFrame", padding=12)
         self.actions_frame.grid(row=3, column=0, columnspan=2, sticky="ew", pady=(0, 8))
         self.actions_frame.columnconfigure(0, weight=1)
         controls = ttk.Frame(self.actions_frame, style="Panel.TFrame", padding=(0, 0))
@@ -969,7 +969,7 @@ window.chrome.runtime = {};
         self.start_btn = ttk.Button(
             controls, text="Başlat", command=self.start_bot, style="Accent.TButton"
         )
-        self.start_btn.grid(row=0, column=0, padx=4, pady=4, sticky="ew")
+        self.start_btn.grid(row=0, column=0, padx=6, pady=6, sticky="ew", ipady=4)
         self.stop_btn = ttk.Button(
             controls,
             text="Durdur",
@@ -977,19 +977,19 @@ window.chrome.runtime = {};
             style="Ghost.TButton",
             state=tk.DISABLED,
         )
-        self.stop_btn.grid(row=0, column=1, padx=4, pady=4, sticky="ew")
+        self.stop_btn.grid(row=0, column=1, padx=6, pady=6, sticky="ew", ipady=4)
         self.preflight_btn = ttk.Button(
             controls, text="Ön kontrol", command=self.run_preflight, style="Ghost.TButton"
         )
-        self.preflight_btn.grid(row=0, column=2, padx=4, pady=4, sticky="ew")
+        self.preflight_btn.grid(row=0, column=2, padx=6, pady=6, sticky="ew", ipady=4)
         self.logs_btn = ttk.Button(
             controls, text="Log klasörünü aç", command=self.open_logs, style="Ghost.TButton"
         )
-        self.logs_btn.grid(row=0, column=3, padx=4, pady=4, sticky="ew")
+        self.logs_btn.grid(row=0, column=3, padx=6, pady=6, sticky="ew", ipady=4)
         self.reset_btn = ttk.Button(
             controls, text="Sayaclari sifirla", command=self.reset_counters, style="Ghost.TButton"
         )
-        self.reset_btn.grid(row=0, column=4, padx=4, pady=4, sticky="ew")
+        self.reset_btn.grid(row=0, column=4, padx=6, pady=6, sticky="ew", ipady=4)
 
         log_frame = ttk.LabelFrame(log_shell, text="Log", style="Panel.TFrame", padding=12)
         log_frame.grid(row=0, column=0, sticky="nsew")
