@@ -2,20 +2,60 @@
 __pycache__/
 *.py[cod]
 *.pyo
+*.pyd
+.Python
 
 # Virtual environments
 .venv/
 venv/
 env/
 ENV/
+env.bak/
+venv.bak/
 
 # Editor settings
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
 
 # Runtime logs and screenshots
 logs/
 *.log
 
+# Test coverage
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+.tox/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+*.egg
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+/tmp/
+
 # Cached bytecode inside packaged code
 Code_EXE/Votryx/__pycache__/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Type checking
+.pyre/
+.pytype/
+
