@@ -368,16 +368,23 @@ window.chrome.runtime = {};
         return None
 
     def _build_icon_image(self, size=48):
-        # Build a simple geometric icon for header/title bar.
+        """
+        Build a simple geometric icon for header/title bar.
+        Uses brand colors for visual consistency.
+        """
         icon = tk.PhotoImage(width=size, height=size)
+        # Background gradient effect
         icon.put(self.colors["panel"], to=(0, 0, size, size))
-        icon.put(self.colors["card"], to=(3, 3, size - 3, size - 3))
-        icon.put(self.colors["accent2"], to=(0, 0, size, int(size * 0.42)))
-        icon.put(self.colors["accent"], to=(0, int(size * 0.58), size, size))
+        icon.put(self.colors["card"], to=(2, 2, size - 2, size - 2))
+        # Top accent band (cyan)
+        icon.put(self.colors["accent2"], to=(0, 0, size, int(size * 0.40)))
+        # Bottom accent band (orange)
+        icon.put(self.colors["accent"], to=(0, int(size * 0.60), size, size))
+        # Core dark area for contrast
         core = "#0c162a"
-        # stylized tick
-        icon.put(core, to=(int(size * 0.24), int(size * 0.48), int(size * 0.36), int(size * 0.70)))
-        icon.put(core, to=(int(size * 0.34), int(size * 0.64), int(size * 0.78), int(size * 0.76)))
+        # Stylized checkmark/tick
+        icon.put(core, to=(int(size * 0.22), int(size * 0.46), int(size * 0.34), int(size * 0.72)))
+        icon.put(core, to=(int(size * 0.32), int(size * 0.66), int(size * 0.80), int(size * 0.78)))
         return icon
 
     def _draw_brand_mark(self, canvas, size=60):
