@@ -11,6 +11,12 @@ class LoggingManager:
     """Manages logging configuration and file handling."""
 
     def __init__(self, base_dir: Path, log_path: Optional[str] = None):
+        """Initialize logging manager.
+
+        Args:
+            base_dir: Base directory for resolving log paths
+            log_path: Optional log directory path
+        """
         self.base_dir = base_dir
         self.log_path = log_path or "logs"
         self.log_dir, self.warning = self._resolve_logs_dir()
