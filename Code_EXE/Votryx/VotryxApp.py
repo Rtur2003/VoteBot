@@ -26,11 +26,14 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 
 class VotryxApp:
+    # UI Layout Constants
+    STAT_CARDS_COUNT = 4
+    
     def __init__(self, root):
         self.root = root
         self.root.title("VOTRYX - DistroKid Spotlight")
-        self.root.geometry("1080x760")
-        self.root.minsize(960, 680)
+        self.root.geometry("1280x820")
+        self.root.minsize(1080, 720)
         self._make_maximized()
 
         self.base_dir = Path(__file__).resolve().parent.parent.parent
@@ -333,38 +336,72 @@ window.chrome.runtime = {};
     def _load_brand_image(self):
         """
         Try to load the official VOTRYX logo; fall back to vector mark if not available.
+        Attempts multiple logo variants for optimal display.
         """
-        candidate = self.base_dir / "docs" / "screenshots" / "votryx-logo-transparent.png"
-        if candidate.exists():
-            try:
-                return tk.PhotoImage(file=str(candidate))
-            except Exception as exc:
-                self.logger.warning("Logo yüklenemedi: %s", exc)
+        candidates = [
+            self.base_dir / "docs" / "screenshots" / "votryx-logo-transparent.png",
+            self.base_dir / "docs" / "screenshots" / "votryx-logo-2-transparent.png",
+            self.base_dir / "docs" / "screenshots" / "votryx-logo-3-dark.png",
+        ]
+        for candidate in candidates:
+            if candidate.exists():
+                try:
+                    return tk.PhotoImage(file=str(candidate))
+                except Exception as exc:
+                    self.logger.warning("Logo '%s' yüklenemedi: %s", candidate.name, exc)
         return None
 
     def _load_hero_image(self):
         """
         Load hero/banner for welcome screen if available.
+        Tries multiple banner options for best visual impact.
         """
-        candidate = self.base_dir / "docs" / "screenshots" / "votryx-banner-dark.png"
-        if candidate.exists():
-            try:
-                return tk.PhotoImage(file=str(candidate))
-            except Exception as exc:
-                self.logger.warning("Hero görseli yüklenemedi: %s", exc)
+        candidates = [
+            self.base_dir / "docs" / "screenshots" / "votryx-banner-dark.png",
+            self.base_dir / "docs" / "screenshots" / "votryx-banner-2-dark.png",
+        ]
+        for candidate in candidates:
+            if candidate.exists():
+                try:
+                    return tk.PhotoImage(file=str(candidate))
+                except Exception as exc:
+                    self.logger.warning("Hero görseli '%s' yüklenemedi: %s", candidate.name, exc)
         return None
 
     def _build_icon_image(self, size=48):
-        # Build a simple geometric icon for header/title bar.
+        """
+        Build a simple geometric icon for header/title bar.
+        Uses brand colors for visual consistency.
+        """
+        # Icon design constants
+        BORDER_INSET = 2
+        TOP_ACCENT_RATIO = 0.40
+        BOTTOM_ACCENT_START = 0.60
+        # Checkmark coordinates as ratios of size
+        CHECK_LEFT_X1 = 0.22
+        CHECK_LEFT_Y1 = 0.46
+        CHECK_LEFT_X2 = 0.34
+        CHECK_LEFT_Y2 = 0.72
+        CHECK_RIGHT_X1 = 0.32
+        CHECK_RIGHT_Y1 = 0.66
+        CHECK_RIGHT_X2 = 0.80
+        CHECK_RIGHT_Y2 = 0.78
+        
         icon = tk.PhotoImage(width=size, height=size)
+        # Background gradient effect
         icon.put(self.colors["panel"], to=(0, 0, size, size))
-        icon.put(self.colors["card"], to=(3, 3, size - 3, size - 3))
-        icon.put(self.colors["accent2"], to=(0, 0, size, int(size * 0.42)))
-        icon.put(self.colors["accent"], to=(0, int(size * 0.58), size, size))
+        icon.put(self.colors["card"], to=(BORDER_INSET, BORDER_INSET, size - BORDER_INSET, size - BORDER_INSET))
+        # Top accent band (cyan)
+        icon.put(self.colors["accent2"], to=(0, 0, size, int(size * TOP_ACCENT_RATIO)))
+        # Bottom accent band (orange)
+        icon.put(self.colors["accent"], to=(0, int(size * BOTTOM_ACCENT_START), size, size))
+        # Core dark area for contrast
         core = "#0c162a"
-        # stylized tick
-        icon.put(core, to=(int(size * 0.24), int(size * 0.48), int(size * 0.36), int(size * 0.70)))
-        icon.put(core, to=(int(size * 0.34), int(size * 0.64), int(size * 0.78), int(size * 0.76)))
+        # Stylized checkmark/tick
+        icon.put(core, to=(int(size * CHECK_LEFT_X1), int(size * CHECK_LEFT_Y1), 
+                           int(size * CHECK_LEFT_X2), int(size * CHECK_LEFT_Y2)))
+        icon.put(core, to=(int(size * CHECK_RIGHT_X1), int(size * CHECK_RIGHT_Y1), 
+                           int(size * CHECK_RIGHT_X2), int(size * CHECK_RIGHT_Y2)))
         return icon
 
     def _draw_brand_mark(self, canvas, size=60):
@@ -623,13 +660,14 @@ window.chrome.runtime = {};
 
         main.columnconfigure(0, weight=2)
         main.columnconfigure(1, weight=1)
-        main.rowconfigure(1, weight=1)
-        main.rowconfigure(2, weight=1)
-        main.rowconfigure(3, weight=0)
+        main.rowconfigure(0, weight=0, minsize=120)
+        main.rowconfigure(1, weight=0, minsize=140)
+        main.rowconfigure(2, weight=1, minsize=300)
+        main.rowconfigure(3, weight=0, minsize=80)
         main.rowconfigure(4, weight=0)
 
         header = ttk.Frame(main, style="Main.TFrame")
-        header.grid(row=0, column=0, columnspan=2, sticky="ew", pady=(0, 4))
+        header.grid(row=0, column=0, columnspan=2, sticky="ew", pady=(0, 8))
         header.columnconfigure(2, weight=1)
         if self.brand_image:
             logo_widget = tk.Label(
@@ -642,20 +680,20 @@ window.chrome.runtime = {};
         else:
             logo_widget = tk.Canvas(
                 header,
-                width=60,
-                height=60,
+                width=64,
+                height=64,
                 bg=self.colors["bg"],
                 highlightthickness=0,
                 bd=0,
             )
-            self._draw_brand_mark(logo_widget, size=60)
-        logo_widget.grid(row=0, column=0, rowspan=2, padx=(0, 12), pady=(0, 8), sticky="w")
+            self._draw_brand_mark(logo_widget, size=64)
+        logo_widget.grid(row=0, column=0, rowspan=2, padx=(0, 16), pady=(0, 0), sticky="w")
         title_block = ttk.Frame(header, style="Main.TFrame")
-        title_block.grid(row=0, column=1, rowspan=2, sticky="w", padx=(0, 8))
+        title_block.grid(row=0, column=1, rowspan=2, sticky="w", padx=(0, 12))
         title = ttk.Label(title_block, text="VOTRYX - DistroKid Spotlight", style="Title.TLabel")
-        title.grid(row=0, column=0, sticky="w")
+        title.grid(row=0, column=0, sticky="w", pady=(0, 2))
         pill_frame = ttk.Frame(title_block, style="Main.TFrame")
-        pill_frame.grid(row=0, column=1, padx=(8, 0), sticky="w")
+        pill_frame.grid(row=0, column=1, padx=(10, 0), sticky="w")
         ttk.Label(pill_frame, text="Headless hazır", style="Pill.TLabel").grid(
             row=0, column=0, padx=(0, 6)
         )
@@ -670,7 +708,7 @@ window.chrome.runtime = {};
             background=self.colors["bg"],
             font=("Segoe UI", 11),
         )
-        subtitle.grid(row=1, column=0, pady=(2, 6), sticky="w")
+        subtitle.grid(row=1, column=0, pady=(2, 2), sticky="w")
         tagline = ttk.Label(
             title_block,
             text="Başlat ve unut: otomatik sürücü kontrolü, batch oy ve güvenli loglama",
@@ -678,17 +716,17 @@ window.chrome.runtime = {};
             background=self.colors["bg"],
             font=("Segoe UI", 10),
         )
-        tagline.grid(row=2, column=0, sticky="w")
+        tagline.grid(row=2, column=0, pady=(0, 0), sticky="w")
         self.state_badge = tk.Label(
             header,
             text="Bekliyor",
             bg=self.colors["card"],
             fg=self.colors["text"],
-            font=("Segoe UI", 10, "bold"),
-            padx=12,
-            pady=6,
+            font=("Bahnschrift SemiBold", 11),
+            padx=14,
+            pady=8,
         )
-        self.state_badge.grid(row=0, column=2, rowspan=2, sticky="e")
+        self.state_badge.grid(row=0, column=2, rowspan=2, sticky="e", padx=(0, 0))
 
         # Stats
         self.stats_wrapper = ttk.LabelFrame(
@@ -698,9 +736,12 @@ window.chrome.runtime = {};
             row=1, column=0, columnspan=2, sticky="nsew", padx=(0, 0), pady=(6, 6)
         )
         self.stats_wrapper.columnconfigure(0, weight=1)
+        self.stats_wrapper.rowconfigure(0, weight=1)
         stats_frame = ttk.Frame(self.stats_wrapper, style="Panel.TFrame")
         stats_frame.grid(row=0, column=0, sticky="nsew")
-        stats_frame.columnconfigure((0, 1, 2, 3), weight=1)
+        for i in range(self.STAT_CARDS_COUNT):
+            stats_frame.columnconfigure(i, weight=1, minsize=180)
+        stats_frame.rowconfigure(0, weight=1)
 
         self._make_stat_card(stats_frame, 0, 0, "Toplam Oy", "0", "count")
         self._make_stat_card(stats_frame, 0, 1, "Hata", "0", "errors")
@@ -718,17 +759,17 @@ window.chrome.runtime = {};
         log_shell.columnconfigure(0, weight=1)
         log_shell.rowconfigure(0, weight=1)
 
-        settings = ttk.LabelFrame(settings_shell, text="Ayarlar", style="Panel.TFrame", padding=12)
+        settings = ttk.LabelFrame(settings_shell, text="Ayarlar", style="Panel.TFrame", padding=14)
         settings.grid(row=0, column=0, sticky="nsew")
         settings.columnconfigure(0, weight=1)
         settings.rowconfigure(0, weight=1)
 
         settings_nb = ttk.Notebook(settings, style="TNotebook")
-        settings_nb.grid(row=0, column=0, sticky="nsew", pady=(0, 8))
+        settings_nb.grid(row=0, column=0, sticky="nsew", pady=(0, 10))
         settings.columnconfigure(0, weight=1)
         settings.rowconfigure(0, weight=1)
-        self.general_tab = ttk.Frame(settings_nb, style="Panel.TFrame", padding=8)  # type: ignore[var-annotated]
-        self.advanced_tab = ttk.Frame(settings_nb, style="Panel.TFrame", padding=8)  # type: ignore[var-annotated]
+        self.general_tab = ttk.Frame(settings_nb, style="Panel.TFrame", padding=10)  # type: ignore[var-annotated]
+        self.advanced_tab = ttk.Frame(settings_nb, style="Panel.TFrame", padding=10)  # type: ignore[var-annotated]
         general_tab = self.general_tab
         advanced_tab = self.advanced_tab
         general_tab.columnconfigure(1, weight=1)
@@ -766,16 +807,16 @@ window.chrome.runtime = {};
                 text=label_text,
                 background=self.colors["panel"],
                 foreground=self.colors["text"],
-            ).grid(row=row_idx * 2, column=col_base, sticky="w", pady=(6, 0), padx=(0, 8))
+            ).grid(row=row_idx * 2, column=col_base, sticky="w", pady=(8, 0), padx=(0, 10))
             entry = ttk.Entry(grid, width=12)
             entry.insert(0, str(default_value))
-            entry.grid(row=row_idx * 2, column=col_base + 1, sticky="ew", pady=(6, 0))
+            entry.grid(row=row_idx * 2, column=col_base + 1, sticky="ew", pady=(8, 0))
             ttk.Label(
                 grid,
                 text=helper_text,
                 style="Helper.TLabel",
                 wraplength=240,
-            ).grid(row=row_idx * 2 + 1, column=col_base + 1, sticky="w", pady=(0, 8))
+            ).grid(row=row_idx * 2 + 1, column=col_base + 1, sticky="w", pady=(2, 10))
             return entry
 
         self.pause_entry = add_field(
@@ -826,7 +867,7 @@ window.chrome.runtime = {};
         )
 
         toggles = ttk.Frame(general_tab, style="Panel.TFrame")
-        toggles.grid(row=2, column=0, columnspan=2, sticky="ew", pady=(4, 0))
+        toggles.grid(row=2, column=0, columnspan=2, sticky="ew", pady=(6, 0))
         toggles.columnconfigure((0, 1), weight=1)
         self.headless_var = tk.BooleanVar(value=self.headless)
         self.headless_check = ttk.Checkbutton(
@@ -835,7 +876,7 @@ window.chrome.runtime = {};
             variable=self.headless_var,
             style="Switch.TCheckbutton",
         )
-        self.headless_check.grid(row=0, column=0, sticky="w", padx=(0, 16))
+        self.headless_check.grid(row=0, column=0, sticky="w", padx=(0, 16), pady=(0, 4))
         self.auto_driver_var = tk.BooleanVar(value=self.use_selenium_manager)
         self.auto_driver_check = ttk.Checkbutton(
             toggles,
@@ -843,13 +884,13 @@ window.chrome.runtime = {};
             variable=self.auto_driver_var,
             style="Switch.TCheckbutton",
         )
-        self.auto_driver_check.grid(row=0, column=1, sticky="w")
+        self.auto_driver_check.grid(row=0, column=1, sticky="w", pady=(0, 4))
         ttk.Label(
             toggles,
             text="Headless kapalıysa tarayıcıyı izleyebilirsiniz; Selenium Manager uyumsuz sürücüleri indirir.",
             style="Helper.TLabel",
             wraplength=520,
-        ).grid(row=1, column=0, columnspan=2, sticky="w", pady=(6, 0))
+        ).grid(row=1, column=0, columnspan=2, sticky="w", pady=(2, 0))
 
         # Gelişmiş sekme
         self.random_ua_check = ttk.Checkbutton(
@@ -938,7 +979,7 @@ window.chrome.runtime = {};
 
         self.settings_frame = settings
         actions = ttk.Frame(settings, style="Panel.TFrame")
-        actions.grid(row=1, column=0, sticky="ew", pady=(0, 0))
+        actions.grid(row=1, column=0, sticky="ew", pady=(4, 0))
         actions.columnconfigure((0, 1), weight=1)
         self.apply_btn = ttk.Button(
             actions,
@@ -946,16 +987,16 @@ window.chrome.runtime = {};
             command=self.apply_settings,
             style="Ghost.TButton",
         )
-        self.apply_btn.grid(row=0, column=0, sticky="ew", padx=(0, 6))
+        self.apply_btn.grid(row=0, column=0, sticky="ew", padx=(0, 8), ipady=3)
         self.defaults_btn = ttk.Button(
             actions,
             text="Varsayılanları Yükle",
             command=self.reset_to_defaults,
             style="Ghost.TButton",
         )
-        self.defaults_btn.grid(row=0, column=1, sticky="ew")
+        self.defaults_btn.grid(row=0, column=1, sticky="ew", ipady=3)
 
-        self.actions_frame = ttk.LabelFrame(main, text="Eylemler", style="Panel.TFrame", padding=10)
+        self.actions_frame = ttk.LabelFrame(main, text="Eylemler", style="Panel.TFrame", padding=12)
         self.actions_frame.grid(row=3, column=0, columnspan=2, sticky="ew", pady=(0, 8))
         self.actions_frame.columnconfigure(0, weight=1)
         controls = ttk.Frame(self.actions_frame, style="Panel.TFrame", padding=(0, 0))
@@ -965,7 +1006,7 @@ window.chrome.runtime = {};
         self.start_btn = ttk.Button(
             controls, text="Başlat", command=self.start_bot, style="Accent.TButton"
         )
-        self.start_btn.grid(row=0, column=0, padx=4, pady=4, sticky="ew")
+        self.start_btn.grid(row=0, column=0, padx=6, pady=6, sticky="ew", ipady=4)
         self.stop_btn = ttk.Button(
             controls,
             text="Durdur",
@@ -973,19 +1014,19 @@ window.chrome.runtime = {};
             style="Ghost.TButton",
             state=tk.DISABLED,
         )
-        self.stop_btn.grid(row=0, column=1, padx=4, pady=4, sticky="ew")
+        self.stop_btn.grid(row=0, column=1, padx=6, pady=6, sticky="ew", ipady=4)
         self.preflight_btn = ttk.Button(
             controls, text="Ön kontrol", command=self.run_preflight, style="Ghost.TButton"
         )
-        self.preflight_btn.grid(row=0, column=2, padx=4, pady=4, sticky="ew")
+        self.preflight_btn.grid(row=0, column=2, padx=6, pady=6, sticky="ew", ipady=4)
         self.logs_btn = ttk.Button(
             controls, text="Log klasörünü aç", command=self.open_logs, style="Ghost.TButton"
         )
-        self.logs_btn.grid(row=0, column=3, padx=4, pady=4, sticky="ew")
+        self.logs_btn.grid(row=0, column=3, padx=6, pady=6, sticky="ew", ipady=4)
         self.reset_btn = ttk.Button(
             controls, text="Sayaclari sifirla", command=self.reset_counters, style="Ghost.TButton"
         )
-        self.reset_btn.grid(row=0, column=4, padx=4, pady=4, sticky="ew")
+        self.reset_btn.grid(row=0, column=4, padx=6, pady=6, sticky="ew", ipady=4)
 
         log_frame = ttk.LabelFrame(log_shell, text="Log", style="Panel.TFrame", padding=12)
         log_frame.grid(row=0, column=0, sticky="nsew")
@@ -1062,13 +1103,15 @@ window.chrome.runtime = {};
         self._show_welcome()
 
     def _make_stat_card(self, parent, row, col, title, value, key):
-        card = ttk.Frame(parent, style="Card.TFrame", padding=12)
+        card = ttk.Frame(parent, style="Card.TFrame", padding=14)
         card.grid(row=row, column=col, padx=6, pady=6, sticky="nsew")
         parent.rowconfigure(row, weight=1)
         parent.columnconfigure(col, weight=1)
-        accent_bar = tk.Frame(card, bg=self.colors["accent2"], width=4, height=60)
-        accent_bar.grid(row=0, column=0, rowspan=2, sticky="nsw", padx=(0, 10))
-        ttk.Label(card, text=title, style="StatLabel.TLabel").grid(row=0, column=1, sticky="w")
+        accent_bar = tk.Frame(card, bg=self.colors["accent2"], width=5, height=64)
+        accent_bar.grid(row=0, column=0, rowspan=2, sticky="nsw", padx=(0, 12))
+        ttk.Label(card, text=title, style="StatLabel.TLabel").grid(
+            row=0, column=1, sticky="w", pady=(0, 4)
+        )
         label = ttk.Label(card, text=value, style="StatValue.TLabel")
         label.grid(row=1, column=1, sticky="w")
         if key == "count":
@@ -1091,20 +1134,22 @@ window.chrome.runtime = {};
         if compact:
             self.main.columnconfigure(0, weight=1)
             self.main.columnconfigure(1, weight=0)
-            self.main.rowconfigure(1, weight=1)
-            self.main.rowconfigure(2, weight=1)
-            self.main.rowconfigure(3, weight=1)
-            self.main.rowconfigure(4, weight=0)
+            self.main.rowconfigure(0, weight=0, minsize=120)
+            self.main.rowconfigure(1, weight=0, minsize=140)
+            self.main.rowconfigure(2, weight=1, minsize=250)
+            self.main.rowconfigure(3, weight=1, minsize=250)
+            self.main.rowconfigure(4, weight=0, minsize=80)
             self.stats_wrapper.grid_configure(row=1, column=0, columnspan=2, padx=(0, 0))
             self.settings_frame.master.grid_configure(row=2, column=0, columnspan=2, padx=(0, 0))
             self.log_frame.master.grid_configure(row=3, column=0, columnspan=2, padx=(0, 0))
             self.actions_frame.grid_configure(row=4, column=0, columnspan=2, padx=(0, 0))
         else:
-            self.main.columnconfigure(0, weight=2)
-            self.main.columnconfigure(1, weight=1)
-            self.main.rowconfigure(1, weight=1)
-            self.main.rowconfigure(2, weight=2)
-            self.main.rowconfigure(3, weight=0)
+            self.main.columnconfigure(0, weight=2, minsize=500)
+            self.main.columnconfigure(1, weight=1, minsize=350)
+            self.main.rowconfigure(0, weight=0, minsize=120)
+            self.main.rowconfigure(1, weight=0, minsize=140)
+            self.main.rowconfigure(2, weight=1, minsize=300)
+            self.main.rowconfigure(3, weight=0, minsize=80)
             self.main.rowconfigure(4, weight=0)
             self.stats_wrapper.grid_configure(row=1, column=0, columnspan=2, padx=(0, 0))
             self.settings_frame.master.grid_configure(row=2, column=0, columnspan=1, padx=(0, 8))
@@ -1125,7 +1170,7 @@ window.chrome.runtime = {};
         self.welcome_frame = tk.Frame(self.root, bg=self.colors["bg"])
         self.welcome_frame.place(relx=0, rely=0, relwidth=1, relheight=1)
 
-        wrapper = ttk.Frame(self.welcome_frame, style="Main.TFrame", padding=32)
+        wrapper = ttk.Frame(self.welcome_frame, style="Main.TFrame", padding=40)
         wrapper.pack(fill="both", expand=True)
         wrapper.columnconfigure(1, weight=1)
         wrapper.rowconfigure(0, weight=1)
@@ -1140,17 +1185,17 @@ window.chrome.runtime = {};
             )
         else:
             hero_widget = tk.Canvas(
-                wrapper, width=340, height=260, bg=self.colors["bg"], highlightthickness=0, bd=0
+                wrapper, width=360, height=280, bg=self.colors["bg"], highlightthickness=0, bd=0
             )
-            self._draw_brand_mark(hero_widget, size=200)
-        hero_widget.grid(row=0, column=0, sticky="nsew", padx=(0, 24))
+            self._draw_brand_mark(hero_widget, size=220)
+        hero_widget.grid(row=0, column=0, sticky="nsew", padx=(0, 32))
 
         info = ttk.Frame(wrapper, style="Main.TFrame")
         info.grid(row=0, column=1, sticky="nsew")
         info.columnconfigure(0, weight=1)
 
         ttk.Label(info, text="VOTRYX - DistroKid Spotlight", style="Title.TLabel").grid(
-            row=0, column=0, sticky="w", pady=(0, 8)
+            row=0, column=0, sticky="w", pady=(0, 10)
         )
         ttk.Label(
             info,
@@ -1158,7 +1203,7 @@ window.chrome.runtime = {};
             foreground=self.colors["muted"],
             background=self.colors["bg"],
             font=("Segoe UI", 12),
-        ).grid(row=1, column=0, sticky="w", pady=(0, 12))
+        ).grid(row=1, column=0, sticky="w", pady=(0, 16))
         bullets = [
             "Chromedriver/Chrome ön kontrol, batch/parallel oy",
             "Loglama, ekran görüntüsü, backoff ve zaman aşımı korumaları",
@@ -1171,16 +1216,16 @@ window.chrome.runtime = {};
                 foreground=self.colors["text"],
                 background=self.colors["bg"],
                 font=("Segoe UI", 10),
-            ).grid(row=2 + idx, column=0, sticky="w", pady=(0, 4))
+            ).grid(row=2 + idx, column=0, sticky="w", pady=(0, 6))
 
         cta = ttk.Button(
             info, text="Kontrol Paneline Gir", style="Accent.TButton", command=self._show_app
         )
-        cta.grid(row=2 + len(bullets), column=0, sticky="w", pady=(14, 4))
+        cta.grid(row=2 + len(bullets), column=0, sticky="w", pady=(18, 6), ipady=4)
         sub = ttk.Button(
             info, text="Log klasörünü aç", style="Ghost.TButton", command=self.open_logs
         )
-        sub.grid(row=3 + len(bullets), column=0, sticky="w", pady=(0, 4))
+        sub.grid(row=3 + len(bullets), column=0, sticky="w", pady=(0, 6), ipady=4)
 
     def _show_welcome(self):
         if self.welcome_frame:
