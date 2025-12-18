@@ -3,9 +3,7 @@
 import tempfile
 from pathlib import Path
 
-import pytest
-
-from Code_EXE.Votryx.core.validation import InputValidator, ValidationError
+from Code_EXE.Votryx.core.validation import InputValidator
 
 
 class TestInputValidator:

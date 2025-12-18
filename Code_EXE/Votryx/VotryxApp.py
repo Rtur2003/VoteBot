@@ -8,13 +8,13 @@ import subprocess
 import tempfile
 import threading
 import time
+import tkinter as tk
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
+from tkinter import messagebox, scrolledtext, ttk
 from urllib.parse import urlparse
-import tkinter as tk
-from tkinter import ttk, scrolledtext, messagebox
 
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException, WebDriverException
@@ -282,7 +282,9 @@ class VotryxApp:
             return path, None
         except Exception as exc:
             fallback = Path(tempfile.mkdtemp(prefix="votryx-logs-"))
-            warning = f"Log klasoru '{path}' olusturulamadi ({exc}); gecici '{fallback}' kullaniliyor."
+            warning = (
+                f"Log klasoru '{path}' olusturulamadi ({exc}); gecici '{fallback}' kullaniliyor."
+            )
             return fallback, warning
 
     def _build_logger(self):
@@ -324,9 +326,7 @@ window.chrome.runtime = {};
             browser_info = driver.execute_cdp_cmd("Browser.getVersion", {})
             user_agent = browser_info.get("userAgent")
             if user_agent:
-                driver.execute_cdp_cmd(
-                    "Network.setUserAgentOverride", {"userAgent": user_agent}
-                )
+                driver.execute_cdp_cmd("Network.setUserAgentOverride", {"userAgent": user_agent})
         except Exception as exc:
             self.logger.warning("Stealth ayarları uygulanamadı: %s", exc)
 
@@ -417,9 +417,7 @@ window.chrome.runtime = {};
         except tk.TclError:
             pass
 
-        base_font = ("Bahnschrift SemiBold", 10)
         title_font = ("Bahnschrift SemiBold", 20)
-        subtitle_font = ("Bahnschrift", 11)
 
         style.configure("Main.TFrame", background=self.colors["bg"], padding=0)
         style.configure("Panel.TFrame", background=self.colors["panel"])
@@ -505,7 +503,10 @@ window.chrome.runtime = {};
             background=[("selected", self.colors["accent2"]), ("active", "#1d2d46")],
             foreground=[("selected", "#0f172a"), ("active", self.colors["text"])],
         )
-        def button_style(name, bg, fg, active=None, disabled=None, border=None, padding=10, bold=True):
+
+        def button_style(
+            name, bg, fg, active=None, disabled=None, border=None, padding=10, bold=True
+        ):
             active = active or bg
             disabled = disabled or "#1f2937"
             font = ("Bahnschrift SemiBold", 11) if bold else ("Bahnschrift", 10)
@@ -528,10 +529,36 @@ window.chrome.runtime = {};
                 bordercolor=[("focus", border or self.colors["accent2"])],
             )
 
-        button_style("Accent.TButton", self.colors["accent"], "#0f172a", active=self.colors["accent2"], disabled="#1f2a3d")
-        button_style("Ghost.TButton", self.colors["card"], self.colors["text"], active="#1f2f4a", disabled="#1f2a3d", border=self.colors["border"], bold=False, padding=9)
-        button_style("Outline.TButton", self.colors["panel"], self.colors["text"], active=self.colors["card"], disabled="#1f2a3d", border=self.colors["accent2"], bold=False, padding=9)
-        button_style("Danger.TButton", self.colors["danger"], "#0f172a", active="#e11d48", disabled="#7f1d1d")
+        button_style(
+            "Accent.TButton",
+            self.colors["accent"],
+            "#0f172a",
+            active=self.colors["accent2"],
+            disabled="#1f2a3d",
+        )
+        button_style(
+            "Ghost.TButton",
+            self.colors["card"],
+            self.colors["text"],
+            active="#1f2f4a",
+            disabled="#1f2a3d",
+            border=self.colors["border"],
+            bold=False,
+            padding=9,
+        )
+        button_style(
+            "Outline.TButton",
+            self.colors["panel"],
+            self.colors["text"],
+            active=self.colors["card"],
+            disabled="#1f2a3d",
+            border=self.colors["accent2"],
+            bold=False,
+            padding=9,
+        )
+        button_style(
+            "Danger.TButton", self.colors["danger"], "#0f172a", active="#e11d48", disabled="#7f1d1d"
+        )
         style.configure(
             "Switch.TCheckbutton",
             background=self.colors["panel"],
@@ -629,8 +656,12 @@ window.chrome.runtime = {};
         title.grid(row=0, column=0, sticky="w")
         pill_frame = ttk.Frame(title_block, style="Main.TFrame")
         pill_frame.grid(row=0, column=1, padx=(8, 0), sticky="w")
-        ttk.Label(pill_frame, text="Headless hazır", style="Pill.TLabel").grid(row=0, column=0, padx=(0, 6))
-        ttk.Label(pill_frame, text="Batch oy", style="Pill.TLabel").grid(row=0, column=1, padx=(0, 6))
+        ttk.Label(pill_frame, text="Headless hazır", style="Pill.TLabel").grid(
+            row=0, column=0, padx=(0, 6)
+        )
+        ttk.Label(pill_frame, text="Batch oy", style="Pill.TLabel").grid(
+            row=0, column=1, padx=(0, 6)
+        )
         ttk.Label(pill_frame, text="Log kaydı", style="Pill.TLabel").grid(row=0, column=2)
         subtitle = ttk.Label(
             title_block,
@@ -660,8 +691,12 @@ window.chrome.runtime = {};
         self.state_badge.grid(row=0, column=2, rowspan=2, sticky="e")
 
         # Stats
-        self.stats_wrapper = ttk.LabelFrame(main, text="Gösterge Paneli", style="Panel.TFrame", padding=10)
-        self.stats_wrapper.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=(0, 0), pady=(6, 6))
+        self.stats_wrapper = ttk.LabelFrame(
+            main, text="Gösterge Paneli", style="Panel.TFrame", padding=10
+        )
+        self.stats_wrapper.grid(
+            row=1, column=0, columnspan=2, sticky="nsew", padx=(0, 0), pady=(6, 6)
+        )
         self.stats_wrapper.columnconfigure(0, weight=1)
         stats_frame = ttk.Frame(self.stats_wrapper, style="Panel.TFrame")
         stats_frame.grid(row=0, column=0, sticky="nsew")
@@ -744,22 +779,42 @@ window.chrome.runtime = {};
             return entry
 
         self.pause_entry = add_field(
-            general_grid, 0, 0, "Oy aralığı (sn)", self.pause_between_votes, "Her oy arasında bekleme süresi"
+            general_grid,
+            0,
+            0,
+            "Oy aralığı (sn)",
+            self.pause_between_votes,
+            "Her oy arasında bekleme süresi",
         )
         self.batch_entry = add_field(
             general_grid, 0, 2, "Batch (kaç oy)", self.batch_size, "Tek seferde verilecek oy sayısı"
         )
         self.timeout_entry = add_field(
-            general_grid, 1, 0, "Zaman aşımı (sn)", self.timeout_seconds, "Oy butonu için bekleme sınırı"
+            general_grid,
+            1,
+            0,
+            "Zaman aşımı (sn)",
+            self.timeout_seconds,
+            "Oy butonu için bekleme sınırı",
         )
         self.max_errors_entry = add_field(
-            general_grid, 1, 2, "Maks hata", self.max_errors, "Bu sayıya ulaşınca bekleme ve yeniden deneme"
+            general_grid,
+            1,
+            2,
+            "Maks hata",
+            self.max_errors,
+            "Bu sayıya ulaşınca bekleme ve yeniden deneme",
         )
         self.backoff_entry = add_field(
             general_grid, 2, 0, "Backoff (sn)", self.backoff_seconds, "Hata sonrası ilk bekleme"
         )
         self.backoff_cap_entry = add_field(
-            general_grid, 2, 2, "Backoff üst sınır", self.backoff_cap_seconds, "Maksimum bekleme sınırı"
+            general_grid,
+            2,
+            2,
+            "Backoff üst sınır",
+            self.backoff_cap_seconds,
+            "Maksimum bekleme sınırı",
         )
         self.parallel_entry = add_field(
             general_grid,
@@ -996,7 +1051,9 @@ window.chrome.runtime = {};
         self.log_area.tag_configure("success", foreground=self.colors["success"])
         self.log_area.tag_configure("error", foreground=self.colors["error"])
         self.log_area.tag_configure("muted", foreground=self.colors["muted"])
-        clear_btn = ttk.Button(log_frame, text="Log temizle", command=self.clear_log, style="Ghost.TButton")
+        clear_btn = ttk.Button(
+            log_frame, text="Log temizle", command=self.clear_log, style="Ghost.TButton"
+        )
         clear_btn.grid(row=2, column=0, sticky="e")
         self.log_frame = log_frame
         self._set_form_state(False)
@@ -1024,7 +1081,9 @@ window.chrome.runtime = {};
             self.runtime_label = label
 
     def _apply_responsive_layout(self, compact: bool):
-        if not self.ui_ready or not all([self.main, self.stats_wrapper, self.settings_frame, self.log_frame, self.actions_frame]):
+        if not self.ui_ready or not all(
+            [self.main, self.stats_wrapper, self.settings_frame, self.log_frame, self.actions_frame]
+        ):
             return
         if getattr(self, "_is_compact_layout", None) == compact:
             return
@@ -1072,11 +1131,17 @@ window.chrome.runtime = {};
         wrapper.rowconfigure(0, weight=1)
 
         if self.hero_image:
-            hero_widget = tk.Label(wrapper, image=self.hero_image, bg=self.colors["bg"], bd=0, highlightthickness=0)
+            hero_widget = tk.Label(
+                wrapper, image=self.hero_image, bg=self.colors["bg"], bd=0, highlightthickness=0
+            )
         elif self.brand_image:
-            hero_widget = tk.Label(wrapper, image=self.brand_image, bg=self.colors["bg"], bd=0, highlightthickness=0)
+            hero_widget = tk.Label(
+                wrapper, image=self.brand_image, bg=self.colors["bg"], bd=0, highlightthickness=0
+            )
         else:
-            hero_widget = tk.Canvas(wrapper, width=340, height=260, bg=self.colors["bg"], highlightthickness=0, bd=0)
+            hero_widget = tk.Canvas(
+                wrapper, width=340, height=260, bg=self.colors["bg"], highlightthickness=0, bd=0
+            )
             self._draw_brand_mark(hero_widget, size=200)
         hero_widget.grid(row=0, column=0, sticky="nsew", padx=(0, 24))
 
@@ -1108,9 +1173,13 @@ window.chrome.runtime = {};
                 font=("Segoe UI", 10),
             ).grid(row=2 + idx, column=0, sticky="w", pady=(0, 4))
 
-        cta = ttk.Button(info, text="Kontrol Paneline Gir", style="Accent.TButton", command=self._show_app)
+        cta = ttk.Button(
+            info, text="Kontrol Paneline Gir", style="Accent.TButton", command=self._show_app
+        )
         cta.grid(row=2 + len(bullets), column=0, sticky="w", pady=(14, 4))
-        sub = ttk.Button(info, text="Log klasörünü aç", style="Ghost.TButton", command=self.open_logs)
+        sub = ttk.Button(
+            info, text="Log klasörünü aç", style="Ghost.TButton", command=self.open_logs
+        )
         sub.grid(row=3 + len(bullets), column=0, sticky="w", pady=(0, 4))
 
     def _show_welcome(self):
@@ -1420,11 +1489,14 @@ window.chrome.runtime = {};
         chrome_path = self._resolve_chrome_path()
         problems = []
         if not self.use_selenium_manager and (not driver_path or not driver_path.exists()):
-            problems.append("chromedriver bulunamadı. config.json'daki 'paths.driver' yolunu kontrol edin.")
+            problems.append(
+                "chromedriver bulunamadı. config.json'daki 'paths.driver' yolunu kontrol edin."
+            )
         if not chrome_path or not chrome_path.exists():
             if self.use_selenium_manager:
                 self.log_message(
-                    "Chrome yolu bulunamadı; Selenium Manager Chrome for Testing deneyecek.", level="info"
+                    "Chrome yolu bulunamadı; Selenium Manager Chrome for Testing deneyecek.",
+                    level="info",
                 )
             else:
                 problems.append("Chrome bulunamadı. 'paths.chrome' yolunu kontrol edin.")
@@ -1434,7 +1506,9 @@ window.chrome.runtime = {};
             for msg in problems:
                 self.log_message(msg, level="error")
             return False
-        if not self.use_selenium_manager and not self._check_version_compatibility(driver_path, chrome_path):
+        if not self.use_selenium_manager and not self._check_version_compatibility(
+            driver_path, chrome_path
+        ):
             if show_message:
                 messagebox.showerror(
                     "Sürüm Uyumsuzluğu",
@@ -1472,7 +1546,9 @@ window.chrome.runtime = {};
         chrome_options.add_argument("--no-first-run")
         chrome_options.add_argument("--no-default-browser-check")
         chrome_options.add_argument("--disable-sync")
-        chrome_options.add_argument("--disable-blink-features=AutomationControlled,Translate,BackForwardCache")
+        chrome_options.add_argument(
+            "--disable-blink-features=AutomationControlled,Translate,BackForwardCache"
+        )
         chrome_options.add_argument("--remote-allow-origins=*")
         chrome_options.add_argument("--disable-notifications")
         chrome_options.add_argument("--log-level=3")
@@ -1611,7 +1687,9 @@ window.chrome.runtime = {};
                     failures += 1
 
         if successes == 0:
-            self.log_message(f"Batch tamamlanamadı. Başarılı: {successes}, Hata: {failures}", level="error")
+            self.log_message(
+                f"Batch tamamlanamadı. Başarılı: {successes}, Hata: {failures}", level="error"
+            )
             return False
         if failures:
             self.log_message(
@@ -1619,7 +1697,9 @@ window.chrome.runtime = {};
                 level="success",
             )
         else:
-            self.log_message(f"Batch tamamlandı. Başarılı: {successes}, Hata: {failures}", level="success")
+            self.log_message(
+                f"Batch tamamlandı. Başarılı: {successes}, Hata: {failures}", level="success"
+            )
         self.update_status("Bekliyor", tone="idle")
         return True
 
@@ -1871,7 +1951,7 @@ window.chrome.runtime = {};
 
 def main():
     root = tk.Tk()
-    app = VotryxApp(root)
+    app = VotryxApp(root)  # noqa: F841 - app instance must be kept alive
     root.mainloop()
 
 
