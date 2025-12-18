@@ -26,6 +26,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 
 class VotryxApp:
+    # UI Layout Constants
+    STAT_CARDS_COUNT = 4
+    
     def __init__(self, root):
         self.root = root
         self.root.title("VOTRYX - DistroKid Spotlight")
@@ -736,7 +739,7 @@ window.chrome.runtime = {};
         self.stats_wrapper.rowconfigure(0, weight=1)
         stats_frame = ttk.Frame(self.stats_wrapper, style="Panel.TFrame")
         stats_frame.grid(row=0, column=0, sticky="nsew")
-        for i in range(4):
+        for i in range(self.STAT_CARDS_COUNT):
             stats_frame.columnconfigure(i, weight=1, minsize=180)
         stats_frame.rowconfigure(0, weight=1)
 
