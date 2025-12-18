@@ -370,19 +370,35 @@ window.chrome.runtime = {};
         Build a simple geometric icon for header/title bar.
         Uses brand colors for visual consistency.
         """
+        # Icon design constants
+        BORDER_INSET = 2
+        TOP_ACCENT_RATIO = 0.40
+        BOTTOM_ACCENT_START = 0.60
+        # Checkmark coordinates as ratios of size
+        CHECK_LEFT_X1 = 0.22
+        CHECK_LEFT_Y1 = 0.46
+        CHECK_LEFT_X2 = 0.34
+        CHECK_LEFT_Y2 = 0.72
+        CHECK_RIGHT_X1 = 0.32
+        CHECK_RIGHT_Y1 = 0.66
+        CHECK_RIGHT_X2 = 0.80
+        CHECK_RIGHT_Y2 = 0.78
+        
         icon = tk.PhotoImage(width=size, height=size)
         # Background gradient effect
         icon.put(self.colors["panel"], to=(0, 0, size, size))
-        icon.put(self.colors["card"], to=(2, 2, size - 2, size - 2))
+        icon.put(self.colors["card"], to=(BORDER_INSET, BORDER_INSET, size - BORDER_INSET, size - BORDER_INSET))
         # Top accent band (cyan)
-        icon.put(self.colors["accent2"], to=(0, 0, size, int(size * 0.40)))
+        icon.put(self.colors["accent2"], to=(0, 0, size, int(size * TOP_ACCENT_RATIO)))
         # Bottom accent band (orange)
-        icon.put(self.colors["accent"], to=(0, int(size * 0.60), size, size))
+        icon.put(self.colors["accent"], to=(0, int(size * BOTTOM_ACCENT_START), size, size))
         # Core dark area for contrast
         core = "#0c162a"
         # Stylized checkmark/tick
-        icon.put(core, to=(int(size * 0.22), int(size * 0.46), int(size * 0.34), int(size * 0.72)))
-        icon.put(core, to=(int(size * 0.32), int(size * 0.66), int(size * 0.80), int(size * 0.78)))
+        icon.put(core, to=(int(size * CHECK_LEFT_X1), int(size * CHECK_LEFT_Y1), 
+                           int(size * CHECK_LEFT_X2), int(size * CHECK_LEFT_Y2)))
+        icon.put(core, to=(int(size * CHECK_RIGHT_X1), int(size * CHECK_RIGHT_Y1), 
+                           int(size * CHECK_RIGHT_X2), int(size * CHECK_RIGHT_Y2)))
         return icon
 
     def _draw_brand_mark(self, canvas, size=60):
