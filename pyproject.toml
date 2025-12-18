@@ -64,7 +64,7 @@ testpaths = ["tests"]
 python_files = ["test_*.py", "*_test.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
-addopts = "--strict-markers --cov=votryx --cov-report=term-missing"
+addopts = "--strict-markers --cov=Code_EXE/Votryx --cov-report=term-missing"
 
 [tool.coverage.run]
 source = ["Code_EXE/Votryx"]
