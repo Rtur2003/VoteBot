@@ -1741,7 +1741,7 @@ window.chrome.runtime = {};
         self._set_form_state(False)
 
     def run_bot(self):
-        """Main bot execution loop with error handling and backoff."""
+        """Execute main bot loop with error handling and backoff."""
         consecutive_errors = 0
         backoff_delay = self.backoff_seconds
         while not self._stop_event.is_set():
