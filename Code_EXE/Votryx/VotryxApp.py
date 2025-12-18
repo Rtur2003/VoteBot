@@ -353,13 +353,18 @@ window.chrome.runtime = {};
     def _load_hero_image(self):
         """
         Load hero/banner for welcome screen if available.
+        Tries multiple banner options for best visual impact.
         """
-        candidate = self.base_dir / "docs" / "screenshots" / "votryx-banner-dark.png"
-        if candidate.exists():
-            try:
-                return tk.PhotoImage(file=str(candidate))
-            except Exception as exc:
-                self.logger.warning("Hero görseli yüklenemedi: %s", exc)
+        candidates = [
+            self.base_dir / "docs" / "screenshots" / "votryx-banner-dark.png",
+            self.base_dir / "docs" / "screenshots" / "votryx-banner-2-dark.png",
+        ]
+        for candidate in candidates:
+            if candidate.exists():
+                try:
+                    return tk.PhotoImage(file=str(candidate))
+                except Exception as exc:
+                    self.logger.warning("Hero görseli '%s' yüklenemedi: %s", candidate.name, exc)
         return None
 
     def _build_icon_image(self, size=48):
