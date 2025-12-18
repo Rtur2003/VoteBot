@@ -351,8 +351,9 @@ window.chrome.runtime = {};
             self.logger.warning("Stealth ayarları uygulanamadı: %s", exc)
 
     def _load_brand_image(self):
-        """
-        Try to load the official VOTRYX logo; fall back to vector mark if not available.
+        """Try to load the official VOTRYX logo.
+
+        Falls back to vector mark if not available.
         Attempts multiple logo variants for optimal display.
         """
         candidates = [
@@ -369,8 +370,8 @@ window.chrome.runtime = {};
         return None
 
     def _load_hero_image(self):
-        """
-        Load hero/banner for welcome screen if available.
+        """Load hero/banner for welcome screen if available.
+
         Tries multiple banner options for best visual impact.
         """
         candidates = [
@@ -386,8 +387,8 @@ window.chrome.runtime = {};
         return None
 
     def _build_icon_image(self, size=48):
-        """
-        Build a simple geometric icon for header/title bar.
+        """Build a simple geometric icon for header/title bar.
+
         Uses brand colors for visual consistency.
         """
         # Icon design constants
