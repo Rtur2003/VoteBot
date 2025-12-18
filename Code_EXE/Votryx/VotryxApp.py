@@ -630,7 +630,7 @@ window.chrome.runtime = {};
         main.rowconfigure(4, weight=0)
 
         header = ttk.Frame(main, style="Main.TFrame")
-        header.grid(row=0, column=0, columnspan=2, sticky="ew", pady=(0, 4))
+        header.grid(row=0, column=0, columnspan=2, sticky="ew", pady=(0, 8))
         header.columnconfigure(2, weight=1)
         if self.brand_image:
             logo_widget = tk.Label(
@@ -643,14 +643,14 @@ window.chrome.runtime = {};
         else:
             logo_widget = tk.Canvas(
                 header,
-                width=60,
-                height=60,
+                width=64,
+                height=64,
                 bg=self.colors["bg"],
                 highlightthickness=0,
                 bd=0,
             )
-            self._draw_brand_mark(logo_widget, size=60)
-        logo_widget.grid(row=0, column=0, rowspan=2, padx=(0, 12), pady=(0, 8), sticky="w")
+            self._draw_brand_mark(logo_widget, size=64)
+        logo_widget.grid(row=0, column=0, rowspan=2, padx=(0, 16), pady=(0, 0), sticky="w")
         title_block = ttk.Frame(header, style="Main.TFrame")
         title_block.grid(row=0, column=1, rowspan=2, sticky="w", padx=(0, 8))
         title = ttk.Label(title_block, text="VOTRYX - DistroKid Spotlight", style="Title.TLabel")
