@@ -92,6 +92,11 @@ class LogHistory:
     """Manages log entry history with size limit."""
 
     def __init__(self, max_entries: int = 500):
+        """Initialize log history manager.
+
+        Args:
+            max_entries: Maximum number of log entries to retain
+        """
         self.max_entries = max_entries
         self._entries: List[LogEntry] = []
 
@@ -121,6 +126,7 @@ class StateManager:
     """Manages application state with observer pattern."""
 
     def __init__(self):
+        """Initialize state manager with default statistics."""
         self._stats = VotingStatistics()
         self._log_history = LogHistory()
         self._observers: List[Callable[[VotingStatistics], None]] = []
