@@ -93,6 +93,55 @@ python Code_EXE/Votryx/VotryxApp.py
 3) Stop: clean shutdown.  
 4) Log shortcut opens `logs/votryx.log`.
 
+## Development
+
+### For Contributors
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines and [DEVELOPMENT.md](DEVELOPMENT.md) for detailed development setup.
+
+Quick start for developers:
+```bash
+# Setup virtual environment
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+
+# Install development dependencies
+pip install -r requirements-dev.txt
+
+# Run code quality checks
+make format     # Format code with black and isort
+make lint       # Run flake8 linter
+make type-check # Run mypy type checker
+make test       # Run pytest tests
+```
+
+### Project Structure
+
+The codebase is organized for maintainability:
+```
+VOTRYX/
+├── Code_EXE/Votryx/
+│   ├── core/              # Core modules (config, validation, driver, logging, i18n)
+│   ├── VotryxApp.py       # Main application
+│   └── config.json        # Configuration
+├── tests/                 # Unit tests
+├── docs/                  # Documentation and brand assets
+├── pyproject.toml         # Python project configuration
+├── Makefile              # Development commands
+├── CONTRIBUTING.md       # Contribution guidelines
+└── DEVELOPMENT.md        # Developer guide
+```
+
+### Code Quality Standards
+
+- Python-first approach for all implementations
+- Type hints throughout the codebase
+- Atomic commits with clear scope
+- One change per commit
+- Comprehensive docstrings
+- Input validation at boundaries
+- Separation of concerns
+
 ## Git
 ```bash
 git remote add origin https://github.com/Rtur2003/VOTRYX.git
@@ -106,3 +155,13 @@ git push -u origin main
 - Secondary banner (optional): `docs/screenshots/votryx-banner-2-dark.png`
 - Logos: `docs/screenshots/votryx-logo-transparent.png`, `docs/screenshots/votryx-logo-transparent.svg`, `docs/screenshots/votryx-logo-3-dark.png`, `docs/screenshots/votryx-logo-4.png.png`
 - ASCII logo: `docs/screenshots/ASCII-LOGO.png`
+
+## License
+
+This project is open source. See the repository for license details.
+
+## Community
+
+- **Contributing**: See [CONTRIBUTING.md](CONTRIBUTING.md)
+- **Code of Conduct**: See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+- **Issues**: Report bugs and request features via GitHub Issues
