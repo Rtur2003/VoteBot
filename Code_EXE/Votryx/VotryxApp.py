@@ -962,7 +962,7 @@ window.chrome.runtime = {};
 
         self.settings_frame = settings
         actions = ttk.Frame(settings, style="Panel.TFrame")
-        actions.grid(row=1, column=0, sticky="ew", pady=(0, 0))
+        actions.grid(row=1, column=0, sticky="ew", pady=(4, 0))
         actions.columnconfigure((0, 1), weight=1)
         self.apply_btn = ttk.Button(
             actions,
@@ -970,14 +970,14 @@ window.chrome.runtime = {};
             command=self.apply_settings,
             style="Ghost.TButton",
         )
-        self.apply_btn.grid(row=0, column=0, sticky="ew", padx=(0, 6))
+        self.apply_btn.grid(row=0, column=0, sticky="ew", padx=(0, 8), ipady=3)
         self.defaults_btn = ttk.Button(
             actions,
             text="Varsayılanları Yükle",
             command=self.reset_to_defaults,
             style="Ghost.TButton",
         )
-        self.defaults_btn.grid(row=0, column=1, sticky="ew")
+        self.defaults_btn.grid(row=0, column=1, sticky="ew", ipady=3)
 
         self.actions_frame = ttk.LabelFrame(main, text="Eylemler", style="Panel.TFrame", padding=12)
         self.actions_frame.grid(row=3, column=0, columnspan=2, sticky="ew", pady=(0, 8))
