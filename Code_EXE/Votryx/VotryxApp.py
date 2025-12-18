@@ -259,6 +259,16 @@ class VotryxApp:
         return selectors
 
     def _extract_origin(self, url):
+        """Extract origin from URL for storage clearing.
+
+        Args:
+            url: Target URL string
+
+        Returns:
+            Origin string or None if extraction fails
+        """
+        if not url:  # Explicit null guard
+            return None
         try:
             parsed = urlparse(url)
             if parsed.scheme and parsed.netloc:
