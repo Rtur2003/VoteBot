@@ -652,11 +652,11 @@ window.chrome.runtime = {};
             self._draw_brand_mark(logo_widget, size=64)
         logo_widget.grid(row=0, column=0, rowspan=2, padx=(0, 16), pady=(0, 0), sticky="w")
         title_block = ttk.Frame(header, style="Main.TFrame")
-        title_block.grid(row=0, column=1, rowspan=2, sticky="w", padx=(0, 8))
+        title_block.grid(row=0, column=1, rowspan=2, sticky="w", padx=(0, 12))
         title = ttk.Label(title_block, text="VOTRYX - DistroKid Spotlight", style="Title.TLabel")
-        title.grid(row=0, column=0, sticky="w")
+        title.grid(row=0, column=0, sticky="w", pady=(0, 2))
         pill_frame = ttk.Frame(title_block, style="Main.TFrame")
-        pill_frame.grid(row=0, column=1, padx=(8, 0), sticky="w")
+        pill_frame.grid(row=0, column=1, padx=(10, 0), sticky="w")
         ttk.Label(pill_frame, text="Headless hazır", style="Pill.TLabel").grid(
             row=0, column=0, padx=(0, 6)
         )
@@ -671,7 +671,7 @@ window.chrome.runtime = {};
             background=self.colors["bg"],
             font=("Segoe UI", 11),
         )
-        subtitle.grid(row=1, column=0, pady=(2, 6), sticky="w")
+        subtitle.grid(row=1, column=0, pady=(2, 2), sticky="w")
         tagline = ttk.Label(
             title_block,
             text="Başlat ve unut: otomatik sürücü kontrolü, batch oy ve güvenli loglama",
@@ -679,7 +679,7 @@ window.chrome.runtime = {};
             background=self.colors["bg"],
             font=("Segoe UI", 10),
         )
-        tagline.grid(row=2, column=0, sticky="w")
+        tagline.grid(row=2, column=0, pady=(0, 0), sticky="w")
         self.state_badge = tk.Label(
             header,
             text="Bekliyor",
