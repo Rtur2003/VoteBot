@@ -333,7 +333,7 @@ window.chrome.runtime = {};
     def _load_brand_image(self):
         """
         Try to load the official VOTRYX logo; fall back to vector mark if not available.
-        Attempts to load and scale the logo for optimal display.
+        Attempts multiple logo variants for optimal display.
         """
         candidates = [
             self.base_dir / "docs" / "screenshots" / "votryx-logo-transparent.png",
@@ -343,9 +343,7 @@ window.chrome.runtime = {};
         for candidate in candidates:
             if candidate.exists():
                 try:
-                    img = tk.PhotoImage(file=str(candidate))
-                    # Store original for potential scaling
-                    return img
+                    return tk.PhotoImage(file=str(candidate))
                 except Exception as exc:
                     self.logger.warning("Logo '%s' yüklenemedi: %s", candidate.name, exc)
         return None
