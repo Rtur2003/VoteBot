@@ -1,7 +1,5 @@
 """Unit tests for state management module."""
 
-import pytest
-
 from Code_EXE.Votryx.core.state_manager import (
     LogHistory,
     StateManager,
