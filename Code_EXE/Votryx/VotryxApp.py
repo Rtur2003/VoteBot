@@ -790,16 +790,16 @@ window.chrome.runtime = {};
                 text=label_text,
                 background=self.colors["panel"],
                 foreground=self.colors["text"],
-            ).grid(row=row_idx * 2, column=col_base, sticky="w", pady=(6, 0), padx=(0, 8))
+            ).grid(row=row_idx * 2, column=col_base, sticky="w", pady=(8, 0), padx=(0, 10))
             entry = ttk.Entry(grid, width=12)
             entry.insert(0, str(default_value))
-            entry.grid(row=row_idx * 2, column=col_base + 1, sticky="ew", pady=(6, 0))
+            entry.grid(row=row_idx * 2, column=col_base + 1, sticky="ew", pady=(8, 0))
             ttk.Label(
                 grid,
                 text=helper_text,
                 style="Helper.TLabel",
                 wraplength=240,
-            ).grid(row=row_idx * 2 + 1, column=col_base + 1, sticky="w", pady=(0, 8))
+            ).grid(row=row_idx * 2 + 1, column=col_base + 1, sticky="w", pady=(2, 10))
             return entry
 
         self.pause_entry = add_field(
