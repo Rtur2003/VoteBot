@@ -28,7 +28,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 class VotryxApp:
     # UI Layout Constants
     STAT_CARDS_COUNT = 4
-    
+
     def __init__(self, root):
         self.root = root
         self.root.title("VOTRYX - DistroKid Spotlight")
@@ -386,11 +386,14 @@ window.chrome.runtime = {};
         CHECK_RIGHT_Y1 = 0.66
         CHECK_RIGHT_X2 = 0.80
         CHECK_RIGHT_Y2 = 0.78
-        
+
         icon = tk.PhotoImage(width=size, height=size)
         # Background gradient effect
         icon.put(self.colors["panel"], to=(0, 0, size, size))
-        icon.put(self.colors["card"], to=(BORDER_INSET, BORDER_INSET, size - BORDER_INSET, size - BORDER_INSET))
+        icon.put(
+            self.colors["card"],
+            to=(BORDER_INSET, BORDER_INSET, size - BORDER_INSET, size - BORDER_INSET),
+        )
         # Top accent band (cyan)
         icon.put(self.colors["accent2"], to=(0, 0, size, int(size * TOP_ACCENT_RATIO)))
         # Bottom accent band (orange)
@@ -398,10 +401,24 @@ window.chrome.runtime = {};
         # Core dark area for contrast
         core = "#0c162a"
         # Stylized checkmark/tick
-        icon.put(core, to=(int(size * CHECK_LEFT_X1), int(size * CHECK_LEFT_Y1), 
-                           int(size * CHECK_LEFT_X2), int(size * CHECK_LEFT_Y2)))
-        icon.put(core, to=(int(size * CHECK_RIGHT_X1), int(size * CHECK_RIGHT_Y1), 
-                           int(size * CHECK_RIGHT_X2), int(size * CHECK_RIGHT_Y2)))
+        icon.put(
+            core,
+            to=(
+                int(size * CHECK_LEFT_X1),
+                int(size * CHECK_LEFT_Y1),
+                int(size * CHECK_LEFT_X2),
+                int(size * CHECK_LEFT_Y2),
+            ),
+        )
+        icon.put(
+            core,
+            to=(
+                int(size * CHECK_RIGHT_X1),
+                int(size * CHECK_RIGHT_Y1),
+                int(size * CHECK_RIGHT_X2),
+                int(size * CHECK_RIGHT_Y2),
+            ),
+        )
         return icon
 
     def _draw_brand_mark(self, canvas, size=60):
