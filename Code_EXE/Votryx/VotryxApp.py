@@ -1,3 +1,9 @@
+"""VOTRYX Application - Tkinter UI for automated DistroKid voting.
+
+Provides graphical control surface for voting automation with real-time
+status updates, configurable parameters, and comprehensive logging.
+"""
+
 import atexit
 import json
 import logging
