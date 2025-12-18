@@ -1,3 +1,9 @@
+"""VOTRYX Application - Tkinter UI for automated DistroKid voting.
+
+Provides graphical control surface for voting automation with real-time
+status updates, configurable parameters, and comprehensive logging.
+"""
+
 import atexit
 import json
 import logging
@@ -26,10 +32,21 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 
 class VotryxApp:
+    """Main application class for VOTRYX voting automation UI.
+
+    Manages Tkinter interface, user interactions, and orchestrates
+    voting operations through the voting engine and browser manager.
+    """
+
     # UI Layout Constants
     STAT_CARDS_COUNT = 4
-    
+
     def __init__(self, root):
+        """Initialize VOTRYX application.
+
+        Args:
+            root: Tkinter root window instance
+        """
         self.root = root
         self.root.title("VOTRYX - DistroKid Spotlight")
         self.root.geometry("1280x820")
@@ -242,6 +259,16 @@ class VotryxApp:
         return selectors
 
     def _extract_origin(self, url):
+        """Extract origin from URL for storage clearing.
+
+        Args:
+            url: Target URL string
+
+        Returns:
+            Origin string or None if extraction fails
+        """
+        if not url:  # Explicit null guard
+            return None
         try:
             parsed = urlparse(url)
             if parsed.scheme and parsed.netloc:
@@ -334,8 +361,9 @@ window.chrome.runtime = {};
             self.logger.warning("Stealth ayarları uygulanamadı: %s", exc)
 
     def _load_brand_image(self):
-        """
-        Try to load the official VOTRYX logo; fall back to vector mark if not available.
+        """Try to load the official VOTRYX logo.
+
+        Falls back to vector mark if not available.
         Attempts multiple logo variants for optimal display.
         """
         candidates = [
@@ -352,8 +380,8 @@ window.chrome.runtime = {};
         return None
 
     def _load_hero_image(self):
-        """
-        Load hero/banner for welcome screen if available.
+        """Load hero/banner for welcome screen if available.
+
         Tries multiple banner options for best visual impact.
         """
         candidates = [
@@ -369,8 +397,8 @@ window.chrome.runtime = {};
         return None
 
     def _build_icon_image(self, size=48):
-        """
-        Build a simple geometric icon for header/title bar.
+        """Build a simple geometric icon for header/title bar.
+
         Uses brand colors for visual consistency.
         """
         # Icon design constants
@@ -386,11 +414,14 @@ window.chrome.runtime = {};
         CHECK_RIGHT_Y1 = 0.66
         CHECK_RIGHT_X2 = 0.80
         CHECK_RIGHT_Y2 = 0.78
-        
+
         icon = tk.PhotoImage(width=size, height=size)
         # Background gradient effect
         icon.put(self.colors["panel"], to=(0, 0, size, size))
-        icon.put(self.colors["card"], to=(BORDER_INSET, BORDER_INSET, size - BORDER_INSET, size - BORDER_INSET))
+        icon.put(
+            self.colors["card"],
+            to=(BORDER_INSET, BORDER_INSET, size - BORDER_INSET, size - BORDER_INSET),
+        )
         # Top accent band (cyan)
         icon.put(self.colors["accent2"], to=(0, 0, size, int(size * TOP_ACCENT_RATIO)))
         # Bottom accent band (orange)
@@ -398,10 +429,24 @@ window.chrome.runtime = {};
         # Core dark area for contrast
         core = "#0c162a"
         # Stylized checkmark/tick
-        icon.put(core, to=(int(size * CHECK_LEFT_X1), int(size * CHECK_LEFT_Y1), 
-                           int(size * CHECK_LEFT_X2), int(size * CHECK_LEFT_Y2)))
-        icon.put(core, to=(int(size * CHECK_RIGHT_X1), int(size * CHECK_RIGHT_Y1), 
-                           int(size * CHECK_RIGHT_X2), int(size * CHECK_RIGHT_Y2)))
+        icon.put(
+            core,
+            to=(
+                int(size * CHECK_LEFT_X1),
+                int(size * CHECK_LEFT_Y1),
+                int(size * CHECK_LEFT_X2),
+                int(size * CHECK_LEFT_Y2),
+            ),
+        )
+        icon.put(
+            core,
+            to=(
+                int(size * CHECK_RIGHT_X1),
+                int(size * CHECK_RIGHT_Y1),
+                int(size * CHECK_RIGHT_X2),
+                int(size * CHECK_RIGHT_Y2),
+            ),
+        )
         return icon
 
     def _draw_brand_mark(self, canvas, size=60):
@@ -1319,6 +1364,12 @@ window.chrome.runtime = {};
             shutil.rmtree(self.temp_root, ignore_errors=True)
 
     def log_message(self, message, level="info"):
+        """Add message to application log with timestamp.
+
+        Args:
+            message: Log message text
+            level: Severity level (info, success, error)
+        """
         timestamp = datetime.now().strftime("%H:%M:%S")
 
         def append():
@@ -1339,6 +1390,13 @@ window.chrome.runtime = {};
         self._schedule(append)
 
     def update_status(self, text, tone=None):
+        """Update status label with new message and visual tone.
+
+        Args:
+            text: Status message to display
+            tone: Visual styling (running, idle, error, success)
+        """
+
         def apply():
             self.status_label.config(text=text)
             badge_tone = tone or ("running" if "Çalış" in text or "Oy ver" in text else "idle")
@@ -1347,6 +1405,7 @@ window.chrome.runtime = {};
         self._schedule(apply)
 
     def increment_count(self):
+        """Increment successful vote counter and update UI."""
         self.vote_count += 1
         self._schedule(
             lambda: (
@@ -1356,6 +1415,7 @@ window.chrome.runtime = {};
         )
 
     def increment_error(self):
+        """Increment error counter and update UI."""
         self.error_count += 1
         self._schedule(
             lambda: (
@@ -1365,6 +1425,7 @@ window.chrome.runtime = {};
         )
 
     def clear_log(self):
+        """Clear log display and reset log counters."""
         self.log_records.clear()
         self.success_count = 0
         self.failure_count = 0
@@ -1373,6 +1434,7 @@ window.chrome.runtime = {};
         self.log_message("Log temizlendi")
 
     def reset_counters(self):
+        """Reset vote and error counters to zero."""
         if self.is_running:
             self.log_message("Bot çalişirken sayaçlar sifirlanamaz.", level="error")
             return
@@ -1466,6 +1528,7 @@ window.chrome.runtime = {};
         self._schedule(render)
 
     def toggle_errors_only(self):
+        """Toggle error-only filter for log display."""
         self._render_log()
 
     def _resolve_driver_path(self):
@@ -1570,7 +1633,57 @@ window.chrome.runtime = {};
             self.log_message(f"Chrome: {self.chrome_path}")
         return True
 
+    def _validate_config_integrity(self) -> bool:
+        """Validate configuration values are within acceptable ranges.
+
+        Returns:
+            True if configuration is valid, False otherwise
+        """
+        # Validate timeout
+        if self.timeout_seconds <= 0:
+            self.log_message("Timeout değeri pozitif olmalı", level="error")
+            return False
+
+        # Validate pause duration
+        if self.pause_between_votes < 0:
+            self.log_message("Oy aralığı negatif olamaz", level="error")
+            return False
+
+        # Validate batch size
+        if self.batch_size <= 0:
+            self.log_message("Batch boyutu pozitif olmalı", level="error")
+            return False
+
+        # Validate parallel workers
+        if self.parallel_workers < 1 or self.parallel_workers > 10:
+            self.log_message("Paralel worker sayısı 1-10 arasında olmalı", level="error")
+            return False
+
+        # Validate backoff values
+        if self.backoff_seconds <= 0 or self.backoff_cap_seconds <= 0:
+            self.log_message("Backoff süreleri pozitif olmalı", level="error")
+            return False
+
+        if self.backoff_cap_seconds < self.backoff_seconds:
+            self.log_message("Backoff üst sınırı başlangıç değerinden küçük olamaz", level="error")
+            return False
+
+        # Validate target URL
+        if not self.target_url or not self.target_url.strip():
+            self.log_message("Hedef URL boş olamaz", level="error")
+            return False
+
+        return True
+
     def get_chrome_options(self, profile_dir=None):
+        """Build Chrome options with configured flags and profile.
+
+        Args:
+            profile_dir: Optional path to user profile directory
+
+        Returns:
+            Configured Options instance
+        """
         chrome_options = Options()
         chrome_options.page_load_strategy = "eager"
         if self.chrome_path:
@@ -1616,6 +1729,14 @@ window.chrome.runtime = {};
         return chrome_options
 
     def create_driver(self, profile_dir=None):
+        """Create and initialize ChromeDriver instance.
+
+        Args:
+            profile_dir: Optional profile directory path
+
+        Returns:
+            WebDriver instance or None on failure
+        """
         options = self.get_chrome_options(profile_dir=profile_dir)
         try:
             if self.use_selenium_manager or not self.driver_path:
@@ -1638,9 +1759,13 @@ window.chrome.runtime = {};
             return None
 
     def start_bot(self):
+        """Start voting automation in background thread."""
         if self.is_running:
             return
         if not self._update_settings_from_form(persist=True, notify=False):
+            return
+        if not self._validate_config_integrity():
+            messagebox.showerror("Yapılandırma Hatası", "Lütfen yapılandırmayı kontrol edin.")
             return
         if not self._validate_paths(show_message=True):
             return
@@ -1657,6 +1782,7 @@ window.chrome.runtime = {};
         self.worker.start()
 
     def stop_bot(self):
+        """Stop voting automation and cleanup resources."""
         if not self.is_running:
             return
         self.log_message("Bot durduruluyor...")
@@ -1671,6 +1797,7 @@ window.chrome.runtime = {};
         self._set_form_state(False)
 
     def run_bot(self):
+        """Execute main bot loop with error handling and backoff."""
         consecutive_errors = 0
         backoff_delay = self.backoff_seconds
         while not self._stop_event.is_set():
@@ -1702,6 +1829,7 @@ window.chrome.runtime = {};
         self._schedule(lambda: self._set_form_state(False))
 
     def run_batch(self):
+        """Execute a batch of votes in parallel workers."""
         self.update_status("Oy veriliyor", tone="running")
         successes = 0
         failures = 0
@@ -1841,11 +1969,13 @@ window.chrome.runtime = {};
         return True
 
     def run_preflight(self):
+        """Run preflight checks and display results."""
         if self._validate_paths(show_message=True):
             messagebox.showinfo("Ön kontrol", "Yollar ve ayarlar geçerli görünüyor.")
             self.log_message("Ön kontrol başarılı")
 
     def reset_to_defaults(self):
+        """Reset all configuration fields to default values."""
         defaults = dict(self.defaults)
         self.url_entry.delete(0, tk.END)
         self.url_entry.insert(0, defaults["target_url"])
@@ -1889,6 +2019,7 @@ window.chrome.runtime = {};
         self.apply_settings()
 
     def apply_settings(self):
+        """Apply configuration changes from UI form."""
         return self._update_settings_from_form(persist=True, notify=True)
 
     def _update_settings_from_form(self, persist=False, notify=True):
@@ -1983,18 +2114,21 @@ window.chrome.runtime = {};
         return True
 
     def open_logs(self):
+        """Open log directory in system file browser."""
         try:
             os.startfile(self.log_dir)
         except Exception:
             messagebox.showinfo("Log klasörü", str(self.log_dir))
 
     def on_close(self):
+        """Handle application close event with cleanup."""
         self.stop_bot()
         self._cleanup_temp_profiles()
         self.root.destroy()
 
 
 def main():
+    """Application entry point."""
     root = tk.Tk()
     app = VotryxApp(root)  # noqa: F841 - app instance must be kept alive
     root.mainloop()

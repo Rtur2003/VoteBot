@@ -1,4 +1,4 @@
-.PHONY: help install install-dev format lint type-check test clean run
+.PHONY: help install install-dev format lint type-check test clean run validate-dev check-all
 
 help:
 	@echo "VOTRYX Development Commands"
@@ -11,6 +11,8 @@ help:
 	@echo "  make test          - Run pytest tests"
 	@echo "  make clean         - Remove build artifacts and cache"
 	@echo "  make run           - Run the application"
+	@echo "  make validate-dev  - Validate development environment"
+	@echo "  make check-all     - Run all quality checks (format, lint, type-check, test)"
 
 install:
 	pip install -r requirements.txt
@@ -40,3 +42,10 @@ clean:
 
 run:
 	python Code_EXE/Votryx/VotryxApp.py
+
+validate-dev:
+	@python scripts/validate_dev_setup.py
+
+check-all: format lint type-check test
+	@echo ""
+	@echo "✓ All quality checks passed!"
