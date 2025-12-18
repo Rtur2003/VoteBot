@@ -850,7 +850,7 @@ window.chrome.runtime = {};
         )
 
         toggles = ttk.Frame(general_tab, style="Panel.TFrame")
-        toggles.grid(row=2, column=0, columnspan=2, sticky="ew", pady=(4, 0))
+        toggles.grid(row=2, column=0, columnspan=2, sticky="ew", pady=(6, 0))
         toggles.columnconfigure((0, 1), weight=1)
         self.headless_var = tk.BooleanVar(value=self.headless)
         self.headless_check = ttk.Checkbutton(
@@ -859,7 +859,7 @@ window.chrome.runtime = {};
             variable=self.headless_var,
             style="Switch.TCheckbutton",
         )
-        self.headless_check.grid(row=0, column=0, sticky="w", padx=(0, 16))
+        self.headless_check.grid(row=0, column=0, sticky="w", padx=(0, 16), pady=(0, 4))
         self.auto_driver_var = tk.BooleanVar(value=self.use_selenium_manager)
         self.auto_driver_check = ttk.Checkbutton(
             toggles,
@@ -867,13 +867,13 @@ window.chrome.runtime = {};
             variable=self.auto_driver_var,
             style="Switch.TCheckbutton",
         )
-        self.auto_driver_check.grid(row=0, column=1, sticky="w")
+        self.auto_driver_check.grid(row=0, column=1, sticky="w", pady=(0, 4))
         ttk.Label(
             toggles,
             text="Headless kapalıysa tarayıcıyı izleyebilirsiniz; Selenium Manager uyumsuz sürücüleri indirir.",
             style="Helper.TLabel",
             wraplength=520,
-        ).grid(row=1, column=0, columnspan=2, sticky="w", pady=(6, 0))
+        ).grid(row=1, column=0, columnspan=2, sticky="w", pady=(2, 0))
 
         # Gelişmiş sekme
         self.random_ua_check = ttk.Checkbutton(
