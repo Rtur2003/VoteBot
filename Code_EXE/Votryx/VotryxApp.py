@@ -1153,7 +1153,7 @@ window.chrome.runtime = {};
         self.welcome_frame = tk.Frame(self.root, bg=self.colors["bg"])
         self.welcome_frame.place(relx=0, rely=0, relwidth=1, relheight=1)
 
-        wrapper = ttk.Frame(self.welcome_frame, style="Main.TFrame", padding=32)
+        wrapper = ttk.Frame(self.welcome_frame, style="Main.TFrame", padding=40)
         wrapper.pack(fill="both", expand=True)
         wrapper.columnconfigure(1, weight=1)
         wrapper.rowconfigure(0, weight=1)
@@ -1168,17 +1168,17 @@ window.chrome.runtime = {};
             )
         else:
             hero_widget = tk.Canvas(
-                wrapper, width=340, height=260, bg=self.colors["bg"], highlightthickness=0, bd=0
+                wrapper, width=360, height=280, bg=self.colors["bg"], highlightthickness=0, bd=0
             )
-            self._draw_brand_mark(hero_widget, size=200)
-        hero_widget.grid(row=0, column=0, sticky="nsew", padx=(0, 24))
+            self._draw_brand_mark(hero_widget, size=220)
+        hero_widget.grid(row=0, column=0, sticky="nsew", padx=(0, 32))
 
         info = ttk.Frame(wrapper, style="Main.TFrame")
         info.grid(row=0, column=1, sticky="nsew")
         info.columnconfigure(0, weight=1)
 
         ttk.Label(info, text="VOTRYX - DistroKid Spotlight", style="Title.TLabel").grid(
-            row=0, column=0, sticky="w", pady=(0, 8)
+            row=0, column=0, sticky="w", pady=(0, 10)
         )
         ttk.Label(
             info,
@@ -1186,7 +1186,7 @@ window.chrome.runtime = {};
             foreground=self.colors["muted"],
             background=self.colors["bg"],
             font=("Segoe UI", 12),
-        ).grid(row=1, column=0, sticky="w", pady=(0, 12))
+        ).grid(row=1, column=0, sticky="w", pady=(0, 16))
         bullets = [
             "Chromedriver/Chrome ön kontrol, batch/parallel oy",
             "Loglama, ekran görüntüsü, backoff ve zaman aşımı korumaları",
@@ -1199,16 +1199,16 @@ window.chrome.runtime = {};
                 foreground=self.colors["text"],
                 background=self.colors["bg"],
                 font=("Segoe UI", 10),
-            ).grid(row=2 + idx, column=0, sticky="w", pady=(0, 4))
+            ).grid(row=2 + idx, column=0, sticky="w", pady=(0, 6))
 
         cta = ttk.Button(
             info, text="Kontrol Paneline Gir", style="Accent.TButton", command=self._show_app
         )
-        cta.grid(row=2 + len(bullets), column=0, sticky="w", pady=(14, 4))
+        cta.grid(row=2 + len(bullets), column=0, sticky="w", pady=(18, 6), ipady=4)
         sub = ttk.Button(
             info, text="Log klasörünü aç", style="Ghost.TButton", command=self.open_logs
         )
-        sub.grid(row=3 + len(bullets), column=0, sticky="w", pady=(0, 4))
+        sub.grid(row=3 + len(bullets), column=0, sticky="w", pady=(0, 6), ipady=4)
 
     def _show_welcome(self):
         if self.welcome_frame:
