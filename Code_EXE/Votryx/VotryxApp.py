@@ -1386,6 +1386,7 @@ window.chrome.runtime = {};
             text: Status message to display
             tone: Visual styling (running, idle, error, success)
         """
+
         def apply():
             self.status_label.config(text=text)
             badge_tone = tone or ("running" if "Çalış" in text or "Oy ver" in text else "idle")
