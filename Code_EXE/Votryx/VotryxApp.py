@@ -32,6 +32,12 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 
 class VotryxApp:
+    """Main application class for VOTRYX voting automation UI.
+
+    Manages Tkinter interface, user interactions, and orchestrates
+    voting operations through the voting engine and browser manager.
+    """
+
     # UI Layout Constants
     STAT_CARDS_COUNT = 4
 
