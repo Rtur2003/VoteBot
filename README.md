@@ -7,6 +7,25 @@ Automated Voting Intelligence for DistroKid
 <p align="center">
   <img src="docs/screenshots/votryx-logo-transparent.png" alt="VOTRYX Logo" width="260" />
 </p>
+
+<p align="center">
+  <a href="https://github.com/Rtur2003/VOTRYX/actions/workflows/python-quality.yml">
+    <img src="https://github.com/Rtur2003/VOTRYX/actions/workflows/python-quality.yml/badge.svg" alt="Python Quality Checks">
+  </a>
+  <a href="https://github.com/Rtur2003/VOTRYX/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License">
+  </a>
+  <a href="https://www.python.org/downloads/">
+    <img src="https://img.shields.io/badge/python-3.9%2B-blue.svg" alt="Python Version">
+  </a>
+  <a href="https://github.com/psf/black">
+    <img src="https://img.shields.io/badge/code%20style-black-000000.svg" alt="Code Style: Black">
+  </a>
+  <a href="https://github.com/Rtur2003/VOTRYX/blob/main/CODE_OF_CONDUCT.md">
+    <img src="https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg" alt="Code of Conduct">
+  </a>
+</p>
+
 <p align="center"><em>SVG version available for scalable embeds.</em></p>
 
 ## Overview
@@ -117,19 +136,30 @@ make test       # Run pytest tests
 
 ### Project Structure
 
-The codebase is organized for maintainability:
+The codebase follows a layered architecture with clear separation of concerns. See [ARCHITECTURE.md](ARCHITECTURE.md) for detailed design documentation.
+
 ```
 VOTRYX/
 ├── Code_EXE/Votryx/
-│   ├── core/              # Core modules (config, validation, driver, logging, i18n)
-│   ├── VotryxApp.py       # Main application
-│   └── config.json        # Configuration
-├── tests/                 # Unit tests
-├── docs/                  # Documentation and brand assets
-├── pyproject.toml         # Python project configuration
-├── Makefile              # Development commands
-├── CONTRIBUTING.md       # Contribution guidelines
-└── DEVELOPMENT.md        # Developer guide
+│   ├── core/                    # Core business logic (architecture layer)
+│   │   ├── browser_manager.py   # Driver lifecycle management
+│   │   ├── config.py            # Configuration management
+│   │   ├── driver.py            # WebDriver factory
+│   │   ├── i18n.py              # UI strings (Turkish)
+│   │   ├── logging_manager.py   # File logging with rotation
+│   │   ├── state_manager.py     # Application state + observers
+│   │   ├── validation.py        # Input validation
+│   │   └── voting_engine.py     # Core voting logic
+│   ├── VotryxApp.py             # UI layer (Tkinter)
+│   └── config.json              # Configuration
+├── tests/                       # Unit and integration tests
+├── docs/                        # Documentation and brand assets
+├── .github/workflows/           # CI/CD pipelines
+├── ARCHITECTURE.md              # System architecture documentation
+├── pyproject.toml               # Python project configuration
+├── Makefile                     # Development commands
+├── CONTRIBUTING.md              # Contribution guidelines
+└── DEVELOPMENT.md               # Developer guide
 ```
 
 ### Code Quality Standards
