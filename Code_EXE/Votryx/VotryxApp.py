@@ -42,6 +42,11 @@ class VotryxApp:
     STAT_CARDS_COUNT = 4
 
     def __init__(self, root):
+        """Initialize VOTRYX application.
+
+        Args:
+            root: Tkinter root window instance
+        """
         self.root = root
         self.root.title("VOTRYX - DistroKid Spotlight")
         self.root.geometry("1280x820")
