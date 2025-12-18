@@ -742,17 +742,17 @@ window.chrome.runtime = {};
         log_shell.columnconfigure(0, weight=1)
         log_shell.rowconfigure(0, weight=1)
 
-        settings = ttk.LabelFrame(settings_shell, text="Ayarlar", style="Panel.TFrame", padding=12)
+        settings = ttk.LabelFrame(settings_shell, text="Ayarlar", style="Panel.TFrame", padding=14)
         settings.grid(row=0, column=0, sticky="nsew")
         settings.columnconfigure(0, weight=1)
         settings.rowconfigure(0, weight=1)
 
         settings_nb = ttk.Notebook(settings, style="TNotebook")
-        settings_nb.grid(row=0, column=0, sticky="nsew", pady=(0, 8))
+        settings_nb.grid(row=0, column=0, sticky="nsew", pady=(0, 10))
         settings.columnconfigure(0, weight=1)
         settings.rowconfigure(0, weight=1)
-        self.general_tab = ttk.Frame(settings_nb, style="Panel.TFrame", padding=8)  # type: ignore[var-annotated]
-        self.advanced_tab = ttk.Frame(settings_nb, style="Panel.TFrame", padding=8)  # type: ignore[var-annotated]
+        self.general_tab = ttk.Frame(settings_nb, style="Panel.TFrame", padding=10)  # type: ignore[var-annotated]
+        self.advanced_tab = ttk.Frame(settings_nb, style="Panel.TFrame", padding=10)  # type: ignore[var-annotated]
         general_tab = self.general_tab
         advanced_tab = self.advanced_tab
         general_tab.columnconfigure(1, weight=1)
