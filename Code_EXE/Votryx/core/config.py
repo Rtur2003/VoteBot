@@ -29,6 +29,12 @@ class ConfigurationManager:
     }
 
     def __init__(self, base_dir: Path, code_dir: Path):
+        """Initialize configuration manager.
+
+        Args:
+            base_dir: Base repository directory path
+            code_dir: Code directory path
+        """
         self.base_dir = base_dir
         self.code_dir = code_dir
         self.config_path = self._find_config_path()
