@@ -56,9 +56,7 @@ class DriverManager:
         candidates.extend(
             [
                 Path(r"C:\Program Files\Google\Chrome\Application\chrome.exe"),
-                Path(
-                    r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
-                ),
+                Path(r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"),
             ]
         )
 
@@ -91,9 +89,7 @@ class DriverManager:
                 return path
         return candidates[0] if candidates else None
 
-    def get_version_info(
-        self, binary_path: Path
-    ) -> Tuple[Optional[str], Optional[int]]:
+    def get_version_info(self, binary_path: Path) -> Tuple[Optional[str], Optional[int]]:
         """Extract version information from binary."""
         try:
             result = subprocess.run(
@@ -112,9 +108,7 @@ class DriverManager:
         except Exception:
             return None, None
 
-    def check_version_compatibility(
-        self, driver_path: Path, chrome_path: Path
-    ) -> bool:
+    def check_version_compatibility(self, driver_path: Path, chrome_path: Path) -> bool:
         """Verify driver and browser version compatibility."""
         driver_out, driver_major = self.get_version_info(driver_path)
         chrome_out, chrome_major = self.get_version_info(chrome_path)
@@ -130,9 +124,7 @@ class DriverManager:
             return None
         return random.choice(pool)
 
-    def create_chrome_options(
-        self, profile_dir: Optional[Path] = None
-    ) -> Options:
+    def create_chrome_options(self, profile_dir: Optional[Path] = None) -> Options:
         """Build Chrome options for WebDriver."""
         chrome_options = Options()
         chrome_options.page_load_strategy = "eager"
@@ -179,17 +171,13 @@ class DriverManager:
                 "credentials_enable_service": False,
                 "profile.password_manager_enabled": False,
                 "intl.accept_languages": "tr-TR,tr",
-                "profile.managed_default_content_settings.images": (
-                    2 if self.block_images else 1
-                ),
+                "profile.managed_default_content_settings.images": (2 if self.block_images else 1),
             },
         )
 
         return chrome_options
 
-    def create_driver(
-        self, profile_dir: Optional[Path] = None
-    ) -> Optional[webdriver.Chrome]:
+    def create_driver(self, profile_dir: Optional[Path] = None) -> Optional[webdriver.Chrome]:
         """Create and configure Chrome WebDriver instance."""
         options = self.create_chrome_options(profile_dir=profile_dir)
 
@@ -233,9 +221,7 @@ class DriverManager:
             browser_info = driver.execute_cdp_cmd("Browser.getVersion", {})
             user_agent = browser_info.get("userAgent")
             if user_agent:
-                driver.execute_cdp_cmd(
-                    "Network.setUserAgentOverride", {"userAgent": user_agent}
-                )
+                driver.execute_cdp_cmd("Network.setUserAgentOverride", {"userAgent": user_agent})
         except Exception:
             pass
 
