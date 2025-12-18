@@ -29,8 +29,8 @@ class VotryxApp:
     def __init__(self, root):
         self.root = root
         self.root.title("VOTRYX - DistroKid Spotlight")
-        self.root.geometry("1080x760")
-        self.root.minsize(960, 680)
+        self.root.geometry("1280x820")
+        self.root.minsize(1080, 720)
         self._make_maximized()
 
         self.base_dir = Path(__file__).resolve().parent.parent.parent
