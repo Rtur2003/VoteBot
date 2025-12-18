@@ -1,8 +1,9 @@
 """Unit tests for validation module."""
 
-import pytest
-from pathlib import Path
 import tempfile
+from pathlib import Path
+
+import pytest
 
 from Code_EXE.Votryx.core.validation import InputValidator, ValidationError
 
@@ -81,9 +82,7 @@ class TestInputValidator:
             assert error is None
 
             nonexistent_path = Path(tmpdir) / "nonexistent.txt"
-            valid, error = InputValidator.validate_path_exists(
-                nonexistent_path, "test"
-            )
+            valid, error = InputValidator.validate_path_exists(nonexistent_path, "test")
             assert valid is False
             assert error is not None
 

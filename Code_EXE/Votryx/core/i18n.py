@@ -7,9 +7,7 @@ class UIStrings:
     # Application title and branding
     APP_TITLE = "VOTRYX - DistroKid Spotlight"
     APP_SUBTITLE = "Stabil, hızlı, şeffaf otomatik oy"
-    APP_TAGLINE = (
-        "Başlat ve unut: otomatik sürücü kontrolü, batch oy ve güvenli loglama"
-    )
+    APP_TAGLINE = "Başlat ve unut: otomatik sürücü kontrolü, batch oy ve güvenli loglama"
 
     # Status labels
     STATUS_WAITING = "Bekliyor"
@@ -68,8 +66,7 @@ class UIStrings:
     )
     TOGGLE_BLOCK_IMAGES = "Görselleri engelle (daha hızlı yükleme)"
     HELPER_BLOCK_IMAGES = (
-        "Açıkken sayfa görselleri yüklenmez; "
-        "kapalıysa varsayılan yükleme kullanılır."
+        "Açıkken sayfa görselleri yüklenmez; " "kapalıysa varsayılan yükleme kullanılır."
     )
     FIELD_USER_AGENTS = "User-Agent listesi (satır satır)"
     HELPER_USER_AGENTS = "Boş bırakılırsa varsayılan UA havuzu kullanılır."
@@ -101,9 +98,7 @@ class UIStrings:
     WELCOME_TITLE = "VOTRYX - DistroKid Spotlight"
     WELCOME_SUBTITLE = "Stabil, hızlı, şeffaf otomatik oy"
     WELCOME_BULLET_1 = "Chromedriver/Chrome ön kontrol, batch/parallel oy"
-    WELCOME_BULLET_2 = (
-        "Loglama, ekran görüntüsü, backoff ve zaman aşımı korumaları"
-    )
+    WELCOME_BULLET_2 = "Loglama, ekran görüntüsü, backoff ve zaman aşımı korumaları"
     WELCOME_BULLET_3 = "Sekmeli ayarlar, gelişmiş UA ve selector yönetimi"
     BTN_ENTER_CONTROL_PANEL = "Kontrol Paneline Gir"
 
@@ -119,9 +114,7 @@ class UIStrings:
     MSG_VOTE_SUCCESS = "Oy verildi (pencere {idx}/{total})"
     MSG_VOTE_SUCCESS_RETRY = "Oy verildi (yeniden deneme, pencere {idx}/{total})"
     MSG_BATCH_COMPLETE = "Batch tamamlandı. Başarılı: {success}, Hata: {failure}"
-    MSG_BATCH_PARTIAL = (
-        "Batch kısmen tamamlandı. Başarılı: {success}, Hata: {failure}"
-    )
+    MSG_BATCH_PARTIAL = "Batch kısmen tamamlandı. Başarılı: {success}, Hata: {failure}"
     MSG_BATCH_FAILED = "Batch tamamlanamadı. Başarılı: {success}, Hata: {failure}"
     MSG_CONSECUTIVE_ERRORS = (
         "Art arda {count} hata alındı, {wait} sn bekleniyor ve yeniden denenecek."
@@ -132,29 +125,21 @@ class UIStrings:
     ERR_VOTE_BUTTON_TIMEOUT = "Oy butonu zaman aşımına uğradı."
     ERR_VOTE_BUTTON_TIMEOUT_PREP = "Oy butonu zaman aşımına uğradı (hazırlık)."
     ERR_VOTE_BUTTON_NOT_FOUND = "Oy butonu bulunamadı, ekran görüntüsü: {path}"
-    ERR_VOTE_BUTTON_NO_SCREENSHOT = (
-        "Oy butonu bulunamadı, ekran görüntüsü alınamadı."
-    )
+    ERR_VOTE_BUTTON_NO_SCREENSHOT = "Oy butonu bulunamadı, ekran görüntüsü alınamadı."
     ERR_UNEXPECTED = "Beklenmeyen hata: {error}"
     ERR_UNEXPECTED_PREP = "Beklenmeyen hata (hazırlık): {error}"
     ERR_INVALID_NUMBER_FIELDS = "Sayısal alanlar geçerli ve pozitif olmalı."
     ERR_INVALID_VOTE_INTERVAL = "Oy aralığı 0'dan büyük olmalı."
     ERR_INVALID_BACKOFF = "Backoff süreleri 0'dan büyük olmalı."
-    ERR_INVALID_BACKOFF_CAP = (
-        "Backoff üst sınırı başlangıç değerinden küçük olamaz."
-    )
+    ERR_INVALID_BACKOFF_CAP = "Backoff üst sınırı başlangıç değerinden küçük olamaz."
     ERR_INVALID_URL = "Geçerli bir hedef URL girin (http/https ile)."
     ERR_SETTINGS_NOT_READ = "Ayarlar okunamadı: sayısal alan hatalı."
     ERR_SETTINGS_NOT_SAVED = "Ayarlar kaydedilemedi: {error}"
     ERR_CONFIG_SAVE_FAILED = "Ayarlar kaydedilemedi: {error}"
 
     # Info messages
-    INFO_CHROME_NOT_FOUND = (
-        "Chrome yolu bulunamadı; Selenium Manager Chrome for Testing deneyecek."
-    )
-    INFO_SELENIUM_MANAGER = (
-        "ChromeDriver Selenium Manager tarafından otomatik yönetilecek."
-    )
+    INFO_CHROME_NOT_FOUND = "Chrome yolu bulunamadı; Selenium Manager Chrome for Testing deneyecek."
+    INFO_SELENIUM_MANAGER = "ChromeDriver Selenium Manager tarafından otomatik yönetilecek."
     INFO_DRIVER_PATH = "Sürücü: {path}"
     INFO_CHROME_PATH = "Chrome: {path}"
     INFO_MULTIPLE_CONFIGS = (

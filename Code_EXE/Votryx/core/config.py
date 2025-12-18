@@ -44,9 +44,7 @@ class ConfigurationManager:
         existing = [path for path in candidates if path.exists()]
         if existing:
             selected = existing[0]
-            self.ignored_config_paths = [
-                path for path in existing[1:] if path != selected
-            ]
+            self.ignored_config_paths = [path for path in existing[1:] if path != selected]
             return selected
         return candidates[0]
 
@@ -68,9 +66,7 @@ class ConfigurationManager:
         """Persist configuration to disk with atomic write."""
         target_dir = self.config_path.parent
         target_dir.mkdir(parents=True, exist_ok=True)
-        fd, temp_path = tempfile.mkstemp(
-            prefix="config-", suffix=".json", dir=target_dir
-        )
+        fd, temp_path = tempfile.mkstemp(prefix="config-", suffix=".json", dir=target_dir)
         try:
             with os.fdopen(fd, "w", encoding="utf-8") as temp_file:
                 json.dump(self.config, temp_file, ensure_ascii=False, indent=4)

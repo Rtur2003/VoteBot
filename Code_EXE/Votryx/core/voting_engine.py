@@ -117,7 +117,7 @@ class VotingEngine:
         log_callback: Optional[Callable] = None,
     ) -> Tuple[int, int]:
         """Execute a batch of votes with parallel workers.
-        
+
         Returns:
             Tuple of (successes, failures)
         """
@@ -133,9 +133,7 @@ class VotingEngine:
             for i in range(total):
                 if self.is_stopped:
                     break
-                futures.append(
-                    executor.submit(self._prepare_and_vote, i, driver_factory)
-                )
+                futures.append(executor.submit(self._prepare_and_vote, i, driver_factory))
 
             for idx, future in enumerate(as_completed(futures), start=1):
                 if self.is_stopped:

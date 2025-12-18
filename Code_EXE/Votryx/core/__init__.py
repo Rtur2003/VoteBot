@@ -5,7 +5,7 @@ Each module has a single, well-defined responsibility.
 
 Architecture:
 - browser_manager: WebDriver lifecycle management
-- config: Configuration loading and persistence  
+- config: Configuration loading and persistence
 - driver: WebDriver factory and options
 - i18n: Internationalized UI strings
 - logging_manager: File-based logging

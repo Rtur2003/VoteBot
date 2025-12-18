@@ -40,9 +40,7 @@ class BrowserLifecycleManager:
         except Exception:
             return None
 
-    def register_driver(
-        self, driver: webdriver.Chrome, profile_dir: Optional[Path] = None
-    ):
+    def register_driver(self, driver: webdriver.Chrome, profile_dir: Optional[Path] = None):
         """Register active driver for lifecycle management."""
         with self._driver_lock:
             self.active_drivers.add(driver)

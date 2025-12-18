@@ -59,9 +59,7 @@ class TestVotingStatistics:
 
     def test_reset_counters(self):
         """Test counter reset."""
-        stats = VotingStatistics(
-            vote_count=10, error_count=5, success_count=8, failure_count=2
-        )
+        stats = VotingStatistics(vote_count=10, error_count=5, success_count=8, failure_count=2)
         new_stats = stats.reset_counters()
 
         assert new_stats.vote_count == 0
