@@ -623,9 +623,10 @@ window.chrome.runtime = {};
 
         main.columnconfigure(0, weight=2)
         main.columnconfigure(1, weight=1)
-        main.rowconfigure(1, weight=1)
-        main.rowconfigure(2, weight=1)
-        main.rowconfigure(3, weight=0)
+        main.rowconfigure(0, weight=0, minsize=120)
+        main.rowconfigure(1, weight=0, minsize=140)
+        main.rowconfigure(2, weight=1, minsize=300)
+        main.rowconfigure(3, weight=0, minsize=80)
         main.rowconfigure(4, weight=0)
 
         header = ttk.Frame(main, style="Main.TFrame")
