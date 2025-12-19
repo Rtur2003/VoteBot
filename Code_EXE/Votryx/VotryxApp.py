@@ -715,7 +715,7 @@ window.chrome.runtime = {};
         header.grid(row=0, column=0, columnspan=2, sticky="ew", pady=(0, 8))
         header.columnconfigure(2, weight=1)
         if self.brand_image:
-            logo_widget = tk.Label(
+            logo_widget: tk.Widget = tk.Label(
                 header,
                 image=self.brand_image,
                 bg=self.colors["bg"],
@@ -1221,7 +1221,7 @@ window.chrome.runtime = {};
         wrapper.rowconfigure(0, weight=1)
 
         if self.hero_image:
-            hero_widget = tk.Label(
+            hero_widget: tk.Widget = tk.Label(
                 wrapper, image=self.hero_image, bg=self.colors["bg"], bd=0, highlightthickness=0
             )
         elif self.brand_image:
