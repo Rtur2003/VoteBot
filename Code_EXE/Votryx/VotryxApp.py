@@ -2118,7 +2118,7 @@ window.chrome.runtime = {};
         """Open log directory in system file browser."""
         try:
             if platform.system() == "Windows" and hasattr(os, "startfile"):
-                os.startfile(self.log_dir)  # type: ignore[attr-defined]
+                os.startfile(self.log_dir)
             elif platform.system() == "Darwin":
                 subprocess.run(["open", str(self.log_dir)], check=False)
             else:

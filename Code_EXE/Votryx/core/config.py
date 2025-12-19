@@ -91,10 +91,12 @@ class ConfigurationManager:
         """Set configuration value."""
         self.config[key] = value
 
-    def get_paths(self) -> Dict[str, Any]:
+    def get_paths(self) -> Dict[str, str]:
         """Get paths configuration."""
         paths = self.config.get("paths", {})
-        return paths if isinstance(paths, dict) else {}
+        if not isinstance(paths, dict):
+            return {}
+        return {k: str(v) for k, v in paths.items()}
 
     def update(self, updates: Dict[str, Any]) -> None:
         """Update multiple configuration values."""
