@@ -8,6 +8,7 @@ import atexit
 import json
 import logging
 import os
+import platform
 import random
 import shutil
 import subprocess
@@ -2116,7 +2117,12 @@ window.chrome.runtime = {};
     def open_logs(self):
         """Open log directory in system file browser."""
         try:
-            os.startfile(self.log_dir)
+            if platform.system() == "Windows" and hasattr(os, "startfile"):
+                os.startfile(self.log_dir)  # type: ignore[attr-defined]
+            elif platform.system() == "Darwin":
+                subprocess.run(["open", str(self.log_dir)], check=False)
+            else:
+                subprocess.run(["xdg-open", str(self.log_dir)], check=False)
         except Exception:
             messagebox.showinfo("Log klasörü", str(self.log_dir))
 
