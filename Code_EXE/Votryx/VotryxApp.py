@@ -8,6 +8,7 @@ import atexit
 import json
 import logging
 import os
+import platform
 import random
 import shutil
 import subprocess
@@ -715,7 +716,7 @@ window.chrome.runtime = {};
         header.grid(row=0, column=0, columnspan=2, sticky="ew", pady=(0, 8))
         header.columnconfigure(2, weight=1)
         if self.brand_image:
-            logo_widget = tk.Label(
+            logo_widget: tk.Widget = tk.Label(
                 header,
                 image=self.brand_image,
                 bg=self.colors["bg"],
@@ -813,8 +814,8 @@ window.chrome.runtime = {};
         settings_nb.grid(row=0, column=0, sticky="nsew", pady=(0, 10))
         settings.columnconfigure(0, weight=1)
         settings.rowconfigure(0, weight=1)
-        self.general_tab = ttk.Frame(settings_nb, style="Panel.TFrame", padding=10)  # type: ignore[var-annotated]
-        self.advanced_tab = ttk.Frame(settings_nb, style="Panel.TFrame", padding=10)  # type: ignore[var-annotated]
+        self.general_tab = ttk.Frame(settings_nb, style="Panel.TFrame", padding=10)
+        self.advanced_tab = ttk.Frame(settings_nb, style="Panel.TFrame", padding=10)
         general_tab = self.general_tab
         advanced_tab = self.advanced_tab
         general_tab.columnconfigure(1, weight=1)
@@ -1221,7 +1222,7 @@ window.chrome.runtime = {};
         wrapper.rowconfigure(0, weight=1)
 
         if self.hero_image:
-            hero_widget = tk.Label(
+            hero_widget: tk.Widget = tk.Label(
                 wrapper, image=self.hero_image, bg=self.colors["bg"], bd=0, highlightthickness=0
             )
         elif self.brand_image:
@@ -2116,7 +2117,12 @@ window.chrome.runtime = {};
     def open_logs(self):
         """Open log directory in system file browser."""
         try:
-            os.startfile(self.log_dir)
+            if platform.system() == "Windows" and hasattr(os, "startfile"):
+                os.startfile(self.log_dir)
+            elif platform.system() == "Darwin":
+                subprocess.run(["open", str(self.log_dir)], check=False)
+            else:
+                subprocess.run(["xdg-open", str(self.log_dir)], check=False)
         except Exception:
             messagebox.showinfo("Log klasörü", str(self.log_dir))
 

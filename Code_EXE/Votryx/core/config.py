@@ -60,10 +60,9 @@ class ConfigurationManager:
             with self.config_path.open("r", encoding="utf-8") as f:
                 data = json.load(f)
                 merged = {**self.DEFAULT_CONFIG, **data}
-                merged["paths"] = {
-                    **self.DEFAULT_CONFIG.get("paths", {}),
-                    **data.get("paths", {}),
-                }
+                default_paths: Dict[str, Any] = self.DEFAULT_CONFIG.get("paths", {})  # type: ignore[assignment]
+                data_paths: Dict[str, Any] = data.get("paths", {})
+                merged["paths"] = {**default_paths, **data_paths}
                 return merged
         except Exception:
             return dict(self.DEFAULT_CONFIG)
@@ -94,7 +93,10 @@ class ConfigurationManager:
 
     def get_paths(self) -> Dict[str, str]:
         """Get paths configuration."""
-        return self.config.get("paths", {})
+        paths = self.config.get("paths", {})
+        if not isinstance(paths, dict):
+            return {}
+        return {k: str(v) for k, v in paths.items()}
 
     def update(self, updates: Dict[str, Any]) -> None:
         """Update multiple configuration values."""

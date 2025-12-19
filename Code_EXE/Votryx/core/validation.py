@@ -1,7 +1,7 @@
 """Input validation module for VOTRYX."""
 
 from pathlib import Path
-from typing import Optional, Tuple
+from typing import Any, Optional, Tuple
 from urllib.parse import urlparse
 
 
@@ -39,7 +39,7 @@ class InputValidator:
 
     @staticmethod
     def validate_positive_number(
-        value: any, name: str, min_value: float = 0.0
+        value: Any, name: str, min_value: float = 0.0
     ) -> Tuple[bool, Optional[str]]:
         """
         Validate that a value is a positive number.
@@ -57,7 +57,7 @@ class InputValidator:
 
     @staticmethod
     def validate_integer_range(
-        value: any, name: str, min_val: int, max_val: int
+        value: Any, name: str, min_val: int, max_val: int
     ) -> Tuple[bool, Optional[str]]:
         """
         Validate that a value is an integer within a range.
