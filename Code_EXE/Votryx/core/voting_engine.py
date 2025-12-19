@@ -217,8 +217,8 @@ class VotingEngine:
 
     def calculate_backoff_delay(self, consecutive_errors: int) -> float:
         """Calculate exponential backoff delay."""
-        delay = self.backoff_seconds * (2 ** (consecutive_errors - 1))
-        return min(delay, self.backoff_cap_seconds)
+        delay: float = self.backoff_seconds * (2 ** (consecutive_errors - 1))
+        return float(min(delay, self.backoff_cap_seconds))
 
     def sleep_with_jitter(self, base_seconds: float) -> float:
         """Add random jitter to sleep duration."""
