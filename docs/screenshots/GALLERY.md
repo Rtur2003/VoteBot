@@ -29,4 +29,3 @@ This page exists to ensure every visual asset in `docs/screenshots/` has a clear
 ## Extras
 
 ![ASCII-LOGO](ASCII-LOGO.png)
-
