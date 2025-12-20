@@ -1431,7 +1431,23 @@ window.chrome.runtime = {};
 
     def _show_app(self):
         if self.welcome_frame:
-            self.welcome_frame.place_forget()
+            try:
+                self.welcome_frame.destroy()
+            except Exception:
+                try:
+                    self.welcome_frame.place_forget()
+                except Exception:
+                    pass
+            self.welcome_frame = None
+        try:
+            if self.main and int(self.main.winfo_exists()):
+                self.main.lift()
+        except Exception:
+            pass
+        try:
+            self.root.update_idletasks()
+        except Exception:
+            pass
         self._apply_responsive_layout(compact=self.root.winfo_width() < 1200)
 
     def _schedule(self, func):
