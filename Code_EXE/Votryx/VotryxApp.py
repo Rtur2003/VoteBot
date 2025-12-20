@@ -145,6 +145,7 @@ class VotryxApp:
         self.block_images_var = tk.BooleanVar(value=self.block_images)
         self.tray_icon = None
         self.is_minimized_to_tray = False
+        self.tray_available = TRAY_AVAILABLE
 
         self.log_dir, self.log_dir_warning = self._resolve_logs_dir()
         self.logger = self._build_logger()
