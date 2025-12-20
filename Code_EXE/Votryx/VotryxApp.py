@@ -114,6 +114,7 @@ class VotryxApp:
         self.stats_wrapper = None
         self.actions_frame = None
         self.log_frame = None
+        self.view_stack = None
         self.main = None
         self.welcome_frame = None
         self.hero_image = None
@@ -877,7 +878,13 @@ window.chrome.runtime = {};
         self.root.columnconfigure(0, weight=1)
         self.root.rowconfigure(0, weight=1)
 
-        main = ttk.Frame(self.root, style="Main.TFrame", padding=16)
+        view_stack = ttk.Frame(self.root, style="Main.TFrame")
+        view_stack.grid(row=0, column=0, sticky="nsew")
+        view_stack.columnconfigure(0, weight=1)
+        view_stack.rowconfigure(0, weight=1)
+        self.view_stack = view_stack
+
+        main = ttk.Frame(view_stack, style="Main.TFrame", padding=16)
         main.grid(row=0, column=0, sticky="nsew")
         self.main = main
         self.root.bind("<Configure>", self._on_root_resize)
@@ -1422,8 +1429,9 @@ window.chrome.runtime = {};
                 self.welcome_frame.destroy()
             except Exception:
                 pass
-        self.welcome_frame = tk.Frame(self.root, bg=self.colors["bg"])
-        self.welcome_frame.place(relx=0, rely=0, relwidth=1, relheight=1)
+        parent = self.view_stack or self.root
+        self.welcome_frame = tk.Frame(parent, bg=self.colors["bg"])
+        self.welcome_frame.grid(row=0, column=0, sticky="nsew")
 
         wrapper = ttk.Frame(self.welcome_frame, style="Main.TFrame", padding=40)
         wrapper.pack(fill="both", expand=True)
@@ -1515,55 +1523,56 @@ window.chrome.runtime = {};
 
     def _show_welcome(self):
         if self.welcome_frame:
-            self.welcome_frame.lift()
-            self.welcome_frame.place(relx=0, rely=0, relwidth=1, relheight=1)
+            try:
+                self.welcome_frame.grid()
+                self.welcome_frame.tkraise()
+            except Exception:
+                pass
             self._animate_loading()
 
     def _show_app(self):
-        """Transition from welcome screen to main app with fade effect."""
+        """Transition from welcome screen to main app."""
         if self.welcome_frame:
-            # Fade out effect
             self._fade_out_welcome(alpha=1.0)
+        else:
+            self._show_main()
+
+    def _show_main(self):
+        """Show the main control panel and remove the welcome overlay."""
+        if self.welcome_frame:
+            try:
+                self.welcome_frame.destroy()
+            except Exception:
+                try:
+                    self.welcome_frame.grid_remove()
+                except Exception:
+                    pass
+            self.welcome_frame = None
+        try:
+            if self.main and self.main.winfo_exists():
+                self.main.tkraise()
+        except Exception:
+            pass
+        try:
+            self.root.update_idletasks()
+        except Exception:
+            pass
+        self._apply_responsive_layout(compact=self.root.winfo_width() < 1200)
 
     def _fade_out_welcome(self, alpha=1.0):
         """Gradually fade out welcome screen."""
+        if not self.welcome_frame or not self.welcome_frame.winfo_exists():
+            self._show_main()
+            return
         if alpha <= 0:
-            # Animation complete, destroy welcome frame
-            if self.welcome_frame:
-                try:
-                    self.welcome_frame.destroy()
-                except Exception:
-                    try:
-                        self.welcome_frame.place_forget()
-                    except Exception:
-                        pass
-                self.welcome_frame = None
-            try:
-                if self.main and self.main.winfo_exists():
-                    self.main.lift()
-            except Exception:
-                pass
-            try:
-                self.root.update_idletasks()
-            except Exception:
-                pass
-            self._apply_responsive_layout(compact=self.root.winfo_width() < 1200)
+            self._show_main()
             return
 
         try:
-            if self.welcome_frame and self.welcome_frame.winfo_exists():
-                # Simple visibility fade by adjusting placement
-                next_alpha = max(0, alpha - 0.15)
-                # Continue fade animation
-                self.root.after(30, lambda: self._fade_out_welcome(next_alpha))
+            next_alpha = max(0, alpha - 0.2)
+            self.root.after(30, lambda: self._fade_out_welcome(next_alpha))
         except Exception:
-            # If any error, just destroy immediately
-            if self.welcome_frame:
-                try:
-                    self.welcome_frame.destroy()
-                except Exception:
-                    pass
-                self.welcome_frame = None
+            self._show_main()
 
     def _schedule(self, func):
         self.root.after(0, func)
