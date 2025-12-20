@@ -15,6 +15,7 @@ import subprocess
 import tempfile
 import threading
 import time
+import traceback
 import tkinter as tk
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
@@ -154,11 +155,23 @@ class VotryxApp:
             "danger": "#f43f5e",
         }
 
-        self.brand_icon = self._build_icon_image()
-        self.root.iconphoto(False, self.brand_icon)
+        try:
+            self.brand_icon = self._build_icon_image()
+            self.root.iconphoto(False, self.brand_icon)
+        except Exception as exc:
+            self.brand_icon = None
+            self.logger.warning("Uygulama ikonu ayarlanamadi: %s", exc)
 
-        self._build_styles()
-        self._build_ui()
+        try:
+            self._build_styles()
+            self._build_ui()
+        except Exception as exc:
+            tb = traceback.format_exc()
+            self.logger.error(
+                "UI baslatilamadi: %s\n%s", exc, tb, exc_info=False
+            )
+            self._build_boot_error_screen(exc, tb)
+            return
         self.ui_ready = True
         self._apply_responsive_layout(compact=self.root.winfo_width() < 1200)
         if self.log_dir_warning:
@@ -504,14 +517,23 @@ window.chrome.runtime = {};
 
         style.configure("Main.TFrame", background=self.colors["bg"], padding=0)
         style.configure("Panel.TFrame", background=self.colors["panel"])
-        style.configure(
-            "Card.TFrame",
-            background=self.colors["card"],
-            borderwidth=1,
-            relief="flat",
-            bordercolor=self.colors["border"],
-            padding=12,
-        )
+        try:
+            style.configure(
+                "Card.TFrame",
+                background=self.colors["card"],
+                borderwidth=1,
+                relief="flat",
+                bordercolor=self.colors["border"],
+                padding=12,
+            )
+        except tk.TclError:
+            style.configure(
+                "Card.TFrame",
+                background=self.colors["card"],
+                borderwidth=1,
+                relief="flat",
+                padding=12,
+            )
         style.configure(
             "TLabelFrame",
             background=self.colors["panel"],
@@ -603,14 +625,27 @@ window.chrome.runtime = {};
             }
             if border:
                 kwargs.update({"bordercolor": border, "focuscolor": border, "lightcolor": border})
-            style.configure(name, **kwargs)
-            style.map(
-                name,
-                background=[("active", active), ("disabled", disabled)],
-                foreground=[("disabled", "#9ca3af"), ("pressed", fg)],
-                focuscolor=[("focus", border or self.colors["accent2"])],
-                bordercolor=[("focus", border or self.colors["accent2"])],
-            )
+            try:
+                style.configure(name, **kwargs)
+            except tk.TclError:
+                kwargs.pop("bordercolor", None)
+                kwargs.pop("focuscolor", None)
+                kwargs.pop("lightcolor", None)
+                style.configure(name, **kwargs)
+            try:
+                style.map(
+                    name,
+                    background=[("active", active), ("disabled", disabled)],
+                    foreground=[("disabled", "#9ca3af"), ("pressed", fg)],
+                    focuscolor=[("focus", border or self.colors["accent2"])],
+                    bordercolor=[("focus", border or self.colors["accent2"])],
+                )
+            except tk.TclError:
+                style.map(
+                    name,
+                    background=[("active", active), ("disabled", disabled)],
+                    foreground=[("disabled", "#9ca3af"), ("pressed", fg)],
+                )
 
         button_style(
             "Accent.TButton",
@@ -649,19 +684,31 @@ window.chrome.runtime = {};
             font=("Bahnschrift", 10),
         )
         style.map("Switch.TCheckbutton", background=[("active", "#1f2937")])
-        style.configure(
-            "TEntry",
-            fieldbackground=self.colors["panel"],
-            foreground=self.colors["text"],
-            insertcolor=self.colors["text"],
-            bordercolor=self.colors["card"],
-            padding=6,
-        )
-        style.map(
-            "TEntry",
-            fieldbackground=[("focus", "#111a2d")],
-            bordercolor=[("focus", self.colors["accent2"])],
-        )
+        try:
+            style.configure(
+                "TEntry",
+                fieldbackground=self.colors["panel"],
+                foreground=self.colors["text"],
+                insertcolor=self.colors["text"],
+                bordercolor=self.colors["card"],
+                padding=6,
+            )
+        except tk.TclError:
+            style.configure(
+                "TEntry",
+                fieldbackground=self.colors["panel"],
+                foreground=self.colors["text"],
+                insertcolor=self.colors["text"],
+                padding=6,
+            )
+        try:
+            style.map(
+                "TEntry",
+                fieldbackground=[("focus", "#111a2d")],
+                bordercolor=[("focus", self.colors["accent2"])],
+            )
+        except tk.TclError:
+            style.map("TEntry", fieldbackground=[("focus", "#111a2d")])
         style.configure(
             "Section.TLabel",
             font=("Bahnschrift SemiBold", 12),
@@ -694,6 +741,84 @@ window.chrome.runtime = {};
             background=[("selected", self.colors["accent2"]), ("active", "#1d2d46")],
             foreground=[("selected", "#0f172a"), ("active", self.colors["text"])],
         )
+
+    def _build_boot_error_screen(self, exc: Exception, tb: str) -> None:
+        try:
+            for child in list(self.root.winfo_children()):
+                child.destroy()
+        except Exception:
+            pass
+
+        bg = self.colors.get("bg", "#0b1224") if hasattr(self, "colors") else "#0b1224"
+        fg = self.colors.get("text", "#e6edf7") if hasattr(self, "colors") else "#e6edf7"
+        muted = self.colors.get("muted", "#a5b4ce") if hasattr(self, "colors") else "#a5b4ce"
+        card = self.colors.get("card", "#13213b") if hasattr(self, "colors") else "#13213b"
+
+        try:
+            self.root.configure(bg=bg)
+        except Exception:
+            pass
+
+        self.root.protocol("WM_DELETE_WINDOW", self.root.destroy)
+
+        wrapper = tk.Frame(self.root, bg=bg)
+        wrapper.pack(fill="both", expand=True, padx=24, pady=24)
+        wrapper.columnconfigure(0, weight=1)
+        wrapper.rowconfigure(3, weight=1)
+
+        tk.Label(
+            wrapper,
+            text="VOTRYX UI baslatilamadi",
+            bg=bg,
+            fg=fg,
+            font=("Segoe UI", 16, "bold"),
+            anchor="w",
+        ).grid(row=0, column=0, sticky="ew")
+
+        tk.Label(
+            wrapper,
+            text=f"Hata: {exc}",
+            bg=bg,
+            fg=muted,
+            font=("Segoe UI", 10),
+            anchor="w",
+            justify="left",
+            wraplength=960,
+        ).grid(row=1, column=0, sticky="ew", pady=(8, 10))
+
+        tk.Label(
+            wrapper,
+            text=f"Log: {self.log_dir / 'votryx.log'}",
+            bg=bg,
+            fg=muted,
+            font=("Consolas", 9),
+            anchor="w",
+        ).grid(row=2, column=0, sticky="ew", pady=(0, 10))
+
+        details = tk.Text(
+            wrapper,
+            bg=card,
+            fg=fg,
+            insertbackground=fg,
+            relief="flat",
+            highlightthickness=1,
+            highlightbackground=card,
+            font=("Consolas", 9),
+            wrap="none",
+        )
+        details.grid(row=3, column=0, sticky="nsew")
+        try:
+            details.insert("1.0", tb.strip())
+            details.configure(state="disabled")
+        except Exception:
+            pass
+
+        btns = tk.Frame(wrapper, bg=bg)
+        btns.grid(row=4, column=0, sticky="e", pady=(12, 0))
+        tk.Button(btns, text="Log klasorunu ac", command=self.open_logs).pack(
+            side="left", padx=(0, 8)
+        )
+        tk.Button(btns, text="Kapat", command=self.root.destroy).pack(side="left")
 
     def _build_ui(self):
         self.root.columnconfigure(0, weight=1)
