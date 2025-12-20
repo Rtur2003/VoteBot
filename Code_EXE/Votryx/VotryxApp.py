@@ -42,6 +42,11 @@ try:
 except ImportError:
     TRAY_AVAILABLE = False
 
+try:
+    from ui.panel import ControlPanelView
+except Exception:
+    ControlPanelView = None
+
 
 class VotryxApp:
     """Main application class for VOTRYX voting automation UI.
