@@ -293,6 +293,7 @@ Current design supports:
 ## Development Guidelines
 
 ### Adding New Features
+
 1. Identify which layer the feature belongs to
 2. Check if existing module can be extended
 3. If new module needed, follow single responsibility
@@ -300,6 +301,7 @@ Current design supports:
 5. Update this documentation
 
 ### Code Style
+
 - Black for formatting (line length 100)
 - isort for import sorting
 - flake8 for linting
@@ -307,6 +309,7 @@ Current design supports:
 - Docstrings for all public methods
 
 ### Commit Discipline
+
 - One logical change per commit
 - Clear, technical commit messages
 - Format: `<scope>: <what changed>`
@@ -315,12 +318,14 @@ Current design supports:
 ## Maintenance
 
 ### Regular Tasks
+
 - Update dependencies monthly
 - Review and prune logs
 - Check for Chrome/ChromeDriver updates
 - Monitor error rates in logs
 
 ### Monitoring
+
 - Vote success/failure ratio
 - Average voting time
 - Error patterns in logs
