@@ -1394,6 +1394,14 @@ window.chrome.runtime = {};
             except Exception:
                 return False
 
+        def _grid_target(widget):
+            if not widget:
+                return None
+            parent = getattr(widget, "master", None)
+            if parent is None or parent is self.main:
+                return widget
+            return parent
+
         if not self.ui_ready or not all(
             [
                 _exists(self.main),
