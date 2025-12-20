@@ -163,7 +163,6 @@ class VotryxApp:
             )
 
         self.brand_image = self._load_brand_image()
-        self.hero_image = self._load_hero_image()
         self.colors = {
             "bg": "#0b1224",
             "panel": "#0f1a30",
