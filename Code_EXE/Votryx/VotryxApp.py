@@ -2510,12 +2510,14 @@ window.chrome.runtime = {};
 
     def run_preflight(self):
         """Run preflight checks and display results."""
+        self._log_action("preflight")
         if self._validate_paths(show_message=True):
             messagebox.showinfo("Ön kontrol", "Yollar ve ayarlar geçerli görünüyor.")
             self.log_message("Ön kontrol başarılı")
 
     def reset_to_defaults(self):
         """Reset all configuration fields to default values."""
+        self._log_action("reset_to_defaults")
         defaults = dict(self.defaults)
         self.url_entry.delete(0, tk.END)
         self.url_entry.insert(0, defaults["target_url"])
@@ -2560,6 +2562,7 @@ window.chrome.runtime = {};
 
     def apply_settings(self):
         """Apply configuration changes from UI form."""
+        self._log_action("apply_settings")
         return self._update_settings_from_form(persist=True, notify=True)
 
     def _update_settings_from_form(self, persist=False, notify=True):
