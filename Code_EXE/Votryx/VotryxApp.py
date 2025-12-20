@@ -17,8 +17,8 @@ import subprocess
 import tempfile
 import threading
 import time
-import traceback
 import tkinter as tk
+import traceback
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from logging.handlers import RotatingFileHandler
@@ -33,6 +33,14 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+
+try:
+    import pystray
+    from PIL import Image, ImageDraw
+
+    TRAY_AVAILABLE = True
+except ImportError:
+    TRAY_AVAILABLE = False
 
 
 class VotryxApp:
@@ -129,6 +137,8 @@ class VotryxApp:
         self.errors_only_var = tk.BooleanVar(value=False)
         self.random_ua_var = tk.BooleanVar(value=self.use_random_user_agent)
         self.block_images_var = tk.BooleanVar(value=self.block_images)
+        self.tray_icon = None
+        self.is_minimized_to_tray = False
 
         self.log_dir, self.log_dir_warning = self._resolve_logs_dir()
         self.logger = self._build_logger()
@@ -192,9 +202,7 @@ class VotryxApp:
             self._build_ui()
         except Exception as exc:
             tb = traceback.format_exc()
-            self.logger.error(
-                "UI baslatilamadi: %s\n%s", exc, tb, exc_info=False
-            )
+            self.logger.error("UI baslatilamadi: %s\n%s", exc, tb, exc_info=False)
             self._build_boot_error_screen(exc, tb)
             return
         self.ui_ready = True
@@ -203,6 +211,8 @@ class VotryxApp:
             self.log_message(self.log_dir_warning, level="info")
         self._set_state_badge("Bekliyor", "idle")
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
+        if TRAY_AVAILABLE:
+            self.root.bind("<Unmap>", self._handle_window_state)
         self._update_runtime()
 
     def _make_maximized(self):
@@ -1215,7 +1225,7 @@ window.chrome.runtime = {};
         self.actions_frame.columnconfigure(0, weight=1)
         controls = ttk.Frame(self.actions_frame, style="Panel.TFrame", padding=(0, 0))
         controls.grid(row=0, column=0, sticky="ew")
-        controls.columnconfigure((0, 1, 2, 3, 4), weight=1)
+        controls.columnconfigure((0, 1, 2, 3, 4, 5), weight=1)
 
         self.start_btn = ttk.Button(
             controls, text="Başlat", command=self.start_bot, style="Accent.TButton"
@@ -1241,6 +1251,16 @@ window.chrome.runtime = {};
             controls, text="Sayaclari sifirla", command=self.reset_counters, style="Ghost.TButton"
         )
         self.reset_btn.grid(row=0, column=4, padx=6, pady=6, sticky="ew", ipady=4)
+
+        # Add minimize to tray button if available
+        if TRAY_AVAILABLE:
+            self.tray_btn = ttk.Button(
+                controls,
+                text="Gizle (Arka Plan)",
+                command=self._minimize_to_tray,
+                style="Outline.TButton",
+            )
+            self.tray_btn.grid(row=0, column=5, padx=6, pady=6, sticky="ew", ipady=4)
 
         log_frame = ttk.LabelFrame(log_shell, text="Log", style="Panel.TFrame", padding=12)
         log_frame.grid(row=0, column=0, sticky="nsew")
@@ -1342,7 +1362,7 @@ window.chrome.runtime = {};
             if not widget:
                 return False
             try:
-                return bool(int(widget.winfo_exists()))
+                return bool(widget.winfo_exists())
             except Exception:
                 return False
 
@@ -1369,7 +1389,9 @@ window.chrome.runtime = {};
                 self.main.rowconfigure(3, weight=1, minsize=250)
                 self.main.rowconfigure(4, weight=0, minsize=80)
                 self.stats_wrapper.grid_configure(row=1, column=0, columnspan=2, padx=(0, 0))
-                self.settings_frame.master.grid_configure(row=2, column=0, columnspan=2, padx=(0, 0))
+                self.settings_frame.master.grid_configure(
+                    row=2, column=0, columnspan=2, padx=(0, 0)
+                )
                 self.log_frame.master.grid_configure(row=3, column=0, columnspan=2, padx=(0, 0))
                 self.actions_frame.grid_configure(row=4, column=0, columnspan=2, padx=(0, 0))
             else:
@@ -1381,7 +1403,9 @@ window.chrome.runtime = {};
                 self.main.rowconfigure(3, weight=0, minsize=80)
                 self.main.rowconfigure(4, weight=0)
                 self.stats_wrapper.grid_configure(row=1, column=0, columnspan=2, padx=(0, 0))
-                self.settings_frame.master.grid_configure(row=2, column=0, columnspan=1, padx=(0, 8))
+                self.settings_frame.master.grid_configure(
+                    row=2, column=0, columnspan=1, padx=(0, 8)
+                )
                 self.log_frame.master.grid_configure(row=2, column=1, columnspan=1, padx=(8, 0))
                 self.actions_frame.grid_configure(row=3, column=0, columnspan=2, padx=(0, 0))
         except tk.TclError:
@@ -1439,6 +1463,11 @@ window.chrome.runtime = {};
             "Chromedriver/Chrome ön kontrol, batch/parallel oy",
             "Loglama, ekran görüntüsü, backoff ve zaman aşımı korumaları",
             "Sekmeli ayarlar, gelişmiş UA ve selector yönetimi",
+            (
+                "Arka plan çalışma desteği - gizle ve çalışmaya devam et"
+                if TRAY_AVAILABLE
+                else "Arka plan çalışma desteği yüklenmedi"
+            ),
         ]
         for idx, text in enumerate(bullets):
             ttk.Label(
@@ -1458,31 +1487,83 @@ window.chrome.runtime = {};
         )
         sub.grid(row=3 + len(bullets), column=0, sticky="w", pady=(0, 6), ipady=4)
 
+        # Add loading indicator
+        loading_frame = ttk.Frame(info, style="Main.TFrame")
+        loading_frame.grid(row=4 + len(bullets), column=0, sticky="w", pady=(20, 0))
+
+        self.loading_label = ttk.Label(
+            loading_frame,
+            text="",
+            foreground=self.colors["accent2"],
+            background=self.colors["bg"],
+            font=("Segoe UI", 9),
+        )
+        self.loading_label.pack()
+
+    def _animate_loading(self, step=0):
+        """Animate loading dots on welcome screen."""
+        if not hasattr(self, "loading_label"):
+            return
+
+        try:
+            if self.welcome_frame and self.welcome_frame.winfo_exists():
+                dots = "." * (step % 4)
+                self.loading_label.config(text=f"Hazırlanıyor{dots}")
+                self.root.after(400, lambda: self._animate_loading(step + 1))
+        except Exception:
+            pass
+
     def _show_welcome(self):
         if self.welcome_frame:
             self.welcome_frame.lift()
             self.welcome_frame.place(relx=0, rely=0, relwidth=1, relheight=1)
+            self._animate_loading()
 
     def _show_app(self):
+        """Transition from welcome screen to main app with fade effect."""
         if self.welcome_frame:
-            try:
-                self.welcome_frame.destroy()
-            except Exception:
+            # Fade out effect
+            self._fade_out_welcome(alpha=1.0)
+
+    def _fade_out_welcome(self, alpha=1.0):
+        """Gradually fade out welcome screen."""
+        if alpha <= 0:
+            # Animation complete, destroy welcome frame
+            if self.welcome_frame:
                 try:
-                    self.welcome_frame.place_forget()
+                    self.welcome_frame.destroy()
+                except Exception:
+                    try:
+                        self.welcome_frame.place_forget()
+                    except Exception:
+                        pass
+                self.welcome_frame = None
+            try:
+                if self.main and self.main.winfo_exists():
+                    self.main.lift()
+            except Exception:
+                pass
+            try:
+                self.root.update_idletasks()
+            except Exception:
+                pass
+            self._apply_responsive_layout(compact=self.root.winfo_width() < 1200)
+            return
+
+        try:
+            if self.welcome_frame and self.welcome_frame.winfo_exists():
+                # Simple visibility fade by adjusting placement
+                next_alpha = max(0, alpha - 0.15)
+                # Continue fade animation
+                self.root.after(30, lambda: self._fade_out_welcome(next_alpha))
+        except Exception:
+            # If any error, just destroy immediately
+            if self.welcome_frame:
+                try:
+                    self.welcome_frame.destroy()
                 except Exception:
                     pass
-            self.welcome_frame = None
-        try:
-            if self.main and int(self.main.winfo_exists()):
-                self.main.lift()
-        except Exception:
-            pass
-        try:
-            self.root.update_idletasks()
-        except Exception:
-            pass
-        self._apply_responsive_layout(compact=self.root.winfo_width() < 1200)
+                self.welcome_frame = None
 
     def _schedule(self, func):
         self.root.after(0, func)
@@ -1565,6 +1646,134 @@ window.chrome.runtime = {};
         if self.temp_root.exists():
             shutil.rmtree(self.temp_root, ignore_errors=True)
 
+    def _create_tray_icon(self):
+        """Create system tray icon for background operation.
+
+        Returns:
+            pystray.Icon instance or None if unavailable or creation fails
+        """
+        if not TRAY_AVAILABLE:
+            return None
+
+        try:
+            # Fallback colors in case UI hasn't initialized
+            colors = getattr(
+                self,
+                "colors",
+                {
+                    "bg": "#0b1224",
+                    "card": "#13213b",
+                    "accent2": "#23c4ff",
+                    "accent": "#ff7a1a",
+                },
+            )
+
+            # Create a simple icon image
+            icon_size = 64
+            image = Image.new("RGB", (icon_size, icon_size), colors.get("bg", "#0b1224"))
+            draw = ImageDraw.Draw(image)
+
+            # Draw a simple circular icon with brand colors
+            draw.ellipse(
+                [4, 4, icon_size - 4, icon_size - 4],
+                fill=colors.get("card", "#13213b"),
+                outline=colors.get("accent2", "#23c4ff"),
+            )
+            draw.arc(
+                [4, 4, icon_size - 4, icon_size - 4],
+                start=35,
+                end=275,
+                fill=colors.get("accent", "#ff7a1a"),
+                width=8,
+            )
+
+            # Create menu with current state
+            menu = self._create_tray_menu()
+            return pystray.Icon("votryx", image, "VOTRYX", menu)
+        except Exception as exc:
+            self.logger.warning("Tray icon oluşturulamadı: %s", exc)
+            return None
+
+    def _create_tray_menu(self):
+        """Create tray icon menu with current bot state.
+
+        Returns:
+            pystray.Menu instance
+        """
+        return pystray.Menu(
+            pystray.MenuItem("Göster", self._show_from_tray, default=True),
+            pystray.MenuItem("Durdur" if self.is_running else "Başlat", self._toggle_bot_from_tray),
+            pystray.MenuItem("Çıkış", self._quit_from_tray),
+        )
+
+    def _show_from_tray(self, icon=None, item=None):
+        """Show window from system tray."""
+        self.is_minimized_to_tray = False
+        self.root.after(0, lambda: (self.root.deiconify(), self.root.focus_force()))
+
+    def _toggle_bot_from_tray(self, icon=None, item=None):
+        """Toggle bot state from system tray."""
+        if self.is_running:
+            self.root.after(0, self.stop_bot)
+        else:
+            self.root.after(0, self.start_bot)
+
+    def _quit_from_tray(self, icon=None, item=None):
+        """Quit application from system tray."""
+        if self.tray_icon:
+            self.tray_icon.stop()
+        self.root.after(0, self.on_close)
+
+    def _minimize_to_tray(self):
+        """Minimize window to system tray.
+
+        If system tray is not available, logs an error and returns without action.
+        Creates tray icon on first minimization.
+        """
+        if not TRAY_AVAILABLE:
+            self.log_message("Sistem tepsisi desteği yok (pystray yüklenmemiş)", level="error")
+            return
+
+        try:
+            self.is_minimized_to_tray = True
+            self.root.withdraw()
+
+            if not self.tray_icon:
+                self.tray_icon = self._create_tray_icon()
+                if self.tray_icon:
+                    threading.Thread(target=self.tray_icon.run, daemon=True).start()
+                else:
+                    self.log_message("Tray icon oluşturulamadı", level="error")
+                    # Restore window if tray icon creation failed
+                    self.is_minimized_to_tray = False
+                    self.root.deiconify()
+                    return
+
+            self.log_message("Arka planda çalışmaya devam ediyor")
+        except Exception as exc:
+            self.logger.exception("Tray minimize hatası", exc_info=exc)
+            self.log_message(f"Arka plana geçilemedi: {exc}", level="error")
+            # Restore window on error
+            self.is_minimized_to_tray = False
+            try:
+                self.root.deiconify()
+            except Exception:
+                pass
+
+    def _handle_window_state(self, event=None):
+        """Handle window state changes for tray minimize support.
+
+        Args:
+            event: Tkinter event (optional)
+        """
+        try:
+            # Check if window is being iconified (minimized)
+            if self.root.state() == "iconic" and TRAY_AVAILABLE:
+                self.root.after(100, self._minimize_to_tray)
+        except Exception as exc:
+            # Silently fail for window state checks to avoid UI disruption
+            self.logger.debug("Window state check hatası: %s", exc)
+
     def log_message(self, message, level="info"):
         """Add message to application log with timestamp.
 
@@ -1572,6 +1781,14 @@ window.chrome.runtime = {};
             message: Log message text
             level: Severity level (info, success, error)
         """
+        # Guard: validate message is not None
+        if message is None:
+            message = ""
+
+        # Guard: validate level is in allowed values
+        if level not in ("info", "success", "error"):
+            level = "info"
+
         timestamp = datetime.now().strftime("%H:%M:%S")
 
         def append():
@@ -1598,6 +1815,9 @@ window.chrome.runtime = {};
             text: Status message to display
             tone: Visual styling (running, idle, error, success)
         """
+        # Guard: validate text is not None
+        if text is None:
+            text = "Bekliyor"
 
         def apply():
             self.status_label.config(text=text)
@@ -1661,6 +1881,26 @@ window.chrome.runtime = {};
         }
         bg, fg = colors.get(tone, colors["idle"])
         self.state_badge.config(text=text, bg=bg, fg=fg)
+
+        # Start pulse animation if running
+        if tone == "running":
+            self._pulse_state_badge(step=0)
+
+    def _pulse_state_badge(self, step=0):
+        """Subtle pulse animation for running state badge."""
+        if not self.is_running:
+            return
+
+        try:
+            # Simple opacity-like effect by alternating between two similar colors
+            if step % 2 == 0:
+                self.state_badge.config(bg=self.colors["accent2"])
+            else:
+                self.state_badge.config(bg="#1ea7d8")  # Slightly lighter shade
+
+            self.root.after(800, lambda: self._pulse_state_badge(step + 1))
+        except Exception:
+            pass
 
     def _update_log_counts_badges(self):
         self.success_badge.config(text=f"Başarılı: {self.success_count}")
@@ -1980,6 +2220,8 @@ window.chrome.runtime = {};
         self.start_btn.config(state=tk.DISABLED, text="Çalışıyor...")
         self.stop_btn.config(state=tk.NORMAL)
         self._set_form_state(True)
+        # Update window title to show running status
+        self.root.title("VOTRYX - DistroKid Spotlight [ÇALIŞIYOR]")
         self.worker = threading.Thread(target=self.run_bot, daemon=True)
         self.worker.start()
 
@@ -1997,6 +2239,8 @@ window.chrome.runtime = {};
         self.start_btn.config(state=tk.NORMAL, text="Başlat")
         self.stop_btn.config(state=tk.DISABLED)
         self._set_form_state(False)
+        # Restore window title
+        self.root.title("VOTRYX - DistroKid Spotlight")
 
     def run_bot(self):
         """Execute main bot loop with error handling and backoff."""
@@ -2330,6 +2574,11 @@ window.chrome.runtime = {};
     def on_close(self):
         """Handle application close event with cleanup."""
         self.ui_ready = False
+        if self.tray_icon:
+            try:
+                self.tray_icon.stop()
+            except Exception:
+                pass
         self.stop_bot()
         self._cleanup_temp_profiles()
         self.root.destroy()
