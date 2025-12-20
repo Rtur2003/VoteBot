@@ -1416,6 +1416,8 @@ window.chrome.runtime = {};
             return
         self._is_compact_layout = compact
         try:
+            settings_target = _grid_target(self.settings_frame)
+            log_target = _grid_target(self.log_frame)
             if compact:
                 self.main.columnconfigure(0, weight=1)
                 self.main.columnconfigure(1, weight=0)
