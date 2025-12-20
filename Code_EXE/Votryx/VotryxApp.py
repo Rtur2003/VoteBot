@@ -17,8 +17,8 @@ import subprocess
 import tempfile
 import threading
 import time
-import traceback
 import tkinter as tk
+import traceback
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from logging.handlers import RotatingFileHandler
@@ -37,6 +37,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 try:
     import pystray
     from PIL import Image, ImageDraw
+
     TRAY_AVAILABLE = True
 except ImportError:
     TRAY_AVAILABLE = False
@@ -201,9 +202,7 @@ class VotryxApp:
             self._build_ui()
         except Exception as exc:
             tb = traceback.format_exc()
-            self.logger.error(
-                "UI baslatilamadi: %s\n%s", exc, tb, exc_info=False
-            )
+            self.logger.error("UI baslatilamadi: %s\n%s", exc, tb, exc_info=False)
             self._build_boot_error_screen(exc, tb)
             return
         self.ui_ready = True
@@ -1252,11 +1251,14 @@ window.chrome.runtime = {};
             controls, text="Sayaclari sifirla", command=self.reset_counters, style="Ghost.TButton"
         )
         self.reset_btn.grid(row=0, column=4, padx=6, pady=6, sticky="ew", ipady=4)
-        
+
         # Add minimize to tray button if available
         if TRAY_AVAILABLE:
             self.tray_btn = ttk.Button(
-                controls, text="Gizle (Arka Plan)", command=self._minimize_to_tray, style="Outline.TButton"
+                controls,
+                text="Gizle (Arka Plan)",
+                command=self._minimize_to_tray,
+                style="Outline.TButton",
             )
             self.tray_btn.grid(row=0, column=5, padx=6, pady=6, sticky="ew", ipady=4)
 
@@ -1387,7 +1389,9 @@ window.chrome.runtime = {};
                 self.main.rowconfigure(3, weight=1, minsize=250)
                 self.main.rowconfigure(4, weight=0, minsize=80)
                 self.stats_wrapper.grid_configure(row=1, column=0, columnspan=2, padx=(0, 0))
-                self.settings_frame.master.grid_configure(row=2, column=0, columnspan=2, padx=(0, 0))
+                self.settings_frame.master.grid_configure(
+                    row=2, column=0, columnspan=2, padx=(0, 0)
+                )
                 self.log_frame.master.grid_configure(row=3, column=0, columnspan=2, padx=(0, 0))
                 self.actions_frame.grid_configure(row=4, column=0, columnspan=2, padx=(0, 0))
             else:
@@ -1399,7 +1403,9 @@ window.chrome.runtime = {};
                 self.main.rowconfigure(3, weight=0, minsize=80)
                 self.main.rowconfigure(4, weight=0)
                 self.stats_wrapper.grid_configure(row=1, column=0, columnspan=2, padx=(0, 0))
-                self.settings_frame.master.grid_configure(row=2, column=0, columnspan=1, padx=(0, 8))
+                self.settings_frame.master.grid_configure(
+                    row=2, column=0, columnspan=1, padx=(0, 8)
+                )
                 self.log_frame.master.grid_configure(row=2, column=1, columnspan=1, padx=(8, 0))
                 self.actions_frame.grid_configure(row=3, column=0, columnspan=2, padx=(0, 0))
         except tk.TclError:
@@ -1457,7 +1463,11 @@ window.chrome.runtime = {};
             "Chromedriver/Chrome ön kontrol, batch/parallel oy",
             "Loglama, ekran görüntüsü, backoff ve zaman aşımı korumaları",
             "Sekmeli ayarlar, gelişmiş UA ve selector yönetimi",
-            "Arka plan çalışma desteği - gizle ve çalışmaya devam et" if TRAY_AVAILABLE else "Arka plan çalışma desteği yüklenmedi",
+            (
+                "Arka plan çalışma desteği - gizle ve çalışmaya devam et"
+                if TRAY_AVAILABLE
+                else "Arka plan çalışma desteği yüklenmedi"
+            ),
         ]
         for idx, text in enumerate(bullets):
             ttk.Label(
@@ -1476,11 +1486,11 @@ window.chrome.runtime = {};
             info, text="Log klasörünü aç", style="Ghost.TButton", command=self.open_logs
         )
         sub.grid(row=3 + len(bullets), column=0, sticky="w", pady=(0, 6), ipady=4)
-        
+
         # Add loading indicator
         loading_frame = ttk.Frame(info, style="Main.TFrame")
         loading_frame.grid(row=4 + len(bullets), column=0, sticky="w", pady=(20, 0))
-        
+
         self.loading_label = ttk.Label(
             loading_frame,
             text="",
@@ -1492,9 +1502,9 @@ window.chrome.runtime = {};
 
     def _animate_loading(self, step=0):
         """Animate loading dots on welcome screen."""
-        if not hasattr(self, 'loading_label'):
+        if not hasattr(self, "loading_label"):
             return
-        
+
         try:
             if self.welcome_frame and int(self.welcome_frame.winfo_exists()):
                 dots = "." * (step % 4)
@@ -1618,20 +1628,30 @@ window.chrome.runtime = {};
 
         # Create a simple icon image
         icon_size = 64
-        image = Image.new('RGB', (icon_size, icon_size), self.colors["bg"])
+        image = Image.new("RGB", (icon_size, icon_size), self.colors["bg"])
         draw = ImageDraw.Draw(image)
-        
+
         # Draw a simple circular icon with brand colors
-        draw.ellipse([4, 4, icon_size-4, icon_size-4], fill=self.colors["card"], outline=self.colors["accent2"])
-        draw.arc([4, 4, icon_size-4, icon_size-4], start=35, end=275, fill=self.colors["accent"], width=8)
-        
+        draw.ellipse(
+            [4, 4, icon_size - 4, icon_size - 4],
+            fill=self.colors["card"],
+            outline=self.colors["accent2"],
+        )
+        draw.arc(
+            [4, 4, icon_size - 4, icon_size - 4],
+            start=35,
+            end=275,
+            fill=self.colors["accent"],
+            width=8,
+        )
+
         # Create menu
         menu = pystray.Menu(
             pystray.MenuItem("Göster", self._show_from_tray, default=True),
             pystray.MenuItem("Durdur" if self.is_running else "Başlat", self._toggle_bot_from_tray),
-            pystray.MenuItem("Çıkış", self._quit_from_tray)
+            pystray.MenuItem("Çıkış", self._quit_from_tray),
         )
-        
+
         return pystray.Icon("votryx", image, "VOTRYX", menu)
 
     def _show_from_tray(self, icon=None, item=None):
@@ -1660,18 +1680,18 @@ window.chrome.runtime = {};
 
         self.is_minimized_to_tray = True
         self.root.withdraw()
-        
+
         if not self.tray_icon:
             self.tray_icon = self._create_tray_icon()
             if self.tray_icon:
                 threading.Thread(target=self.tray_icon.run, daemon=True).start()
-        
+
         self.log_message("Arka planda çalışmaya devam ediyor")
 
     def _handle_window_state(self, event=None):
         """Handle window state changes for tray minimize support."""
         # Check if window is being iconified (minimized)
-        if self.root.state() == 'iconic' and TRAY_AVAILABLE:
+        if self.root.state() == "iconic" and TRAY_AVAILABLE:
             self.root.after(100, self._minimize_to_tray)
 
     def log_message(self, message, level="info"):
