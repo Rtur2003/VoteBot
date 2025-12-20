@@ -880,6 +880,22 @@ window.chrome.runtime = {};
         tk.Button(btns, text="Kapat", command=self.root.destroy).pack(side="left")
 
     def _build_ui(self):
+        if ControlPanelView is None:
+            self.logger.warning("ControlPanelView import failed; using legacy UI")
+            self._build_ui_legacy()
+            return
+        self.root.columnconfigure(0, weight=1)
+        self.root.rowconfigure(0, weight=1)
+
+        main = ControlPanelView(self, self.root)
+        main.grid(row=0, column=0, sticky="nsew")
+        self.main = main
+        self.root.bind("<Configure>", self._on_root_resize)
+        self._set_form_state(False)
+        self._apply_responsive_layout(compact=self.root.winfo_width() < 1200)
+        self.log_message("UI: control panel ready")
+
+    def _build_ui_legacy(self):
         self.root.columnconfigure(0, weight=1)
         self.root.rowconfigure(0, weight=1)
 
