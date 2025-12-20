@@ -1427,10 +1427,10 @@ window.chrome.runtime = {};
                 self.main.rowconfigure(3, weight=1, minsize=250)
                 self.main.rowconfigure(4, weight=0, minsize=80)
                 self.stats_wrapper.grid_configure(row=1, column=0, columnspan=2, padx=(0, 0))
-                self.settings_frame.master.grid_configure(
-                    row=2, column=0, columnspan=2, padx=(0, 0)
-                )
-                self.log_frame.master.grid_configure(row=3, column=0, columnspan=2, padx=(0, 0))
+                if settings_target and _exists(settings_target):
+                    settings_target.grid_configure(row=2, column=0, columnspan=2, padx=(0, 0))
+                if log_target and _exists(log_target):
+                    log_target.grid_configure(row=3, column=0, columnspan=2, padx=(0, 0))
                 self.actions_frame.grid_configure(row=4, column=0, columnspan=2, padx=(0, 0))
             else:
                 self.main.columnconfigure(0, weight=2, minsize=500)
@@ -1441,10 +1441,10 @@ window.chrome.runtime = {};
                 self.main.rowconfigure(3, weight=0, minsize=80)
                 self.main.rowconfigure(4, weight=0)
                 self.stats_wrapper.grid_configure(row=1, column=0, columnspan=2, padx=(0, 0))
-                self.settings_frame.master.grid_configure(
-                    row=2, column=0, columnspan=1, padx=(0, 8)
-                )
-                self.log_frame.master.grid_configure(row=2, column=1, columnspan=1, padx=(8, 0))
+                if settings_target and _exists(settings_target):
+                    settings_target.grid_configure(row=2, column=0, columnspan=1, padx=(0, 8))
+                if log_target and _exists(log_target):
+                    log_target.grid_configure(row=2, column=1, columnspan=1, padx=(8, 0))
                 self.actions_frame.grid_configure(row=3, column=0, columnspan=2, padx=(0, 0))
         except tk.TclError:
             return
