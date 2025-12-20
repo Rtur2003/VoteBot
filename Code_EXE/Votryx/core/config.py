@@ -37,9 +37,9 @@ class ConfigurationManager:
         """
         self.base_dir = base_dir
         self.code_dir = code_dir
+        self.ignored_config_paths: List[Path] = []
         self.config_path = self._find_config_path()
         self.config = self._load_config()
-        self.ignored_config_paths: List[Path] = []
 
     def _find_config_path(self) -> Path:
         """Locate configuration file from candidate paths."""
