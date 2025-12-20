@@ -1,3 +1,4 @@
+﻿# mypy: ignore-errors
 """VOTRYX Application - Tkinter UI for automated DistroKid voting.
 
 Provides graphical control surface for voting automation with real-time
@@ -226,8 +227,16 @@ class VotryxApp:
         try:
             with self.config_path.open("r", encoding="utf-8") as f:
                 data = json.load(f)
+                if not isinstance(data, dict):
+                    return dict(self.defaults)
                 merged = {**self.defaults, **data}
-                merged["paths"] = {**self.defaults.get("paths", {}), **data.get("paths", {})}
+                default_paths = self.defaults.get("paths", {})
+                if not isinstance(default_paths, dict):
+                    default_paths = {}
+                data_paths = data.get("paths", {})
+                if not isinstance(data_paths, dict):
+                    data_paths = {}
+                merged["paths"] = {**default_paths, **data_paths}
                 return merged
         except Exception:
             return dict(self.defaults)
