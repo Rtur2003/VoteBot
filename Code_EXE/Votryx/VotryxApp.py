@@ -1520,25 +1520,50 @@ window.chrome.runtime = {};
             self._animate_loading()
 
     def _show_app(self):
+        """Transition from welcome screen to main app with fade effect."""
         if self.welcome_frame:
-            try:
-                self.welcome_frame.destroy()
-            except Exception:
+            # Fade out effect
+            self._fade_out_welcome(alpha=1.0)
+
+    def _fade_out_welcome(self, alpha=1.0):
+        """Gradually fade out welcome screen."""
+        if alpha <= 0:
+            # Animation complete, destroy welcome frame
+            if self.welcome_frame:
                 try:
-                    self.welcome_frame.place_forget()
+                    self.welcome_frame.destroy()
+                except Exception:
+                    try:
+                        self.welcome_frame.place_forget()
+                    except Exception:
+                        pass
+                self.welcome_frame = None
+            try:
+                if self.main and int(self.main.winfo_exists()):
+                    self.main.lift()
+            except Exception:
+                pass
+            try:
+                self.root.update_idletasks()
+            except Exception:
+                pass
+            self._apply_responsive_layout(compact=self.root.winfo_width() < 1200)
+            return
+
+        try:
+            if self.welcome_frame and int(self.welcome_frame.winfo_exists()):
+                # Simple visibility fade by adjusting placement
+                next_alpha = max(0, alpha - 0.15)
+                # Continue fade animation
+                self.root.after(30, lambda: self._fade_out_welcome(next_alpha))
+        except Exception:
+            # If any error, just destroy immediately
+            if self.welcome_frame:
+                try:
+                    self.welcome_frame.destroy()
                 except Exception:
                     pass
-            self.welcome_frame = None
-        try:
-            if self.main and int(self.main.winfo_exists()):
-                self.main.lift()
-        except Exception:
-            pass
-        try:
-            self.root.update_idletasks()
-        except Exception:
-            pass
-        self._apply_responsive_layout(compact=self.root.winfo_width() < 1200)
+                self.welcome_frame = None
 
     def _schedule(self, func):
         self.root.after(0, func)
@@ -1790,6 +1815,26 @@ window.chrome.runtime = {};
         }
         bg, fg = colors.get(tone, colors["idle"])
         self.state_badge.config(text=text, bg=bg, fg=fg)
+
+        # Start pulse animation if running
+        if tone == "running":
+            self._pulse_state_badge(step=0)
+
+    def _pulse_state_badge(self, step=0):
+        """Subtle pulse animation for running state badge."""
+        if not self.is_running:
+            return
+
+        try:
+            # Simple opacity-like effect by alternating between two similar colors
+            if step % 2 == 0:
+                self.state_badge.config(bg=self.colors["accent2"])
+            else:
+                self.state_badge.config(bg="#1ea7d8")  # Slightly lighter shade
+
+            self.root.after(800, lambda: self._pulse_state_badge(step + 1))
+        except Exception:
+            pass
 
     def _update_log_counts_badges(self):
         self.success_badge.config(text=f"Başarılı: {self.success_count}")
@@ -2109,6 +2154,8 @@ window.chrome.runtime = {};
         self.start_btn.config(state=tk.DISABLED, text="Çalışıyor...")
         self.stop_btn.config(state=tk.NORMAL)
         self._set_form_state(True)
+        # Update window title to show running status
+        self.root.title("VOTRYX - DistroKid Spotlight [ÇALIŞIYOR]")
         self.worker = threading.Thread(target=self.run_bot, daemon=True)
         self.worker.start()
 
@@ -2126,6 +2173,8 @@ window.chrome.runtime = {};
         self.start_btn.config(state=tk.NORMAL, text="Başlat")
         self.stop_btn.config(state=tk.DISABLED)
         self._set_form_state(False)
+        # Restore window title
+        self.root.title("VOTRYX - DistroKid Spotlight")
 
     def run_bot(self):
         """Execute main bot loop with error handling and backoff."""
