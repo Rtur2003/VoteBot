@@ -2062,6 +2062,8 @@ window.chrome.runtime = {};
     def toggle_errors_only(self):
         """Toggle error-only filter for log display."""
         self._render_log()
+        state = "on" if self.errors_only_var.get() else "off"
+        self._log_action("toggle_errors_only", state)
 
     def _resolve_driver_path(self):
         candidates = []
