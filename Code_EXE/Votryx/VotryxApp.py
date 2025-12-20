@@ -1575,16 +1575,26 @@ window.chrome.runtime = {};
             self._show_main()
 
     def _schedule(self, func):
-        self.root.after(0, func)
+        if not self.ui_ready:
+            return
+        try:
+            self.root.after(0, func)
+        except tk.TclError:
+            pass
 
     def _update_runtime(self):
+        if not self.ui_ready:
+            return
         if self.start_time and self.is_running:
             elapsed = time.time() - self.start_time
             hours = int(elapsed // 3600)
             minutes = int((elapsed % 3600) // 60)
             seconds = int(elapsed % 60)
             self.runtime_label.config(text=f"{hours:02d}:{minutes:02d}:{seconds:02d}")
-        self.root.after(1000, self._update_runtime)
+        try:
+            self.root.after(1000, self._update_runtime)
+        except tk.TclError:
+            pass
 
     def _create_temp_profile_dir(self):
         try:
