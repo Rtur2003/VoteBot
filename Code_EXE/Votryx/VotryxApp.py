@@ -124,6 +124,10 @@ class VotryxApp:
         self.welcome_frame = None
         self.hero_image = None
         self.ui_ready = False
+        self._resize_job = None
+        self._pending_compact = None
+        self._layout_breakpoint = 1200
+        self._layout_hysteresis = 40
 
         self.is_running = False
         self.vote_count = 0
@@ -213,7 +217,9 @@ class VotryxApp:
             self._build_boot_error_screen(exc, tb)
             return
         self.ui_ready = True
-        self._apply_responsive_layout(compact=self.root.winfo_width() < 1200)
+        self._apply_responsive_layout(
+            compact=self._resolve_compact_layout(self.root.winfo_width())
+        )
         if self.log_dir_warning:
             self.log_message(self.log_dir_warning, level="info")
         self._set_state_badge("Bekliyor", "idle")
@@ -893,7 +899,9 @@ window.chrome.runtime = {};
         self.main = main
         self.root.bind("<Configure>", self._on_root_resize)
         self._set_form_state(False)
-        self._apply_responsive_layout(compact=self.root.winfo_width() < 1200)
+        self._apply_responsive_layout(
+            compact=self._resolve_compact_layout(self.root.winfo_width())
+        )
         self.log_message("UI: control panel ready")
 
     def _build_ui_legacy(self):
@@ -1383,6 +1391,16 @@ window.chrome.runtime = {};
             self.status_label = label
         elif key == "runtime":
             self.runtime_label = label
+
+    def _resolve_compact_layout(self, width):
+        if width is None or width <= 0:
+            return bool(getattr(self, "_is_compact_layout", True))
+        current = getattr(self, "_is_compact_layout", None)
+        if current is None:
+            return width < self._layout_breakpoint
+        if current:
+            return width < (self._layout_breakpoint + self._layout_hysteresis)
+        return width < (self._layout_breakpoint - self._layout_hysteresis)
 
     def _apply_responsive_layout(self, compact: bool):
         def _exists(widget) -> bool:
