@@ -10,6 +10,26 @@ from Code_EXE.Votryx.core.config import ConfigurationManager
 class TestConfigurationManager:
     """Test suite for ConfigurationManager."""
 
+    def test_multiple_config_files_tracks_ignored_paths(self):
+        """Track ignored config paths when multiple candidates exist."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            base_dir = Path(tmpdir)
+            code_dir = base_dir / "code"
+            code_dir.mkdir()
+
+            base_config_path = base_dir / "config.json"
+            code_config_path = code_dir / "config.json"
+
+            with open(base_config_path, "w") as f:
+                json.dump({"batch_size": 2}, f)
+            with open(code_config_path, "w") as f:
+                json.dump({"batch_size": 3}, f)
+
+            manager = ConfigurationManager(base_dir, code_dir)
+
+            assert manager.config_path == base_config_path
+            assert manager.ignored_config_paths == [code_config_path]
+
     def test_default_config_loaded_when_file_missing(self):
         """Test that default configuration is loaded when file doesn't exist."""
         with tempfile.TemporaryDirectory() as tmpdir:
