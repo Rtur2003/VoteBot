@@ -1647,37 +1647,47 @@ window.chrome.runtime = {};
             shutil.rmtree(self.temp_root, ignore_errors=True)
 
     def _create_tray_icon(self):
-        """Create system tray icon for background operation."""
+        """Create system tray icon for background operation.
+
+        Returns:
+            pystray.Icon instance or None if unavailable or creation fails
+        """
         if not TRAY_AVAILABLE:
             return None
 
-        # Create a simple icon image
-        icon_size = 64
-        image = Image.new("RGB", (icon_size, icon_size), self.colors["bg"])
-        draw = ImageDraw.Draw(image)
+        try:
+            # Create a simple icon image
+            icon_size = 64
+            image = Image.new("RGB", (icon_size, icon_size), self.colors["bg"])
+            draw = ImageDraw.Draw(image)
 
-        # Draw a simple circular icon with brand colors
-        draw.ellipse(
-            [4, 4, icon_size - 4, icon_size - 4],
-            fill=self.colors["card"],
-            outline=self.colors["accent2"],
-        )
-        draw.arc(
-            [4, 4, icon_size - 4, icon_size - 4],
-            start=35,
-            end=275,
-            fill=self.colors["accent"],
-            width=8,
-        )
+            # Draw a simple circular icon with brand colors
+            draw.ellipse(
+                [4, 4, icon_size - 4, icon_size - 4],
+                fill=self.colors["card"],
+                outline=self.colors["accent2"],
+            )
+            draw.arc(
+                [4, 4, icon_size - 4, icon_size - 4],
+                start=35,
+                end=275,
+                fill=self.colors["accent"],
+                width=8,
+            )
 
-        # Create menu
-        menu = pystray.Menu(
-            pystray.MenuItem("Göster", self._show_from_tray, default=True),
-            pystray.MenuItem("Durdur" if self.is_running else "Başlat", self._toggle_bot_from_tray),
-            pystray.MenuItem("Çıkış", self._quit_from_tray),
-        )
+            # Create menu
+            menu = pystray.Menu(
+                pystray.MenuItem("Göster", self._show_from_tray, default=True),
+                pystray.MenuItem(
+                    "Durdur" if self.is_running else "Başlat", self._toggle_bot_from_tray
+                ),
+                pystray.MenuItem("Çıkış", self._quit_from_tray),
+            )
 
-        return pystray.Icon("votryx", image, "VOTRYX", menu)
+            return pystray.Icon("votryx", image, "VOTRYX", menu)
+        except Exception as exc:
+            self.logger.warning("Tray icon oluşturulamadı: %s", exc)
+            return None
 
     def _show_from_tray(self, icon=None, item=None):
         """Show window from system tray."""
@@ -1698,26 +1708,54 @@ window.chrome.runtime = {};
         self.root.after(0, self.on_close)
 
     def _minimize_to_tray(self):
-        """Minimize window to system tray."""
+        """Minimize window to system tray.
+
+        If system tray is not available, logs an error and returns without action.
+        Creates tray icon on first minimization.
+        """
         if not TRAY_AVAILABLE:
             self.log_message("Sistem tepsisi desteği yok (pystray yüklenmemiş)", level="error")
             return
 
-        self.is_minimized_to_tray = True
-        self.root.withdraw()
+        try:
+            self.is_minimized_to_tray = True
+            self.root.withdraw()
 
-        if not self.tray_icon:
-            self.tray_icon = self._create_tray_icon()
-            if self.tray_icon:
-                threading.Thread(target=self.tray_icon.run, daemon=True).start()
+            if not self.tray_icon:
+                self.tray_icon = self._create_tray_icon()
+                if self.tray_icon:
+                    threading.Thread(target=self.tray_icon.run, daemon=True).start()
+                else:
+                    self.log_message("Tray icon oluşturulamadı", level="error")
+                    # Restore window if tray icon creation failed
+                    self.is_minimized_to_tray = False
+                    self.root.deiconify()
+                    return
 
-        self.log_message("Arka planda çalışmaya devam ediyor")
+            self.log_message("Arka planda çalışmaya devam ediyor")
+        except Exception as exc:
+            self.logger.exception("Tray minimize hatası", exc_info=exc)
+            self.log_message(f"Arka plana geçilemedi: {exc}", level="error")
+            # Restore window on error
+            self.is_minimized_to_tray = False
+            try:
+                self.root.deiconify()
+            except Exception:
+                pass
 
     def _handle_window_state(self, event=None):
-        """Handle window state changes for tray minimize support."""
-        # Check if window is being iconified (minimized)
-        if self.root.state() == "iconic" and TRAY_AVAILABLE:
-            self.root.after(100, self._minimize_to_tray)
+        """Handle window state changes for tray minimize support.
+
+        Args:
+            event: Tkinter event (optional)
+        """
+        try:
+            # Check if window is being iconified (minimized)
+            if self.root.state() == "iconic" and TRAY_AVAILABLE:
+                self.root.after(100, self._minimize_to_tray)
+        except Exception as exc:
+            # Silently fail for window state checks to avoid UI disruption
+            self.logger.debug("Window state check hatası: %s", exc)
 
     def log_message(self, message, level="info"):
         """Add message to application log with timestamp.
@@ -1726,6 +1764,14 @@ window.chrome.runtime = {};
             message: Log message text
             level: Severity level (info, success, error)
         """
+        # Guard: validate message is not None
+        if message is None:
+            message = ""
+
+        # Guard: validate level is in allowed values
+        if level not in ("info", "success", "error"):
+            level = "info"
+
         timestamp = datetime.now().strftime("%H:%M:%S")
 
         def append():
@@ -1752,6 +1798,9 @@ window.chrome.runtime = {};
             text: Status message to display
             tone: Visual styling (running, idle, error, success)
         """
+        # Guard: validate text is not None
+        if text is None:
+            text = "Bekliyor"
 
         def apply():
             self.status_label.config(text=text)
