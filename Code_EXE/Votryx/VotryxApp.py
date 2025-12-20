@@ -1781,11 +1781,14 @@ window.chrome.runtime = {};
 
     def _show_from_tray(self, icon=None, item=None):
         """Show window from system tray."""
+        self._log_action("tray_show")
         self.is_minimized_to_tray = False
         self.root.after(0, lambda: (self.root.deiconify(), self.root.focus_force()))
 
     def _toggle_bot_from_tray(self, icon=None, item=None):
         """Toggle bot state from system tray."""
+        target = "stop" if self.is_running else "start"
+        self._log_action("tray_toggle", target)
         if self.is_running:
             self.root.after(0, self.stop_bot)
         else:
@@ -1793,6 +1796,7 @@ window.chrome.runtime = {};
 
     def _quit_from_tray(self, icon=None, item=None):
         """Quit application from system tray."""
+        self._log_action("tray_quit")
         if self.tray_icon:
             self.tray_icon.stop()
         self.root.after(0, self.on_close)
