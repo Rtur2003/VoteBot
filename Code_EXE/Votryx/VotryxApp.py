@@ -887,9 +887,7 @@ window.chrome.runtime = {};
 
     def _build_ui(self):
         if ControlPanelView is None:
-            self.logger.warning("ControlPanelView import failed; using legacy UI")
-            self._build_ui_legacy()
-            return
+            raise RuntimeError("ControlPanelView import failed")
         self.root.columnconfigure(0, weight=1)
         self.root.rowconfigure(0, weight=1)
 
