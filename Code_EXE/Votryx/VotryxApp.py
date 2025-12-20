@@ -8,6 +8,7 @@ status updates, configurable parameters, and comprehensive logging.
 import atexit
 import json
 import logging
+import math
 import os
 import platform
 import random
@@ -157,7 +158,30 @@ class VotryxApp:
         }
 
         try:
-            self.brand_icon = self._build_icon_image()
+            self.brand_icon = None
+            icon_candidates = [
+                self.base_dir / "docs" / "screenshots" / "votryx-logo-transparent.png",
+                self.base_dir / "docs" / "screenshots" / "votryx-logo-2-transparent.png",
+                self.base_dir / "docs" / "screenshots" / "votryx-logo-3-dark.png",
+                self.base_dir / "docs" / "screenshots" / "votryx-logo-4.png.png",
+            ]
+            for candidate in icon_candidates:
+                if not candidate.exists():
+                    continue
+                try:
+                    icon = tk.PhotoImage(file=str(candidate))
+                    width = int(icon.width())
+                    height = int(icon.height())
+                    scale = max(1, math.ceil(max(width, height) / 48))
+                    if scale > 1:
+                        icon = icon.subsample(scale, scale)
+                    self.brand_icon = icon
+                    break
+                except Exception:
+                    continue
+
+            if not self.brand_icon:
+                self.brand_icon = self._build_icon_image()
             self.root.iconphoto(False, self.brand_icon)
         except Exception as exc:
             self.brand_icon = None
@@ -393,11 +417,21 @@ window.chrome.runtime = {};
             self.base_dir / "docs" / "screenshots" / "votryx-logo-transparent.png",
             self.base_dir / "docs" / "screenshots" / "votryx-logo-2-transparent.png",
             self.base_dir / "docs" / "screenshots" / "votryx-logo-3-dark.png",
+            self.base_dir / "docs" / "screenshots" / "votryx-logo-4.png.png",
         ]
         for candidate in candidates:
             if candidate.exists():
                 try:
-                    return tk.PhotoImage(file=str(candidate))
+                    image = tk.PhotoImage(file=str(candidate))
+                    try:
+                        width = int(image.width())
+                        height = int(image.height())
+                        scale = max(1, math.ceil(max(width, height) / 96))
+                        if scale > 1:
+                            image = image.subsample(scale, scale)
+                    except Exception:
+                        pass
+                    return image
                 except Exception as exc:
                     self.logger.warning("Logo '%s' yüklenemedi: %s", candidate.name, exc)
         return None
