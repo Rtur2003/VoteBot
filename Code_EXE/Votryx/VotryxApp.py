@@ -1362,8 +1362,6 @@ window.chrome.runtime = {};
         self.log_frame = log_frame
         self._set_form_state(False)
         self._apply_responsive_layout(compact=self.root.winfo_width() < 1200)
-        self._build_welcome_overlay()
-        self._show_welcome()
 
     def _make_stat_card(self, parent, row, col, title, value, key):
         card = ttk.Frame(parent, style="Card.TFrame", padding=14)
