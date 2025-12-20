@@ -2294,6 +2294,7 @@ window.chrome.runtime = {};
 
     def start_bot(self):
         """Start voting automation in background thread."""
+        self._log_action("start_bot")
         if self.is_running:
             return
         if not self._update_settings_from_form(persist=True, notify=False):
@@ -2319,6 +2320,7 @@ window.chrome.runtime = {};
 
     def stop_bot(self):
         """Stop voting automation and cleanup resources."""
+        self._log_action("stop_bot")
         if not self.is_running:
             return
         self.log_message("Bot durduruluyor...")
