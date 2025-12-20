@@ -1523,6 +1523,7 @@ window.chrome.runtime = {};
 
     def _show_welcome(self):
         if self.welcome_frame:
+            self.log_message("UI: welcome ekrani gosterildi")
             try:
                 self.welcome_frame.grid()
                 self.welcome_frame.tkraise()
@@ -1532,13 +1533,16 @@ window.chrome.runtime = {};
 
     def _show_app(self):
         """Transition from welcome screen to main app."""
-        if self.welcome_frame:
-            self._fade_out_welcome(alpha=1.0)
-        else:
-            self._show_main()
+        self.log_message("UI: kontrol paneli gecisi baslatildi")
+        self._show_main()
+        try:
+            self.root.after(600, self._ensure_main_visible)
+        except tk.TclError:
+            pass
 
     def _show_main(self):
         """Show the main control panel and remove the welcome overlay."""
+        self.log_message("UI: kontrol paneli gorunur hale getiriliyor")
         if self.welcome_frame:
             try:
                 self.welcome_frame.destroy()
@@ -1550,6 +1554,7 @@ window.chrome.runtime = {};
             self.welcome_frame = None
         try:
             if self.main and self.main.winfo_exists():
+                self.main.grid()
                 self.main.tkraise()
         except Exception:
             pass
@@ -1558,6 +1563,23 @@ window.chrome.runtime = {};
         except Exception:
             pass
         self._apply_responsive_layout(compact=self.root.winfo_width() < 1200)
+
+    def _ensure_main_visible(self):
+        if not self.ui_ready:
+            return
+        main_visible = False
+        try:
+            if self.main and self.main.winfo_exists():
+                main_visible = bool(self.main.winfo_ismapped())
+        except Exception:
+            main_visible = False
+        if self.welcome_frame and self.welcome_frame.winfo_exists():
+            self.log_message("UI: welcome ekrani kaldiriliyor (watchdog)", level="error")
+            self._show_main()
+            return
+        if not main_visible:
+            self.log_message("UI: panel gorunur degil, yeniden gosteriliyor", level="error")
+            self._show_main()
 
     def _fade_out_welcome(self, alpha=1.0):
         """Gradually fade out welcome screen."""
