@@ -1362,7 +1362,7 @@ window.chrome.runtime = {};
             if not widget:
                 return False
             try:
-                return bool(int(widget.winfo_exists()))
+                return bool(widget.winfo_exists())
             except Exception:
                 return False
 
@@ -1506,7 +1506,7 @@ window.chrome.runtime = {};
             return
 
         try:
-            if self.welcome_frame and int(self.welcome_frame.winfo_exists()):
+            if self.welcome_frame and self.welcome_frame.winfo_exists():
                 dots = "." * (step % 4)
                 self.loading_label.config(text=f"Hazırlanıyor{dots}")
                 self.root.after(400, lambda: self._animate_loading(step + 1))
@@ -1539,7 +1539,7 @@ window.chrome.runtime = {};
                         pass
                 self.welcome_frame = None
             try:
-                if self.main and int(self.main.winfo_exists()):
+                if self.main and self.main.winfo_exists():
                     self.main.lift()
             except Exception:
                 pass
@@ -1551,7 +1551,7 @@ window.chrome.runtime = {};
             return
 
         try:
-            if self.welcome_frame and int(self.welcome_frame.winfo_exists()):
+            if self.welcome_frame and self.welcome_frame.winfo_exists():
                 # Simple visibility fade by adjusting placement
                 next_alpha = max(0, alpha - 0.15)
                 # Continue fade animation
@@ -1656,38 +1656,55 @@ window.chrome.runtime = {};
             return None
 
         try:
+            # Fallback colors in case UI hasn't initialized
+            colors = getattr(
+                self,
+                "colors",
+                {
+                    "bg": "#0b1224",
+                    "card": "#13213b",
+                    "accent2": "#23c4ff",
+                    "accent": "#ff7a1a",
+                },
+            )
+
             # Create a simple icon image
             icon_size = 64
-            image = Image.new("RGB", (icon_size, icon_size), self.colors["bg"])
+            image = Image.new("RGB", (icon_size, icon_size), colors.get("bg", "#0b1224"))
             draw = ImageDraw.Draw(image)
 
             # Draw a simple circular icon with brand colors
             draw.ellipse(
                 [4, 4, icon_size - 4, icon_size - 4],
-                fill=self.colors["card"],
-                outline=self.colors["accent2"],
+                fill=colors.get("card", "#13213b"),
+                outline=colors.get("accent2", "#23c4ff"),
             )
             draw.arc(
                 [4, 4, icon_size - 4, icon_size - 4],
                 start=35,
                 end=275,
-                fill=self.colors["accent"],
+                fill=colors.get("accent", "#ff7a1a"),
                 width=8,
             )
 
-            # Create menu
-            menu = pystray.Menu(
-                pystray.MenuItem("Göster", self._show_from_tray, default=True),
-                pystray.MenuItem(
-                    "Durdur" if self.is_running else "Başlat", self._toggle_bot_from_tray
-                ),
-                pystray.MenuItem("Çıkış", self._quit_from_tray),
-            )
-
+            # Create menu with current state
+            menu = self._create_tray_menu()
             return pystray.Icon("votryx", image, "VOTRYX", menu)
         except Exception as exc:
             self.logger.warning("Tray icon oluşturulamadı: %s", exc)
             return None
+
+    def _create_tray_menu(self):
+        """Create tray icon menu with current bot state.
+
+        Returns:
+            pystray.Menu instance
+        """
+        return pystray.Menu(
+            pystray.MenuItem("Göster", self._show_from_tray, default=True),
+            pystray.MenuItem("Durdur" if self.is_running else "Başlat", self._toggle_bot_from_tray),
+            pystray.MenuItem("Çıkış", self._quit_from_tray),
+        )
 
     def _show_from_tray(self, icon=None, item=None):
         """Show window from system tray."""
