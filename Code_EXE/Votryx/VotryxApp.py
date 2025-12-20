@@ -1295,37 +1295,54 @@ window.chrome.runtime = {};
             self.runtime_label = label
 
     def _apply_responsive_layout(self, compact: bool):
+        def _exists(widget) -> bool:
+            if not widget:
+                return False
+            try:
+                return bool(int(widget.winfo_exists()))
+            except Exception:
+                return False
+
         if not self.ui_ready or not all(
-            [self.main, self.stats_wrapper, self.settings_frame, self.log_frame, self.actions_frame]
+            [
+                _exists(self.main),
+                _exists(self.stats_wrapper),
+                _exists(self.settings_frame),
+                _exists(self.log_frame),
+                _exists(self.actions_frame),
+            ]
         ):
             return
         if getattr(self, "_is_compact_layout", None) == compact:
             return
         self._is_compact_layout = compact
-        if compact:
-            self.main.columnconfigure(0, weight=1)
-            self.main.columnconfigure(1, weight=0)
-            self.main.rowconfigure(0, weight=0, minsize=120)
-            self.main.rowconfigure(1, weight=0, minsize=140)
-            self.main.rowconfigure(2, weight=1, minsize=250)
-            self.main.rowconfigure(3, weight=1, minsize=250)
-            self.main.rowconfigure(4, weight=0, minsize=80)
-            self.stats_wrapper.grid_configure(row=1, column=0, columnspan=2, padx=(0, 0))
-            self.settings_frame.master.grid_configure(row=2, column=0, columnspan=2, padx=(0, 0))
-            self.log_frame.master.grid_configure(row=3, column=0, columnspan=2, padx=(0, 0))
-            self.actions_frame.grid_configure(row=4, column=0, columnspan=2, padx=(0, 0))
-        else:
-            self.main.columnconfigure(0, weight=2, minsize=500)
-            self.main.columnconfigure(1, weight=1, minsize=350)
-            self.main.rowconfigure(0, weight=0, minsize=120)
-            self.main.rowconfigure(1, weight=0, minsize=140)
-            self.main.rowconfigure(2, weight=1, minsize=300)
-            self.main.rowconfigure(3, weight=0, minsize=80)
-            self.main.rowconfigure(4, weight=0)
-            self.stats_wrapper.grid_configure(row=1, column=0, columnspan=2, padx=(0, 0))
-            self.settings_frame.master.grid_configure(row=2, column=0, columnspan=1, padx=(0, 8))
-            self.log_frame.master.grid_configure(row=2, column=1, columnspan=1, padx=(8, 0))
-            self.actions_frame.grid_configure(row=3, column=0, columnspan=2, padx=(0, 0))
+        try:
+            if compact:
+                self.main.columnconfigure(0, weight=1)
+                self.main.columnconfigure(1, weight=0)
+                self.main.rowconfigure(0, weight=0, minsize=120)
+                self.main.rowconfigure(1, weight=0, minsize=140)
+                self.main.rowconfigure(2, weight=1, minsize=250)
+                self.main.rowconfigure(3, weight=1, minsize=250)
+                self.main.rowconfigure(4, weight=0, minsize=80)
+                self.stats_wrapper.grid_configure(row=1, column=0, columnspan=2, padx=(0, 0))
+                self.settings_frame.master.grid_configure(row=2, column=0, columnspan=2, padx=(0, 0))
+                self.log_frame.master.grid_configure(row=3, column=0, columnspan=2, padx=(0, 0))
+                self.actions_frame.grid_configure(row=4, column=0, columnspan=2, padx=(0, 0))
+            else:
+                self.main.columnconfigure(0, weight=2, minsize=500)
+                self.main.columnconfigure(1, weight=1, minsize=350)
+                self.main.rowconfigure(0, weight=0, minsize=120)
+                self.main.rowconfigure(1, weight=0, minsize=140)
+                self.main.rowconfigure(2, weight=1, minsize=300)
+                self.main.rowconfigure(3, weight=0, minsize=80)
+                self.main.rowconfigure(4, weight=0)
+                self.stats_wrapper.grid_configure(row=1, column=0, columnspan=2, padx=(0, 0))
+                self.settings_frame.master.grid_configure(row=2, column=0, columnspan=1, padx=(0, 8))
+                self.log_frame.master.grid_configure(row=2, column=1, columnspan=1, padx=(8, 0))
+                self.actions_frame.grid_configure(row=3, column=0, columnspan=2, padx=(0, 0))
+        except tk.TclError:
+            return
 
     def _on_root_resize(self, event):
         if not self.ui_ready:
@@ -2253,6 +2270,7 @@ window.chrome.runtime = {};
 
     def on_close(self):
         """Handle application close event with cleanup."""
+        self.ui_ready = False
         self.stop_bot()
         self._cleanup_temp_profiles()
         self.root.destroy()
