@@ -2658,6 +2658,7 @@ window.chrome.runtime = {};
 
     def open_logs(self):
         """Open log directory in system file browser."""
+        self._log_action("open_logs")
         try:
             if platform.system() == "Windows" and hasattr(os, "startfile"):
                 os.startfile(self.log_dir)
@@ -2670,6 +2671,7 @@ window.chrome.runtime = {};
 
     def on_close(self):
         """Handle application close event with cleanup."""
+        self._log_action("app_close")
         self.ui_ready = False
         if self.tray_icon:
             try:
