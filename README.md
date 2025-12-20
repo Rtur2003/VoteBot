@@ -181,6 +181,7 @@ git push -u origin main
 ```
 
 ## Brand Assets
+- Gallery: `docs/screenshots/GALLERY.md`
 - Primary banner: `docs/screenshots/votryx-banner-dark.png`
 - Secondary banner (optional): `docs/screenshots/votryx-banner-2-dark.png`
 - Logos: `docs/screenshots/votryx-logo-transparent.png`, `docs/screenshots/votryx-logo-transparent.svg`, `docs/screenshots/votryx-logo-3-dark.png`, `docs/screenshots/votryx-logo-4.png.png`
