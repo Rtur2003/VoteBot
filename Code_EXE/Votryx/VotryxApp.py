@@ -1426,6 +1426,8 @@ window.chrome.runtime = {};
             ]
         ):
             return
+        self._resize_job = None
+        self._pending_compact = None
         if getattr(self, "_is_compact_layout", None) == compact:
             return
         self._is_compact_layout = compact
@@ -1466,7 +1468,21 @@ window.chrome.runtime = {};
     def _on_root_resize(self, event):
         if not self.ui_ready:
             return
-        self._apply_responsive_layout(compact=event.width < 1200)
+        width = getattr(event, "width", None)
+        compact = self._resolve_compact_layout(width)
+        if compact == getattr(self, "_is_compact_layout", None):
+            return
+        if self._pending_compact == compact:
+            return
+        self._pending_compact = compact
+        if self._resize_job is not None:
+            try:
+                self.root.after_cancel(self._resize_job)
+            except Exception:
+                pass
+        self._resize_job = self.root.after(
+            120, lambda: self._apply_responsive_layout(compact=compact)
+        )
 
     def _build_welcome_overlay(self):
         if self.welcome_frame:
