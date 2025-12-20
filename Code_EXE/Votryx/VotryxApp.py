@@ -34,6 +34,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
+try:
+    import pystray
+    from PIL import Image, ImageDraw
+    TRAY_AVAILABLE = True
+except ImportError:
+    TRAY_AVAILABLE = False
+
 
 class VotryxApp:
     """Main application class for VOTRYX voting automation UI.
@@ -129,6 +136,8 @@ class VotryxApp:
         self.errors_only_var = tk.BooleanVar(value=False)
         self.random_ua_var = tk.BooleanVar(value=self.use_random_user_agent)
         self.block_images_var = tk.BooleanVar(value=self.block_images)
+        self.tray_icon = None
+        self.is_minimized_to_tray = False
 
         self.log_dir, self.log_dir_warning = self._resolve_logs_dir()
         self.logger = self._build_logger()
@@ -203,6 +212,8 @@ class VotryxApp:
             self.log_message(self.log_dir_warning, level="info")
         self._set_state_badge("Bekliyor", "idle")
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
+        if TRAY_AVAILABLE:
+            self.root.bind("<Unmap>", self._handle_window_state)
         self._update_runtime()
 
     def _make_maximized(self):
@@ -1215,7 +1226,7 @@ window.chrome.runtime = {};
         self.actions_frame.columnconfigure(0, weight=1)
         controls = ttk.Frame(self.actions_frame, style="Panel.TFrame", padding=(0, 0))
         controls.grid(row=0, column=0, sticky="ew")
-        controls.columnconfigure((0, 1, 2, 3, 4), weight=1)
+        controls.columnconfigure((0, 1, 2, 3, 4, 5), weight=1)
 
         self.start_btn = ttk.Button(
             controls, text="Başlat", command=self.start_bot, style="Accent.TButton"
@@ -1241,6 +1252,13 @@ window.chrome.runtime = {};
             controls, text="Sayaclari sifirla", command=self.reset_counters, style="Ghost.TButton"
         )
         self.reset_btn.grid(row=0, column=4, padx=6, pady=6, sticky="ew", ipady=4)
+        
+        # Add minimize to tray button if available
+        if TRAY_AVAILABLE:
+            self.tray_btn = ttk.Button(
+                controls, text="Gizle (Arka Plan)", command=self._minimize_to_tray, style="Outline.TButton"
+            )
+            self.tray_btn.grid(row=0, column=5, padx=6, pady=6, sticky="ew", ipady=4)
 
         log_frame = ttk.LabelFrame(log_shell, text="Log", style="Panel.TFrame", padding=12)
         log_frame.grid(row=0, column=0, sticky="nsew")
@@ -1439,6 +1457,7 @@ window.chrome.runtime = {};
             "Chromedriver/Chrome ön kontrol, batch/parallel oy",
             "Loglama, ekran görüntüsü, backoff ve zaman aşımı korumaları",
             "Sekmeli ayarlar, gelişmiş UA ve selector yönetimi",
+            "Arka plan çalışma desteği - gizle ve çalışmaya devam et" if TRAY_AVAILABLE else "Arka plan çalışma desteği yüklenmedi",
         ]
         for idx, text in enumerate(bullets):
             ttk.Label(
@@ -1457,11 +1476,38 @@ window.chrome.runtime = {};
             info, text="Log klasörünü aç", style="Ghost.TButton", command=self.open_logs
         )
         sub.grid(row=3 + len(bullets), column=0, sticky="w", pady=(0, 6), ipady=4)
+        
+        # Add loading indicator
+        loading_frame = ttk.Frame(info, style="Main.TFrame")
+        loading_frame.grid(row=4 + len(bullets), column=0, sticky="w", pady=(20, 0))
+        
+        self.loading_label = ttk.Label(
+            loading_frame,
+            text="",
+            foreground=self.colors["accent2"],
+            background=self.colors["bg"],
+            font=("Segoe UI", 9),
+        )
+        self.loading_label.pack()
+
+    def _animate_loading(self, step=0):
+        """Animate loading dots on welcome screen."""
+        if not hasattr(self, 'loading_label'):
+            return
+        
+        try:
+            if self.welcome_frame and int(self.welcome_frame.winfo_exists()):
+                dots = "." * (step % 4)
+                self.loading_label.config(text=f"Hazırlanıyor{dots}")
+                self.root.after(400, lambda: self._animate_loading(step + 1))
+        except Exception:
+            pass
 
     def _show_welcome(self):
         if self.welcome_frame:
             self.welcome_frame.lift()
             self.welcome_frame.place(relx=0, rely=0, relwidth=1, relheight=1)
+            self._animate_loading()
 
     def _show_app(self):
         if self.welcome_frame:
@@ -1564,6 +1610,69 @@ window.chrome.runtime = {};
             self._discard_profile_dir(path)
         if self.temp_root.exists():
             shutil.rmtree(self.temp_root, ignore_errors=True)
+
+    def _create_tray_icon(self):
+        """Create system tray icon for background operation."""
+        if not TRAY_AVAILABLE:
+            return None
+
+        # Create a simple icon image
+        icon_size = 64
+        image = Image.new('RGB', (icon_size, icon_size), self.colors["bg"])
+        draw = ImageDraw.Draw(image)
+        
+        # Draw a simple circular icon with brand colors
+        draw.ellipse([4, 4, icon_size-4, icon_size-4], fill=self.colors["card"], outline=self.colors["accent2"])
+        draw.arc([4, 4, icon_size-4, icon_size-4], start=35, end=275, fill=self.colors["accent"], width=8)
+        
+        # Create menu
+        menu = pystray.Menu(
+            pystray.MenuItem("Göster", self._show_from_tray, default=True),
+            pystray.MenuItem("Durdur" if self.is_running else "Başlat", self._toggle_bot_from_tray),
+            pystray.MenuItem("Çıkış", self._quit_from_tray)
+        )
+        
+        return pystray.Icon("votryx", image, "VOTRYX", menu)
+
+    def _show_from_tray(self, icon=None, item=None):
+        """Show window from system tray."""
+        self.is_minimized_to_tray = False
+        self.root.after(0, lambda: (self.root.deiconify(), self.root.focus_force()))
+
+    def _toggle_bot_from_tray(self, icon=None, item=None):
+        """Toggle bot state from system tray."""
+        if self.is_running:
+            self.root.after(0, self.stop_bot)
+        else:
+            self.root.after(0, self.start_bot)
+
+    def _quit_from_tray(self, icon=None, item=None):
+        """Quit application from system tray."""
+        if self.tray_icon:
+            self.tray_icon.stop()
+        self.root.after(0, self.on_close)
+
+    def _minimize_to_tray(self):
+        """Minimize window to system tray."""
+        if not TRAY_AVAILABLE:
+            self.log_message("Sistem tepsisi desteği yok (pystray yüklenmemiş)", level="error")
+            return
+
+        self.is_minimized_to_tray = True
+        self.root.withdraw()
+        
+        if not self.tray_icon:
+            self.tray_icon = self._create_tray_icon()
+            if self.tray_icon:
+                threading.Thread(target=self.tray_icon.run, daemon=True).start()
+        
+        self.log_message("Arka planda çalışmaya devam ediyor")
+
+    def _handle_window_state(self, event=None):
+        """Handle window state changes for tray minimize support."""
+        # Check if window is being iconified (minimized)
+        if self.root.state() == 'iconic' and TRAY_AVAILABLE:
+            self.root.after(100, self._minimize_to_tray)
 
     def log_message(self, message, level="info"):
         """Add message to application log with timestamp.
@@ -2330,6 +2439,11 @@ window.chrome.runtime = {};
     def on_close(self):
         """Handle application close event with cleanup."""
         self.ui_ready = False
+        if self.tray_icon:
+            try:
+                self.tray_icon.stop()
+            except Exception:
+                pass
         self.stop_bot()
         self._cleanup_temp_profiles()
         self.root.destroy()
