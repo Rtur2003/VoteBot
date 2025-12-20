@@ -1803,6 +1803,7 @@ window.chrome.runtime = {};
         If system tray is not available, logs an error and returns without action.
         Creates tray icon on first minimization.
         """
+        self._log_action("tray_minimize")
         if not TRAY_AVAILABLE:
             self.log_message("Sistem tepsisi desteği yok (pystray yüklenmemiş)", level="error")
             return
@@ -1881,6 +1882,16 @@ window.chrome.runtime = {};
             self.logger.info(message)
         self._schedule(append)
 
+    def _log_action(self, action, detail=None):
+        """Log a user-triggered action for audit visibility."""
+        if action is None:
+            return
+        action_text = str(action).strip()
+        if not action_text:
+            return
+        detail_text = f" ({detail})" if detail else ""
+        self.log_message(f"Action: {action_text}{detail_text}")
+
     def update_status(self, text, tone=None):
         """Update status label with new message and visual tone.
 
@@ -1927,9 +1938,11 @@ window.chrome.runtime = {};
         self.log_area.delete(1.0, tk.END)
         self._update_log_counts_badges()
         self.log_message("Log temizlendi")
+        self._log_action("clear_log")
 
     def reset_counters(self):
         """Reset vote and error counters to zero."""
+        self._log_action("reset_counters")
         if self.is_running:
             self.log_message("Bot çalişirken sayaçlar sifirlanamaz.", level="error")
             return
