@@ -1,4 +1,4 @@
-"""UI text constants for the control panel."""
+"""UI text constants for the VOTRYX interface."""
 
 STRINGS = {
     "header_title": "VOTRYX Control Panel",
@@ -54,4 +54,20 @@ STRINGS = {
     "button_open_logs": "Open Logs",
     "button_reset_counters": "Reset Counters",
     "button_tray": "Minimize to Tray",
+    "welcome_title": "Welcome to VOTRYX",
+    "welcome_subtitle": "A focused workspace for automated voting control.",
+    "welcome_bullets": [
+        "Guided setup for URL, timing, and batch size.",
+        "Live status, counters, and log visibility.",
+        "Guardrails for errors, backoff, and recovery.",
+    ],
+    "welcome_cta": "Start Setup",
+    "tutorial_title": "Quick Start",
+    "tutorial_subtitle": "Three steps to launch a clean voting session.",
+    "tutorial_steps": [
+        "1) Set Target URL and timing in Settings.",
+        "2) Run Preflight to confirm driver and Chrome.",
+        "3) Press Start and monitor Status + Log.",
+    ],
+    "tutorial_cta": "Open Control Panel",
 }
