@@ -2559,7 +2559,10 @@ window.chrome.runtime = {};
     def _complete_vote(self, driver, vote_button, idx, total):
         try:
             vote_button.click()
-            self.log_message(f"Oy verildi (pencere {idx}/{total})", level="success")
+            self.log_message(
+                "Oy verildi (pencere {}/{})".format(idx, total),
+                level="success",
+            )
             self.increment_count()
             return True
         except Exception:
@@ -2569,7 +2572,7 @@ window.chrome.runtime = {};
                 refreshed_btn = self._locate_vote_button(driver, wait)
                 refreshed_btn.click()
                 self.log_message(
-                    f"Oy verildi (yeniden deneme, pencere {idx}/{total})",
+                    "Oy verildi (yeniden deneme, pencere {}/{})".format(idx, total),
                     level="success",
                 )
                 self.increment_count()
