@@ -14,6 +14,7 @@ import platform
 import random
 import shutil
 import subprocess
+import sys
 import tempfile
 import threading
 import time
@@ -65,7 +66,7 @@ class VotryxApp:
         self.root.minsize(1080, 720)
         self._make_maximized()
 
-        self.base_dir = Path(__file__).resolve().parent.parent.parent
+        self.base_dir = self._resolve_base_dir()
         self.code_dir = Path(__file__).resolve().parent
         self.defaults = {
             "paths": {},
@@ -244,6 +245,31 @@ class VotryxApp:
             except Exception:
                 pass
 
+    def _resolve_base_dir(self):
+        if getattr(sys, "frozen", False):
+            return Path(sys.executable).resolve().parent
+        return Path(__file__).resolve().parent.parent.parent
+
+    def _resolve_user_config_path(self):
+        if platform.system() == "Windows":
+            base = Path(os.environ.get("APPDATA", Path.home()))
+            return base / "VOTRYX" / "config.json"
+        if platform.system() == "Darwin":
+            return Path.home() / "Library" / "Application Support" / "VOTRYX" / "config.json"
+        return Path.home() / ".config" / "votryx" / "config.json"
+
+    def _is_path_writable(self, path):
+        if not path:
+            return False
+        parent = path.parent
+        if parent.exists():
+            return os.access(parent, os.W_OK)
+        try:
+            parent.mkdir(parents=True, exist_ok=True)
+            return True
+        except Exception:
+            return False
+
     def _find_config_path(self):
         candidates = [
             self.base_dir / "config.json",
@@ -254,8 +280,21 @@ class VotryxApp:
         if existing:
             selected = existing[0]
             self.ignored_config_paths = [path for path in existing[1:] if path != selected]
+        else:
+            selected = candidates[0]
+
+        if self._is_path_writable(selected):
             return selected
-        return candidates[0]
+
+        user_config = self._resolve_user_config_path()
+        if selected.exists() and user_config:
+            try:
+                user_config.parent.mkdir(parents=True, exist_ok=True)
+                if not user_config.exists():
+                    shutil.copyfile(selected, user_config)
+            except Exception:
+                pass
+        return user_config if user_config else selected
 
     def _load_config(self):
         try:
