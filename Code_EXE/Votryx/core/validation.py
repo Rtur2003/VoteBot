@@ -29,6 +29,9 @@ class InputValidator:
             return False, "URL cannot be empty"
 
         url = url.strip()
+        if not url:
+            return False, "URL cannot be empty"
+
         if not url.startswith(("http://", "https://")):
             return False, "URL must start with http:// or https://"
 
@@ -93,6 +96,9 @@ class InputValidator:
 
         # Convert string to Path if necessary
         if isinstance(path, str):
+            # Check for whitespace-only strings
+            if not path.strip():
+                return False, f"{name} path is not specified"
             path = Path(path)
         elif not isinstance(path, Path):
             return False, f"{name} must be a valid path"

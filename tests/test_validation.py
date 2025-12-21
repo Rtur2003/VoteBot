@@ -25,6 +25,16 @@ class TestInputValidator:
         assert valid is True
         assert error is None
 
+    def test_validate_url_whitespace_only(self):
+        """Test URL validation with whitespace-only string."""
+        valid, error = InputValidator.validate_url("   ")
+        assert valid is False
+        assert error == "URL cannot be empty"
+
+        valid, error = InputValidator.validate_url("\t\n  ")
+        assert valid is False
+        assert error == "URL cannot be empty"
+
     def test_validate_url_invalid(self):
         """Test URL validation with invalid URLs."""
         valid, error = InputValidator.validate_url("")
@@ -192,6 +202,16 @@ class TestInputValidator:
             )
             assert valid is False
             assert error is not None
+
+    def test_validate_path_exists_with_whitespace(self):
+        """Test path validation with whitespace-only string."""
+        valid, error = InputValidator.validate_path_exists("   ", "test")
+        assert valid is False
+        assert error == "test path is not specified"
+
+        valid, error = InputValidator.validate_path_exists("\t\n", "test")
+        assert valid is False
+        assert error == "test path is not specified"
 
     def test_validate_path_exists_with_invalid_type(self):
         """Test path validation with invalid type."""
