@@ -34,7 +34,7 @@ class ControlPanelView(ttk.Frame):
             text=STRINGS["header_subtitle"],
             foreground=self.colors["muted"],
             background=self.colors["bg"],
-            font=("Segoe UI", 10),
+            font=("Bahnschrift", 10),
         )
         subtitle.grid(row=1, column=0, sticky="w")
 
@@ -245,7 +245,7 @@ class ControlPanelView(ttk.Frame):
             background=self.colors["panel"],
             foreground=self.colors["text"],
             insertbackground=self.colors["text"],
-            font=("Consolas", 9),
+            font=("Cascadia Mono", 9),
             borderwidth=1,
             relief=tk.FLAT,
             highlightthickness=1,
@@ -271,7 +271,7 @@ class ControlPanelView(ttk.Frame):
             background=self.colors["panel"],
             foreground=self.colors["text"],
             insertbackground=self.colors["text"],
-            font=("Consolas", 9),
+            font=("Cascadia Mono", 9),
             borderwidth=1,
             relief=tk.FLAT,
             highlightthickness=1,
@@ -320,7 +320,7 @@ class ControlPanelView(ttk.Frame):
             text=f"{STRINGS['badge_success']}: 0",
             bg=self.colors["success"],
             fg="#0f172a",
-            font=("Segoe UI", 9, "bold"),
+            font=("Bahnschrift SemiBold", 9),
             padx=8,
             pady=4,
         )
@@ -330,7 +330,7 @@ class ControlPanelView(ttk.Frame):
             text=f"{STRINGS['badge_errors']}: 0",
             bg=self.colors["error"],
             fg="#0f172a",
-            font=("Segoe UI", 9, "bold"),
+            font=("Bahnschrift SemiBold", 9),
             padx=8,
             pady=4,
         )
@@ -356,10 +356,10 @@ class ControlPanelView(ttk.Frame):
             log_frame,
             width=60,
             height=18,
-            background="#0b1220",
+            background=self.colors["bg"],
             foreground=self.colors["text"],
             insertbackground=self.colors["text"],
-            font=("Consolas", 10),
+            font=("Cascadia Mono", 10),
             borderwidth=1,
             relief=tk.FLAT,
             highlightthickness=1,
