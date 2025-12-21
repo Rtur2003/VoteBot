@@ -14,7 +14,7 @@ This document describes the UI modernization and quality improvements implemente
   - "Göster" (Show) - Restore window (default action)
   - "Durdur/Başlat" (Stop/Start) - Toggle bot state
   - "Çıkış" (Exit) - Close application
-- **Behavior**: 
+- **Behavior**:
   - Bot continues running in background when minimized to tray
   - Window can be restored from tray or taskbar
   - Tray icon remains visible as long as app is running
@@ -24,7 +24,7 @@ This document describes the UI modernization and quality improvements implemente
 **Smooth Entry Experience**
 
 - **Loading Animation**: Animated dots showing "Hazırlanıyor..." (Preparing...)
-- **Feature Bullets**: 
+- **Feature Bullets**:
   - Shows key features including new tray support
   - Indicates if tray support is available
 - **Smooth Transition**: Fade-out effect when entering main app
@@ -33,11 +33,11 @@ This document describes the UI modernization and quality improvements implemente
 ### 3. Running State Indicators
 **Clear Visual Feedback**
 
-- **Pulsing State Badge**: 
+- **Pulsing State Badge**:
   - Badge in header pulses between two shades of cyan when running
   - Clearly visible indicator of active state
   - Stops pulsing when bot is stopped
-  
+
 - **Window Title Update**:
   - Normal: "VOTRYX - DistroKid Spotlight"
   - Running: "VOTRYX - DistroKid Spotlight [ÇALIŞIYOR]"
