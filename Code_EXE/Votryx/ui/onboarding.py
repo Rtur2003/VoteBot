@@ -7,7 +7,17 @@ from ui.strings import STRINGS
 
 
 class _BaseOnboardingView(tk.Frame):
-    def __init__(self, app, parent, title, subtitle, bullets, cta_text, cta_command):
+    def __init__(
+        self,
+        app,
+        parent,
+        title,
+        subtitle,
+        bullets,
+        cta_text,
+        cta_command,
+        hero_image=None,
+    ):
         super().__init__(parent, bg=app.colors["bg"])
         self.app = app
         self.colors = app.colors
@@ -16,6 +26,13 @@ class _BaseOnboardingView(tk.Frame):
         self._reveal_index = 0
         self._bullet_labels = []
         self._wrap_labels = []
+        self._hero_image = hero_image
+        self._hero_width = None
+        if hero_image is not None:
+            try:
+                self._hero_width = int(hero_image.width())
+            except Exception:
+                self._hero_width = None
 
         self._canvas = tk.Canvas(
             self,
@@ -29,14 +46,35 @@ class _BaseOnboardingView(tk.Frame):
         self._content = tk.Frame(self._canvas, bg=self.colors["bg"])
         self._content_id = self._canvas.create_window((0, 0), window=self._content, anchor="center")
 
-        self._build_content(title, subtitle, bullets, cta_text, cta_command)
+        self._build_content(title, subtitle, bullets, cta_text, cta_command, hero_image)
         self._canvas.bind("<Configure>", self._on_resize)
 
-    def _build_content(self, title, subtitle, bullets, cta_text, cta_command):
-        self._content.columnconfigure(0, weight=1)
+    def _build_content(self, title, subtitle, bullets, cta_text, cta_command, hero_image):
+        if hero_image is not None:
+            self._content.columnconfigure(0, weight=1)
+            self._content.columnconfigure(1, weight=0)
+            self._content.rowconfigure(0, weight=1)
+            body = tk.Frame(self._content, bg=self.colors["bg"])
+            body.grid(row=0, column=0, sticky="nsew")
+            body.columnconfigure(0, weight=1)
+
+            hero_frame = tk.Frame(
+                self._content,
+                bg=self.colors["panel"],
+                highlightthickness=1,
+                highlightbackground=self.colors["border"],
+            )
+            hero_frame.grid(row=0, column=1, sticky="ne", padx=(24, 0))
+            hero_label = tk.Label(hero_frame, image=hero_image, bg=self.colors["panel"], bd=0)
+            hero_label.pack(padx=16, pady=16)
+            self._hero_label = hero_label
+        else:
+            self._content.columnconfigure(0, weight=1)
+            body = self._content
+            body.columnconfigure(0, weight=1)
 
         title_label = tk.Label(
-            self._content,
+            body,
             text=title,
             bg=self.colors["bg"],
             fg=self.colors["text"],
@@ -45,7 +83,7 @@ class _BaseOnboardingView(tk.Frame):
         title_label.grid(row=0, column=0, sticky="w")
 
         subtitle_label = tk.Label(
-            self._content,
+            body,
             text=subtitle,
             bg=self.colors["bg"],
             fg=self.colors["muted"],
@@ -56,7 +94,7 @@ class _BaseOnboardingView(tk.Frame):
         subtitle_label.grid(row=1, column=0, sticky="w", pady=(4, 16))
         self._wrap_labels.append(subtitle_label)
 
-        bullets_frame = tk.Frame(self._content, bg=self.colors["bg"])
+        bullets_frame = tk.Frame(body, bg=self.colors["bg"])
         bullets_frame.grid(row=2, column=0, sticky="w")
         for idx, line in enumerate(bullets):
             label = tk.Label(
@@ -75,7 +113,7 @@ class _BaseOnboardingView(tk.Frame):
             self._wrap_labels.append(label)
 
         cta = ttk.Button(
-            self._content,
+            body,
             text=cta_text,
             command=cta_command,
             style="Accent.TButton",
@@ -124,10 +162,17 @@ class _BaseOnboardingView(tk.Frame):
             tags="bg",
         )
 
-        content_width = min(980, max(600, width - 160))
+        max_width = 1080 if self._hero_image else 980
+        min_width = 720 if self._hero_image else 600
+        content_width = min(max_width, max(min_width, width - 160))
         self._canvas.coords(self._content_id, width // 2, height // 2)
         self._canvas.itemconfigure(self._content_id, width=content_width)
-        wrap = max(320, content_width - 120)
+        if self._hero_image:
+            hero_width = self._hero_width or int(content_width * 0.35)
+            text_width = max(320, content_width - hero_width - 80)
+        else:
+            text_width = max(320, int(content_width * 0.85))
+        wrap = min(text_width, content_width - 120)
         for label in self._wrap_labels:
             try:
                 label.configure(wraplength=wrap)
@@ -172,6 +217,7 @@ class _BaseOnboardingView(tk.Frame):
 
 class WelcomeView(_BaseOnboardingView):
     def __init__(self, app, parent):
+        hero = app.hero_image or app.brand_image
         super().__init__(
             app,
             parent,
@@ -180,6 +226,7 @@ class WelcomeView(_BaseOnboardingView):
             STRINGS["welcome_bullets"],
             STRINGS["welcome_cta"],
             app.show_tutorial,
+            hero_image=hero,
         )
 
 
