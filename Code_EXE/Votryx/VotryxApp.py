@@ -1782,7 +1782,9 @@ window.chrome.runtime = {};
             hours = int(elapsed // 3600)
             minutes = int((elapsed % 3600) // 60)
             seconds = int(elapsed % 60)
-            self.runtime_label.config(text=f"{hours:02d}:{minutes:02d}:{seconds:02d}")
+            self.runtime_label.config(
+                text="{:02d}:{:02d}:{:02d}".format(hours, minutes, seconds)
+            )
         try:
             self.root.after(1000, self._update_runtime)
         except tk.TclError:

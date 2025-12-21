@@ -264,4 +264,4 @@ def _blend_hex(start, end, t):
     r = int(r1 + (r2 - r1) * t)
     g = int(g1 + (g2 - g1) * t)
     b = int(b1 + (b2 - b1) * t)
-    return f"#{r:02x}{g:02x}{b:02x}"
+    return "#{:02x}{:02x}{:02x}".format(r, g, b)
