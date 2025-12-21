@@ -73,6 +73,9 @@ class VotingStatistics:
             return "00:00:00"
 
         elapsed = time.time() - self.start_time
+        # Guard against negative values (clock skew, testing, etc.)
+        if elapsed < 0:
+            elapsed = 0
         hours = int(elapsed // 3600)
         minutes = int((elapsed % 3600) // 60)
         seconds = int(elapsed % 60)
