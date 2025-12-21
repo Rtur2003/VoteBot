@@ -5,17 +5,17 @@
         "logs": "logs"
     },
     "target_url": "https://distrokid.com/spotlight/hasanarthuraltunta/vote/",
-    "pause_between_votes": 3.0,
+    "pause_between_votes": 10.0,
     "batch_size": 1,
-    "max_errors": 3,
-    "parallel_workers": 2,
+    "max_errors": 5,
+    "parallel_workers": 1,
     "headless": true,
-    "timeout_seconds": 15,
-    "use_selenium_manager": false,
+    "timeout_seconds": 25,
+    "use_selenium_manager": true,
     "use_random_user_agent": true,
     "block_images": true,
     "user_agents": [],
     "vote_selectors": [],
-    "backoff_seconds": 5.0,
+    "backoff_seconds": 10.0,
     "backoff_cap_seconds": 60.0
 }
