@@ -43,9 +43,12 @@ except ImportError:
     TRAY_AVAILABLE = False
 
 try:
+    from ui.onboarding import TutorialView, WelcomeView
     from ui.panel import ControlPanelView
 except Exception:
     ControlPanelView = None
+    TutorialView = None
+    WelcomeView = None
 
 
 class VotryxApp:
@@ -123,6 +126,7 @@ class VotryxApp:
         self.main = None
         self.welcome_frame = None
         self.hero_image = None
+        self.views = {}
         self.ui_ready = False
         self._resize_job = None
         self._pending_compact = None
@@ -216,9 +220,7 @@ class VotryxApp:
             self._build_boot_error_screen(exc, tb)
             return
         self.ui_ready = True
-        self._apply_responsive_layout(
-            compact=self._resolve_compact_layout(self.root.winfo_width())
-        )
+        self.show_welcome()
         if self.log_dir_warning:
             self.log_message(self.log_dir_warning, level="info")
         self._set_state_badge("Bekliyor", "idle")
@@ -886,20 +888,65 @@ window.chrome.runtime = {};
         tk.Button(btns, text="Kapat", command=self.root.destroy).pack(side="left")
 
     def _build_ui(self):
-        if ControlPanelView is None:
-            raise RuntimeError("ControlPanelView import failed")
+        if ControlPanelView is None or WelcomeView is None or TutorialView is None:
+            raise RuntimeError("UI components import failed")
         self.root.columnconfigure(0, weight=1)
         self.root.rowconfigure(0, weight=1)
 
-        main = ControlPanelView(self, self.root)
-        main.grid(row=0, column=0, sticky="nsew")
-        self.main = main
-        self.root.bind("<Configure>", self._on_root_resize)
+        view_stack = ttk.Frame(self.root, style="Main.TFrame")
+        view_stack.grid(row=0, column=0, sticky="nsew")
+        view_stack.columnconfigure(0, weight=1)
+        view_stack.rowconfigure(0, weight=1)
+        self.view_stack = view_stack
+
+        welcome_view = WelcomeView(self, view_stack)
+        tutorial_view = TutorialView(self, view_stack)
+        panel_view = ControlPanelView(self, view_stack)
+
+        for view in (welcome_view, tutorial_view, panel_view):
+            view.grid(row=0, column=0, sticky="nsew")
+
+        self.views = {
+            "welcome": welcome_view,
+            "tutorial": tutorial_view,
+            "panel": panel_view,
+        }
+        self.main = panel_view
         self._set_form_state(False)
-        self._apply_responsive_layout(
-            compact=self._resolve_compact_layout(self.root.winfo_width())
-        )
-        self.log_message("UI: control panel ready")
+        self.log_message("UI: onboarding views ready")
+
+    def _show_view(self, name):
+        view = self.views.get(name)
+        if not view:
+            return
+        for candidate in self.views.values():
+            if candidate is view:
+                continue
+            try:
+                if hasattr(candidate, "on_hide"):
+                    candidate.on_hide()
+                candidate.grid_remove()
+            except Exception:
+                pass
+        try:
+            view.grid()
+            view.tkraise()
+            if hasattr(view, "on_show"):
+                view.on_show()
+        except Exception:
+            pass
+
+    def show_welcome(self):
+        self._log_action("show_welcome")
+        self._show_view("welcome")
+
+    def show_tutorial(self):
+        self._log_action("show_tutorial")
+        self._show_view("tutorial")
+
+    def show_panel(self):
+        self._log_action("show_panel")
+        self._show_view("panel")
 
     def _build_ui_legacy(self):
         self.root.columnconfigure(0, weight=1)
