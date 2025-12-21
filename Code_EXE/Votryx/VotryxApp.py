@@ -167,6 +167,7 @@ class VotryxApp:
             )
 
         self.brand_image = self._load_brand_image()
+        self.hero_image = self._load_hero_image()
         self.colors = {
             "bg": "#0b1224",
             "panel": "#0f1a30",
@@ -447,24 +448,30 @@ window.chrome.runtime = {};
             if candidate.exists():
                 try:
                     image = tk.PhotoImage(file=str(candidate))
-                    try:
-                        width = int(image.width())
-                        height = int(image.height())
-                        scale = max(1, math.ceil(max(width, height) / 96))
-                        if scale > 1:
-                            image = image.subsample(scale, scale)
-                    except Exception:
-                        pass
-                    return image
+                    return self._scale_photoimage(image, max_size=(96, 96))
                 except Exception as exc:
                     self.logger.warning("Logo '%s' yüklenemedi: %s", candidate.name, exc)
         return None
 
-    def _load_hero_image(self):
-        """Load hero/banner for welcome screen if available.
+    def _scale_photoimage(self, image, max_size):
+        if not image or not max_size:
+            return image
+        try:
+            width = int(image.width())
+            height = int(image.height())
+        except Exception:
+            return image
+        max_width, max_height = max_size
+        scale = max(1, math.ceil(max(width / max_width, height / max_height)))
+        if scale > 1:
+            try:
+                image = image.subsample(scale, scale)
+            except Exception:
+                return image
+        return image
 
-        Tries multiple banner options for best visual impact.
-        """
+    def _load_hero_image(self, max_size=(560, 320)):
+        """Load hero/banner for onboarding if available."""
         candidates = [
             self.base_dir / "docs" / "screenshots" / "votryx-banner-dark.png",
             self.base_dir / "docs" / "screenshots" / "votryx-banner-2-dark.png",
@@ -472,7 +479,23 @@ window.chrome.runtime = {};
         for candidate in candidates:
             if candidate.exists():
                 try:
-                    return tk.PhotoImage(file=str(candidate))
+                    image = None
+                    try:
+                        from PIL import Image, ImageTk
+                    except Exception:
+                        Image = None
+                        ImageTk = None
+                    if Image and ImageTk:
+                        pil_image = Image.open(candidate)
+                        pil_image = pil_image.convert("RGBA")
+                        resample = getattr(Image, "Resampling", Image).LANCZOS
+                        pil_image.thumbnail(max_size, resample)
+                        image = ImageTk.PhotoImage(pil_image)
+                    else:
+                        image = tk.PhotoImage(file=str(candidate))
+                        image = self._scale_photoimage(image, max_size=max_size)
+                    if image:
+                        return image
                 except Exception as exc:
                     self.logger.warning("Hero görseli '%s' yüklenemedi: %s", candidate.name, exc)
         return None
