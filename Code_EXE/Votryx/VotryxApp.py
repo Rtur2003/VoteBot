@@ -42,6 +42,14 @@ try:
 except ImportError:
     TRAY_AVAILABLE = False
 
+try:
+    from ui.onboarding import TutorialView, WelcomeView
+    from ui.panel import ControlPanelView
+except Exception:
+    ControlPanelView = None
+    TutorialView = None
+    WelcomeView = None
+
 
 class VotryxApp:
     """Main application class for VOTRYX voting automation UI.
@@ -118,7 +126,12 @@ class VotryxApp:
         self.main = None
         self.welcome_frame = None
         self.hero_image = None
+        self.views = {}
         self.ui_ready = False
+        self._resize_job = None
+        self._pending_compact = None
+        self._layout_breakpoint = 1200
+        self._layout_hysteresis = 40
 
         self.is_running = False
         self.vote_count = 0
@@ -140,6 +153,7 @@ class VotryxApp:
         self.block_images_var = tk.BooleanVar(value=self.block_images)
         self.tray_icon = None
         self.is_minimized_to_tray = False
+        self.tray_available = TRAY_AVAILABLE
 
         self.log_dir, self.log_dir_warning = self._resolve_logs_dir()
         self.logger = self._build_logger()
@@ -153,7 +167,6 @@ class VotryxApp:
             )
 
         self.brand_image = self._load_brand_image()
-        self.hero_image = self._load_hero_image()
         self.colors = {
             "bg": "#0b1224",
             "panel": "#0f1a30",
@@ -207,7 +220,7 @@ class VotryxApp:
             self._build_boot_error_screen(exc, tb)
             return
         self.ui_ready = True
-        self._apply_responsive_layout(compact=self.root.winfo_width() < 1200)
+        self.show_welcome()
         if self.log_dir_warning:
             self.log_message(self.log_dir_warning, level="info")
         self._set_state_badge("Bekliyor", "idle")
@@ -875,6 +888,67 @@ window.chrome.runtime = {};
         tk.Button(btns, text="Kapat", command=self.root.destroy).pack(side="left")
 
     def _build_ui(self):
+        if ControlPanelView is None or WelcomeView is None or TutorialView is None:
+            raise RuntimeError("UI components import failed")
+        self.root.columnconfigure(0, weight=1)
+        self.root.rowconfigure(0, weight=1)
+
+        view_stack = ttk.Frame(self.root, style="Main.TFrame")
+        view_stack.grid(row=0, column=0, sticky="nsew")
+        view_stack.columnconfigure(0, weight=1)
+        view_stack.rowconfigure(0, weight=1)
+        self.view_stack = view_stack
+
+        welcome_view = WelcomeView(self, view_stack)
+        tutorial_view = TutorialView(self, view_stack)
+        panel_view = ControlPanelView(self, view_stack)
+
+        for view in (welcome_view, tutorial_view, panel_view):
+            view.grid(row=0, column=0, sticky="nsew")
+
+        self.views = {
+            "welcome": welcome_view,
+            "tutorial": tutorial_view,
+            "panel": panel_view,
+        }
+        self.main = panel_view
+        self._set_form_state(False)
+        self.log_message("UI: onboarding views ready")
+
+    def _show_view(self, name):
+        view = self.views.get(name)
+        if not view:
+            return
+        for candidate in self.views.values():
+            if candidate is view:
+                continue
+            try:
+                if hasattr(candidate, "on_hide"):
+                    candidate.on_hide()
+                candidate.grid_remove()
+            except Exception:
+                pass
+        try:
+            view.grid()
+            view.tkraise()
+            if hasattr(view, "on_show"):
+                view.on_show()
+        except Exception:
+            pass
+
+    def show_welcome(self):
+        self._log_action("show_welcome")
+        self._show_view("welcome")
+
+    def show_tutorial(self):
+        self._log_action("show_tutorial")
+        self._show_view("tutorial")
+
+    def show_panel(self):
+        self._log_action("show_panel")
+        self._show_view("panel")
+
+    def _build_ui_legacy(self):
         self.root.columnconfigure(0, weight=1)
         self.root.rowconfigure(0, weight=1)
 
@@ -1340,8 +1414,6 @@ window.chrome.runtime = {};
         self.log_frame = log_frame
         self._set_form_state(False)
         self._apply_responsive_layout(compact=self.root.winfo_width() < 1200)
-        self._build_welcome_overlay()
-        self._show_welcome()
 
     def _make_stat_card(self, parent, row, col, title, value, key):
         card = ttk.Frame(parent, style="Card.TFrame", padding=14)
@@ -1364,6 +1436,16 @@ window.chrome.runtime = {};
         elif key == "runtime":
             self.runtime_label = label
 
+    def _resolve_compact_layout(self, width):
+        if width is None or width <= 0:
+            return bool(getattr(self, "_is_compact_layout", True))
+        current = getattr(self, "_is_compact_layout", None)
+        if current is None:
+            return width < self._layout_breakpoint
+        if current:
+            return width < (self._layout_breakpoint + self._layout_hysteresis)
+        return width < (self._layout_breakpoint - self._layout_hysteresis)
+
     def _apply_responsive_layout(self, compact: bool):
         def _exists(widget) -> bool:
             if not widget:
@@ -1372,6 +1454,14 @@ window.chrome.runtime = {};
                 return bool(widget.winfo_exists())
             except Exception:
                 return False
+
+        def _grid_target(widget):
+            if not widget:
+                return None
+            parent = getattr(widget, "master", None)
+            if parent is None or parent is self.main:
+                return widget
+            return parent
 
         if not self.ui_ready or not all(
             [
@@ -1383,10 +1473,14 @@ window.chrome.runtime = {};
             ]
         ):
             return
+        self._resize_job = None
+        self._pending_compact = None
         if getattr(self, "_is_compact_layout", None) == compact:
             return
         self._is_compact_layout = compact
         try:
+            settings_target = _grid_target(self.settings_frame)
+            log_target = _grid_target(self.log_frame)
             if compact:
                 self.main.columnconfigure(0, weight=1)
                 self.main.columnconfigure(1, weight=0)
@@ -1396,10 +1490,10 @@ window.chrome.runtime = {};
                 self.main.rowconfigure(3, weight=1, minsize=250)
                 self.main.rowconfigure(4, weight=0, minsize=80)
                 self.stats_wrapper.grid_configure(row=1, column=0, columnspan=2, padx=(0, 0))
-                self.settings_frame.master.grid_configure(
-                    row=2, column=0, columnspan=2, padx=(0, 0)
-                )
-                self.log_frame.master.grid_configure(row=3, column=0, columnspan=2, padx=(0, 0))
+                if settings_target and _exists(settings_target):
+                    settings_target.grid_configure(row=2, column=0, columnspan=2, padx=(0, 0))
+                if log_target and _exists(log_target):
+                    log_target.grid_configure(row=3, column=0, columnspan=2, padx=(0, 0))
                 self.actions_frame.grid_configure(row=4, column=0, columnspan=2, padx=(0, 0))
             else:
                 self.main.columnconfigure(0, weight=2, minsize=500)
@@ -1410,10 +1504,10 @@ window.chrome.runtime = {};
                 self.main.rowconfigure(3, weight=0, minsize=80)
                 self.main.rowconfigure(4, weight=0)
                 self.stats_wrapper.grid_configure(row=1, column=0, columnspan=2, padx=(0, 0))
-                self.settings_frame.master.grid_configure(
-                    row=2, column=0, columnspan=1, padx=(0, 8)
-                )
-                self.log_frame.master.grid_configure(row=2, column=1, columnspan=1, padx=(8, 0))
+                if settings_target and _exists(settings_target):
+                    settings_target.grid_configure(row=2, column=0, columnspan=1, padx=(0, 8))
+                if log_target and _exists(log_target):
+                    log_target.grid_configure(row=2, column=1, columnspan=1, padx=(8, 0))
                 self.actions_frame.grid_configure(row=3, column=0, columnspan=2, padx=(0, 0))
         except tk.TclError:
             return
@@ -1421,7 +1515,21 @@ window.chrome.runtime = {};
     def _on_root_resize(self, event):
         if not self.ui_ready:
             return
-        self._apply_responsive_layout(compact=event.width < 1200)
+        width = getattr(event, "width", None)
+        compact = self._resolve_compact_layout(width)
+        if compact == getattr(self, "_is_compact_layout", None):
+            return
+        if self._pending_compact == compact:
+            return
+        self._pending_compact = compact
+        if self._resize_job is not None:
+            try:
+                self.root.after_cancel(self._resize_job)
+            except Exception:
+                pass
+        self._resize_job = self.root.after(
+            120, lambda: self._apply_responsive_layout(compact=compact)
+        )
 
     def _build_welcome_overlay(self):
         if self.welcome_frame:
@@ -1523,6 +1631,7 @@ window.chrome.runtime = {};
 
     def _show_welcome(self):
         if self.welcome_frame:
+            self.log_message("UI: welcome ekrani gosterildi")
             try:
                 self.welcome_frame.grid()
                 self.welcome_frame.tkraise()
@@ -1532,13 +1641,16 @@ window.chrome.runtime = {};
 
     def _show_app(self):
         """Transition from welcome screen to main app."""
-        if self.welcome_frame:
-            self._fade_out_welcome(alpha=1.0)
-        else:
-            self._show_main()
+        self.log_message("UI: kontrol paneli gecisi baslatildi")
+        self._show_main()
+        try:
+            self.root.after(600, self._ensure_main_visible)
+        except tk.TclError:
+            pass
 
     def _show_main(self):
         """Show the main control panel and remove the welcome overlay."""
+        self.log_message("UI: kontrol paneli gorunur hale getiriliyor")
         if self.welcome_frame:
             try:
                 self.welcome_frame.destroy()
@@ -1550,6 +1662,7 @@ window.chrome.runtime = {};
             self.welcome_frame = None
         try:
             if self.main and self.main.winfo_exists():
+                self.main.grid()
                 self.main.tkraise()
         except Exception:
             pass
@@ -1558,6 +1671,23 @@ window.chrome.runtime = {};
         except Exception:
             pass
         self._apply_responsive_layout(compact=self.root.winfo_width() < 1200)
+
+    def _ensure_main_visible(self):
+        if not self.ui_ready:
+            return
+        main_visible = False
+        try:
+            if self.main and self.main.winfo_exists():
+                main_visible = bool(self.main.winfo_ismapped())
+        except Exception:
+            main_visible = False
+        if self.welcome_frame and self.welcome_frame.winfo_exists():
+            self.log_message("UI: welcome ekrani kaldiriliyor (watchdog)", level="error")
+            self._show_main()
+            return
+        if not main_visible:
+            self.log_message("UI: panel gorunur degil, yeniden gosteriliyor", level="error")
+            self._show_main()
 
     def _fade_out_welcome(self, alpha=1.0):
         """Gradually fade out welcome screen."""
@@ -1727,11 +1857,14 @@ window.chrome.runtime = {};
 
     def _show_from_tray(self, icon=None, item=None):
         """Show window from system tray."""
+        self._log_action("tray_show")
         self.is_minimized_to_tray = False
         self.root.after(0, lambda: (self.root.deiconify(), self.root.focus_force()))
 
     def _toggle_bot_from_tray(self, icon=None, item=None):
         """Toggle bot state from system tray."""
+        target = "stop" if self.is_running else "start"
+        self._log_action("tray_toggle", target)
         if self.is_running:
             self.root.after(0, self.stop_bot)
         else:
@@ -1739,6 +1872,7 @@ window.chrome.runtime = {};
 
     def _quit_from_tray(self, icon=None, item=None):
         """Quit application from system tray."""
+        self._log_action("tray_quit")
         if self.tray_icon:
             self.tray_icon.stop()
         self.root.after(0, self.on_close)
@@ -1749,6 +1883,7 @@ window.chrome.runtime = {};
         If system tray is not available, logs an error and returns without action.
         Creates tray icon on first minimization.
         """
+        self._log_action("tray_minimize")
         if not TRAY_AVAILABLE:
             self.log_message("Sistem tepsisi desteği yok (pystray yüklenmemiş)", level="error")
             return
@@ -1827,6 +1962,16 @@ window.chrome.runtime = {};
             self.logger.info(message)
         self._schedule(append)
 
+    def _log_action(self, action, detail=None):
+        """Log a user-triggered action for audit visibility."""
+        if action is None:
+            return
+        action_text = str(action).strip()
+        if not action_text:
+            return
+        detail_text = f" ({detail})" if detail else ""
+        self.log_message(f"Action: {action_text}{detail_text}")
+
     def update_status(self, text, tone=None):
         """Update status label with new message and visual tone.
 
@@ -1873,9 +2018,11 @@ window.chrome.runtime = {};
         self.log_area.delete(1.0, tk.END)
         self._update_log_counts_badges()
         self.log_message("Log temizlendi")
+        self._log_action("clear_log")
 
     def reset_counters(self):
         """Reset vote and error counters to zero."""
+        self._log_action("reset_counters")
         if self.is_running:
             self.log_message("Bot çalişirken sayaçlar sifirlanamaz.", level="error")
             return
@@ -1991,6 +2138,8 @@ window.chrome.runtime = {};
     def toggle_errors_only(self):
         """Toggle error-only filter for log display."""
         self._render_log()
+        state = "on" if self.errors_only_var.get() else "off"
+        self._log_action("toggle_errors_only", state)
 
     def _resolve_driver_path(self):
         candidates = []
@@ -2221,6 +2370,7 @@ window.chrome.runtime = {};
 
     def start_bot(self):
         """Start voting automation in background thread."""
+        self._log_action("start_bot")
         if self.is_running:
             return
         if not self._update_settings_from_form(persist=True, notify=False):
@@ -2246,6 +2396,7 @@ window.chrome.runtime = {};
 
     def stop_bot(self):
         """Stop voting automation and cleanup resources."""
+        self._log_action("stop_bot")
         if not self.is_running:
             return
         self.log_message("Bot durduruluyor...")
@@ -2435,12 +2586,14 @@ window.chrome.runtime = {};
 
     def run_preflight(self):
         """Run preflight checks and display results."""
+        self._log_action("preflight")
         if self._validate_paths(show_message=True):
             messagebox.showinfo("Ön kontrol", "Yollar ve ayarlar geçerli görünüyor.")
             self.log_message("Ön kontrol başarılı")
 
     def reset_to_defaults(self):
         """Reset all configuration fields to default values."""
+        self._log_action("reset_to_defaults")
         defaults = dict(self.defaults)
         self.url_entry.delete(0, tk.END)
         self.url_entry.insert(0, defaults["target_url"])
@@ -2485,6 +2638,7 @@ window.chrome.runtime = {};
 
     def apply_settings(self):
         """Apply configuration changes from UI form."""
+        self._log_action("apply_settings")
         return self._update_settings_from_form(persist=True, notify=True)
 
     def _update_settings_from_form(self, persist=False, notify=True):
@@ -2580,6 +2734,7 @@ window.chrome.runtime = {};
 
     def open_logs(self):
         """Open log directory in system file browser."""
+        self._log_action("open_logs")
         try:
             if platform.system() == "Windows" and hasattr(os, "startfile"):
                 os.startfile(self.log_dir)
@@ -2592,6 +2747,7 @@ window.chrome.runtime = {};
 
     def on_close(self):
         """Handle application close event with cleanup."""
+        self._log_action("app_close")
         self.ui_ready = False
         if self.tray_icon:
             try:
