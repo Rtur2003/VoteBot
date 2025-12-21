@@ -35,7 +35,7 @@ VOTRYX is a Tkinter-based control surface for automated voting workflows on Dist
 Previously known as VoteBot; existing configs and workflows remain compatible under the new VOTRYX branding.
 
 ## Screenshots
-![VOTRYX Control Interface](docs/screenshots/votebot5-ui.png)  
+![VOTRYX Control Interface](docs/screenshots/votebot5-ui.png)
 *VOTRYX Control Interface*
 
 ## Features
@@ -110,12 +110,12 @@ pip install -r requirements.txt
 python Code_EXE/Votryx/VotryxApp.py
 ```
 1) **Welcome Screen**: Shows loading animation and feature overview. Click "Kontrol Paneline Gir" to enter.
-2) **Preflight**: Paths and versions validated; issues reported.  
+2) **Preflight**: Paths and versions validated; issues reported.
 3) **Start**: Automation runs, counters and logs update live. Window title shows [ÇALIŞIYOR].
 4) **Background Mode**: Click "Gizle (Arka Plan)" to minimize to system tray. Bot continues working.
    - Right-click tray icon to show/hide window or stop/start bot.
    - Tray icon shows VOTRYX logo with menu options.
-5) **Stop**: Clean shutdown and resource cleanup.  
+5) **Stop**: Clean shutdown and resource cleanup.
 6) **Log Shortcut**: Opens `logs/votryx.log` directory.
 
 ## Development

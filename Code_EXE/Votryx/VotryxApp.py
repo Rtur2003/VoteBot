@@ -383,7 +383,7 @@ class VotryxApp:
         try:
             parsed = urlparse(url)
             if parsed.scheme and parsed.netloc:
-                return f"{parsed.scheme}://{parsed.netloc}"
+                return "{}://{}".format(parsed.scheme, parsed.netloc)
         except Exception:
             pass
         return None
@@ -1782,7 +1782,9 @@ window.chrome.runtime = {};
             hours = int(elapsed // 3600)
             minutes = int((elapsed % 3600) // 60)
             seconds = int(elapsed % 60)
-            self.runtime_label.config(text=f"{hours:02d}:{minutes:02d}:{seconds:02d}")
+            self.runtime_label.config(
+                text="{:02d}:{:02d}:{:02d}".format(hours, minutes, seconds)
+            )
         try:
             self.root.after(1000, self._update_runtime)
         except tk.TclError:
@@ -2557,7 +2559,10 @@ window.chrome.runtime = {};
     def _complete_vote(self, driver, vote_button, idx, total):
         try:
             vote_button.click()
-            self.log_message(f"Oy verildi (pencere {idx}/{total})", level="success")
+            self.log_message(
+                "Oy verildi (pencere {}/{})".format(idx, total),
+                level="success",
+            )
             self.increment_count()
             return True
         except Exception:
@@ -2567,7 +2572,7 @@ window.chrome.runtime = {};
                 refreshed_btn = self._locate_vote_button(driver, wait)
                 refreshed_btn.click()
                 self.log_message(
-                    f"Oy verildi (yeniden deneme, pencere {idx}/{total})",
+                    "Oy verildi (yeniden deneme, pencere {}/{})".format(idx, total),
                     level="success",
                 )
                 self.increment_count()
