@@ -66,6 +66,26 @@ class TestVotingStatistics:
         stats = VotingStatistics()
         assert stats.get_runtime_formatted() == "00:00:00"
 
+    def test_get_runtime_formatted_negative_time(self):
+        """Test runtime format with future start time (edge case)."""
+        import time
+
+        stats = VotingStatistics(start_time=time.time() + 100, is_running=True)
+        # Should handle gracefully and return 00:00:00
+        runtime = stats.get_runtime_formatted()
+        assert runtime == "00:00:00"
+
+    def test_get_runtime_formatted_long_duration(self):
+        """Test runtime format with long duration."""
+        import time
+
+        # Simulate 24+ hours of running
+        stats = VotingStatistics(start_time=time.time() - 86400, is_running=True)
+        runtime = stats.get_runtime_formatted()
+        # Should be at least 24:00:00
+        hours = int(runtime.split(":")[0])
+        assert hours >= 24
+
 
 class TestLogHistory:
     """Test suite for LogHistory."""
@@ -217,3 +237,75 @@ class TestStateManager:
         manager.clear_logs()
 
         assert len(manager.get_logs()) == 0
+
+    def test_observer_error_handling(self):
+        """Test that observer errors don't break state updates."""
+        manager = StateManager()
+
+        def bad_observer(stats):
+            raise Exception("Observer error")
+
+        def good_observer(stats):
+            good_observer.called = True
+
+        good_observer.called = False
+
+        manager.register_observer(bad_observer)
+        manager.register_observer(good_observer)
+
+        # Should not raise exception
+        manager.increment_vote()
+
+        # Good observer should still be called
+        assert good_observer.called is True
+
+    def test_multiple_observers(self):
+        """Test multiple observers receive updates."""
+        manager = StateManager()
+        call_counts = {"obs1": 0, "obs2": 0, "obs3": 0}
+
+        def observer1(stats):
+            call_counts["obs1"] += 1
+
+        def observer2(stats):
+            call_counts["obs2"] += 1
+
+        def observer3(stats):
+            call_counts["obs3"] += 1
+
+        manager.register_observer(observer1)
+        manager.register_observer(observer2)
+        manager.register_observer(observer3)
+
+        manager.increment_vote()
+        manager.increment_error()
+
+        assert call_counts["obs1"] == 2
+        assert call_counts["obs2"] == 2
+        assert call_counts["obs3"] == 2
+
+    def test_register_same_observer_twice(self):
+        """Test registering the same observer twice doesn't duplicate."""
+        manager = StateManager()
+        call_count = [0]
+
+        def observer(stats):
+            call_count[0] += 1
+
+        manager.register_observer(observer)
+        manager.register_observer(observer)  # Register again
+
+        manager.increment_vote()
+
+        # Should only be called once
+        assert call_count[0] == 1
+
+    def test_unregister_nonexistent_observer(self):
+        """Test unregistering an observer that was never registered."""
+        manager = StateManager()
+
+        def observer(stats):
+            pass
+
+        # Should not raise error
+        manager.unregister_observer(observer)
