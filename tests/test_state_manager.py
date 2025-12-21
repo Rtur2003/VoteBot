@@ -1,10 +1,6 @@
 """Unit tests for state management module."""
 
-from Code_EXE.Votryx.core.state_manager import (
-    LogHistory,
-    StateManager,
-    VotingStatistics,
-)
+from Code_EXE.Votryx.core.state_manager import LogHistory, StateManager, VotingStatistics
 
 
 class TestVotingStatistics:
