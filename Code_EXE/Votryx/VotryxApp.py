@@ -170,16 +170,16 @@ class VotryxApp:
         self.brand_image = self._load_brand_image()
         self.hero_image = self._load_hero_image()
         self.colors = {
-            "bg": "#0b1224",
-            "panel": "#0f1a30",
-            "card": "#13213b",
-            "border": "#1f2f4a",
-            "accent": "#ff7a1a",
-            "accent2": "#23c4ff",
-            "text": "#e6edf7",
-            "muted": "#a5b4ce",
-            "error": "#f97070",
-            "success": "#38e0a3",
+            "bg": "#070c16",
+            "panel": "#0e1a2f",
+            "card": "#15253f",
+            "border": "#223355",
+            "accent": "#ff8a2b",
+            "accent2": "#38bdf8",
+            "text": "#eef3fb",
+            "muted": "#9fb4d1",
+            "error": "#fb7185",
+            "success": "#34d399",
             "danger": "#f43f5e",
         }
 
@@ -642,7 +642,7 @@ window.chrome.runtime = {};
         except tk.TclError:
             pass
 
-        title_font = ("Bahnschrift SemiBold", 20)
+        title_font = ("Bahnschrift SemiBold", 22)
 
         style.configure("Main.TFrame", background=self.colors["bg"], padding=0)
         style.configure("Panel.TFrame", background=self.colors["panel"])
@@ -673,7 +673,7 @@ window.chrome.runtime = {};
             "TLabelFrame.Label",
             background=self.colors["panel"],
             foreground=self.colors["text"],
-            font=("Segoe UI", 11, "bold"),
+            font=("Bahnschrift SemiBold", 11),
         )
         style.configure(
             "Title.TLabel",
@@ -683,7 +683,7 @@ window.chrome.runtime = {};
         )
         style.configure(
             "StatLabel.TLabel",
-            font=("Segoe UI", 11),
+            font=("Bahnschrift", 11),
             background=self.colors["card"],
             foreground=self.colors["muted"],
         )

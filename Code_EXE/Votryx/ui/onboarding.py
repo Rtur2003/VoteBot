@@ -143,6 +143,19 @@ class _BaseOnboardingView(tk.Frame):
             y1 = int(height * ((step + 1) / steps))
             self._canvas.create_rectangle(0, y0, width, y1, fill=color, outline="", tags="bg")
 
+        glow_steps = 8
+        for step in range(glow_steps):
+            intensity = (glow_steps - step) / (glow_steps * 12)
+            color = _blend_hex(self.colors["bg"], self.colors["accent2"], intensity)
+            y = int(height * 0.18) + step * 2
+            self._canvas.create_line(0, y, width, y, fill=color, tags="bg")
+
+        for step in range(glow_steps):
+            intensity = (glow_steps - step) / (glow_steps * 14)
+            color = _blend_hex(self.colors["bg"], self.colors["accent"], intensity)
+            y = int(height * 0.82) - step * 2
+            self._canvas.create_line(0, y, width, y, fill=color, tags="bg")
+
         self._canvas.create_oval(
             int(width * 0.68),
             int(height * 0.1),
