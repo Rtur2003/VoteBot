@@ -68,9 +68,7 @@ class ControlPanelView(ttk.Frame):
         self.app._make_stat_card(
             stats_frame, 0, 2, STRINGS["stat_state"], STRINGS["state_idle"], "status"
         )
-        self.app._make_stat_card(
-            stats_frame, 0, 3, STRINGS["stat_runtime"], "00:00:00", "runtime"
-        )
+        self.app._make_stat_card(stats_frame, 0, 3, STRINGS["stat_runtime"], "00:00:00", "runtime")
 
         settings_frame = ttk.LabelFrame(
             self, text=STRINGS["section_settings"], style="Panel.TFrame", padding=12
@@ -252,9 +250,9 @@ class ControlPanelView(ttk.Frame):
             highlightbackground=self.colors["card"],
         )
         self.app.ua_text.grid(row=4, column=1, sticky="ew", pady=(4, 0))
-        ttk.Label(
-            advanced_block, text=STRINGS["helper_user_agents"], style="Helper.TLabel"
-        ).grid(row=5, column=1, sticky="w", pady=(0, 8))
+        ttk.Label(advanced_block, text=STRINGS["helper_user_agents"], style="Helper.TLabel").grid(
+            row=5, column=1, sticky="w", pady=(0, 8)
+        )
         for line in self.app.custom_user_agents:
             self.app.ua_text.insert(tk.END, f"{line}\n")
 
@@ -390,7 +388,10 @@ class ControlPanelView(ttk.Frame):
         controls.columnconfigure((0, 1, 2, 3, 4, 5), weight=1)
 
         self.app.start_btn = ttk.Button(
-            controls, text=STRINGS["button_start"], command=self.app.start_bot, style="Accent.TButton"
+            controls,
+            text=STRINGS["button_start"],
+            command=self.app.start_bot,
+            style="Accent.TButton",
         )
         self.app.start_btn.grid(row=0, column=0, padx=6, pady=6, sticky="ew", ipady=4)
         self.app.stop_btn = ttk.Button(
