@@ -19,6 +19,12 @@ class TestInputValidator:
         assert valid is True
         assert error is None
 
+    def test_validate_url_strips_whitespace(self):
+        """Test URL validation trims whitespace."""
+        valid, error = InputValidator.validate_url("  https://example.com  ")
+        assert valid is True
+        assert error is None
+
     def test_validate_url_invalid(self):
         """Test URL validation with invalid URLs."""
         valid, error = InputValidator.validate_url("")
@@ -30,6 +36,12 @@ class TestInputValidator:
         assert error is not None
 
         valid, error = InputValidator.validate_url("ftp://example.com")
+        assert valid is False
+        assert error is not None
+
+    def test_validate_url_missing_domain(self):
+        """Test URL validation when domain is missing."""
+        valid, error = InputValidator.validate_url("https://")
         assert valid is False
         assert error is not None
 
@@ -51,6 +63,12 @@ class TestInputValidator:
         assert valid is False
         assert error is not None
 
+    def test_validate_positive_number_min_value(self):
+        """Test positive number validation with a custom minimum."""
+        valid, error = InputValidator.validate_positive_number(5.0, "test", min_value=5.0)
+        assert valid is False
+        assert error is not None
+
     def test_validate_integer_range(self):
         """Test integer range validation."""
         valid, error = InputValidator.validate_integer_range(5, "test", 1, 10)
@@ -69,6 +87,16 @@ class TestInputValidator:
         assert valid is False
         assert error is not None
 
+    def test_validate_integer_range_bounds(self):
+        """Test integer range boundaries."""
+        valid, error = InputValidator.validate_integer_range(1, "test", 1, 10)
+        assert valid is True
+        assert error is None
+
+        valid, error = InputValidator.validate_integer_range(10, "test", 1, 10)
+        assert valid is True
+        assert error is None
+
     def test_validate_path_exists(self):
         """Test path existence validation."""
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -83,6 +111,12 @@ class TestInputValidator:
             valid, error = InputValidator.validate_path_exists(nonexistent_path, "test")
             assert valid is False
             assert error is not None
+
+    def test_validate_path_exists_none(self):
+        """Test path existence validation with missing path."""
+        valid, error = InputValidator.validate_path_exists(None, "test")
+        assert valid is False
+        assert error is not None
 
     def test_validate_backoff_values(self):
         """Test backoff values validation."""
@@ -122,7 +156,7 @@ class TestInputValidator:
         assert "short" not in normalized
 
     def test_normalize_user_agents_empty(self):
-        """Test user agent normalization with empty list."""
+        """Test user agent normalization with empty inputs."""
         normalized = InputValidator.normalize_user_agents([])
         assert normalized == []
 
