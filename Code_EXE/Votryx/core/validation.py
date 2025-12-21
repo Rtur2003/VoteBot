@@ -77,9 +77,7 @@ class InputValidator:
             return False, f"{name} must be a valid integer"
 
     @staticmethod
-    def validate_path_exists(
-        path: Union[str, Path, Any], name: str
-    ) -> Tuple[bool, Optional[str]]:
+    def validate_path_exists(path: Union[str, Path, Any], name: str) -> Tuple[bool, Optional[str]]:
         """
         Validate that a path exists.
 
