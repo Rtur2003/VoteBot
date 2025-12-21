@@ -383,7 +383,7 @@ class VotryxApp:
         try:
             parsed = urlparse(url)
             if parsed.scheme and parsed.netloc:
-                return f"{parsed.scheme}://{parsed.netloc}"
+                return "{}://{}".format(parsed.scheme, parsed.netloc)
         except Exception:
             pass
         return None
